@@ -1,5 +1,5 @@
 /**
- * OphthaHub - 眼科医専用 講演会・学会検索アプリ
+ * OphthalConf - 眼科専用 講演会・学会検索アプリ
  * 即時絞り込み・カレンダー重複表示・ICS連携・学会詳細メタ情報
  */
 
@@ -138,6 +138,7 @@ const WEEKDAYS = ["日", "月", "火", "水", "木", "金", "土"];
  * 初期化処理
  */
 function initApp() {
+  migrateLegacyStorage();
   loadCalendarSettings();
   loadAttendingConferences();
   loadHiddenConferences();
@@ -150,11 +151,35 @@ function initApp() {
   renderEvents();
 }
 
+/** 旧保存キーから移行する。正規キーの既存値と旧データは変更しない。 */
+function migrateLegacyStorage() {
+  const legacyPrefix = "ophthahub_"; // 旧バージョンとのデータ互換のためにのみ保持。
+  for (const key of [ATTENDING_CONFERENCES_KEY, HIDDEN_CONFERENCES_KEY, CONFERENCE_HISTORY_KEY, CALENDAR_SETTINGS_KEY]) {
+    try {
+      const marker = `${key}_legacy_migrated`;
+      if (localStorage.getItem(marker) === "1") continue;
+      const current = localStorage.getItem(key);
+      if (current !== null && current !== "") {
+        // すでに正規キーを使っている場合も、後から旧データを復活させない。
+        localStorage.setItem(marker, "1");
+        continue;
+      }
+      const legacy = localStorage.getItem(key.replace(/^ophthalconf_/, legacyPrefix));
+      if (legacy === null || legacy === "") continue;
+      localStorage.setItem(key, legacy);
+      // コピー完了後にだけ記録し、途中失敗時は次の起動で再試行できる。
+      localStorage.setItem(marker, "1");
+    } catch (error) {
+      console.warn("Failed to migrate legacy storage:", error);
+    }
+  }
+}
+
 /**
  * 学会参加予定 / 非表示の永続化管理 (localStorage)
  */
-const ATTENDING_CONFERENCES_KEY = "ophthahub_attending_conferences";
-const HIDDEN_CONFERENCES_KEY = "ophthahub_hidden_conferences";
+const ATTENDING_CONFERENCES_KEY = "ophthalconf_attending_conferences";
+const HIDDEN_CONFERENCES_KEY = "ophthalconf_hidden_conferences";
 
 function loadAttendingConferences() {
   try {
@@ -333,7 +358,7 @@ function renderHiddenConferencesModal() {
  * 学会参加履歴の永続化管理 & 年度別集計 (マイ学会履歴)
  * ==========================================================================
  */
-const CONFERENCE_HISTORY_KEY = "ophthahub_conference_attendance_history";
+const CONFERENCE_HISTORY_KEY = "ophthalconf_conference_attendance_history";
 
 /**
  * localStorageから学会参加履歴をロード
@@ -688,7 +713,7 @@ function closeConferenceHistoryModal() {
 /**
  * localStorageからカレンダー連携設定をロード
  */
-const CALENDAR_SETTINGS_KEY = "ophthahub_calendar_settings";
+const CALENDAR_SETTINGS_KEY = "ophthalconf_calendar_settings";
 
 function loadCalendarSettings() {
   try {
@@ -2168,7 +2193,7 @@ function addToCalendar(event) {
   const icsData = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//OphthaHub//OphthalmologyEvent//JA",
+    "PRODID:-//OphthalConf//OphthalmologyEvent//JA",
     "CALSCALE:GREGORIAN",
     "BEGIN:VEVENT",
     `SUMMARY:${event.title}`,

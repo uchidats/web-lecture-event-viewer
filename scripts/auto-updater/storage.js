@@ -57,7 +57,8 @@ const checks = [
     'scripts/auto-updater/storage.js', 'scripts/auto-updater/pipeline.js'].map(file => ['--check', file]),
   ['scratch/test_ended_conferences.js'], ['scratch/test_conference_history.js'],
   ['scratch/test_venue_master.js'], ['scratch/test_comprehensive_regression.js'],
-  ['scratch/test_abstract_submission.js'], ['scratch/test_auto_updater.js']
+  ['scratch/test_abstract_submission.js'], ['scratch/test_auto_updater.js'],
+  ['scratch/test_brand_storage.js']
 ];
 function runChecks(root) {
   const results = [];
