@@ -16,8 +16,8 @@ function load(original = false) {
 }
 const run = load();
 const before = load(true);
-assert.equal(run('Object.keys(venueMaster).length'), 9);
-assert.equal(run('sampleEvents.filter(e => e.venueId).length'), 10);
+assert.equal(run('Object.keys(venueMaster).length'), 10);
+assert.equal(run('sampleEvents.filter(e => e.venueId).length'), 11);
 assert.ok(run('sampleEvents.every(e => !e.venueId || getEventVenue(e)?.venueId === e.venueId)'));
 assert.equal(run('getEventVenue({venueId:"toString"})'), null);
 assert.equal(run('getEventVenue({venueId:"missing"})'), null);

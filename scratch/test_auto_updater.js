@@ -21,7 +21,9 @@ async function main() {
   dataset.events = dataset.events.map(e => baselinePilots[e.id] || e);
   const source = config.sources.find(s => s.id === 'conf-jp-surgery-2027');
   const event = dataset.events.find(e => e.id === source.id);
-  const candidate = (field, value, confidence = 0.98) => ({ field, value, confidence, method: 'labeled-html', url: source.pages[1].url });
+  const candidate = (field, value, confidence = 0.98) => ({ field, value, confidence, method: 'labeled-html',
+    url: source.pages[field === 'venue' ? 0 : 1].url,
+    ...(field === 'venue' ? {sourceRole: 'overview', venueEvidence: 'labeled-venue', evidence: value} : {}) });
   const decide = (candidates, issues = [], override = {}) => assess(event, source, candidates, issues, config.defaults, { today: '2026-10-04', venues: {}, ...override });
 
   for (const [raw, expected] of [

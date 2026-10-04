@@ -38,6 +38,20 @@ apply → バックアップ → 書き込み → 回帰テスト → 成功時�
 
 ## Confidence と自動更新条件
 
+### 会場の採用・上書きルール
+
+会場は、公式開催概要の会場欄または開催回が一致するJSON-LD `Event.location.name` に
+明記された値のみ候補にする。`sourceRole`、`venueEvidence`、原文 `evidence` を保存し、
+policyで抽出方法と原文の会場名一致を検証する。都市名・他学会・AI・会場マスターから
+会場名を推測しない。記載がない場合は既存値を保持する。
+
+未設定／未定等は明示的な根拠があれば補完可能。確定済みの既存会場と異なる場合は、
+都市情報があっても `existing-venue-change-needs-review` として自動上書きしない。
+venueIdを持つ場合は会場マスターとの矛盾も保留する。適用処理でも根拠・URL・既存値を再検証する。
+会場差分には `sourceUrl`（抽出元の公式URL）を必須とし、dry-runレポートと
+適用履歴 `auto-update-history.json` に新旧値・根拠とともに保存する。
+手動訂正も確認URL付きで記録する（例: `reports/venue-corrections.json`）。
+
 | 根拠 | confidence上限 |
 | --- | --- |
 | 開催回が一致する公式JSON-LD | 0.99 |

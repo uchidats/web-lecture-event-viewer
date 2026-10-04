@@ -23,6 +23,15 @@ function canonical(field, value) {
 }
 function day(value) { return Date.parse(String(value).slice(0, 10) + 'T00:00:00Z'); }
 function isPlaceholder(value) { return !value || /未定|不明|要確認|海外|欧州/.test(value); }
+function isUnknownVenue(value) { return !value || /^(未定|不明|要確認|海外|欧州|TBD|TBA)$/i.test(String(value).trim()); }
+
+function hasExplicitVenueEvidence(candidate) {
+  return candidate.sourceRole === 'overview' &&
+    ((candidate.method === 'labeled-html' && candidate.venueEvidence === 'labeled-venue') ||
+      (candidate.method === 'json-ld' && candidate.venueEvidence === 'event-location')) &&
+    typeof candidate.evidence === 'string' && !!candidate.evidence.trim() &&
+    canonical('venue', candidate.evidence) === canonical('venue', candidate.value);
+}
 
 function assess(event, source, candidates, issues, limits, { today, venues = {} }) {
   const accepted = [], review = [];
@@ -47,6 +56,7 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
     if (!fields.has(candidate.field)) { reject(candidate, 'protected-or-unknown-field'); continue; }
     if (candidate.value === null || candidate.value === undefined || candidate.value === '') { reject(candidate, 'missing-value-never-deletes'); continue; }
     if (typeof candidate.value !== 'string') { reject(candidate, 'invalid-value-type'); continue; }
+    if (candidate.field === 'venue' && !hasExplicitVenueEvidence(candidate)) { reject(candidate, 'venue-not-explicit-in-official-source'); continue; }
     const list = groups.get(candidate.field) || [];
     list.push(candidate); groups.set(candidate.field, list);
   }
@@ -101,14 +111,16 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
     if (field === 'country' && (event.conferenceRegion === 'domestic') !== (canonical(field, value) === '日本')) { reject(candidate, 'region-country-contradiction'); continue; }
     if (field === 'abstractSubmission.status' && !['open', 'upcoming', 'closed', 'unknown'].includes(value)) { reject(candidate, 'invalid-status'); continue; }
     if (field === 'venue' && (String(value).length > 300 || /未定|不明|要確認|〒|運営事務局/.test(value))) { reject(candidate, 'invalid-venue'); continue; }
-    if (field === 'venue' && !isPlaceholder(previous) && canonical(field, previous) !== canonical(field, value) &&
-        !unique.has('city')) { reject(candidate, 'venue-change-without-location'); continue; }
+    if (field === 'venue' && !isUnknownVenue(previous) && canonical(field, previous) !== canonical(field, value)) {
+      reject(candidate, 'existing-venue-change-needs-review'); continue;
+    }
     if (field === 'venue' && event.venueId && venues[event.venueId] &&
         canonical(field, value) !== canonical(field, previous)) { reject(candidate, 'venue-master-conflict'); continue; }
     if (canonical(field, previous) === canonical(field, value)) continue;
     if (!Number.isFinite(confidence) || confidence < limits.minConfidence) { reject(candidate, 'low-confidence'); continue; }
     if (!source.autoUpdateEnabled) { reject(candidate, 'auto-update-disabled'); continue; }
-    accepted.push({ ...candidate, value: field === 'country' ? canonical(field, value) : value, oldValue: previous });
+    accepted.push({ ...candidate, value: field === 'country' ? canonical(field, value) : value, oldValue: previous,
+      ...(field === 'venue' ? { sourceUrl: candidate.url } : {}) });
   }
   // Keep related fields consistent: reject the whole date/location/abstract group if part is unsafe.
   const groupFor = field => ['date', 'endDate'].includes(field) ? 'dates' : ['venue', 'city', 'country'].includes(field) ? 'location' : field?.startsWith('abstractSubmission.') && !field.endsWith('.url') ? 'abstract' : field;
@@ -142,6 +154,13 @@ function applyChanges(events, changes) {
   for (const change of changes) {
     const event = result.find(e => e.id === change.eventId);
     if (!event?.isConference) throw new Error('Unknown conference ID');
+    if (change.field === 'venue') {
+      if (!hasExplicitVenueEvidence(change) || !change.sourceUrl || change.sourceUrl !== change.url ||
+        !/^https:\/\//.test(change.sourceUrl)) throw new Error('Venue change requires explicit official evidence and source URL');
+      if (!isUnknownVenue(event.venue) && canonical('venue', event.venue) !== canonical('venue', change.value)) {
+        throw new Error('Existing venue change requires manual review');
+      }
+    }
     setField(event, change.field, change.value);
     if (['date', 'endDate'].includes(change.field)) event.period = `${event.date} ～ ${event.endDate || event.date}`;
     if (change.field === 'abstractSubmission.deadline') event.abstractDeadline = change.value;
@@ -149,4 +168,4 @@ function applyChanges(events, changes) {
   return result;
 }
 
-module.exports = { assess, fields, canonical, oldValue, location, applyChanges, setField };
+module.exports = { assess, fields, canonical, oldValue, location, applyChanges, setField, hasExplicitVenueEvidence };

@@ -58,7 +58,8 @@ const checks = [
   ['scratch/test_ended_conferences.js'], ['scratch/test_conference_history.js'],
   ['scratch/test_venue_master.js'], ['scratch/test_comprehensive_regression.js'],
   ['scratch/test_abstract_submission.js'], ['scratch/test_auto_updater.js'],
-  ['scratch/test_brand_storage.js'], ['scratch/test_companies.js'], ['scratch/test_time_zones.js']
+  ['scratch/test_brand_storage.js'], ['scratch/test_companies.js'], ['scratch/test_time_zones.js'],
+  ['scratch/test_venue_update_policy.js']
 ];
 function runChecks(root) {
   const results = [];

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "changes": [
+    {
+      "eventId": "conf-int-fujiretina-2027",
+      "field": "venue",
+      "oldValue": "東京国際フォーラム",
+      "newValue": "虎ノ門ヒルズフォーラム",
+      "oldVenueId": null,
+      "newVenueId": "toranomon-hills-forum",
+      "sourceUrl": "https://convention.jtbcom.co.jp/fujiretina/",
+      "corroboratingUrls": ["https://www.jrvs.jp/fuji.html", "https://www.nichigan.or.jp/member/syukai/hyoji_international.html"],
+      "verifiedAt": "2026-10-05",
+      "status": "manual-official-source-correction",
+      "reason": "初回データ追加時の誤記を公式開催概要に基づき訂正。会期は2027-03-26〜2027-03-28を維持。"
+    }
+  ]
+}

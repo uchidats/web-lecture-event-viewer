@@ -156,6 +156,17 @@ const venueMaster = {
     "access": { "nearestStations": [], "shinkansenStations": [], "airports": [], "transportModes": [], "taxiEstimate": null, "morningCrowdingNotes": [] },
     "accommodation": { "recommendedAreas": [], "hotels": [] }
   },
+  "toranomon-hills-forum": {
+    "venueId": "toranomon-hills-forum",
+    "name": "虎ノ門ヒルズフォーラム",
+    "city": "東京都", "prefecture": "東京都", "country": "日本",
+    "timeZone": "Asia/Tokyo",
+    "googleMaps": { "searchQuery": "虎ノ門ヒルズフォーラム 東京都" },
+    "sourceUrl": "https://convention.jtbcom.co.jp/fujiretina/",
+    "verifiedAt": "2026-10-05",
+    "access": { "nearestStations": [], "shinkansenStations": [], "airports": [], "transportModes": [], "taxiEstimate": null, "morningCrowdingNotes": [] },
+    "accommodation": { "recommendedAreas": [], "hotels": [] }
+  },
   "messe-wien": {
     "venueId": "messe-wien",
     "name": "Messe Wien Exhibition & Congress Center",

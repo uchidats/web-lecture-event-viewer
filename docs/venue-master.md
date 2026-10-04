@@ -57,6 +57,8 @@ categories は `luxury / business / budget / walkable / airportAccess` の複数
 
 初期の国内6会場に加え、ニューオーリンズ・シンガポール・ウィーンの3会場を登録し、
 既存の該当4イベントに venueId を追加した。海外の時刻併記は [event-time-zones.md](event-time-zones.md) を参照。
+FujiRetina 2027の公式会場を確認し、虎ノ門ヒルズフォーラムを追加して同イベントに紐づけた。
+訂正経緯と確認URLは [fujiretina-2027-venue-audit.md](fujiretina-2027-venue-audit.md) を参照。
 既存イベント全件の一括置換・名称による自動紐付けは行わない。
 
 検証: `node --check venues.js`、`node --check events.js`、`node --check script.js`、

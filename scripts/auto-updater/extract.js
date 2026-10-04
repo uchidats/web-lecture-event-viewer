@@ -68,7 +68,9 @@ function extractOfficialHtml(document, source) {
   const { html, url, role } = document;
   const candidates = [], issues = [];
   const add = (field, value, confidence, method, evidence) => {
-    if (value !== null && value !== undefined && value !== '') candidates.push({ field, value, confidence, method, url, evidence: text(evidence || String(value)).slice(0, 500) });
+    if (value !== null && value !== undefined && value !== '') candidates.push({ field, value, confidence, method, url,
+      evidence: text(evidence || String(value)).slice(0, 500),
+      ...(field === 'venue' ? { sourceRole: role, venueEvidence: method === 'labeled-html' ? 'labeled-venue' : method === 'json-ld' ? 'event-location' : null } : {}) });
   };
   if (!/<(?:html|body|main|table|dl)\b/i.test(html)) return { candidates, issues: ['invalid-html'] };
   const title = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1] || '';

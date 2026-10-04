@@ -51,7 +51,7 @@ async function main() {
 
 
 
-    await evaluate(`getTodayString = () => '2026-10-05'; const template = sampleEvents.find(e => e.id === 'oph-004'); const multi = {...template, id:'dst-test', date:'2026-03-07', endDate:'2026-03-09', timeZone:'America/Chicago'}; elements.eventList.innerHTML = [template, sampleEvents.find(e => e.id === 'oph-010'), multi, sampleEvents.find(e => e.id === 'conf-int-wgc-2027'), sampleEvents.find(e => e.id === 'oph-001')].map(createEventCardHtml).join('');`);
+    await evaluate(`getTodayString = () => '2026-10-05'; const template = sampleEvents.find(e => e.id === 'oph-004'); const multi = {...template, id:'dst-test', date:'2026-03-07', endDate:'2026-03-09', timeZone:'America/Chicago'}; elements.eventList.innerHTML = [template, sampleEvents.find(e => e.id === 'oph-010'), multi, sampleEvents.find(e => e.id === 'conf-int-wgc-2027'), sampleEvents.find(e => e.id === 'oph-001'), sampleEvents.find(e => e.id === 'conf-int-fujiretina-2027')].map(createEventCardHtml).join('');`);
     for (const width of [320, 360, 480, 1280]) {
       await call('Emulation.setDeviceMetricsOverride', {width, height:900, deviceScaleFactor:1, mobile:width<500});
       const layout = await evaluate(`(() => {
@@ -87,6 +87,20 @@ async function main() {
       })`);
       assert.deepEqual(descriptions.map(item => item.visible), [false, true, true], width + 'px domestic/overseas description visibility');
       assert.ok(descriptions.every(item => item.subtitle), width + 'px subtitles preserved');
+      const fuji = await evaluate(`(() => {
+        const event = sampleEvents.find(e => e.id === 'conf-int-fujiretina-2027');
+        const card = document.querySelector('[data-id="'+event.id+'"]');
+        const venue = getEventVenue(event);
+        const map = card.querySelector('.location-text a');
+        return {venue: event.venue, id: event.venueId, masterName: venue.name,
+          query: new URL(map.href).searchParams.get('query'), name: map.textContent,
+          dates: [event.date,event.endDate], noWrongVenue: !card.textContent.includes('東京国際フォーラム')};
+      })()`);
+      assert.equal(fuji.venue, '虎ノ門ヒルズフォーラム');
+      assert.equal(fuji.id, 'toranomon-hills-forum');
+      assert.equal(fuji.masterName, fuji.venue); assert.equal(fuji.name, fuji.venue);
+      assert.ok(fuji.query.includes(fuji.venue)); assert.equal(fuji.noWrongVenue, true);
+      assert.deepEqual(fuji.dates, ['2027-03-26','2027-03-28']);
     }
     const modal = await evaluate(`(() => {showPdfModal(sampleEvents.find(e => e.id === 'oph-004')); return document.querySelector('dialog[open]').innerHTML.includes('japan-time');})()`);
     assert.equal(modal,true);
