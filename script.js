@@ -1826,7 +1826,7 @@ function createEventCardHtml(event) {
             <span class="conf-attendance-hint">（あり：関連セミナー表示 / なし：非表示）</span>
           </div>
 
-          <div class="conf-choice-group" role="group" aria-label="参加予定の選択">
+          <div class="conf-choice-group conf-planned-choice-group" role="group" aria-label="参加予定の選択">
             <button type="button" 
               class="conf-choice-btn choice-yes ${isConferenceAttending ? 'active' : ''}" 
               data-action="attend-choice" 

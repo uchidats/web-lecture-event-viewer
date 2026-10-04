@@ -1163,6 +1163,73 @@ button, input, select, textarea {
   background: #ffffff;
 }
 
+/* 参加予定は、輪郭と内側の丸で選択状態を示す。 */
+.conf-planned-choice-group {
+  background: transparent;
+  border: none;
+  padding: 0;
+  gap: 8px;
+}
+
+.conf-planned-choice-group .conf-choice-btn {
+  min-height: 44px;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  color: #334155;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+.conf-planned-choice-group .choice-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 2px solid #64748b;
+  background: transparent;
+}
+
+.conf-planned-choice-group .choice-dot::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  transform: scale(0);
+  transition: transform 0.15s ease;
+}
+
+.conf-planned-choice-group .conf-choice-btn:hover {
+  background: #f8fafc;
+  border-color: #64748b;
+}
+
+.conf-planned-choice-group .conf-choice-btn:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
+
+.conf-planned-choice-group .conf-choice-btn.active {
+  color: #1d4ed8;
+  background: #eff6ff;
+  border-color: #2563eb;
+  box-shadow: none;
+}
+
+.conf-planned-choice-group .conf-choice-btn.active .choice-dot {
+  border-color: currentColor;
+  background: transparent;
+}
+
+.conf-planned-choice-group .conf-choice-btn.active .choice-dot::after {
+  transform: scale(1);
+}
+
 /* 「参加した」アクティブ時 */
 .conf-choice-btn.choice-attended.active {
   background: #0d9488;
