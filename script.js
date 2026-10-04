@@ -1562,8 +1562,11 @@ function getFilteredEvents() {
   }).sort((a, b) => {
     if (state.sortBy === "date-asc") {
       return new Date(a.date) - new Date(b.date);
-    } else if (state.sortBy === "date-desc") {
-      return new Date(b.date) - new Date(a.date);
+    } else if (state.sortBy === "abstract-deadline-asc") {
+      const deadlineA = parseAbstractDate(a.abstractSubmission?.deadline)?.timestamp ?? Infinity;
+      const deadlineB = parseAbstractDate(b.abstractSubmission?.deadline)?.timestamp ?? Infinity;
+      if (deadlineA !== deadlineB) return deadlineA - deadlineB;
+      return new Date(a.date) - new Date(b.date);
     } else if (state.sortBy === "title-asc") {
       return a.title.localeCompare(b.title, "ja");
     }

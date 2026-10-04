@@ -69,6 +69,37 @@ vm.runInContext(`
   state.filters.abstractStatus.add('open'); state.filters.abstractStatus.add('deadline_7d');
   assert.equal(JSON.stringify(getFilteredEvents().map(e => e.id)), JSON.stringify(['wrong-year', 'match', 'wrong-region']));
   state.filters.abstractStatus.clear(); assert.equal(JSON.stringify(getFilteredEvents().map(e => e.id)), before);
+  // Deadline sorting uses calendar days, puts missing/invalid dates last, and preserves filter gates.
+  assert.equal(state.sortBy, 'date-asc');
+  const sortingEvent = (id, date, deadline, extra = {}) => ({
+    ...make('open', deadline), id, date, endDate: date, region: '関西',
+    specialty: '網膜・硝子体', sponsors: [{companyId: 'santen', role: 'co-sponsor'}], ...extra
+  });
+  state.events = [
+    sortingEvent('missing-late', '2027-05-01', null),
+    sortingEvent('same-late', '2027-04-20', '2026-10-10 09:00'),
+    sortingEvent('invalid', '2027-04-10', '2026-02-30'),
+    sortingEvent('soon', '2027-06-01', '2026-10-05'),
+    sortingEvent('same-early', '2027-04-15', '2026-10-10 17:00'),
+    sortingEvent('missing-early', '2027-04-01', undefined),
+    sortingEvent('past', '2027-07-01', '2026-10-01', {abstractSubmission: {status: 'closed', deadline: '2026-10-01'}}),
+    sortingEvent('wrong-region', '2027-04-01', '2026-10-06', {region: '海外'}),
+    sortingEvent('wrong-company', '2027-04-01', '2026-10-06', {sponsors: [{companyId: 'bayer', role: 'co-sponsor'}]})
+  ];
+  const sortedIds = () => getFilteredEvents().map(e => e.id).join(',');
+  const dateOrder = sortedIds();
+  state.sortBy = 'abstract-deadline-asc';
+  assert.equal(sortedIds(), 'past,soon,wrong-region,wrong-company,same-early,same-late,missing-early,invalid,missing-late');
+  state.filters.region.add('関西'); state.filters.year.add('2027');
+  state.filters.specialty.add('網膜・硝子体'); state.filters.company.add('santen');
+  state.filters.abstractStatus.add('open');
+  assert.equal(sortedIds(), 'soon,same-early,same-late,missing-early,invalid,missing-late');
+  state.filters.abstractStatus.clear();
+  state.hiddenConferences.add('soon');
+  assert.equal(sortedIds(), 'past,same-early,same-late,missing-early,invalid,missing-late');
+  state.hiddenConferences.clear();
+  for (const key of ['region', 'year', 'specialty', 'company']) state.filters[key].clear();
+  state.sortBy = 'date-asc'; assert.equal(sortedIds(), dateOrder);
   state.events = originalEvents;
   assert.equal(sampleEvents.length, 94);
   assert.equal(new Set(sampleEvents.map(e => e.id)).size, 94);
@@ -78,3 +109,8 @@ vm.runInContext(`
 const css = read('style.css');
 assert.ok(css.includes('@media (max-width: 480px)'));
 assert.ok(css.includes('overflow-wrap: anywhere'));
+const html = read('index.html');
+assert.ok(html.includes('<option value="date-asc">開催日（近い順）</option>'));
+assert.ok(html.includes('<option value="abstract-deadline-asc">演題締切（近い順）</option>'));
+assert.ok(!html.includes('value="date-desc"'));
+console.log('PASS: deadline sorting, missing/invalid dates last, same-day tie breaks, combined filters, default and menu');
