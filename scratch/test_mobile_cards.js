@@ -7,8 +7,8 @@ const { pathToFileURL } = require('node:url');
 const { spawn, spawnSync } = require('node:child_process');
 const root = path.resolve(__dirname, '..');
 const browserPath = process.env.CARD_TEST_BROWSER || 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
-// Pin the pre-change layout so this comparison also works after committing.
-const baselineRef = process.env.CARD_TEST_BASE_REF || 'f1ea580';
+// Pin the layout before compacting details across desktop, tablet and mobile.
+const baselineRef = process.env.CARD_TEST_BASE_REF || 'c9496d8';
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 async function main() {
@@ -54,6 +54,7 @@ async function main() {
       const fixtures = ['2026-11-04', '2026-11-03', '2026-10-11', '2026-10-05', '2026-10-04', '2026-10-03'].map(deadline => ({
         ...template, abstractSubmission: {status: 'open', deadline, url: 'https://example.com/abstract'},
         sponsor: 'VeryLongSponsorNameWithoutSpaces'.repeat(8),
+        credits: 'VeryLongCreditDescriptionWithoutSpaces'.repeat(8),
         cityCountry: 'VeryLongCityNameWithoutSpaces'.repeat(4) + ' / USA',
         venue: 'VeryLongVenueNameWithoutSpaces'.repeat(5)
       }));
@@ -77,8 +78,12 @@ async function main() {
       };
     })()`);
     const results = [];
-    for (const width of [1280, 480, 360]) {
+    for (const width of [1280, 1024, 980, 768, 600, 480, 360, 320]) {
       await call('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width <= 480 });
+      // Long fixtures widen the old grid's intrinsic column; compare cards at the current available width.
+      await evaluate(`layoutStyle.textContent = ${JSON.stringify(currentCss)}; document.querySelectorAll('.event-card').forEach(card => card.style.width = '');`);
+      const cardWidth = await evaluate('document.querySelector(".event-card").getBoundingClientRect().width');
+      await evaluate(`document.querySelectorAll('.event-card').forEach(card => card.style.width = '${cardWidth}px');`);
       await evaluate(`layoutStyle.textContent = ${JSON.stringify(oldCss.stdout)};`);
       await evaluate('document.fonts.ready.then(() => true)');
       await delay(350);
@@ -89,17 +94,15 @@ async function main() {
       const after = await measure();
       assert.equal(after.width, width); assert.equal(after.cards, 100);
       assert.equal(after.maps, before.maps); assert.ok(after.badges > 0); assert.equal(after.badges, before.badges);
-      if (width === 1280) assert.deepEqual(after, before, 'PC layout must be unchanged');
-      else {
-        assert.equal(after.pageOverflow, false, `${width}px page overflow`);
-        assert.equal(after.overflow, 0, `${width}px card/value overflow`);
-        assert.equal(after.stacked, 0, `${width}px rows should be horizontal`);
-        assert.ok(after.heights[0] < before.heights[0], 'Mobile card should be shorter');
-      }
+      assert.equal(after.pageOverflow, false, `${width}px page overflow`);
+      assert.equal(after.overflow, 0, `${width}px card/value overflow`);
+      assert.equal(after.stacked, 0, `${width}px rows should be horizontal`);
+      assert.ok(after.heights[0] <= before.heights[0], `${width}px card should not grow: ${before.heights[0]} -> ${after.heights[0]}`);
+      if (width >= 600) assert.ok(after.heights[0] < before.heights[0], `${width}px card should be shorter`);
       results.push({ width, cards: after.cards, overflow: after.overflow, horizontalRows: after.stacked === 0,
         firstCardBefore: before.heights[0], firstCardAfter: after.heights[0] });
     }
-    console.log('PASS: real browser 1280/480/360px; 94 events + 6 long-value/deadline fixtures; Maps and deadline badges preserved');
+    console.log('PASS: real browser 320-1280px (8 widths); 94 events + 6 long sponsor/credit/deadline fixtures; horizontal detail rows, no overflow, compact cards, Maps and deadline badges preserved');
     console.log(JSON.stringify(results));
     await call('Browser.close');
   } finally { if (socket) socket.close(); if (browser.exitCode === null) browser.kill(); }

@@ -1078,17 +1078,19 @@ button, input, select, textarea {
   border: 1px solid #e2e8f0;
   border-left: 3px solid var(--primary);
   border-radius: var(--radius-sm);
-  padding: 12px 16px;
+  padding: 8px 10px;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 4px;
   font-size: 0.8rem;
+  line-height: 1.4;
 }
 
 .conf-item {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 4px;
+  min-width: 0;
 }
 
 .conf-item-full {
@@ -1097,21 +1099,27 @@ button, input, select, textarea {
 
 .conf-deadlines-row {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px 20px;
-  padding-top: 2px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 12px;
 }
 
 .conf-label {
   font-weight: 700;
   color: #475569;
-  min-width: 92px;
+  white-space: nowrap;
   flex-shrink: 0;
 }
 
 .conf-val {
   color: #0f172a;
   font-weight: 500;
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.conf-val.deadline-highlight {
+  white-space: normal;
 }
 
 .deadline-highlight {
@@ -1593,26 +1601,34 @@ button, input, select, textarea {
 /* メタ情報（共催・単位等） */
 .card-meta-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 6px 18px;
-  padding: 10px 14px;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 4px 12px;
+  padding: 8px 10px;
   background: #f8fafc;
   border-radius: var(--radius-md);
   font-size: 0.78rem;
+  line-height: 1.4;
 }
 
 .card-meta-item {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 4px;
+  min-width: 0;
   color: #475569;
 }
 
 .card-meta-label {
   font-weight: 600;
   color: #64748b;
-  min-width: 62px;
+  white-space: nowrap;
   flex-shrink: 0;
+}
+
+.card-meta-item > :last-child {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .credits-highlight {
@@ -2256,7 +2272,7 @@ button, input, select, textarea {
 
   /* 学会情報ボックス */
   .conference-special-box {
-    padding: 10px 12px;
+    padding: 8px 10px;
   }
 
   .conf-attendance-bar {
@@ -2283,9 +2299,9 @@ button, input, select, textarea {
   }
 
   .conf-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 4px;
   }
 
   .conf-label {
@@ -2294,20 +2310,20 @@ button, input, select, textarea {
 
   .conf-deadlines-row {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 4px;
   }
 
   /* メタ情報リストのminmax(280px)解除 */
   .card-meta-list {
     grid-template-columns: 1fr;
-    padding: 10px 12px;
-    gap: 6px;
+    padding: 8px 10px;
+    gap: 4px;
   }
 
   .card-meta-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 4px;
   }
 
   .card-meta-label {
