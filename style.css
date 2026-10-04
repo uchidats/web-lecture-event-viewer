@@ -1040,6 +1040,121 @@ button, input, select, textarea {
   white-space: nowrap; /* 締切済などの途中の改行を防止 */
 }
 
+/* 学会参加予定切り替えバー */
+.conf-attendance-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  margin-bottom: 2px;
+  transition: all 0.2s ease;
+}
+
+.conf-attendance-bar.attending {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+
+.conf-attendance-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.conf-attendance-checkbox {
+  width: 17px;
+  height: 17px;
+  accent-color: #16a34a;
+  cursor: pointer;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.conf-attendance-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.conf-attendance-main-text {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.conf-attendance-hint {
+  font-size: 0.74rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.conf-attending-active-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+  white-space: nowrap;
+}
+
+/* 学会参加予定バッジ（カード右上） */
+.conf-attending-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+}
+
+/* 参加予定設定中の学会カードハイライト */
+.event-card.card-attending-conference {
+  border-color: #86efac;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.08);
+}
+
+/* 学会関連セミナー（ランチョン・モーニング等）親学会バッジ */
+.parent-conference-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 3px 9px;
+  border-radius: 4px;
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 2px;
+}
+
+.parent-conference-pill svg {
+  flex-shrink: 0;
+}
+
+.event-card.card-seminar-related {
+  border-left: 3px solid #0284c7;
+}
+
 /* メタ情報（共催・単位等） */
 .card-meta-list {
   display: grid;
@@ -1570,6 +1685,24 @@ button, input, select, textarea {
   /* 学会情報ボックス */
   .conference-special-box {
     padding: 10px 12px;
+  }
+
+  .conf-attendance-bar {
+    padding: 7px 10px;
+    gap: 6px;
+  }
+
+  .conf-attendance-main-text {
+    font-size: 0.82rem;
+  }
+
+  .conf-attendance-hint {
+    font-size: 0.70rem;
+  }
+
+  .parent-conference-pill {
+    font-size: 0.72rem;
+    padding: 2px 7px;
   }
 
   .conf-item {

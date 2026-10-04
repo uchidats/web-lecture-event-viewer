@@ -13,6 +13,9 @@
  *  - abstractDeadline: 演題登録締切（例: "2026年6月15日(月) 17:00"）
  *  - earlyBirdDeadline: 早期登録締切（例: "2026年8月31日(月)"）
  *  - officialUrl: 公式サイト / 申込ページURL
+ * 
+ * 学会関連セミナー（ランチョン・モーニング・イブニング・共催等）特有フィールド:
+ *  - parentConferenceId: 親学会のイベントID（例: "oph-001"）。親学会が参加予定の場合のみ一覧に表示。
  */
 const sampleEvents = [
   {
@@ -356,5 +359,133 @@ const sampleEvents = [
     cityCountry: "シンガポール / シンガポール共和国",
     abstractDeadline: "2026年8月10日(月) 締切済",
     earlyBirdDeadline: "2026年10月31日(土) まで受付中"
+  },
+  {
+    id: "oph-001-s1",
+    parentConferenceId: "oph-001",
+    title: "【臨眼2026】ランチョンセミナー12：難治性黄斑疾患に対する抗VEGF治療の新展開",
+    subtitle: "広角OCTAとバイオマーカーに基づく投与間隔延長プロトコル",
+    date: "2026-10-23",
+    endDate: "2026-10-23",
+    time: "12:20 - 13:20",
+    region: "関西",
+    venue: "国立京都国際会館 第2会場（Room B-1）",
+    specialty: "網膜・硝子体",
+    eventType: "講演会・勉強会",
+    format: "現地",
+    sponsor: "第79回日本臨床眼科学会 / ノバルティス ファーマ株式会社",
+    credits: "日本眼科学会生涯教育 1単位",
+    calendarStatus: {
+      google: {
+        status: "free",
+        conflicts: []
+      },
+      icloud: {
+        status: "free",
+        conflicts: []
+      },
+      isAdded: false
+    },
+    officialUrl: "https://example.com/ringan2026-luncheon12",
+    pdfUrl: "ringan2026_luncheon12.pdf",
+    tags: ["ランチョンセミナー", "抗VEGF", "黄斑変性", "臨眼2026共催"],
+    description: "第79回日本臨床眼科学会 ランチョンセミナー。滲出型加齢黄斑変性およびPCVに対する高用量抗VEGF抗体の長期治療成績とtreat-and-extendレジメンの実際。",
+    isConference: false
+  },
+  {
+    id: "oph-001-s2",
+    parentConferenceId: "oph-001",
+    title: "【臨眼2026】モーニングセミナー3：緑内障手術ナビゲーション 〜低侵襲緑内障手術(MIGS)の極意〜",
+    subtitle: "線維柱帯切開術マイクロフックとステント留置術の使い分け",
+    date: "2026-10-24",
+    endDate: "2026-10-24",
+    time: "07:50 - 08:40",
+    region: "関西",
+    venue: "国立京都国際会館 第5会場（Room D）",
+    specialty: "緑内障",
+    eventType: "講演会・勉強会",
+    format: "現地",
+    sponsor: "第79回日本臨床眼科学会 / 参天製薬株式会社",
+    credits: "日本眼科学会生涯教育 1単位",
+    calendarStatus: {
+      google: {
+        status: "free",
+        conflicts: []
+      },
+      icloud: {
+        status: "free",
+        conflicts: []
+      },
+      isAdded: false
+    },
+    officialUrl: "https://example.com/ringan2026-morning3",
+    pdfUrl: "ringan2026_morning3.pdf",
+    tags: ["モーニングセミナー", "MIGS", "緑内障手術", "臨眼2026共催"],
+    description: "第79回日本臨床眼科学会 モーニングセミナー。流出路再建術におけるマイクロフックトラベクロトミーの手技と周術期眼圧管理。",
+    isConference: false
+  },
+  {
+    id: "oph-001-s3",
+    parentConferenceId: "oph-001",
+    title: "【臨眼2026】イブニングセミナー5：極小切開白内障手術と最新IOL固定手技",
+    subtitle: "強膜内固定術(Yamane法)のトラブルシューティングと長期予後",
+    date: "2026-10-24",
+    endDate: "2026-10-24",
+    time: "17:30 - 18:30",
+    region: "関西",
+    venue: "国立京都国際会館 第1会場（Main Hall）",
+    specialty: "白内障",
+    eventType: "講演会・勉強会",
+    format: "現地",
+    sponsor: "第79回日本臨床眼科学会 / アルコン ファーマ株式会社",
+    credits: "日本眼科学会生涯教育 1単位",
+    calendarStatus: {
+      google: {
+        status: "free",
+        conflicts: []
+      },
+      icloud: {
+        status: "free",
+        conflicts: []
+      },
+      isAdded: false
+    },
+    officialUrl: "https://example.com/ringan2026-evening5",
+    pdfUrl: "ringan2026_evening5.pdf",
+    tags: ["イブニングセミナー", "強膜内固定", "Yamane法", "臨眼2026共催"],
+    description: "第79回日本臨床眼科学会 イブニングセミナー。チン小帯脆弱例・IOL偏位に対するダブルニードル法による毛様溝強膜内固定の工夫と合併症対策。",
+    isConference: false
+  },
+  {
+    id: "oph-008-s1",
+    parentConferenceId: "oph-008",
+    title: "【JSOPRS 2026】共催セミナー1：眼瞼痙攣に対するボツリヌス療法と手術療法のハイブリッド戦略",
+    subtitle: "難治例における眼輪筋切除術と施注テクニックの最適化",
+    date: "2026-12-05",
+    endDate: "2026-12-05",
+    time: "12:00 - 13:00",
+    region: "九州・沖縄",
+    venue: "福岡国際会議場 第1会場",
+    specialty: "眼形成",
+    eventType: "講演会・勉強会",
+    format: "現地",
+    sponsor: "第42回日本眼形成再建外科学会 / グラクソ・スミスクライン株式会社",
+    credits: "日本眼科学会 1単位",
+    calendarStatus: {
+      google: {
+        status: "free",
+        conflicts: []
+      },
+      icloud: {
+        status: "free",
+        conflicts: []
+      },
+      isAdded: false
+    },
+    officialUrl: "https://example.com/jsoprs2026-symposium1",
+    pdfUrl: "jsoprs2026_symposium1.pdf",
+    tags: ["共催セミナー", "ボツリヌス治療", "眼瞼痙攣", "JSOPRS共催"],
+    description: "第42回日本眼形成再建外科学会 共催セミナー。ボツリヌス毒素A療法の効果減弱時の対応と、眼瞼形成術・開瞼失行に対する外科的アプローチ。",
+    isConference: false
   }
 ];

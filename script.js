@@ -20,7 +20,9 @@ let state = {
   calendarSettings: {
     calendarProvider: "both", // "google", "icloud", "both", "none"
     defaultCalendar: "ask"    // "google", "icloud", "ask"
-  }
+  },
+  // 参加予定の学会IDセット (localStorage永続化)
+  attendingConferences: new Set()
 };
 
 // DOM要素の参照キャッシュ
@@ -109,10 +111,56 @@ const WEEKDAYS = ["日", "月", "火", "水", "木", "金", "土"];
  */
 function initApp() {
   loadCalendarSettings();
+  loadAttendingConferences();
   renderFilterOptions();
   updateRegisteredBadge();
   setupEventListeners();
   renderEvents();
+}
+
+/**
+ * 学会参加予定の永続化管理 (localStorage)
+ */
+const ATTENDING_CONFERENCES_KEY = "ophthahub_attending_conferences";
+
+function loadAttendingConferences() {
+  try {
+    const saved = localStorage.getItem(ATTENDING_CONFERENCES_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        state.attendingConferences = new Set(parsed);
+      }
+    }
+  } catch (e) {
+    console.warn("Failed to load attending conferences from localStorage:", e);
+  }
+}
+
+function saveAttendingConferences() {
+  try {
+    localStorage.setItem(ATTENDING_CONFERENCES_KEY, JSON.stringify(Array.from(state.attendingConferences)));
+  } catch (e) {
+    console.warn("Failed to save attending conferences to localStorage:", e);
+  }
+}
+
+function toggleConferenceAttendance(conferenceId, isChecked) {
+  if (isChecked) {
+    state.attendingConferences.add(conferenceId);
+  } else {
+    state.attendingConferences.delete(conferenceId);
+  }
+  saveAttendingConferences();
+  renderEvents();
+
+  const conf = state.events.find(e => e.id === conferenceId);
+  const confTitle = conf ? conf.title : "学会";
+  if (isChecked) {
+    showToast(`✓ 「${confTitle}」を参加予定に設定しました（関連セミナーを表示中）`);
+  } else {
+    showToast(`「${confTitle}」の参加予定を解除しました（関連セミナーを非表示にしました）`);
+  }
 }
 
 /**
@@ -638,6 +686,14 @@ function computeEffectiveScheduleStatus(event) {
  */
 function getFilteredEvents() {
   return state.events.filter(event => {
+    // 学会関連セミナー（ランチョン・モーニング・共催等）の表示制御:
+    // parentConferenceId が設定されている場合、対応する学会が「参加予定」でなければ一覧から除外
+    if (event.parentConferenceId) {
+      if (!state.attendingConferences.has(event.parentConferenceId)) {
+        return false;
+      }
+    }
+
     const effective = computeEffectiveScheduleStatus(event);
 
     // 登録済み限定フィルター
@@ -870,11 +926,27 @@ function createEventCardHtml(event) {
     `;
   }
 
+  // 学会参加予定ステータス
+  const isConferenceAttending = event.isConference && state.attendingConferences.has(event.id);
+
   // 学会（国内学会・海外学会）特有の表示ブロック
   let conferenceBlockHtml = "";
   if (event.isConference) {
     conferenceBlockHtml = `
       <div class="conference-special-box">
+        <!-- 参加予定チェックボックス切り替えバー -->
+        <div class="conf-attendance-bar ${isConferenceAttending ? 'attending' : ''}">
+          <label class="conf-attendance-label" for="conf-cb-${escapeHtml(event.id)}">
+            <input type="checkbox" id="conf-cb-${escapeHtml(event.id)}" class="conf-attendance-checkbox" data-conference-id="${escapeHtml(event.id)}" ${isConferenceAttending ? 'checked' : ''}>
+            <span class="conf-attendance-toggle-box"></span>
+            <span class="conf-attendance-text">
+              <strong class="conf-attendance-main-text">参加予定</strong>
+              <span class="conf-attendance-hint">（チェックすると関連セミナーを一覧に表示）</span>
+            </span>
+          </label>
+          ${isConferenceAttending ? '<span class="conf-attending-active-tag">✓ 関連セミナー表示中</span>' : ''}
+        </div>
+
         <div class="conf-item conf-item-full">
           <span class="conf-label">会期:</span>
           <span class="conf-val">${escapeHtml(event.period || event.date)}</span>
@@ -897,8 +969,24 @@ function createEventCardHtml(event) {
     `;
   }
 
+  // 学会関連セミナー（ランチョン・モーニング等）特有の親学会バッジ
+  let parentConferenceBadgeHtml = "";
+  if (event.parentConferenceId) {
+    const parentConf = state.events.find(e => e.id === event.parentConferenceId);
+    const parentTitle = parentConf ? parentConf.title : "親学会";
+    parentConferenceBadgeHtml = `
+      <div class="parent-conference-pill">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        </svg>
+        <span>${escapeHtml(parentTitle)} 関連セミナー</span>
+      </div>
+    `;
+  }
+
   return `
-    <article class="event-card ${effective.isRegistered ? 'status-registered-card' : ''}" data-id="${event.id}">
+    <article class="event-card ${effective.isRegistered ? 'status-registered-card' : ''} ${isConferenceAttending ? 'card-attending-conference' : ''} ${event.parentConferenceId ? 'card-seminar-related' : ''}" data-id="${event.id}">
       <!-- 上段: 日程・地域・ステータスバッジ -->
       <div class="card-top-row">
         <div class="date-time-block">
@@ -925,6 +1013,8 @@ function createEventCardHtml(event) {
         </div>
 
         <div class="badges-group">
+          <!-- 学会参加予定バッジ -->
+          ${isConferenceAttending ? '<span class="conf-attending-badge">✓ 参加予定</span>' : ''}
           <!-- 開催形式バッジ -->
           <span class="format-badge ${formatClass}">${escapeHtml(event.format)}</span>
           <!-- カレンダー予定空き状況バッジ -->
@@ -937,6 +1027,7 @@ function createEventCardHtml(event) {
 
       <!-- 中段: タイトル・サブタイトル・概要 -->
       <div class="card-content-block">
+        ${parentConferenceBadgeHtml}
         <h3 class="card-title">${escapeHtml(event.title)}</h3>
         <p class="card-subtitle">${escapeHtml(event.subtitle)}</p>
         <p class="card-desc">${escapeHtml(event.description)}</p>
@@ -1029,6 +1120,14 @@ function attachCardActionListeners() {
     const calBtn = card.querySelector('[data-action="add-calendar"]');
     if (calBtn) {
       calBtn.addEventListener("click", () => addToCalendar(event));
+    }
+
+    // 学会カードの「参加予定」チェックボックス
+    const confAttendanceCb = card.querySelector('.conf-attendance-checkbox');
+    if (confAttendanceCb) {
+      confAttendanceCb.addEventListener("change", (e) => {
+        toggleConferenceAttendance(event.id, e.target.checked);
+      });
     }
   });
 }
