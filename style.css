@@ -1590,6 +1590,18 @@ button, input, select, textarea {
   background: var(--primary-light);
 }
 
+.abstract-submit-link.abstract-submit-link-closed {
+  color: #64748b;
+  font-weight: 500;
+  border-color: transparent;
+  background: transparent;
+}
+
+.abstract-submit-link.abstract-submit-link-closed:hover {
+  color: #334155;
+  background: #f1f5f9;
+}
+
 .deadline-highlight.closed {
   color: #64748b;
 }

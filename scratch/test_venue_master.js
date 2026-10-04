@@ -29,6 +29,11 @@ for (const event of events) {
   const card = run(`createEventCardHtml(${JSON.stringify(event)})`);
   const overseasConference = event.isConference && (event.conferenceRegion === 'international' || event.eventType === '海外学会');
   assert.equal(card.includes('<span class="card-meta-label">認定単位:</span>'), !overseasConference, event.id);
+  assert.equal(card.includes('<p class="card-desc">'), !event.isConference || overseasConference, event.id);
+  assert.ok(card.includes(`<p class="card-subtitle">${run(`escapeHtml(${JSON.stringify(event.subtitle)})`)}</p>`), event.id);
+  if (!event.isConference || overseasConference) {
+    assert.ok(card.includes(`<p class="card-desc">${run(`escapeHtml(${JSON.stringify(event.description)})`)}</p>`), event.id);
+  }
 }
 assert.equal(run('JSON.stringify(sampleEvents)'), originalData, 'Card display must not modify stored credits');
 for (const [event, label, value] of [
@@ -153,9 +158,11 @@ for (const event of [events.find(e => e.venueId), events.find(e => !e.venueId), 
   const url = new URL(run('openedUrl'));
   assert.equal(url.searchParams.get('location'), location);
   assert.ok(url.searchParams.get('details').includes('単位: ' + event.credits));
+  assert.ok(url.searchParams.get('details').includes(event.description));
   assert.ok(run('calendarEvent.calendarStatus.isAdded'));
   run(`state.calendarSettings.defaultCalendar = 'icloud'; addToCalendar(${serialized});`);
   assert.ok(run('downloadedIcs').includes(`LOCATION:${location}\r\n`));
   assert.ok(run('downloadedIcs').includes(`(${event.credits})\\n公式:`));
+  assert.ok(run('downloadedIcs').includes(`DESCRIPTION:${event.description.replace(/\n/g, ' ')}`));
 }
 console.log('PASS: venue master, Maps fallback, all event cards and filter regressions');

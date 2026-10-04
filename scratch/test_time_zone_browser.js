@@ -80,6 +80,13 @@ async function main() {
         return [...document.querySelector('[data-id="'+id+'"]').querySelectorAll('.card-meta-label')].some(label => label.textContent === '認定単位:');
       })`);
       assert.deepEqual(credits, [true, false, false], width + 'px domestic/overseas credit visibility');
+      const descriptions = await evaluate(`['oph-001', 'oph-004', 'conf-int-wgc-2027'].map(id => {
+        const card = document.querySelector('[data-id="'+id+'"]');
+        const event = sampleEvents.find(e => e.id === id);
+        return {visible: !!card.querySelector('.card-desc'), subtitle: card.querySelector('.card-subtitle').textContent === event.subtitle};
+      })`);
+      assert.deepEqual(descriptions.map(item => item.visible), [false, true, true], width + 'px domestic/overseas description visibility');
+      assert.ok(descriptions.every(item => item.subtitle), width + 'px subtitles preserved');
     }
     const modal = await evaluate(`(() => {showPdfModal(sampleEvents.find(e => e.id === 'oph-004')); return document.querySelector('dialog[open]').innerHTML.includes('japan-time');})()`);
     assert.equal(modal,true);

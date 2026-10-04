@@ -51,6 +51,28 @@ vm.runInContext(`
     assert.ok(!renderAbstractSubmissionHtml(make('open', deadline)).includes('NaN'));
   }
   assert.ok(renderAbstractSubmissionHtml(make('unknown', '2026-11-05')).includes('演題締切 11/5'));
+  for (const [status, deadline] of [
+    ['closed', '2026-06-30'], ['closed', '2026-11-05'], ['closed', null],
+    ['open', '2026-10-03'], ['upcoming', '2026-10-03'], ['unknown', '2026-10-03']
+  ]) {
+    const ended = make(status, deadline);
+    const html = renderAbstractSubmissionHtml(ended);
+    assert.equal(html, '<span class="abstract-status-tag closed">演題募集終了</span>');
+    const linked = renderAbstractSubmissionHtml(make(status, deadline, 'https://example.com/abstract'));
+    assert.ok(linked.includes('演題募集終了'));
+    assert.ok(linked.includes('演題募集詳細'));
+    assert.ok(linked.includes('abstract-submit-link-closed'));
+    assert.ok(!linked.includes('演題締切'));
+    assert.ok(!linked.includes('募集開始予定'));
+    assert.ok(!linked.includes('締切まで'));
+    assert.equal(matchesAbstractFilter(ended, 'open'), false);
+  }
+  for (const status of ['open', 'upcoming']) {
+    const html = renderAbstractSubmissionHtml(make(status, '2026-11-05', 'https://example.com/abstract'));
+    assert.ok(html.includes('演題締切 11/5'));
+    assert.ok(!html.includes('abstract-submit-link-closed'));
+  }
+  assert.ok(renderAbstractSubmissionHtml(make('open', '2026-10-04')).includes('本日締切'));
   const originalEvents = state.events;
   state.events = [
     {...make('open', '2026-10-05'), id: 'match', date: '2027-04-01', specialty: 'test', region: 'test'},

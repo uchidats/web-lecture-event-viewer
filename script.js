@@ -1009,18 +1009,20 @@ function renderAbstractSubmissionHtml(event, baseDate = getTodayString()) {
   if (!sub) return `<span class="deadline-highlight">${escapeHtml(event.abstractDeadline || "要確認")}</span>`;
   const info = getAbstractSubmissionState(event, baseDate);
   const labels = { open: "演題募集中", upcoming: "演題募集予定", closed: "演題募集終了" };
+  const isClosed = sub.status === "closed" || (info.days !== null && info.days < 0);
+  const displayStatus = isClosed ? "closed" : info.status;
   const date = parseAbstractDate(sub.deadline);
   const today = parseAbstractDate(baseDate);
   const deadlineLabel = date ? `${date.year !== today?.year ? date.year + "/" : ""}${date.month}/${date.day}` : sub.deadline;
   const parts = [];
-  if (labels[info.status]) parts.push(`<span class="abstract-status-tag ${info.status}">${labels[info.status]}</span>`);
-  if (deadlineLabel) parts.push(`<span class="deadline-highlight">演題締切 ${escapeHtml(deadlineLabel)}</span>`);
-  if (info.isOpen && info.days !== null) {
+  if (labels[displayStatus]) parts.push(`<span class="abstract-status-tag ${displayStatus}">${labels[displayStatus]}</span>`);
+  if (!isClosed && deadlineLabel) parts.push(`<span class="deadline-highlight">演題締切 ${escapeHtml(deadlineLabel)}</span>`);
+  if (!isClosed && info.isOpen && info.days !== null) {
     const text = info.days === 0 ? "本日締切" : `${info.urgency === "urgent" ? "締切間近・" : info.urgency === "soon" ? "注意・" : ""}締切まで${info.days}日`;
     parts.push(`<span class="abstract-status-tag ${info.urgency}">${text}</span>`);
   }
-  if (info.status === "upcoming" && sub.startDate) parts.push(`<span class="abstract-start-date">募集開始予定 ${escapeHtml(sub.startDate)}</span>`);
-  if (sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link">${info.isOpen ? "演題登録" : "演題募集詳細"} ↗</a>`);
+  if (!isClosed && info.status === "upcoming" && sub.startDate) parts.push(`<span class="abstract-start-date">募集開始予定 ${escapeHtml(sub.startDate)}</span>`);
+  if (sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link${isClosed ? ' abstract-submit-link-closed' : ''}">${info.isOpen ? "演題登録" : "演題募集詳細"} ↗</a>`);
   return parts.join(" ") || '<span class="abstract-unknown">演題募集情報未確認</span>';
 }
 
@@ -2028,7 +2030,7 @@ function createEventCardHtml(event) {
         ${parentConferenceBadgeHtml}
         <h3 class="card-title">${escapeHtml(event.title)}</h3>
         <p class="card-subtitle">${escapeHtml(event.subtitle)}</p>
-        <p class="card-desc">${escapeHtml(event.description)}</p>
+        ${event.isConference && event.conferenceRegion !== 'international' && event.eventType !== '海外学会' ? '' : `<p class="card-desc">${escapeHtml(event.description)}</p>`}
       </div>
 
       <!-- 学会特有メタ情報（国内学会・海外学会のみ） -->
