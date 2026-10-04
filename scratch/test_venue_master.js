@@ -24,6 +24,13 @@ assert.equal(run('getEventVenue({venueId:"missing"})'), null);
 assert.ok(run('Object.values(venueMaster).every(v => v.name && v.city && v.prefecture && v.country && v.googleMaps.searchQuery && Array.isArray(v.access.airports) && Array.isArray(v.accommodation.hotels))'));
 
 const events = JSON.parse(run('JSON.stringify(sampleEvents)'));
+const originalData = run('JSON.stringify(sampleEvents)');
+for (const event of events) {
+  const card = run(`createEventCardHtml(${JSON.stringify(event)})`);
+  const overseasConference = event.isConference && (event.conferenceRegion === 'international' || event.eventType === '海外学会');
+  assert.equal(card.includes('<span class="card-meta-label">認定単位:</span>'), !overseasConference, event.id);
+}
+assert.equal(run('JSON.stringify(sampleEvents)'), originalData, 'Card display must not modify stored credits');
 for (const [event, label, value] of [
   [{ cityCountry: '京都市（京都府） / 日本', region: '関西' }, '開催都市', '京都市（京都府）'],
   [{ cityCountry: '東京 ／ 日本', region: '関東', conferenceRegion: 'international' }, '開催都市', '東京'],
@@ -137,7 +144,7 @@ run(`
   document.createElement = () => ({ click() {} });
   document.body = { appendChild() {}, removeChild() {} };
 `);
-for (const event of [events.find(e => e.venueId), events.find(e => !e.venueId), {
+for (const event of [events.find(e => e.venueId), events.find(e => !e.venueId), events.find(e => e.id === 'oph-004'), {
   ...events.find(e => e.venueId), venue: ''
 }]) {
   const serialized = JSON.stringify(event);
@@ -145,8 +152,10 @@ for (const event of [events.find(e => e.venueId), events.find(e => !e.venueId), 
   run(`state.calendarSettings.defaultCalendar = 'google'; var calendarEvent = ${serialized}; addToCalendar(calendarEvent);`);
   const url = new URL(run('openedUrl'));
   assert.equal(url.searchParams.get('location'), location);
+  assert.ok(url.searchParams.get('details').includes('単位: ' + event.credits));
   assert.ok(run('calendarEvent.calendarStatus.isAdded'));
   run(`state.calendarSettings.defaultCalendar = 'icloud'; addToCalendar(${serialized});`);
   assert.ok(run('downloadedIcs').includes(`LOCATION:${location}\r\n`));
+  assert.ok(run('downloadedIcs').includes(`(${event.credits})\\n公式:`));
 }
 console.log('PASS: venue master, Maps fallback, all event cards and filter regressions');

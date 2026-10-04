@@ -2048,10 +2048,12 @@ function createEventCardHtml(event) {
           <span class="card-meta-label">主催/共催:</span>
           <span>${escapeHtml(event.sponsor)}</span>
         </div>
+        ${event.isConference && (event.conferenceRegion === 'international' || event.eventType === '海外学会') ? '' : `
         <div class="card-meta-item">
           <span class="card-meta-label">認定単位:</span>
           <span class="credits-highlight">${escapeHtml(event.credits)}</span>
         </div>
+        `}
       </div>
 
       <!-- タグ一覧 -->
