@@ -1157,6 +1157,17 @@ function setupEventListeners() {
     }
   });
 
+  document.querySelector(".group-select-domestic").addEventListener("click", () => {
+    const checkboxes = document.querySelectorAll('#filter-region input[type="checkbox"]');
+    state.filters.region.clear();
+    checkboxes.forEach(cb => {
+      cb.checked = cb.value !== "海外";
+      if (cb.checked) state.filters.region.add(cb.value);
+    });
+    document.querySelector('.group-select-all[data-target="region"]').textContent = "全選択";
+    renderEvents();
+  });
+
   // 「全選択 / 全解除」トグル
   document.querySelectorAll(".group-select-all").forEach(btn => {
     btn.addEventListener("click", () => {
