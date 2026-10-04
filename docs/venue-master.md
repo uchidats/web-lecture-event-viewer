@@ -25,6 +25,7 @@
 | --- | --- |
 | venueId / name | 安定ID / 会場名 |
 | city / prefecture / country | 都市・自治体 / 都道府県 / 国 |
+| timeZone | 任意。IANAタイムゾーン名（例: America/Chicago）。未確認なら省略 |
 | googleMaps.searchQuery | Maps検索語（名称・所在地） |
 | access.nearestStations | 最寄駅のアクセス経路配列 |
 | access.shinkansenStations | 主要新幹線駅からの経路配列 |
@@ -54,7 +55,8 @@ categories は `luxury / business / budget / walkable / airportAccess` の複数
 
 ## 試験導入
 
-6会場を登録し、各会場1イベントにのみ venueId を追加する。
+初期の国内6会場に加え、ニューオーリンズ・シンガポール・ウィーンの3会場を登録し、
+既存の該当4イベントに venueId を追加した。海外の時刻併記は [event-time-zones.md](event-time-zones.md) を参照。
 既存イベント全件の一括置換・名称による自動紐付けは行わない。
 
 検証: `node --check venues.js`、`node --check events.js`、`node --check script.js`、

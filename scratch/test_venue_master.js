@@ -16,8 +16,8 @@ function load(original = false) {
 }
 const run = load();
 const before = load(true);
-assert.equal(run('Object.keys(venueMaster).length'), 6);
-assert.equal(run('sampleEvents.filter(e => e.venueId).length'), 6);
+assert.equal(run('Object.keys(venueMaster).length'), 9);
+assert.equal(run('sampleEvents.filter(e => e.venueId).length'), 10);
 assert.ok(run('sampleEvents.every(e => !e.venueId || getEventVenue(e)?.venueId === e.venueId)'));
 assert.equal(run('getEventVenue({venueId:"toString"})'), null);
 assert.equal(run('getEventVenue({venueId:"missing"})'), null);
@@ -32,7 +32,7 @@ for (const event of events) {
     const html = run(`renderVenueHtml(${JSON.stringify(event)})`);
     const query = run(`getEventVenue(${JSON.stringify(event)}).googleMaps.searchQuery`);
     assert.ok(html.includes(encodeURIComponent(query)), event.id);
-    assert.ok(html.includes(event.venue), event.id);
+    assert.ok(html.includes(run(`escapeHtml(${JSON.stringify(event.venue)})`)), event.id);
   }
 }
 for (const venue of ['', '未定', 'Web', 'オンライン', 'Zoom会議', '東京国際フォーラム / Web同時配信', '<会場>&"']) {
@@ -76,7 +76,7 @@ for (const event of events) {
     assert.equal(normalized, before(`createEventCardHtml(${serialized})`), event.id);
   }
 }
-const escapedEvent = { ...events.find(e => e.region === '海外'), cityCountry: 'City / <国>&"' };
+const escapedEvent = { ...events.find(e => e.region === '海外'), venueId: 'missing', cityCountry: 'City / <国>&"' };
 assert.ok(run(`createEventCardHtml(${JSON.stringify(escapedEvent)})`).includes('[&lt;国&gt;&amp;&quot;]'));
 
 // 実際のフィルター・カード生成を変更前の実装と比較する。

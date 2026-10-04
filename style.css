@@ -848,6 +848,35 @@ button, input, select, textarea {
   gap: 5px;
 }
 
+.event-time-zones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  min-width: 0;
+}
+
+.event-time-zones > span {
+  overflow-wrap: anywhere;
+}
+
+.time-text:has(.event-time-zones) {
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.time-text:has(.event-time-zones) > svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+@media (max-width: 480px) {
+  .event-time-zones {
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
+}
+
 .location-text {
   font-size: 0.78rem;
   color: var(--text-muted);

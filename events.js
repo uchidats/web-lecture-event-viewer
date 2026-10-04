@@ -14,6 +14,7 @@
  *  - time: 開催時間帯 / セッション時間
  *  - region: 国内地域区分（北海道/東北/関東/中部/関西/中国/四国/九州・沖縄、または "海外"）
  *  - venueId: 任意。venues.js の安定ID（未指定の場合は venue を使用）
+ *  - timeZone: 任意。IANAタイムゾーン名（会場マスター未登録の場合にも使用可能）
  *  - venue: 開催会場（未定の場合は "未定"）
  *  - specialty: 専門領域（一般眼科/網膜・硝子体/緑内障/白内障/角膜・外眼部/小児・斜視弱視/神経眼科/眼形成/その他）
  *  - eventType: "国内学会" | "海外学会" | "講演会・勉強会" | "地方会・研究会"
@@ -433,6 +434,7 @@ const sampleEvents = [
     "time": "現地時間",
     "region": "海外",
     "venue": "Messe Wien Exhibition & Congress Center",
+    "venueId": "messe-wien",
     "specialty": "網膜・硝子体",
     "eventType": "海外学会",
     "format": "現地",
@@ -533,6 +535,7 @@ const sampleEvents = [
     "time": "08:00 - 17:30 (現地時間)",
     "region": "海外",
     "venue": "Ernest N. Morial Convention Center, New Orleans, LA",
+    "venueId": "new-orleans-convention-center",
     "specialty": "一般眼科",
     "eventType": "海外学会",
     "format": "現地",
@@ -1214,6 +1217,7 @@ const sampleEvents = [
     "time": "08:30 - 18:00 (現地時間)",
     "region": "海外",
     "venue": "Suntec Singapore Convention & Exhibition Centre",
+    "venueId": "suntec-singapore",
     "specialty": "白内障",
     "eventType": "海外学会",
     "format": "現地",
@@ -1564,6 +1568,7 @@ const sampleEvents = [
     "time": "現地時間",
     "region": "海外",
     "venue": "Suntec Singapore Convention & Exhibition Centre",
+    "venueId": "suntec-singapore",
     "specialty": "一般眼科",
     "eventType": "海外学会",
     "format": "現地",

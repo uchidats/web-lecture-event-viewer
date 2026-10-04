@@ -1792,6 +1792,16 @@ function renderVenueHtml(event) {
 /**
  * 1件の眼科イベントカードHTML生成
  */
+function renderEventTimeHtml(event) {
+  const rows = getEventJapanTimes(event);
+  if (!rows.length) return escapeHtml(event.time || "");
+  const localTime = event.time.replace(/\s*[（(]現地時間[）)]\s*$/, "") + "（現地時間）";
+  const sameEveryDay = rows.every(row => row.text === rows[0].text);
+  const japanTimes = sameEveryDay ? `<span class="japan-time">${rows.length > 1 ? "各日 " : ""}${escapeHtml(rows[0].text)}</span>` :
+    rows.map(row => `<span class="japan-time">${escapeHtml(row.date)}：${escapeHtml(row.text)}</span>`).join("");
+  return `<span class="event-time-zones"><span class="local-time">${escapeHtml(localTime)}</span>${japanTimes}</span>`;
+}
+
 function createEventCardHtml(event) {
   const dateBadgeInfo = formatEventDateBadge(event);
   const effective = computeEffectiveScheduleStatus(event);
@@ -1989,7 +1999,7 @@ function createEventCardHtml(event) {
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
-              ${escapeHtml(event.time)}
+              ${renderEventTimeHtml(event)}
             </div>
             <div class="location-text">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2174,6 +2184,7 @@ function showPdfModal(event) {
 
       <div class="pdf-paper-meta">
         <div><strong>【日時 / 会期】</strong> ${escapeHtml(event.period || `${event.date} ${event.time}`)}</div>
+        ${getEventJapanTimes(event).length ? `<div><strong>【開催時刻】</strong> ${renderEventTimeHtml(event)}</div>` : ""}
         <div><strong>【開催形式】</strong> ${escapeHtml(event.format)} (${escapeHtml(event.region)})</div>
         <div><strong>【会場】</strong> ${renderVenueHtml(event)}</div>
         <div><strong>【主催】</strong> ${escapeHtml(event.sponsor)}</div>
