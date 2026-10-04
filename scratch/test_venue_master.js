@@ -43,6 +43,41 @@ assert.ok(run('renderVenueHtml({venueId:"tokyo-international-forum"})').includes
 assert.equal(run('getEventVenueName({venueId:"tokyo-international-forum"})'), '東京国際フォーラム');
 assert.equal(run('getEventVenueName({venueId:"tokyo-international-forum",venue:"Room A"})'), 'Room A');
 
+// 国名表示は開催地を参照し、国際学会分類やフィルター値を変えない。
+for (const [event, expected] of [
+  [{ region: '海外', cityCountry: 'ウィーン / オーストリア' }, 'オーストリア'],
+  [{ region: '海外', cityCountry: 'ニューオーリンズ / 米国' }, '米国'],
+  [{ region: '海外', cityCountry: 'シンガポール / シンガポール共和国' }, 'シンガポール'],
+  [{ region: '海外', cityCountry: 'マニラ ／ フィリピン', venueId: 'missing' }, 'フィリピン'],
+  [{ region: '海外', cityCountry: '未定 / 欧州' }, '海外'],
+  [{ region: '海外', cityCountry: '未定 / 未定' }, '海外'],
+  [{ region: '海外', cityCountry: 'ウィーン' }, '海外'],
+  [{ region: '海外', cityCountry: null }, '海外'],
+  [{ region: '国内', cityCountry: '東京 / 日本' }, '国内'],
+  [{ region: '関東', conferenceRegion: 'international', cityCountry: '東京 / 日本' }, '関東'],
+  [{ region: '海外', cityCountry: 'ウィーン / オーストリア', venueId: 'tokyo-international-forum' }, '国内']
+]) {
+  assert.equal(run(`getEventVenueRegionLabel(${JSON.stringify(event)})`), expected);
+}
+run('venueMaster["test-foreign"] = {country:"シンガポール共和国", name:"Test", googleMaps:{searchQuery:"Test Singapore"}};');
+assert.equal(run('getEventVenueRegionLabel({region:"海外",venueId:"test-foreign",cityCountry:"Vienna / オーストリア"})'), 'シンガポール');
+run('venueMaster["test-foreign"].country = " ";');
+assert.equal(run('getEventVenueRegionLabel({region:"海外",venueId:"test-foreign",cityCountry:"Vienna / オーストリア"})'), 'オーストリア');
+run('delete venueMaster["test-foreign"];');
+for (const event of events) {
+  const serialized = JSON.stringify(event);
+  const label = run(`getEventVenueRegionLabel(${serialized})`);
+  const card = run(`createEventCardHtml(${serialized})`);
+  assert.ok(card.includes(`[${run(`escapeHtml(${JSON.stringify(label)})`)}]`), event.id);
+  if (process.argv[2]) {
+    // 国名ラベルを除き、全94カードのHTMLとMapsリンクが変更前と一致する。
+    const normalized = card.replace(`[${run(`escapeHtml(${JSON.stringify(label)})`)}]`, `[${event.region}]`);
+    assert.equal(normalized, before(`createEventCardHtml(${serialized})`), event.id);
+  }
+}
+const escapedEvent = { ...events.find(e => e.region === '海外'), cityCountry: 'City / <国>&"' };
+assert.ok(run(`createEventCardHtml(${JSON.stringify(escapedEvent)})`).includes('[&lt;国&gt;&amp;&quot;]'));
+
 // 実際のフィルター・カード生成を変更前の実装と比較する。
 for (const setup of [
   '',

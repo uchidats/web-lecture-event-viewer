@@ -142,3 +142,20 @@ function getEventVenue(event) {
 function getEventVenueName(event) {
   return event.venue || getEventVenue(event)?.name || "";
 }
+
+// 表示専用。フィルターや学会分類に使う region / conferenceRegion は変更しない。
+function getEventVenueRegionLabel(event) {
+  const masterCountry = getEventVenue(event)?.country;
+  const legacyCountry = typeof event.cityCountry === "string"
+    ? event.cityCountry.split(/[/／]/)[1]?.trim()
+    : "";
+  const country = (typeof masterCountry === "string" && masterCountry.trim()) || legacyCountry;
+  const region = event.region || "";
+  if (country === "日本") return region === "海外" ? "国内" : region;
+  if (region !== "海外" && event.conferenceRegion !== "international") return region;
+  // 地域名や未確認の文字列を国名として表示しない。
+  if (!country || /未定|要確認|不明/.test(country) || ["欧州", "アジア", "海外"].includes(country)) {
+    return region;
+  }
+  return country === "シンガポール共和国" ? "シンガポール" : country;
+}
