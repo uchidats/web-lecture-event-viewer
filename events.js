@@ -1,18 +1,15 @@
 /**
  * 眼科医向け 講演会・学会イベント サンプルデータ
  * 
- * scheduleStatus:
- *  - "free": 🟢 空きあり
- *  - "partial_conflict": 🟡 一部重複
- *  - "conflict": 🔴 重複
- *  - "registered": ✓ カレンダー登録済み
- * 
- * conflictDetail: 重複しているユーザーの予定（例: "18:30–19:30 医局会"）
+ * calendarStatus:
+ *  - google: { status: "free" | "partial" | "busy", conflicts: [{ start, end, title }] }
+ *  - icloud: { status: "free" | "partial" | "busy", conflicts: [{ start, end, title }] }
+ *  - isAdded: boolean (カレンダー登録済みフラグ)
  * 
  * 学会 (国内学会・海外学会) 特有フィールド:
  *  - isConference: true
  *  - period: 会期（例: "2026年10月22日(木)〜10月25日(日)"）
- *  - cityCountry: 開催都市・国（例: "京都（国立京都国際会館） / 日本"）
+ *  - cityCountry: 開催都市・国（例: "京都市（京都府） / 日本"）
  *  - abstractDeadline: 演題登録締切（例: "2026年6月15日(月) 17:00"）
  *  - earlyBirdDeadline: 早期登録締切（例: "2026年8月31日(月)"）
  *  - officialUrl: 公式サイト / 申込ページURL
@@ -32,8 +29,19 @@ const sampleEvents = [
     format: "ハイブリッド",
     sponsor: "公益財団法人 日本眼科学会 / 日本眼科医会",
     credits: "日本眼科学会生涯教育 8単位 / 専門医制度認定",
-    scheduleStatus: "partial_conflict",
-    conflictDetail: "10/22(木) 13:00–17:00 外来手術枠と重複",
+    calendarStatus: {
+      google: {
+        status: "partial",
+        conflicts: [
+          { start: "13:00", end: "17:00", title: "外来手術枠" }
+        ]
+      },
+      icloud: {
+        status: "free",
+        conflicts: []
+      },
+      isAdded: false
+    },
     officialUrl: "https://example.com/ringan2026",
     pdfUrl: "program_ringan2026.pdf",
     tags: ["専門医単位", "国内最大規模", "シンポジウム", "機器展示"],
@@ -58,8 +66,17 @@ const sampleEvents = [
     format: "Web",
     sponsor: "日本緑内障先端治療研究会 / 眼科メディカルファーマ",
     credits: "日本眼科学会生涯教育 1単位",
-    scheduleStatus: "free",
-    conflictDetail: null,
+    calendarStatus: {
+      google: {
+        status: "free",
+        conflicts: []
+      },
+      icloud: {
+        status: "free",
+        conflicts: []
+      },
+      isAdded: false
+    },
     officialUrl: "https://example.com/glaucoma-webinar-oct",
     pdfUrl: "glaucoma_update_2026.pdf",
     tags: ["点眼指導", "SLT", "Webセミナー", "専門医単位"],
@@ -80,8 +97,21 @@ const sampleEvents = [
     format: "ハイブリッド",
     sponsor: "日本小児眼科学会 / 日本弱視斜視学会",
     credits: "日本眼科学会生涯教育 6単位",
-    scheduleStatus: "conflict",
-    conflictDetail: "10/31(土) 14:00–17:00 休日当番医と重複",
+    calendarStatus: {
+      google: {
+        status: "busy",
+        conflicts: [
+          { start: "14:00", end: "17:00", title: "休日当番医" }
+        ]
+      },
+      icloud: {
+        status: "partial",
+        conflicts: [
+          { start: "16:00", end: "18:00", title: "家族送迎" }
+        ]
+      },
+      isAdded: false
+    },
     officialUrl: "https://example.com/jasp-jsas-2026",
     pdfUrl: "jasp_jsas_2026.pdf",
     tags: ["合同学会", "弱視斜視", "視能矯正", "月またぎ会期"],
@@ -106,8 +136,17 @@ const sampleEvents = [
     format: "現地",
     sponsor: "American Academy of Ophthalmology",
     credits: "AMA PRA Category 1 Credits / 国際眼科学会認定",
-    scheduleStatus: "free",
-    conflictDetail: null,
+    calendarStatus: {
+      google: {
+        status: "free",
+        conflicts: []
+      },
+      icloud: {
+        status: "free",
+        conflicts: []
+      },
+      isAdded: false
+    },
     officialUrl: "https://example.com/aao2026-chicago",
     pdfUrl: "aao2026_overview.pdf",
     tags: ["米科学会", "AI診断", "最新手術機器", "国際学会"],
@@ -132,8 +171,17 @@ const sampleEvents = [
     format: "ハイブリッド",
     sponsor: "中部屈折矯正白内障手術懇話会",
     credits: "日本眼科学会生涯教育 1.5単位",
-    scheduleStatus: "registered",
-    conflictDetail: null,
+    calendarStatus: {
+      google: {
+        status: "free",
+        conflicts: []
+      },
+      icloud: {
+        status: "free",
+        conflicts: []
+      },
+      isAdded: true
+    },
     officialUrl: "https://example.com/premium-iol-nagoya",
     pdfUrl: "iol_masterclass_2026.pdf",
     tags: ["多焦点眼内レンズ", "屈折矯正", "乱視矯正", "カレンダー登録済"],
@@ -154,8 +202,17 @@ const sampleEvents = [
     format: "ハイブリッド",
     sponsor: "近畿角膜疾患研究グループ",
     credits: "日本眼科学会 2単位",
-    scheduleStatus: "free",
-    conflictDetail: null,
+    calendarStatus: {
+      google: {
+        status: "free",
+        conflicts: []
+      },
+      icloud: {
+        status: "free",
+        conflicts: []
+      },
+      isAdded: false
+    },
     officialUrl: "https://example.com/kansai-cornea-37",
     pdfUrl: "cornea_dryeye_kansai.pdf",
     tags: ["DMEK", "ドライアイ", "内皮移植", "生体共焦点顕微鏡"],
@@ -176,8 +233,19 @@ const sampleEvents = [
     format: "Web",
     sponsor: "日本弱視斜視臨床懇話会",
     credits: "日本眼科学会専門医 1単位",
-    scheduleStatus: "partial_conflict",
-    conflictDetail: "18:00–19:00 当直引継ぎミーティングと一部重複",
+    calendarStatus: {
+      google: {
+        status: "free",
+        conflicts: []
+      },
+      icloud: {
+        status: "partial",
+        conflicts: [
+          { start: "18:00", end: "19:00", title: "当直引継ぎミーティング" }
+        ]
+      },
+      isAdded: false
+    },
     officialUrl: "https://example.com/pediatric-strabismus-web",
     pdfUrl: "pediatric_ophth_guide.pdf",
     tags: ["3歳児健診", "屈折異常", "アイパッチ遮閉", "専門医単位"],
@@ -198,8 +266,17 @@ const sampleEvents = [
     format: "現地",
     sponsor: "日本眼形成再建外科学会",
     credits: "日本眼科学会 4単位 / 形成外科学会後援",
-    scheduleStatus: "free",
-    conflictDetail: null,
+    calendarStatus: {
+      google: {
+        status: "free",
+        conflicts: []
+      },
+      icloud: {
+        status: "free",
+        conflicts: []
+      },
+      isAdded: false
+    },
     officialUrl: "https://example.com/jsoprs-2026-fukuoka",
     pdfUrl: "jsoprs2026_fukuoka.pdf",
     tags: ["眼瞼下垂", "ミュラー筋短縮", "眼窩減圧術", "現地開催"],
@@ -224,8 +301,21 @@ const sampleEvents = [
     format: "ハイブリッド",
     sponsor: "首都圏神経眼科研究会",
     credits: "日本眼科学会生涯教育 1単位",
-    scheduleStatus: "conflict",
-    conflictDetail: "19:30–21:00 院内安全管理委員会と重複",
+    calendarStatus: {
+      google: {
+        status: "busy",
+        conflicts: [
+          { start: "19:30", end: "21:00", title: "院内安全管理委員会" }
+        ]
+      },
+      icloud: {
+        status: "partial",
+        conflicts: [
+          { start: "19:00", end: "20:00", title: "医局抄読会" }
+        ]
+      },
+      isAdded: false
+    },
     officialUrl: "https://example.com/neuro-oph-case-conf",
     pdfUrl: "neuro_ophthalmology_case.pdf",
     tags: ["抗MOG抗体", "視神経乳頭浮腫", "MRI画像診断", "ステロイドパルス"],
@@ -246,8 +336,17 @@ const sampleEvents = [
     format: "現地",
     sponsor: "Asia-Pacific Association of Cataract and Refractive Surgeons",
     credits: "APACRS CME Credits / 国際単位",
-    scheduleStatus: "free",
-    conflictDetail: null,
+    calendarStatus: {
+      google: {
+        status: "free",
+        conflicts: []
+      },
+      icloud: {
+        status: "free",
+        conflicts: []
+      },
+      isAdded: false
+    },
     officialUrl: "https://example.com/apacrs2026-singapore",
     pdfUrl: "apacrs2026_singapore.pdf",
     tags: ["アジア太平洋学会", "前眼部手術", "フェムトセカンドレーザー", "IOL脱臼"],

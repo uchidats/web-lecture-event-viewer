@@ -345,6 +345,9 @@ function saveCalendarSettings() {
     none: "連携しない"
   };
   showToast(`⚙️ カレンダー設定を保存しました (${providerLabels[provider]})`);
+
+  // カレンダー設定変更に伴い、カードの空き状況表示や重複判定を再描画
+  renderEvents();
 }
 
 /**
@@ -535,19 +538,118 @@ function syncCheckboxesWithState() {
 }
 
 /**
+ * ユーザーのカレンダー設定 (state.calendarSettings.calendarProvider) に基づいて
+ * 各イベントの実効予定ステータスと重複リストを動的に算出
+ * 
+ * 戻り値:
+ *  - statusKey: "free" | "partial_conflict" | "conflict" | "registered" | "unlinked"
+ *  - badgeText: "🟢 空きあり" | "🟡 一部重複" | "🔴 重複" | "✓ カレンダー登録済み" | "未連携"
+ *  - badgeClass: "free" | "partial_conflict" | "conflict" | "registered" | "unlinked"
+ *  - isRegistered: boolean
+ *  - conflicts: Array<{ providerLabel: "Google" | "iCloud", start: string, end: string, title: string }>
+ */
+function computeEffectiveScheduleStatus(event) {
+  // カレンダー登録済みフラグ判定
+  const isAdded = !!(event.calendarStatus?.isAdded || event.scheduleStatus === "registered");
+  if (isAdded) {
+    return {
+      statusKey: "registered",
+      badgeText: "✓ カレンダー登録済み",
+      badgeClass: "registered",
+      isRegistered: true,
+      conflicts: []
+    };
+  }
+
+  const provider = state.calendarSettings.calendarProvider || "both";
+
+  // 1. 連携しない場合
+  if (provider === "none") {
+    return {
+      statusKey: "unlinked",
+      badgeText: "未連携",
+      badgeClass: "unlinked",
+      isRegistered: false,
+      conflicts: []
+    };
+  }
+
+  const gStatus = event.calendarStatus?.google?.status || "free";
+  const gConflicts = event.calendarStatus?.google?.conflicts || [];
+
+  const iStatus = event.calendarStatus?.icloud?.status || "free";
+  const iConflicts = event.calendarStatus?.icloud?.conflicts || [];
+
+  let effectiveStatus = "free";
+  const combinedConflicts = [];
+
+  if (provider === "google") {
+    effectiveStatus = gStatus;
+    gConflicts.forEach(c => combinedConflicts.push({ providerLabel: "Google", ...c }));
+  } else if (provider === "icloud") {
+    effectiveStatus = iStatus;
+    iConflicts.forEach(c => combinedConflicts.push({ providerLabel: "iCloud", ...c }));
+  } else {
+    // "both" (Google + iCloud の両方)
+    // どちらかbusy → busy(重複)
+    // どちらかpartial → partial(一部重複)
+    // 両方free → free(空きあり)
+    if (gStatus === "busy" || iStatus === "busy") {
+      effectiveStatus = "busy";
+    } else if (gStatus === "partial" || iStatus === "partial") {
+      effectiveStatus = "partial";
+    } else {
+      effectiveStatus = "free";
+    }
+
+    gConflicts.forEach(c => combinedConflicts.push({ providerLabel: "Google", ...c }));
+    iConflicts.forEach(c => combinedConflicts.push({ providerLabel: "iCloud", ...c }));
+  }
+
+  if (effectiveStatus === "busy") {
+    return {
+      statusKey: "conflict",
+      badgeText: "🔴 重複",
+      badgeClass: "conflict",
+      isRegistered: false,
+      conflicts: combinedConflicts
+    };
+  } else if (effectiveStatus === "partial") {
+    return {
+      statusKey: "partial_conflict",
+      badgeText: "🟡 一部重複",
+      badgeClass: "partial_conflict",
+      isRegistered: false,
+      conflicts: combinedConflicts
+    };
+  } else {
+    return {
+      statusKey: "free",
+      badgeText: "🟢 空きあり",
+      badgeClass: "free",
+      isRegistered: false,
+      conflicts: []
+    };
+  }
+}
+
+/**
  * フィルタリング & ソートの計算
  */
 function getFilteredEvents() {
   return state.events.filter(event => {
+    const effective = computeEffectiveScheduleStatus(event);
+
     // 登録済み限定フィルター
-    if (state.filters.registeredOnly && event.scheduleStatus !== "registered") {
+    if (state.filters.registeredOnly && !effective.isRegistered) {
       return false;
     }
 
-    // キーワード検索（タイトル、サブタイトル、診療科、主催、単位、重複詳細、タグなど）
+    // キーワード検索（タイトル、サブタイトル、診療科、主催、単位、重複タイトル、タグなど）
     if (state.filters.keyword) {
       const q = state.filters.keyword;
-      const combined = `${event.title} ${event.subtitle} ${event.specialty} ${event.sponsor} ${event.credits} ${event.region} ${event.tags.join(" ")} ${event.conflictDetail || ""}`.toLowerCase();
+      const conflictText = effective.conflicts.map(c => `${c.providerLabel} ${c.title}`).join(" ");
+      const combined = `${event.title} ${event.subtitle} ${event.specialty} ${event.sponsor} ${event.credits} ${event.region} ${event.tags.join(" ")} ${conflictText}`.toLowerCase();
       if (!combined.includes(q)) return false;
     }
 
@@ -571,9 +673,11 @@ function getFilteredEvents() {
       return false;
     }
 
-    // 予定空き状況
-    if (state.filters.scheduleStatus.size > 0 && !state.filters.scheduleStatus.has(event.scheduleStatus)) {
-      return false;
+    // 予定空き状況（未連携の場合は除外しない）
+    if (effective.statusKey !== "unlinked") {
+      if (state.filters.scheduleStatus.size > 0 && !state.filters.scheduleStatus.has(effective.statusKey)) {
+        return false;
+      }
     }
 
     return true;
@@ -721,15 +825,7 @@ function formatEventDateBadge(event) {
  */
 function createEventCardHtml(event) {
   const dateBadgeInfo = formatEventDateBadge(event);
-
-  // 空き状況ステータス定義
-  const scheduleStatusMap = {
-    free: { text: "🟢 空きあり", class: "free" },
-    partial_conflict: { text: "🟡 一部重複", class: "partial_conflict" },
-    conflict: { text: "🔴 重複", class: "conflict" },
-    registered: { text: "✓ カレンダー登録済み", class: "registered" }
-  };
-  const sched = scheduleStatusMap[event.scheduleStatus] || scheduleStatusMap.free;
+  const effective = computeEffectiveScheduleStatus(event);
 
   // 形式スタイル
   const formatMap = {
@@ -739,28 +835,37 @@ function createEventCardHtml(event) {
   };
   const formatClass = formatMap[event.format] || "";
 
-  // 重複情報の表示HTML（一部重複または重複の場合）
+  // 重複情報の表示HTML（未連携・空きあり・登録済みの場合は表示しない）
   let conflictAlertHtml = "";
-  if (event.scheduleStatus === "partial_conflict" && event.conflictDetail) {
-    conflictAlertHtml = `
-      <div class="conflict-alert-box partial">
-        <svg class="conflict-alert-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="8" x2="12" y2="12"></line>
-          <line x1="12" y1="16" x2="12.01" y2="16"></line>
-        </svg>
-        <span>予定と一部重複: <strong>${escapeHtml(event.conflictDetail)}</strong></span>
+  if (effective.conflicts.length > 0) {
+    const isFullConflict = effective.statusKey === "conflict";
+    const alertBoxClass = isFullConflict ? "full" : "partial";
+    const alertTitle = isFullConflict ? "予定と重複しています:" : "予定と一部重複しています:";
+
+    const conflictLinesHtml = effective.conflicts.map(c => `
+      <div class="conflict-item-line">
+        <span class="conflict-provider-tag ${c.providerLabel === 'Google' ? 'google' : 'icloud'}">${escapeHtml(c.providerLabel)}</span>
+        <span>${escapeHtml(c.start)}–${escapeHtml(c.end)} <strong>${escapeHtml(c.title)}</strong></span>
       </div>
-    `;
-  } else if (event.scheduleStatus === "conflict" && event.conflictDetail) {
+    `).join("");
+
     conflictAlertHtml = `
-      <div class="conflict-alert-box full">
+      <div class="conflict-alert-box ${alertBoxClass}">
         <svg class="conflict-alert-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="15" y1="9" x2="9" y2="15"></line>
-          <line x1="9" y1="9" x2="15" y2="15"></line>
+          ${isFullConflict ? `
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          ` : `
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          `}
         </svg>
-        <span>予定と重複: <strong>${escapeHtml(event.conflictDetail)}</strong></span>
+        <div class="conflict-alert-content">
+          <span class="conflict-alert-title">${alertTitle}</span>
+          ${conflictLinesHtml}
+        </div>
       </div>
     `;
   }
@@ -793,7 +898,7 @@ function createEventCardHtml(event) {
   }
 
   return `
-    <article class="event-card ${event.scheduleStatus === 'registered' ? 'status-registered-card' : ''}" data-id="${event.id}">
+    <article class="event-card ${effective.isRegistered ? 'status-registered-card' : ''}" data-id="${event.id}">
       <!-- 上段: 日程・地域・ステータスバッジ -->
       <div class="card-top-row">
         <div class="date-time-block">
@@ -823,7 +928,7 @@ function createEventCardHtml(event) {
           <!-- 開催形式バッジ -->
           <span class="format-badge ${formatClass}">${escapeHtml(event.format)}</span>
           <!-- カレンダー予定空き状況バッジ -->
-          <span class="schedule-badge ${sched.class}">${escapeHtml(sched.text)}</span>
+          <span class="schedule-badge ${effective.badgeClass}">${escapeHtml(effective.badgeText)}</span>
         </div>
       </div>
 
@@ -932,7 +1037,7 @@ function attachCardActionListeners() {
  * ヘッダーの登録件数バッジ更新
  */
 function updateRegisteredBadge() {
-  const registeredCount = state.events.filter(e => e.scheduleStatus === "registered").length;
+  const registeredCount = state.events.filter(e => e.calendarStatus?.isAdded || e.scheduleStatus === "registered").length;
   elements.registeredBadgeCount.textContent = registeredCount;
 }
 
@@ -975,7 +1080,7 @@ function showPdfModal(event) {
 
 /**
  * カレンダー連携処理
- * 設定値 (state.calendarSettings.defaultDestination) に応じて処理:
+ * 設定値 (state.calendarSettings.defaultCalendar) に応じて処理:
  *  - "google": Googleカレンダー予定作成画面を別タブで開く
  *  - "icloud": .icsファイルを直接ダウンロード
  *  - "ask": 選択ダイアログ/トースト経由で両方を提供
@@ -1033,14 +1138,18 @@ function addToCalendar(event) {
     downloadIcs();
     showToast(`📅 iCloud/Appleカレンダー用ファイル(.ics)をダウンロードしました`);
   } else {
-    // "ask": 既定でICSをダウンロードしつつGoogleカレンダーリンクも案内
     downloadIcs();
     showToast(`📅 カレンダーファイル(.ics)をダウンロードしました (Googleカレンダーにも追加可)`);
   }
 
   // カレンダー登録済みステータスに更新
+  if (!event.calendarStatus) {
+    event.calendarStatus = { google: { status: "free", conflicts: [] }, icloud: { status: "free", conflicts: [] } };
+  }
+  event.calendarStatus.isAdded = true;
   event.scheduleStatus = "registered";
   event.conflictDetail = null;
+
   updateRegisteredBadge();
   renderEvents();
 }
