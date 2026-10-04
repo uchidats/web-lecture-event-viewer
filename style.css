@@ -824,6 +824,25 @@ button, input, select, textarea {
   gap: 5px;
 }
 
+/* 会場Google Mapsリンク（ボタン化せず、自然なインラインリンクとして表示） */
+.venue-map-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: #94a3b8;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+  word-break: break-all;
+  cursor: pointer;
+}
+
+.venue-map-link:hover,
+.venue-map-link:focus-visible {
+  color: var(--primary, #0284c7);
+  text-decoration-style: solid;
+  text-decoration-color: var(--primary, #0284c7);
+}
+
 /* 右側バッジグループ */
 .badges-group {
   display: flex;

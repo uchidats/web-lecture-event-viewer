@@ -1022,6 +1022,62 @@ function formatEventDateBadge(event) {
 }
 
 /**
+ * 実在会場であるかを判定（「未定」「オンライン」等の非実在会場を除外）
+ * @param {string} venue 
+ * @returns {boolean}
+ */
+function isPhysicalVenue(venue) {
+  if (!venue || typeof venue !== "string") return false;
+  const v = venue.trim();
+  if (!v || v === "未定" || v.includes("未定")) return false;
+  if (
+    v.startsWith("Web会議システム") ||
+    v.startsWith("Zoom") ||
+    v === "オンライン" ||
+    v === "Web" ||
+    v === "オンライン開催" ||
+    v.includes("要確認")
+  ) {
+    return false;
+  }
+  return true;
+}
+
+/**
+ * 会場名をGoogle Maps検索用ハイパーリンクとしてレンダリング
+ * @param {Object} event 
+ * @returns {string} HTML string
+ */
+function renderVenueHtml(event) {
+  const venue = event.venue;
+  if (!isPhysicalVenue(venue)) {
+    return escapeHtml(venue || "");
+  }
+
+  // 検索語の組み立て: 会場名 + 開催都市
+  // 配信併記（例: " / Web同時配信", " / オンライン中継"）を検索語から除去して精度を向上
+  const cleanVenue = venue.replace(/\s*\/\s*(?:Web|オンライン|ライブ).*$/, "").trim();
+
+  let city = "";
+  if (event.cityCountry && typeof event.cityCountry === "string" && !event.cityCountry.includes("未定")) {
+    city = event.cityCountry.split("/")[0].trim();
+  }
+
+  let searchQuery = cleanVenue;
+  // 会場名に都市名がまだ含まれていなければ都市名を付与（例: "高知県立県民文化ホール グリーンホール 高知市（高知県）"）
+  if (city) {
+    const rawCityName = city.replace(/（.*）/, "").trim();
+    if (!cleanVenue.includes(rawCityName)) {
+      searchQuery = `${cleanVenue} ${city}`;
+    }
+  }
+
+  const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchQuery)}`;
+
+  return `<a href="${mapUrl}" target="_blank" rel="noopener noreferrer" class="venue-map-link" title="Googleマップで場所を表示">${escapeHtml(venue)}</a>`;
+}
+
+/**
  * 1件の眼科イベントカードHTML生成
  */
 function createEventCardHtml(event) {
@@ -1187,7 +1243,7 @@ function createEventCardHtml(event) {
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                 <circle cx="12" cy="10" r="3"></circle>
               </svg>
-              <span>[${escapeHtml(event.region)}] ${escapeHtml(event.venue)}</span>
+              <span>[${escapeHtml(event.region)}] ${renderVenueHtml(event)}</span>
             </div>
           </div>
         </div>
@@ -1336,7 +1392,7 @@ function showPdfModal(event) {
       <div class="pdf-paper-meta">
         <div><strong>【日時 / 会期】</strong> ${escapeHtml(event.period || `${event.date} ${event.time}`)}</div>
         <div><strong>【開催形式】</strong> ${escapeHtml(event.format)} (${escapeHtml(event.region)})</div>
-        <div><strong>【会場】</strong> ${escapeHtml(event.venue)}</div>
+        <div><strong>【会場】</strong> ${renderVenueHtml(event)}</div>
         <div><strong>【主催】</strong> ${escapeHtml(event.sponsor)}</div>
         <div><strong>【眼科単位】</strong> <span style="color:#0284c7; font-weight:600;">${escapeHtml(event.credits)}</span></div>
         ${event.abstractDeadline ? `<div><strong>【演題締切】</strong> ${escapeHtml(event.abstractDeadline)}</div>` : ""}
