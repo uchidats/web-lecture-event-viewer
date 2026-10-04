@@ -1155,6 +1155,94 @@ button, input, select, textarea {
   border-left: 3px solid #0284c7;
 }
 
+/* 学会分類バッジ（国内/海外、カテゴリ） */
+.conf-classification-val {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.conf-category-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.conf-category-badge.region {
+  background: #e2e8f0;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.conf-category-badge.category {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+/* 演題募集ステータス・締切表示 */
+.conf-abstract-deadline-val {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.abstract-status-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: var(--radius-sm);
+  font-size: 0.70rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.abstract-status-tag.open {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.abstract-status-tag.soon {
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.abstract-status-tag.urgent {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.abstract-submit-link {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: underline;
+  padding: 1px 4px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.abstract-submit-link:hover {
+  color: var(--primary-hover);
+  background: var(--primary-light);
+}
+
+.deadline-highlight.closed {
+  color: #64748b;
+}
+
+.deadline-highlight.upcoming {
+  color: #0284c7;
+}
+
 /* メタ情報（共催・単位等） */
 .card-meta-list {
   display: grid;

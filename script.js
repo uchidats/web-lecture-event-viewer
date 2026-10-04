@@ -8,8 +8,10 @@ let state = {
   events: [...sampleEvents], // sampleEvents from events.js
   filters: {
     keyword: "",
+    year: new Set(), // 開催年 (動的抽出)
     specialty: new Set(),
     eventType: new Set(),
+    abstractStatus: new Set(), // 演題募集状況 (学会)
     format: new Set(),
     region: new Set(),
     scheduleStatus: new Set(["free", "partial_conflict", "conflict", "registered"]), // 全ステータスを初期表示
@@ -399,9 +401,98 @@ function saveCalendarSettings() {
 }
 
 /**
+ * eventsデータから開催年（西暦4桁）を一意・昇順で抽出
+ */
+function getAvailableEventYears() {
+  const yearsSet = new Set();
+  state.events.forEach(event => {
+    if (event.date) {
+      const y = event.date.substring(0, 4);
+      if (/^\d{4}$/.test(y)) {
+        yearsSet.add(y);
+      }
+    }
+  });
+  return Array.from(yearsSet).sort();
+}
+
+/**
+ * 演題締切日までの残り日数を算出
+ * @param {Object} event
+ * @param {Date} [baseDate]
+ * @returns {number|null} 残り日数 (負なら締切超過)
+ */
+function getDaysUntilAbstractDeadline(event, baseDate = new Date()) {
+  if (!event.isConference || !event.abstractSubmission?.deadline) return null;
+  const deadlineStr = event.abstractSubmission.deadline;
+  const isoStr = deadlineStr.includes("T") ? deadlineStr : deadlineStr.replace(" ", "T");
+  const deadlineDate = new Date(isoStr);
+  if (isNaN(deadlineDate.getTime())) return null;
+
+  const diffMs = deadlineDate.getTime() - baseDate.getTime();
+  return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+}
+
+/**
  * フィルター項目のチェックボックス（チップUI）を動的生成
  */
 function renderFilterOptions() {
+  // 1. 開催年フィルター（eventsデータから動的抽出・昇順生成）
+  const yearContainer = document.getElementById("filter-year");
+  if (yearContainer) {
+    const availableYears = getAvailableEventYears();
+    yearContainer.innerHTML = availableYears.map(year => {
+      const count = state.events.filter(e => e.date && e.date.startsWith(year)).length;
+      const isChecked = state.filters.year.has(year);
+      return `
+        <label class="chip-label">
+          <input type="checkbox" name="year" value="${escapeHtml(year)}" ${isChecked ? "checked" : ""}>
+          <span class="chip-btn">
+            ${escapeHtml(year)}年
+            <span class="chip-count">(${count})</span>
+          </span>
+        </label>
+      `;
+    }).join("");
+  }
+
+  // 2. 演題募集フィルター（学会特有：募集中、30日以内、7日以内）
+  const abstractContainer = document.getElementById("filter-abstractStatus");
+  if (abstractContainer) {
+    const now = new Date();
+    const openCount = state.events.filter(e => e.isConference && e.abstractSubmission?.status === "open").length;
+    const d30Count = state.events.filter(e => {
+      if (!e.isConference || e.abstractSubmission?.status !== "open") return false;
+      const days = getDaysUntilAbstractDeadline(e, now);
+      return days !== null && days >= 0 && days <= 30;
+    }).length;
+    const d7Count = state.events.filter(e => {
+      if (!e.isConference || e.abstractSubmission?.status !== "open") return false;
+      const days = getDaysUntilAbstractDeadline(e, now);
+      return days !== null && days >= 0 && days <= 7;
+    }).length;
+
+    const abstractOptions = [
+      { value: "open", label: "🟢 演題募集中", count: openCount },
+      { value: "deadline_30d", label: "⏱️ 締切30日以内", count: d30Count },
+      { value: "deadline_7d", label: "🔥 締切7日以内", count: d7Count }
+    ];
+
+    abstractContainer.innerHTML = abstractOptions.map(opt => {
+      const isChecked = state.filters.abstractStatus.has(opt.value);
+      return `
+        <label class="chip-label">
+          <input type="checkbox" name="abstractStatus" value="${opt.value}" ${isChecked ? "checked" : ""}>
+          <span class="chip-btn">
+            ${escapeHtml(opt.label)}
+            <span class="chip-count">(${opt.count})</span>
+          </span>
+        </label>
+      `;
+    }).join("");
+  }
+
+  // 3. 専門領域・イベント種別・開催形式・地域フィルター
   Object.keys(FILTER_OPTIONS).forEach(key => {
     const container = document.getElementById(`filter-${key}`);
     if (!container) return;
@@ -485,7 +576,7 @@ function setupEventListeners() {
     elements.keywordSearch.value = "";
     elements.clearSearchBtn.style.display = "none";
 
-    ["specialty", "eventType", "format", "region"].forEach(key => {
+    ["year", "specialty", "eventType", "abstractStatus", "format", "region"].forEach(key => {
       state.filters[key].clear();
     });
 
@@ -701,6 +792,14 @@ function getFilteredEvents() {
       return false;
     }
 
+    // 開催年フィルター (複数年選択時はOR、未選択時は全年表示)
+    if (state.filters.year.size > 0) {
+      const eventYear = event.date ? event.date.substring(0, 4) : "";
+      if (!state.filters.year.has(eventYear)) {
+        return false;
+      }
+    }
+
     // キーワード検索（タイトル、サブタイトル、診療科、主催、単位、重複タイトル、タグなど）
     if (state.filters.keyword) {
       const q = state.filters.keyword;
@@ -717,6 +816,33 @@ function getFilteredEvents() {
     // イベント種別
     if (state.filters.eventType.size > 0 && !state.filters.eventType.has(event.eventType)) {
       return false;
+    }
+
+    // 演題募集フィルター (学会対象: 複数選択時はOR、未選択時は全件)
+    if (state.filters.abstractStatus.size > 0) {
+      if (!event.isConference || !event.abstractSubmission) {
+        return false;
+      }
+
+      const sub = event.abstractSubmission;
+      const daysLeft = getDaysUntilAbstractDeadline(event);
+
+      let matched = false;
+      state.filters.abstractStatus.forEach(cond => {
+        if (cond === "open") {
+          if (sub.status === "open") matched = true;
+        } else if (cond === "deadline_30d") {
+          if (sub.status === "open" && daysLeft !== null && daysLeft >= 0 && daysLeft <= 30) {
+            matched = true;
+          }
+        } else if (cond === "deadline_7d") {
+          if (sub.status === "open" && daysLeft !== null && daysLeft >= 0 && daysLeft <= 7) {
+            matched = true;
+          }
+        }
+      });
+
+      if (!matched) return false;
     }
 
     // 開催形式
@@ -783,6 +909,25 @@ function renderActiveFilterChips() {
 
   if (state.filters.keyword) {
     chips.push({ group: "keyword", label: `検索: "${state.filters.keyword}"`, value: "" });
+  }
+
+  // 開催年
+  if (state.filters.year.size > 0) {
+    state.filters.year.forEach(yr => {
+      chips.push({ group: "year", label: `年: ${yr}年`, value: yr });
+    });
+  }
+
+  // 演題募集状況 (学会)
+  if (state.filters.abstractStatus.size > 0) {
+    const abstractLabels = {
+      open: "🟢 演題募集中",
+      deadline_30d: "⏱️ 締切30日以内",
+      deadline_7d: "🔥 締切7日以内"
+    };
+    state.filters.abstractStatus.forEach(val => {
+      chips.push({ group: "abstractStatus", label: abstractLabels[val] || val, value: val });
+    });
   }
 
   ["specialty", "eventType", "format", "region"].forEach(group => {
@@ -955,10 +1100,45 @@ function createEventCardHtml(event) {
           <span class="conf-label">開催都市・国:</span>
           <span class="conf-val">${escapeHtml(event.cityCountry || event.venue)}</span>
         </div>
+        ${event.conferenceCategory || event.conferenceRegion ? `
+        <div class="conf-item conf-item-full">
+          <span class="conf-label">学会分類:</span>
+          <span class="conf-val conf-classification-val">
+            <span class="conf-category-badge region">${event.conferenceRegion === 'international' ? '海外学会' : '国内学会'}</span>
+            ${event.conferenceCategory ? `<span class="conf-category-badge category">${escapeHtml(event.conferenceCategory)}</span>` : ''}
+          </span>
+        </div>
+        ` : ''}
         <div class="conf-deadlines-row">
           <div class="conf-item">
             <span class="conf-label">演題登録締切:</span>
-            <span class="conf-val deadline-highlight">${escapeHtml(event.abstractDeadline || "要確認")}</span>
+            <span class="conf-val conf-abstract-deadline-val">
+              ${(() => {
+                const sub = event.abstractSubmission;
+                if (!sub) return `<span class="deadline-highlight">${escapeHtml(event.abstractDeadline || "要確認")}</span>`;
+                if (sub.status === "open") {
+                  const daysLeft = getDaysUntilAbstractDeadline(event);
+                  let daysTag = '<span class="abstract-status-tag open">🟢 募集中</span>';
+                  if (daysLeft !== null) {
+                    if (daysLeft <= 7) {
+                      daysTag = `<span class="abstract-status-tag urgent">🔥 あと${daysLeft}日</span>`;
+                    } else if (daysLeft <= 30) {
+                      daysTag = `<span class="abstract-status-tag soon">⏱️ あと${daysLeft}日</span>`;
+                    }
+                  }
+                  return `
+                    <span class="deadline-highlight">${escapeHtml(sub.deadline || event.abstractDeadline)}</span>
+                    ${daysTag}
+                    ${sub.url ? `<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link">要項・応募 ↗</a>` : ""}
+                  `;
+                } else if (sub.status === "closed") {
+                  return `<span class="deadline-highlight closed">${escapeHtml(sub.deadline || event.abstractDeadline || "締切済")}</span>`;
+                } else if (sub.status === "upcoming") {
+                  return `<span class="deadline-highlight upcoming">${escapeHtml(sub.startDate ? sub.startDate + "〜 募集開始予定" : "募集開始前")}</span>`;
+                }
+                return `<span class="deadline-highlight">${escapeHtml(event.abstractDeadline || "要確認")}</span>`;
+              })()}
+            </span>
           </div>
           <div class="conf-item">
             <span class="conf-label">早期登録締切:</span>

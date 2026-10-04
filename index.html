@@ -84,6 +84,15 @@
       </div>
 
       <div class="sidebar-body">
+        <!-- 開催年 (eventsデータから動的生成) -->
+        <section class="filter-group">
+          <div class="filter-group-header">
+            <h3 class="filter-label">開催年</h3>
+            <span class="group-select-all" data-target="year">全選択</span>
+          </div>
+          <div class="chip-checkbox-grid" id="filter-year"></div>
+        </section>
+
         <!-- 専門領域 (網膜・硝子体, 緑内障, 白内障, etc.) -->
         <section class="filter-group">
           <div class="filter-group-header">
@@ -100,6 +109,15 @@
             <span class="group-select-all" data-target="eventType">全選択</span>
           </div>
           <div class="chip-checkbox-grid" id="filter-eventType"></div>
+        </section>
+
+        <!-- 演題募集 (学会) -->
+        <section class="filter-group">
+          <div class="filter-group-header">
+            <h3 class="filter-label">演題募集 (学会)</h3>
+            <span class="group-select-all" data-target="abstractStatus">解除</span>
+          </div>
+          <div class="chip-checkbox-grid" id="filter-abstractStatus"></div>
         </section>
 
         <!-- 開催形式 (Web, 現地, ハイブリッド) -->
