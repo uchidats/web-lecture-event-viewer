@@ -1190,10 +1190,33 @@ button, input, select, textarea {
   border: 1px solid #86efac;
 }
 
+/* 終了学会バッジ（カード右上） */
+.conf-ended-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+}
+
 /* 参加予定設定中の学会カードハイライト */
 .event-card.card-attending-conference {
   border-color: #86efac;
   box-shadow: 0 4px 12px rgba(22, 163, 74, 0.08);
+}
+
+/* 終了済み学会カード */
+.event-card.card-conference-ended {
+  opacity: 0.85;
+  border-color: #e2e8f0;
+}
+
+.event-card.card-conference-ended:hover {
+  opacity: 1;
 }
 
 /* 学会関連セミナー（ランチョン・モーニング等）親学会バッジ */

@@ -15,7 +15,8 @@ let state = {
     format: new Set(),
     region: new Set(),
     scheduleStatus: new Set(["free", "partial_conflict", "conflict", "registered"]), // 全ステータスを初期表示
-    registeredOnly: false
+    registeredOnly: false,
+    includeEndedConferences: false // 終了した学会も表示 (デフォルトOFF)
   },
   sortBy: "date-asc",
   // カレンダー連携設定 (localStorage永続化)
@@ -44,6 +45,7 @@ const elements = {
   registeredBadgeCount: document.getElementById("registered-badge-count"),
   registeredOnlyBadge: document.getElementById("registered-only-badge"),
   clearRegisteredFilter: document.getElementById("clear-registered-filter"),
+  filterIncludeEnded: document.getElementById("filter-include-ended"),
   // モバイル関連
   mobileFilterBtn: document.getElementById("mobile-filter-btn"),
   closeMobileFilter: document.getElementById("close-mobile-filter"),
@@ -579,6 +581,32 @@ function getDaysUntilAbstractDeadline(event, baseDate = new Date()) {
 }
 
 /**
+ * 今日の日付文字列 (YYYY-MM-DD) を取得
+ * @returns {string}
+ */
+function getTodayString() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+/**
+ * 学会が会期終了済みであるかを判定 (endDate < 今日)
+ * 会期中、および終了日当日は false (未終了) を返す
+ * @param {Object} event
+ * @param {string} [todayStr]
+ * @returns {boolean}
+ */
+function isConferenceEnded(event, todayStr = getTodayString()) {
+  if (!event.isConference) return false;
+  const targetEnd = event.endDate || event.date;
+  if (!targetEnd) return false;
+  return targetEnd < todayStr;
+}
+
+/**
  * フィルター項目のチェックボックス（チップUI）を動的生成
  */
 function renderFilterOptions() {
@@ -728,6 +756,10 @@ function setupEventListeners() {
     // スケジュール状況は全選択に戻す
     state.filters.scheduleStatus = new Set(["free", "partial_conflict", "conflict", "registered"]);
     state.filters.registeredOnly = false;
+    state.filters.includeEndedConferences = false;
+    if (elements.filterIncludeEnded) {
+      elements.filterIncludeEnded.checked = false;
+    }
     elements.toggleRegisteredFilter.classList.remove("active");
     elements.registeredOnlyBadge.style.display = "none";
 
@@ -744,6 +776,14 @@ function setupEventListeners() {
     state.sortBy = e.target.value;
     renderEvents();
   });
+
+  // 終了学会表示トグル
+  if (elements.filterIncludeEnded) {
+    elements.filterIncludeEnded.addEventListener("change", (e) => {
+      state.filters.includeEndedConferences = e.target.checked;
+      renderEvents();
+    });
+  }
 
   // カレンダー登録済みのみトグル
   elements.toggleRegisteredFilter.addEventListener("click", () => {
@@ -949,7 +989,16 @@ function computeEffectiveScheduleStatus(event) {
  * フィルタリング & ソートの計算
  */
 function getFilteredEvents() {
+  const todayStr = getTodayString();
   return state.events.filter(event => {
+    // 終了済み学会の表示制御 (isConference: true のみ対象)
+    // 「終了した学会も表示」がOFFの場合、会期終了済み(endDate < 今日)の学会を除外
+    if (!state.filters.includeEndedConferences && event.isConference) {
+      if (isConferenceEnded(event, todayStr)) {
+        return false;
+      }
+    }
+
     // 非表示にした学会の除外（「参加予定：なし」）
     if (event.isConference && state.hiddenConferences.has(event.id)) {
       return false;
@@ -960,6 +1009,13 @@ function getFilteredEvents() {
     if (event.parentConferenceId) {
       if (!state.attendingConferences.has(event.parentConferenceId)) {
         return false;
+      }
+      // 親学会が終了して非表示になっている場合は関連セミナーも非表示
+      if (!state.filters.includeEndedConferences) {
+        const parentConf = state.events.find(e => e.id === event.parentConferenceId);
+        if (parentConf && isConferenceEnded(parentConf, todayStr)) {
+          return false;
+        }
       }
     }
 
@@ -1127,6 +1183,11 @@ function renderActiveFilterChips() {
     });
   }
 
+  // 終了した学会も表示
+  if (state.filters.includeEndedConferences) {
+    chips.push({ group: "includeEndedConferences", label: "終了した学会も表示", value: "true" });
+  }
+
   if (chips.length === 0) {
     elements.activeFilterChips.innerHTML = "";
     return;
@@ -1148,6 +1209,9 @@ function renderActiveFilterChips() {
         state.filters.keyword = "";
         elements.keywordSearch.value = "";
         elements.clearSearchBtn.style.display = "none";
+      } else if (grp === "includeEndedConferences") {
+        state.filters.includeEndedConferences = false;
+        if (elements.filterIncludeEnded) elements.filterIncludeEnded.checked = false;
       } else if (state.filters[grp]) {
         state.filters[grp].delete(val);
         const cb = document.querySelector(`input[name="${grp}"][value="${val}"]`);
@@ -1308,6 +1372,7 @@ function createEventCardHtml(event) {
   // 学会参加予定ステータス（あり・なし・未選択）
   const isConferenceAttending = event.isConference && state.attendingConferences.has(event.id);
   const isConferenceHidden = event.isConference && state.hiddenConferences.has(event.id);
+  const isConferenceEndedEvent = event.isConference && isConferenceEnded(event);
 
   // 学会（国内学会・海外学会）特有の表示ブロック
   let conferenceBlockHtml = "";
@@ -1422,7 +1487,7 @@ function createEventCardHtml(event) {
   }
 
   return `
-    <article class="event-card ${effective.isRegistered ? 'status-registered-card' : ''} ${isConferenceAttending ? 'card-attending-conference' : ''} ${event.parentConferenceId ? 'card-seminar-related' : ''}" data-id="${event.id}">
+    <article class="event-card ${effective.isRegistered ? 'status-registered-card' : ''} ${isConferenceAttending ? 'card-attending-conference' : ''} ${event.parentConferenceId ? 'card-seminar-related' : ''} ${isConferenceEndedEvent ? 'card-conference-ended' : ''}" data-id="${event.id}">
       <!-- 上段: 日程・地域・ステータスバッジ -->
       <div class="card-top-row">
         <div class="date-time-block">
@@ -1449,6 +1514,8 @@ function createEventCardHtml(event) {
         </div>
 
         <div class="badges-group">
+          <!-- 終了学会バッジ -->
+          ${isConferenceEndedEvent ? '<span class="conf-ended-badge">終了</span>' : ''}
           <!-- 学会参加予定バッジ -->
           ${isConferenceAttending ? '<span class="conf-attending-badge">✓ 参加予定</span>' : ''}
           <!-- 開催形式バッジ -->
