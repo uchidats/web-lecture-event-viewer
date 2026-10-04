@@ -23,8 +23,10 @@ let state = {
     calendarProvider: "both", // "google", "icloud", "both", "none"
     defaultCalendar: "ask"    // "google", "icloud", "ask"
   },
-  // 参加予定の学会IDセット (localStorage永続化)
-  attendingConferences: new Set()
+  // 参加予定の学会IDセット (localStorage永続化: 「あり」)
+  attendingConferences: new Set(),
+  // 非表示にした学会IDセット (localStorage永続化: 「なし」)
+  hiddenConferences: new Set()
 };
 
 // DOM要素の参照キャッシュ
@@ -57,6 +59,14 @@ const elements = {
   dismissCalSettingsModal: document.getElementById("dismiss-cal-settings-modal"),
   saveCalSettingsBtn: document.getElementById("save-cal-settings"),
   calendarSettingsForm: document.getElementById("calendar-settings-form"),
+  // 非表示学会管理モーダル
+  hiddenModal: document.getElementById("hidden-conferences-modal"),
+  openHiddenModalBtn: document.getElementById("open-hidden-modal-btn"),
+  closeHiddenModalBtn: document.getElementById("close-hidden-modal"),
+  dismissHiddenModalBtn: document.getElementById("dismiss-hidden-modal"),
+  hiddenConferencesList: document.getElementById("hidden-conferences-list"),
+  hiddenConferencesCountBadge: document.getElementById("hidden-conferences-count-badge"),
+  unhideAllBtn: document.getElementById("unhide-all-conferences-btn"),
   // ダイアログ & トースト
   pdfModal: document.getElementById("pdf-modal"),
   closePdfModal: document.getElementById("close-pdf-modal"),
@@ -114,16 +124,19 @@ const WEEKDAYS = ["日", "月", "火", "水", "木", "金", "土"];
 function initApp() {
   loadCalendarSettings();
   loadAttendingConferences();
+  loadHiddenConferences();
   renderFilterOptions();
   updateRegisteredBadge();
+  updateHiddenConferencesBadge();
   setupEventListeners();
   renderEvents();
 }
 
 /**
- * 学会参加予定の永続化管理 (localStorage)
+ * 学会参加予定 / 非表示の永続化管理 (localStorage)
  */
 const ATTENDING_CONFERENCES_KEY = "ophthahub_attending_conferences";
+const HIDDEN_CONFERENCES_KEY = "ophthahub_hidden_conferences";
 
 function loadAttendingConferences() {
   try {
@@ -147,22 +160,154 @@ function saveAttendingConferences() {
   }
 }
 
-function toggleConferenceAttendance(conferenceId, isChecked) {
-  if (isChecked) {
-    state.attendingConferences.add(conferenceId);
-  } else {
-    state.attendingConferences.delete(conferenceId);
+function loadHiddenConferences() {
+  try {
+    const saved = localStorage.getItem(HIDDEN_CONFERENCES_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        state.hiddenConferences = new Set(parsed);
+      }
+    }
+  } catch (e) {
+    console.warn("Failed to load hidden conferences from localStorage:", e);
   }
-  saveAttendingConferences();
+}
+
+function saveHiddenConferences() {
+  try {
+    localStorage.setItem(HIDDEN_CONFERENCES_KEY, JSON.stringify(Array.from(state.hiddenConferences)));
+  } catch (e) {
+    console.warn("Failed to save hidden conferences to localStorage:", e);
+  }
+}
+
+function updateHiddenConferencesBadge() {
+  if (!elements.hiddenConferencesCountBadge) return;
+  const count = state.hiddenConferences.size;
+  if (count > 0) {
+    elements.hiddenConferencesCountBadge.textContent = `${count}件`;
+    elements.hiddenConferencesCountBadge.style.display = "inline-flex";
+  } else {
+    elements.hiddenConferencesCountBadge.style.display = "none";
+  }
+}
+
+/**
+ * 学会の参加ステータスを変更（あり・なし・未選択）
+ * @param {string} conferenceId
+ * @param {"yes"|"no"|"none"} choice - "yes": 参加あり, "no": 参加なし(非表示), "none": 未選択
+ */
+function setConferenceAttendance(conferenceId, choice) {
+  const conf = state.events.find(e => e.id === conferenceId);
+  const confTitle = conf ? conf.title : "学会";
+
+  if (choice === "yes") {
+    // あり: 参加予定ON、非表示OFF
+    state.attendingConferences.add(conferenceId);
+    state.hiddenConferences.delete(conferenceId);
+    saveAttendingConferences();
+    saveHiddenConferences();
+    updateHiddenConferencesBadge();
+    renderEvents();
+    showToast(`✓ 「${confTitle}」を参加予定に設定しました（関連セミナーを表示中）`);
+  } else if (choice === "no") {
+    // なし: 非表示ON、参加予定OFF
+    state.attendingConferences.delete(conferenceId);
+    state.hiddenConferences.add(conferenceId);
+    saveAttendingConferences();
+    saveHiddenConferences();
+    updateHiddenConferencesBadge();
+    renderEvents();
+    // カードが消えた際、Undo可能なトーストを表示
+    showToast(`「${confTitle}」を非表示にしました`, {
+      label: "元に戻す",
+      onClick: () => {
+        unhideConference(conferenceId);
+      }
+    });
+  } else {
+    // 未選択に戻す
+    state.attendingConferences.delete(conferenceId);
+    state.hiddenConferences.delete(conferenceId);
+    saveAttendingConferences();
+    saveHiddenConferences();
+    updateHiddenConferencesBadge();
+    renderEvents();
+    showToast(`「${confTitle}」の選択を解除しました`);
+  }
+}
+
+/**
+ * 非表示にした学会を復活させる
+ * @param {string} conferenceId
+ */
+function unhideConference(conferenceId) {
+  if (!state.hiddenConferences.has(conferenceId)) return;
+  state.hiddenConferences.delete(conferenceId);
+  saveHiddenConferences();
+  updateHiddenConferencesBadge();
   renderEvents();
+  renderHiddenConferencesModal();
 
   const conf = state.events.find(e => e.id === conferenceId);
   const confTitle = conf ? conf.title : "学会";
-  if (isChecked) {
-    showToast(`✓ 「${confTitle}」を参加予定に設定しました（関連セミナーを表示中）`);
-  } else {
-    showToast(`「${confTitle}」の参加予定を解除しました（関連セミナーを非表示にしました）`);
+  showToast(`「${confTitle}」を一覧に再表示しました`);
+}
+
+/**
+ * 非表示にした学会をすべて復活
+ */
+function unhideAllConferences() {
+  if (state.hiddenConferences.size === 0) return;
+  const count = state.hiddenConferences.size;
+  state.hiddenConferences.clear();
+  saveHiddenConferences();
+  updateHiddenConferencesBadge();
+  renderEvents();
+  renderHiddenConferencesModal();
+  showToast(`${count}件の学会を一覧に再表示しました`);
+}
+
+/**
+ * 非表示学会管理モーダルのリスト描画
+ */
+function renderHiddenConferencesModal() {
+  if (!elements.hiddenConferencesList) return;
+
+  const hiddenEvents = state.events.filter(e => e.isConference && state.hiddenConferences.has(e.id));
+
+  if (hiddenEvents.length === 0) {
+    elements.hiddenConferencesList.innerHTML = `
+      <div class="hidden-empty-state">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: #94a3b8; margin: 0 auto 8px; display: block;">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <p style="text-align: center; color: #64748b; font-size: 0.9rem;">現在、非表示に設定された学会はありません。</p>
+      </div>
+    `;
+    if (elements.unhideAllBtn) elements.unhideAllBtn.style.display = "none";
+    return;
   }
+
+  if (elements.unhideAllBtn) elements.unhideAllBtn.style.display = "inline-flex";
+
+  elements.hiddenConferencesList.innerHTML = hiddenEvents.map(e => `
+    <div class="hidden-conference-item-card">
+      <div class="hidden-item-info">
+        <h4 class="hidden-item-title">${escapeHtml(e.title)}</h4>
+        <div class="hidden-item-meta">
+          <span>📅 ${escapeHtml(e.period || e.date)}</span>
+          <span>📍 ${escapeHtml(e.cityCountry || e.venue || e.region)}</span>
+        </div>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline btn-restore-conf" data-conference-id="${escapeHtml(e.id)}" title="一覧に再表示">
+        再表示
+      </button>
+    </div>
+  `).join("");
 }
 
 /**
@@ -657,6 +802,34 @@ function setupEventListeners() {
       }
     });
   }
+
+  // モーダルダイアログ (非表示にした学会の管理)
+  if (elements.openHiddenModalBtn) {
+    elements.openHiddenModalBtn.addEventListener("click", () => {
+      renderHiddenConferencesModal();
+      if (elements.hiddenModal) elements.hiddenModal.showModal();
+    });
+  }
+  if (elements.closeHiddenModalBtn) {
+    elements.closeHiddenModalBtn.addEventListener("click", () => elements.hiddenModal.close());
+  }
+  if (elements.dismissHiddenModalBtn) {
+    elements.dismissHiddenModalBtn.addEventListener("click", () => elements.hiddenModal.close());
+  }
+  if (elements.unhideAllBtn) {
+    elements.unhideAllBtn.addEventListener("click", () => {
+      unhideAllConferences();
+    });
+  }
+  if (elements.hiddenConferencesList) {
+    elements.hiddenConferencesList.addEventListener("click", (e) => {
+      const restoreBtn = e.target.closest(".btn-restore-conf");
+      if (restoreBtn) {
+        const confId = restoreBtn.getAttribute("data-conference-id");
+        if (confId) unhideConference(confId);
+      }
+    });
+  }
 }
 
 /**
@@ -777,6 +950,11 @@ function computeEffectiveScheduleStatus(event) {
  */
 function getFilteredEvents() {
   return state.events.filter(event => {
+    // 非表示にした学会の除外（「参加予定：なし」）
+    if (event.isConference && state.hiddenConferences.has(event.id)) {
+      return false;
+    }
+
     // 学会関連セミナー（ランチョン・モーニング・共催等）の表示制御:
     // parentConferenceId が設定されている場合、対応する学会が「参加予定」でなければ一覧から除外
     if (event.parentConferenceId) {
@@ -1127,24 +1305,46 @@ function createEventCardHtml(event) {
     `;
   }
 
-  // 学会参加予定ステータス
+  // 学会参加予定ステータス（あり・なし・未選択）
   const isConferenceAttending = event.isConference && state.attendingConferences.has(event.id);
+  const isConferenceHidden = event.isConference && state.hiddenConferences.has(event.id);
 
   // 学会（国内学会・海外学会）特有の表示ブロック
   let conferenceBlockHtml = "";
   if (event.isConference) {
     conferenceBlockHtml = `
       <div class="conference-special-box">
-        <!-- 参加予定チェックボックス切り替えバー -->
+        <!-- 参加予定（あり・なし 排他2択）切り替えバー -->
         <div class="conf-attendance-bar ${isConferenceAttending ? 'attending' : ''}">
-          <label class="conf-attendance-label" for="conf-cb-${escapeHtml(event.id)}">
-            <input type="checkbox" id="conf-cb-${escapeHtml(event.id)}" class="conf-attendance-checkbox" data-conference-id="${escapeHtml(event.id)}" ${isConferenceAttending ? 'checked' : ''}>
-            <span class="conf-attendance-toggle-box"></span>
-            <span class="conf-attendance-text">
-              <strong class="conf-attendance-main-text">参加予定</strong>
-              <span class="conf-attendance-hint">（チェックすると関連セミナーを一覧に表示）</span>
-            </span>
-          </label>
+          <div class="conf-attendance-label-wrap">
+            <span class="conf-attendance-main-text">参加予定:</span>
+            <span class="conf-attendance-hint">（あり：関連セミナー表示 / なし：非表示）</span>
+          </div>
+
+          <div class="conf-choice-group" role="group" aria-label="参加予定の選択">
+            <button type="button" 
+              class="conf-choice-btn choice-yes ${isConferenceAttending ? 'active' : ''}" 
+              data-action="attend-choice" 
+              data-choice="yes" 
+              data-conference-id="${escapeHtml(event.id)}" 
+              aria-pressed="${isConferenceAttending ? 'true' : 'false'}"
+              title="${isConferenceAttending ? '参加予定を解除' : '参加予定にする（関連セミナーを表示）'}">
+              <span class="choice-dot"></span>
+              <span class="choice-text">あり</span>
+            </button>
+
+            <button type="button" 
+              class="conf-choice-btn choice-no ${isConferenceHidden ? 'active' : ''}" 
+              data-action="attend-choice" 
+              data-choice="no" 
+              data-conference-id="${escapeHtml(event.id)}" 
+              aria-pressed="${isConferenceHidden ? 'true' : 'false'}"
+              title="参加しない（一覧から非表示にする）">
+              <span class="choice-dot"></span>
+              <span class="choice-text">なし</span>
+            </button>
+          </div>
+
           ${isConferenceAttending ? '<span class="conf-attending-active-tag">✓ 関連セミナー表示中</span>' : ''}
         </div>
 
@@ -1358,13 +1558,22 @@ function attachCardActionListeners() {
       calBtn.addEventListener("click", () => addToCalendar(event));
     }
 
-    // 学会カードの「参加予定」チェックボックス
-    const confAttendanceCb = card.querySelector('.conf-attendance-checkbox');
-    if (confAttendanceCb) {
-      confAttendanceCb.addEventListener("change", (e) => {
-        toggleConferenceAttendance(event.id, e.target.checked);
+    // 学会カードの「参加予定（あり・なし）」排他2択ボタン
+    const choiceButtons = card.querySelectorAll('[data-action="attend-choice"]');
+    choiceButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const choice = btn.getAttribute("data-choice");
+        const isCurrentlyYes = state.attendingConferences.has(event.id);
+
+        if (choice === "yes") {
+          // すでに「あり」なら未選択に戻す、そうでなければ「あり」へ設定
+          setConferenceAttendance(event.id, isCurrentlyYes ? "none" : "yes");
+        } else if (choice === "no") {
+          // 「なし」へ設定（一覧から非表示）
+          setConferenceAttendance(event.id, "no");
+        }
       });
-    }
+    });
   });
 }
 
@@ -1493,14 +1702,42 @@ function addToCalendar(event) {
  * トースト通知
  */
 let toastTimeout;
-function showToast(message) {
+function showToast(message, action = null) {
   clearTimeout(toastTimeout);
-  elements.toast.textContent = message;
+  if (!elements.toast) return;
+
+  elements.toast.innerHTML = "";
+
+  const textSpan = document.createElement("span");
+  textSpan.className = "toast-message";
+  textSpan.textContent = message;
+  elements.toast.appendChild(textSpan);
+
+  if (action && action.label && typeof action.onClick === "function") {
+    const actionBtn = document.createElement("button");
+    actionBtn.type = "button";
+    actionBtn.className = "toast-action-btn";
+    actionBtn.textContent = action.label;
+    actionBtn.addEventListener("click", () => {
+      action.onClick();
+      hideToast();
+    });
+    elements.toast.appendChild(actionBtn);
+  }
+
   elements.toast.classList.add("show");
 
+  const duration = action ? 5000 : 3200;
   toastTimeout = setTimeout(() => {
+    hideToast();
+  }, duration);
+}
+
+function hideToast() {
+  clearTimeout(toastTimeout);
+  if (elements.toast) {
     elements.toast.classList.remove("show");
-  }, 3200);
+  }
 }
 
 /**

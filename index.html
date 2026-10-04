@@ -167,6 +167,23 @@
             </label>
           </div>
         </section>
+
+        <!-- 非表示にした学会の管理導線 -->
+        <section class="filter-group filter-group-hidden-conferences" id="section-hidden-conferences">
+          <div class="filter-group-header">
+            <h3 class="filter-label">非表示にした学会</h3>
+            <span id="hidden-conferences-count-badge" class="badge-count" style="display: none;">0</span>
+          </div>
+          <div class="hidden-conferences-control">
+            <button type="button" id="open-hidden-modal-btn" class="btn btn-outline-nav btn-block btn-manage-hidden">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+              <span>非表示にした学会を表示・管理</span>
+            </button>
+          </div>
+        </section>
       </div>
 
       <!-- スマホ用適用バー -->
@@ -388,6 +405,37 @@
       <div class="dialog-footer">
         <button type="button" id="save-cal-settings" class="btn btn-primary">設定を保存</button>
         <button type="button" id="dismiss-cal-settings-modal" class="btn btn-secondary">キャンセル</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 非表示にした学会の管理モーダルダイアログ -->
+  <dialog id="hidden-conferences-modal" class="custom-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <div class="dialog-title-wrapper" style="color: #475569;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+          </svg>
+          <h3>非表示にした学会の管理</h3>
+        </div>
+        <button id="close-hidden-modal" class="close-btn" aria-label="閉じる">&times;</button>
+      </div>
+
+      <div class="dialog-body">
+        <p class="settings-section-desc">
+          「参加予定：なし」を選択し、一覧から非表示に設定した学会です。「再表示」を押すと、通常の学会・講演会一覧に復活します。
+        </p>
+
+        <div id="hidden-conferences-list" class="hidden-conferences-list-container">
+          <!-- JSで非表示学会一覧が動的挿入されます -->
+        </div>
+      </div>
+
+      <div class="dialog-footer">
+        <button type="button" id="unhide-all-conferences-btn" class="btn btn-outline" style="display: none;">すべて再表示</button>
+        <button type="button" id="dismiss-hidden-modal" class="btn btn-secondary">閉じる</button>
       </div>
     </div>
   </dialog>
