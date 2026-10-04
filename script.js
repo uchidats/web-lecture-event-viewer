@@ -944,13 +944,58 @@ function getAvailableEventYears() {
  */
 function getDaysUntilAbstractDeadline(event, baseDate = new Date()) {
   if (!event.isConference || !event.abstractSubmission?.deadline) return null;
-  const deadlineStr = event.abstractSubmission.deadline;
-  const isoStr = deadlineStr.includes("T") ? deadlineStr : deadlineStr.replace(" ", "T");
-  const deadlineDate = new Date(isoStr);
-  if (isNaN(deadlineDate.getTime())) return null;
+  const deadline = parseAbstractDate(event.abstractSubmission.deadline);
+  const today = parseAbstractDate(typeof baseDate === "string" ? baseDate :
+    `${baseDate.getFullYear()}-${String(baseDate.getMonth() + 1).padStart(2, "0")}-${String(baseDate.getDate()).padStart(2, "0")}`);
+  return deadline && today ? (deadline.timestamp - today.timestamp) / 86400000 : null;
+}
 
-  const diffMs = deadlineDate.getTime() - baseDate.getTime();
-  return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+// 日時付きの既存データも、締切日の暦日として比較する。
+function parseAbstractDate(value) {
+  const match = typeof value === "string" && value.match(/^(\d{4})-(\d{2})-(\d{2})(?:$|[ T])/);
+  if (!match) return null;
+  const [, year, month, day] = match.map(Number);
+  const timestamp = Date.UTC(year, month - 1, day);
+  const date = new Date(timestamp);
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return null;
+  return { year, month, day, timestamp };
+}
+
+function getAbstractSubmissionState(event, baseDate = getTodayString()) {
+  const sub = event.isConference ? event.abstractSubmission : null;
+  const days = getDaysUntilAbstractDeadline(event, baseDate);
+  const status = sub?.status === "open" && days !== null && days < 0 ? "closed" : sub?.status || "unknown";
+  const urgency = status !== "open" || days === null || days > 30 ? "normal" :
+    days === 0 ? "today" : days <= 7 ? "urgent" : "soon";
+  return { status, days, urgency, isOpen: status === "open" };
+}
+
+function matchesAbstractFilter(event, condition, baseDate = getTodayString()) {
+  const info = getAbstractSubmissionState(event, baseDate);
+  if (!info.isOpen) return false;
+  if (condition === "open") return true;
+  const limit = condition === "deadline_30d" ? 30 : condition === "deadline_7d" ? 7 : null;
+  return limit !== null && info.days !== null && info.days >= 0 && info.days <= limit;
+}
+
+function renderAbstractSubmissionHtml(event, baseDate = getTodayString()) {
+  const sub = event.abstractSubmission;
+  if (!sub) return `<span class="deadline-highlight">${escapeHtml(event.abstractDeadline || "要確認")}</span>`;
+  const info = getAbstractSubmissionState(event, baseDate);
+  const labels = { open: "演題募集中", upcoming: "演題募集予定", closed: "演題募集終了" };
+  const date = parseAbstractDate(sub.deadline);
+  const today = parseAbstractDate(baseDate);
+  const deadlineLabel = date ? `${date.year !== today?.year ? date.year + "/" : ""}${date.month}/${date.day}` : sub.deadline;
+  const parts = [];
+  if (labels[info.status]) parts.push(`<span class="abstract-status-tag ${info.status}">${labels[info.status]}</span>`);
+  if (deadlineLabel) parts.push(`<span class="deadline-highlight">演題締切 ${escapeHtml(deadlineLabel)}</span>`);
+  if (info.isOpen && info.days !== null) {
+    const text = info.days === 0 ? "本日締切" : `${info.urgency === "urgent" ? "締切間近・" : info.urgency === "soon" ? "注意・" : ""}締切まで${info.days}日`;
+    parts.push(`<span class="abstract-status-tag ${info.urgency}">${text}</span>`);
+  }
+  if (info.status === "upcoming" && sub.startDate) parts.push(`<span class="abstract-start-date">募集開始予定 ${escapeHtml(sub.startDate)}</span>`);
+  if (sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link">${info.isOpen ? "演題登録" : "演題募集詳細"} ↗</a>`);
+  return parts.join(" ") || '<span class="abstract-unknown">演題募集情報未確認</span>';
 }
 
 /**
@@ -1005,18 +1050,10 @@ function renderFilterOptions() {
   // 2. 演題募集フィルター（学会特有：募集中、30日以内、7日以内）
   const abstractContainer = document.getElementById("filter-abstractStatus");
   if (abstractContainer) {
-    const now = new Date();
-    const openCount = state.events.filter(e => e.isConference && e.abstractSubmission?.status === "open").length;
-    const d30Count = state.events.filter(e => {
-      if (!e.isConference || e.abstractSubmission?.status !== "open") return false;
-      const days = getDaysUntilAbstractDeadline(e, now);
-      return days !== null && days >= 0 && days <= 30;
-    }).length;
-    const d7Count = state.events.filter(e => {
-      if (!e.isConference || e.abstractSubmission?.status !== "open") return false;
-      const days = getDaysUntilAbstractDeadline(e, now);
-      return days !== null && days >= 0 && days <= 7;
-    }).length;
+    const today = getTodayString();
+    const openCount = state.events.filter(e => matchesAbstractFilter(e, "open", today)).length;
+    const d30Count = state.events.filter(e => matchesAbstractFilter(e, "deadline_30d", today)).length;
+    const d7Count = state.events.filter(e => matchesAbstractFilter(e, "deadline_7d", today)).length;
 
     const abstractOptions = [
       { value: "open", label: "🟢 演題募集中", count: openCount },
@@ -1452,29 +1489,7 @@ function getFilteredEvents() {
 
     // 演題募集フィルター (学会対象: 複数選択時はOR、未選択時は全件)
     if (state.filters.abstractStatus.size > 0) {
-      if (!event.isConference || !event.abstractSubmission) {
-        return false;
-      }
-
-      const sub = event.abstractSubmission;
-      const daysLeft = getDaysUntilAbstractDeadline(event);
-
-      let matched = false;
-      state.filters.abstractStatus.forEach(cond => {
-        if (cond === "open") {
-          if (sub.status === "open") matched = true;
-        } else if (cond === "deadline_30d") {
-          if (sub.status === "open" && daysLeft !== null && daysLeft >= 0 && daysLeft <= 30) {
-            matched = true;
-          }
-        } else if (cond === "deadline_7d") {
-          if (sub.status === "open" && daysLeft !== null && daysLeft >= 0 && daysLeft <= 7) {
-            matched = true;
-          }
-        }
-      });
-
-      if (!matched) return false;
+      if (![...state.filters.abstractStatus].some(condition => matchesAbstractFilter(event, condition, todayStr))) return false;
     }
 
     // 開催形式
@@ -1873,33 +1888,9 @@ function createEventCardHtml(event) {
         ` : ''}
         <div class="conf-deadlines-row">
           <div class="conf-item">
-            <span class="conf-label">演題登録締切:</span>
+            <span class="conf-label">演題募集:</span>
             <span class="conf-val conf-abstract-deadline-val">
-              ${(() => {
-                const sub = event.abstractSubmission;
-                if (!sub) return `<span class="deadline-highlight">${escapeHtml(event.abstractDeadline || "要確認")}</span>`;
-                if (sub.status === "open") {
-                  const daysLeft = getDaysUntilAbstractDeadline(event);
-                  let daysTag = '<span class="abstract-status-tag open">🟢 募集中</span>';
-                  if (daysLeft !== null) {
-                    if (daysLeft <= 7) {
-                      daysTag = `<span class="abstract-status-tag urgent">🔥 あと${daysLeft}日</span>`;
-                    } else if (daysLeft <= 30) {
-                      daysTag = `<span class="abstract-status-tag soon">⏱️ あと${daysLeft}日</span>`;
-                    }
-                  }
-                  return `
-                    <span class="deadline-highlight">${escapeHtml(sub.deadline || event.abstractDeadline)}</span>
-                    ${daysTag}
-                    ${sub.url ? `<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link">要項・応募 ↗</a>` : ""}
-                  `;
-                } else if (sub.status === "closed") {
-                  return `<span class="deadline-highlight closed">${escapeHtml(sub.deadline || event.abstractDeadline || "締切済")}</span>`;
-                } else if (sub.status === "upcoming") {
-                  return `<span class="deadline-highlight upcoming">${escapeHtml(sub.startDate ? sub.startDate + "〜 募集開始予定" : "募集開始前")}</span>`;
-                }
-                return `<span class="deadline-highlight">${escapeHtml(event.abstractDeadline || "要確認")}</span>`;
-              })()}
+              ${renderAbstractSubmissionHtml(event)}
             </span>
           </div>
           <div class="conf-item">

@@ -1409,6 +1409,38 @@ button, input, select, textarea {
   align-items: center;
   gap: 6px;
   flex-wrap: wrap;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.conf-deadlines-row > .conf-item {
+  min-width: 0;
+}
+
+.abstract-status-tag.normal,
+.abstract-status-tag.upcoming {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.abstract-status-tag.closed {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+.abstract-status-tag.today {
+  background: #991b1b;
+  color: #ffffff;
+  border: 2px solid #7f1d1d;
+  font-size: 0.8rem;
+}
+
+.abstract-start-date,
+.abstract-unknown {
+  color: #64748b;
+  font-size: 0.75rem;
 }
 
 .abstract-status-tag {
@@ -1444,9 +1476,30 @@ button, input, select, textarea {
   font-weight: 600;
   color: var(--primary);
   text-decoration: underline;
-  padding: 1px 4px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 6px 10px;
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
   border-radius: var(--radius-sm);
   white-space: nowrap;
+}
+
+.abstract-submit-link:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  .conf-abstract-deadline-val {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .abstract-submit-link {
+    min-height: 44px;
+  }
 }
 
 .abstract-submit-link:hover {
