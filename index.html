@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OphthaHub | 眼科医向け 講演会・学会ファインダー</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-logo">
+          <!-- Eye icon -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">OphthaHub</span>
+          <span class="brand-subtitle">眼科医専用 講演会・学会・研究会検索</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="calendar-settings-btn" class="btn btn-outline-nav" title="カレンダー連携設定を開く">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          <span>カレンダー連携設定</span>
+          <span id="calendar-settings-indicator" class="setting-active-pill">Google</span>
+        </button>
+        <button id="toggle-registered-filter" class="btn btn-outline-nav" title="カレンダー登録済みのみ表示">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+            <path d="m9 16 2 2 4-4"></path>
+          </svg>
+          <span>登録済み一覧</span>
+          <span id="registered-badge-count" class="badge-count">0</span>
+        </button>
+        <button id="mobile-filter-btn" class="btn btn-primary mobile-only" aria-label="絞り込みフィルターを開く">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+          </svg>
+          <span>条件で絞り込む</span>
+          <span id="mobile-active-filter-indicator" class="active-dot"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-layout">
+    <!-- サイドバー：検索・即時絞り込みパネル（片道GOビューア風UI） -->
+    <aside id="filter-sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title-row">
+          <h2 class="sidebar-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+            </svg>
+            絞り込み条件
+          </h2>
+          <button id="reset-filter-btn" class="btn-text" title="条件を全クリア">すべて解除</button>
+          <button id="close-mobile-filter" class="close-btn mobile-only" aria-label="閉じる">&times;</button>
+        </div>
+        
+        <!-- フリーワード検索 -->
+        <div class="search-input-wrapper">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="keyword-search" placeholder="演題・講師・主催・単位・薬剤名など…" autocomplete="off">
+          <button id="clear-search-btn" class="clear-icon" aria-label="クリア" style="display: none;">&times;</button>
+        </div>
+      </div>
+
+      <div class="sidebar-body">
+        <!-- 専門領域 (網膜・硝子体, 緑内障, 白内障, etc.) -->
+        <section class="filter-group">
+          <div class="filter-group-header">
+            <h3 class="filter-label">専門領域</h3>
+            <span class="group-select-all" data-target="specialty">全選択</span>
+          </div>
+          <div class="chip-checkbox-grid" id="filter-specialty"></div>
+        </section>
+
+        <!-- イベント種別 (講演会・勉強会, 国内学会, 海外学会, 地方会・研究会) -->
+        <section class="filter-group">
+          <div class="filter-group-header">
+            <h3 class="filter-label">イベント種別</h3>
+            <span class="group-select-all" data-target="eventType">全選択</span>
+          </div>
+          <div class="chip-checkbox-grid" id="filter-eventType"></div>
+        </section>
+
+        <!-- 開催形式 (Web, 現地, ハイブリッド) -->
+        <section class="filter-group">
+          <div class="filter-group-header">
+            <h3 class="filter-label">開催形式</h3>
+            <span class="group-select-all" data-target="format">全選択</span>
+          </div>
+          <div class="chip-checkbox-grid" id="filter-format"></div>
+        </section>
+
+        <!-- 地域 (全国Web, 北海道, 東北, 関東, 中部, 関西, 中国, 四国, 九州・沖縄, 海外) -->
+        <section class="filter-group">
+          <div class="filter-group-header">
+            <h3 class="filter-label">地域</h3>
+            <span class="group-select-all" data-target="region">全選択</span>
+          </div>
+          <div class="chip-checkbox-grid" id="filter-region"></div>
+        </section>
+
+        <!-- 予定重複・カレンダー空き状況（ユーザー自身のスケジュール） -->
+        <section class="filter-group">
+          <div class="filter-group-header">
+            <h3 class="filter-label">予定の空き状況</h3>
+            <span class="schedule-sync-hint">Google / iCloud連携 (模擬)</span>
+          </div>
+          <div class="checkbox-list" id="filter-scheduleStatus">
+            <label class="custom-checkbox-row">
+              <input type="checkbox" name="scheduleStatus" value="free" checked>
+              <span class="status-dot-circle dot-free"></span>
+              <span class="checkbox-text">🟢 空きあり</span>
+            </label>
+            <label class="custom-checkbox-row">
+              <input type="checkbox" name="scheduleStatus" value="partial_conflict" checked>
+              <span class="status-dot-circle dot-partial"></span>
+              <span class="checkbox-text">🟡 一部重複</span>
+            </label>
+            <label class="custom-checkbox-row">
+              <input type="checkbox" name="scheduleStatus" value="conflict" checked>
+              <span class="status-dot-circle dot-conflict"></span>
+              <span class="checkbox-text">🔴 重複</span>
+            </label>
+            <label class="custom-checkbox-row">
+              <input type="checkbox" name="scheduleStatus" value="registered" checked>
+              <span class="status-dot-circle dot-registered"></span>
+              <span class="checkbox-text">✓ カレンダー登録済み</span>
+            </label>
+          </div>
+        </section>
+      </div>
+
+      <!-- スマホ用適用バー -->
+      <div class="sidebar-footer mobile-only">
+        <button id="apply-mobile-filter" class="btn btn-primary btn-block">
+          条件を適用して見る (<span id="mobile-result-count">0</span>件)
+        </button>
+      </div>
+    </aside>
+
+    <!-- モバイル用背景オーバーレイ -->
+    <div id="filter-backdrop" class="modal-backdrop"></div>
+
+    <!-- メインコンテンツ：カードリスト一覧 -->
+    <section class="content-area">
+      <!-- バー情報：ヒット件数、ソート順、アクティブタグ -->
+      <div class="content-header-bar">
+        <div class="results-meta">
+          <h1 class="results-title">眼科 講演会・学会・研究会一覧</h1>
+          <div class="results-count-container">
+            該当 <span id="event-count" class="count-highlight">0</span> 件
+            <span id="registered-only-badge" class="filter-chip-tag" style="display: none;">
+              ✓ カレンダー登録済みのみ表示中
+              <button id="clear-registered-filter" class="tag-close">&times;</button>
+            </span>
+          </div>
+        </div>
+
+        <div class="sort-selector-wrapper">
+          <label for="sort-select" class="sort-label">並び順:</label>
+          <select id="sort-select" class="sort-select">
+            <option value="date-asc">開催日 (近い順)</option>
+            <option value="date-desc">開催日 (遠い順)</option>
+            <option value="title-asc">イベント名 (50音順)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- アクティブフィルタータグ一覧 -->
+      <div id="active-filter-chips" class="active-chips-bar"></div>
+
+      <!-- イベントカードグリッド -->
+      <div id="event-list" class="event-cards-grid">
+        <!-- JSでイベントカードが挿入されます -->
+      </div>
+
+      <!-- 該当なし時の空表示 -->
+      <div id="empty-state" class="empty-state" style="display: none;">
+        <div class="empty-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
+        <h3 class="empty-title">条件に合致する眼科講演会・学会が見つかりませんでした</h3>
+        <p class="empty-desc">検索条件を広げるか、キーワードや空き状況の選択を変更してお試しください。</p>
+        <button id="empty-reset-btn" class="btn btn-secondary">絞り込み条件をリセット</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- 案内PDFプレビュー用モーダルダイアログ -->
+  <dialog id="pdf-modal" class="custom-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <div class="dialog-title-wrapper">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <h3 id="pdf-modal-title">案内状 / 抄録プログラムPDF</h3>
+        </div>
+        <button id="close-pdf-modal" class="close-btn" aria-label="閉じる">&times;</button>
+      </div>
+      <div class="dialog-body" id="pdf-modal-body">
+        <!-- 案内状シミュレーション表示 -->
+      </div>
+      <div class="dialog-footer">
+        <button id="download-mock-pdf" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          PDFをダウンロード
+        </button>
+        <button id="dismiss-pdf-modal" class="btn btn-secondary">閉じる</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- カレンダー連携設定モーダルダイアログ -->
+  <dialog id="calendar-settings-modal" class="custom-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <div class="dialog-title-wrapper" style="color: #0284c7;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+            <circle cx="12" cy="14" r="2"></circle>
+          </svg>
+          <h3>カレンダー連携設定</h3>
+        </div>
+        <button id="close-cal-settings-modal" class="close-btn" aria-label="閉じる">&times;</button>
+      </div>
+
+      <div class="dialog-body">
+        <form id="calendar-settings-form" class="settings-form">
+          <!-- セクション1: 利用するカレンダー -->
+          <section class="settings-section">
+            <h4 class="settings-section-title">
+              1. 利用するカレンダー（空き状況の判定元）
+            </h4>
+            <p class="settings-section-desc">
+              将来的に本人の予定を照合し、「🟢 空きあり」「🟡 一部重複」「🔴 重複」を自動判定するために連携するカレンダーを選択します。
+            </p>
+
+            <div class="settings-radio-group">
+              <label class="settings-radio-card">
+                <input type="radio" name="connectedCalendar" value="google" checked>
+                <div class="radio-card-body">
+                  <div class="radio-card-header">
+                    <span class="service-icon google">G</span>
+                    <strong>Google Calendar</strong>
+                  </div>
+                  <span class="radio-card-desc">Googleアカウントの予定と照合します</span>
+                </div>
+              </label>
+
+              <label class="settings-radio-card">
+                <input type="radio" name="connectedCalendar" value="icloud">
+                <div class="radio-card-body">
+                  <div class="radio-card-header">
+                    <span class="service-icon icloud">🍎</span>
+                    <strong>Apple / iCloud Calendar</strong>
+                  </div>
+                  <span class="radio-card-desc">Apple/iCloudカレンダーの予定と照合します</span>
+                </div>
+              </label>
+
+              <label class="settings-radio-card">
+                <input type="radio" name="connectedCalendar" value="both">
+                <div class="radio-card-body">
+                  <div class="radio-card-header">
+                    <span class="service-icon both">G+🍎</span>
+                    <strong>Google + iCloud の両方</strong>
+                    <span class="badge-recommend">推奨</span>
+                  </div>
+                  <span class="radio-card-desc">両方の予定を統合・照合して空き状況を判定します</span>
+                </div>
+              </label>
+
+              <label class="settings-radio-card">
+                <input type="radio" name="connectedCalendar" value="none">
+                <div class="radio-card-body">
+                  <div class="radio-card-header">
+                    <span class="service-icon none">✕</span>
+                    <strong>連携しない</strong>
+                  </div>
+                  <span class="radio-card-desc">予定との重複判定を行わず、手動追加のみ利用します</span>
+                </div>
+              </label>
+            </div>
+          </section>
+
+          <!-- セクション2: 既定の追加先 -->
+          <section class="settings-section">
+            <h4 class="settings-section-title">
+              2. 講演会をカレンダーに追加する際の既定の追加先
+            </h4>
+            <p class="settings-section-desc">
+              各カードの「カレンダーに追加」ボタンを押した際のアクションを設定します。
+            </p>
+
+            <div class="settings-radio-group">
+              <label class="settings-radio-card compact">
+                <input type="radio" name="defaultDestination" value="google">
+                <div class="radio-card-body">
+                  <div class="radio-card-header">
+                    <span class="service-icon google">G</span>
+                    <strong>Google Calendar</strong>
+                  </div>
+                  <span class="radio-card-desc">直接Googleカレンダーの予定登録画面を開きます</span>
+                </div>
+              </label>
+
+              <label class="settings-radio-card compact">
+                <input type="radio" name="defaultDestination" value="icloud">
+                <div class="radio-card-body">
+                  <div class="radio-card-header">
+                    <span class="service-icon icloud">🍎</span>
+                    <strong>iCloud Calendar</strong>
+                  </div>
+                  <span class="radio-card-desc">標準ICSファイルをダウンロードして取り込みます</span>
+                </div>
+              </label>
+
+              <label class="settings-radio-card compact">
+                <input type="radio" name="defaultDestination" value="ask" checked>
+                <div class="radio-card-body">
+                  <div class="radio-card-header">
+                    <span class="service-icon ask">?</span>
+                    <strong>毎回選択する</strong>
+                  </div>
+                  <span class="radio-card-desc">Googleカレンダー登録またはICSダウンロードを選択できます</span>
+                </div>
+              </label>
+            </div>
+          </section>
+        </form>
+      </div>
+
+      <div class="dialog-footer">
+        <button type="button" id="save-cal-settings" class="btn btn-primary">設定を保存</button>
+        <button type="button" id="dismiss-cal-settings-modal" class="btn btn-secondary">キャンセル</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- トースト通知 -->
+  <div id="toast-notification" class="toast"></div>
+
+  <!-- スクリプト読み込み -->
+  <script src="events.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
