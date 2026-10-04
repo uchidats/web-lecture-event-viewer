@@ -1402,36 +1402,44 @@ button, input, select, textarea {
     grid-column: 1 / 2;
     width: 100%;
     min-width: 0;
-    padding: 8px 6px;
-    font-size: 0.78rem;
+    padding: 7px 6px;
+    font-size: 0.74rem;
     justify-content: center;
+    gap: 4px;
+    white-space: nowrap;
   }
 
   .header-actions #calendar-settings-btn span:first-of-type {
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: visible;
+    text-overflow: clip;
+    flex-shrink: 0;
   }
 
   .header-actions #calendar-settings-btn .setting-active-pill {
     flex-shrink: 0;
-    font-size: 0.68rem;
-    padding: 1px 6px;
+    font-size: 0.65rem;
+    padding: 1px 5px;
+    margin-left: 2px;
+    white-space: nowrap;
   }
 
   .header-actions #toggle-registered-filter {
     grid-column: 2 / 3;
     width: 100%;
     min-width: 0;
-    padding: 8px 6px;
-    font-size: 0.78rem;
+    padding: 7px 6px;
+    font-size: 0.74rem;
     justify-content: center;
+    gap: 4px;
+    white-space: nowrap;
   }
 
   .header-actions #toggle-registered-filter span:first-of-type {
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: visible;
+    text-overflow: clip;
+    flex-shrink: 0;
   }
 
   .header-actions #mobile-filter-btn {
@@ -1614,30 +1622,32 @@ button, input, select, textarea {
 
   .header-actions #calendar-settings-btn,
   .header-actions #toggle-registered-filter {
-    padding: 7px 4px;
-    font-size: 0.74rem;
-    gap: 4px;
+    padding: 7px 3px;
+    font-size: 0.70rem;
+    gap: 3px;
+    letter-spacing: -0.02em;
   }
 
   .header-actions #calendar-settings-btn svg,
   .header-actions #toggle-registered-filter svg {
-    width: 14px;
-    height: 14px;
+    width: 13px;
+    height: 13px;
     flex-shrink: 0;
   }
 
   .header-actions #calendar-settings-btn .setting-active-pill {
     padding: 1px 4px;
-    font-size: 0.65rem;
+    font-size: 0.60rem;
     margin-left: 2px;
+    border-radius: var(--radius-sm);
   }
 
   .badge-count {
-    margin-left: 3px;
+    margin-left: 2px;
     padding: 0 4px;
-    min-width: 18px;
-    height: 18px;
-    font-size: 0.68rem;
+    min-width: 17px;
+    height: 17px;
+    font-size: 0.65rem;
   }
 
   .date-badge {
