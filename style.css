@@ -250,6 +250,25 @@ button, input, select, textarea {
   background: var(--primary-light);
 }
 
+.settings-radio-card.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+.settings-radio-card.disabled input[type="radio"] {
+  cursor: not-allowed;
+}
+
+.settings-section.disabled .settings-section-title {
+  color: #94a3b8;
+}
+
+.settings-section.disabled .settings-section-desc {
+  color: #cbd5e1;
+}
+
 .radio-card-body {
   display: flex;
   flex-direction: column;

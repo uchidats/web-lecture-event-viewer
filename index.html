@@ -273,8 +273,8 @@
             </p>
 
             <div class="settings-radio-group">
-              <label class="settings-radio-card">
-                <input type="radio" name="connectedCalendar" value="google" checked>
+              <label class="settings-radio-card" id="card-provider-google">
+                <input type="radio" name="calendarProvider" value="google" checked>
                 <div class="radio-card-body">
                   <div class="radio-card-header">
                     <span class="service-icon google">G</span>
@@ -284,8 +284,8 @@
                 </div>
               </label>
 
-              <label class="settings-radio-card">
-                <input type="radio" name="connectedCalendar" value="icloud">
+              <label class="settings-radio-card" id="card-provider-icloud">
+                <input type="radio" name="calendarProvider" value="icloud">
                 <div class="radio-card-body">
                   <div class="radio-card-header">
                     <span class="service-icon icloud">🍎</span>
@@ -295,8 +295,8 @@
                 </div>
               </label>
 
-              <label class="settings-radio-card">
-                <input type="radio" name="connectedCalendar" value="both">
+              <label class="settings-radio-card" id="card-provider-both">
+                <input type="radio" name="calendarProvider" value="both">
                 <div class="radio-card-body">
                   <div class="radio-card-header">
                     <span class="service-icon both">G+🍎</span>
@@ -307,8 +307,8 @@
                 </div>
               </label>
 
-              <label class="settings-radio-card">
-                <input type="radio" name="connectedCalendar" value="none">
+              <label class="settings-radio-card" id="card-provider-none">
+                <input type="radio" name="calendarProvider" value="none">
                 <div class="radio-card-body">
                   <div class="radio-card-header">
                     <span class="service-icon none">✕</span>
@@ -321,17 +321,17 @@
           </section>
 
           <!-- セクション2: 既定の追加先 -->
-          <section class="settings-section">
+          <section class="settings-section" id="section-default-destination">
             <h4 class="settings-section-title">
-              2. 講演会をカレンダーに追加する際の既定の追加先
+              2. 講演会を追加する既定のカレンダー
             </h4>
-            <p class="settings-section-desc">
+            <p class="settings-section-desc" id="default-dest-desc">
               各カードの「カレンダーに追加」ボタンを押した際のアクションを設定します。
             </p>
 
-            <div class="settings-radio-group">
-              <label class="settings-radio-card compact">
-                <input type="radio" name="defaultDestination" value="google">
+            <div class="settings-radio-group" id="group-default-destination">
+              <label class="settings-radio-card compact" id="card-dest-google">
+                <input type="radio" name="defaultCalendar" value="google">
                 <div class="radio-card-body">
                   <div class="radio-card-header">
                     <span class="service-icon google">G</span>
@@ -341,8 +341,8 @@
                 </div>
               </label>
 
-              <label class="settings-radio-card compact">
-                <input type="radio" name="defaultDestination" value="icloud">
+              <label class="settings-radio-card compact" id="card-dest-icloud">
+                <input type="radio" name="defaultCalendar" value="icloud">
                 <div class="radio-card-body">
                   <div class="radio-card-header">
                     <span class="service-icon icloud">🍎</span>
@@ -352,8 +352,8 @@
                 </div>
               </label>
 
-              <label class="settings-radio-card compact">
-                <input type="radio" name="defaultDestination" value="ask" checked>
+              <label class="settings-radio-card compact" id="card-dest-ask">
+                <input type="radio" name="defaultCalendar" value="ask" checked>
                 <div class="radio-card-body">
                   <div class="radio-card-header">
                     <span class="service-icon ask">?</span>

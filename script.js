@@ -18,8 +18,8 @@ let state = {
   sortBy: "date-asc",
   // カレンダー連携設定 (localStorage永続化)
   calendarSettings: {
-    connectedCalendar: "google", // "google", "icloud", "both", "none"
-    defaultDestination: "ask"    // "google", "icloud", "ask"
+    calendarProvider: "both", // "google", "icloud", "both", "none"
+    defaultCalendar: "ask"    // "google", "icloud", "ask"
   }
 };
 
@@ -125,41 +125,153 @@ function loadCalendarSettings() {
     const saved = localStorage.getItem(CALENDAR_SETTINGS_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (parsed.connectedCalendar) state.calendarSettings.connectedCalendar = parsed.connectedCalendar;
-      if (parsed.defaultDestination) state.calendarSettings.defaultDestination = parsed.defaultDestination;
+      // 新旧フォーマット両対応
+      const provider = parsed.calendarProvider || parsed.connectedCalendar;
+      const destination = parsed.defaultCalendar || parsed.defaultDestination;
+
+      if (provider) state.calendarSettings.calendarProvider = provider;
+      if (destination) state.calendarSettings.defaultCalendar = destination;
     }
   } catch (e) {
     console.warn("Failed to load calendar settings from localStorage:", e);
   }
+  // 不整合があれば補正
+  sanitizeCalendarSettings();
   updateSettingsIndicator();
 }
 
 /**
+ * 選択状態の整合性チェック・補正
+ * - none: 既定の追加先は選択不可
+ * - google: defaultは google または ask
+ * - icloud: defaultは icloud または ask
+ */
+function sanitizeCalendarSettings() {
+  const p = state.calendarSettings.calendarProvider;
+  const d = state.calendarSettings.defaultCalendar;
+
+  if (p === "google" && d === "icloud") {
+    state.calendarSettings.defaultCalendar = "google";
+  } else if (p === "icloud" && d === "google") {
+    state.calendarSettings.defaultCalendar = "icloud";
+  }
+}
+
+/**
  * ヘッダーの設定ボタン横のインジケーター表示を更新
+ * 例：
+ * - Google連携
+ * - iCloud連携
+ * - Google + iCloud
+ * - 未連携
  */
 function updateSettingsIndicator() {
   if (!elements.calendarSettingsIndicator) return;
 
   const labels = {
-    google: "Google",
-    icloud: "iCloud",
-    both: "Google+iCloud",
-    none: "連携なし"
+    google: "Google連携",
+    icloud: "iCloud連携",
+    both: "Google + iCloud",
+    none: "未連携"
   };
 
-  const current = state.calendarSettings.connectedCalendar || "google";
-  elements.calendarSettingsIndicator.textContent = labels[current] || "Google";
+  const current = state.calendarSettings.calendarProvider || "both";
+  elements.calendarSettingsIndicator.textContent = labels[current] || "Google + iCloud";
 
-  // 「連携なし」の時はスタイル微調整
   if (current === "none") {
-    elements.calendarSettingsIndicator.style.background = "#f1f5f9";
-    elements.calendarSettingsIndicator.style.color = "#64748b";
+    elements.calendarSettingsIndicator.style.background = "#fee2e2";
+    elements.calendarSettingsIndicator.style.color = "#b91c1c";
   } else if (current === "both") {
     elements.calendarSettingsIndicator.style.background = "#ede9fe";
     elements.calendarSettingsIndicator.style.color = "#7c3aed";
+  } else if (current === "google") {
+    elements.calendarSettingsIndicator.style.background = "#e0f2fe";
+    elements.calendarSettingsIndicator.style.color = "#0369a1";
   } else {
-    elements.calendarSettingsIndicator.style.background = "var(--primary-light)";
-    elements.calendarSettingsIndicator.style.color = "var(--primary)";
+    elements.calendarSettingsIndicator.style.background = "#f1f5f9";
+    elements.calendarSettingsIndicator.style.color = "#334155";
+  }
+}
+
+/**
+ * モーダル内の「既定の追加先」選択肢の有効/無効・グレーアウト状態を更新
+ */
+function updateDestinationOptionsInteractivity(provider) {
+  const form = elements.calendarSettingsForm;
+  if (!form) return;
+
+  const sectionDest = document.getElementById("section-default-destination");
+  const cardDestGoogle = document.getElementById("card-dest-google");
+  const cardDestIcloud = document.getElementById("card-dest-icloud");
+  const cardDestAsk = document.getElementById("card-dest-ask");
+
+  const inputGoogle = cardDestGoogle ? cardDestGoogle.querySelector('input[type="radio"]') : null;
+  const inputIcloud = cardDestIcloud ? cardDestIcloud.querySelector('input[type="radio"]') : null;
+  const inputAsk = cardDestAsk ? cardDestAsk.querySelector('input[type="radio"]') : null;
+
+  if (provider === "none") {
+    // 連携しない場合: 既定の追加先をすべて無効化・グレーアウト
+    if (sectionDest) sectionDest.classList.add("disabled");
+
+    [cardDestGoogle, cardDestIcloud, cardDestAsk].forEach(card => card && card.classList.add("disabled"));
+    [inputGoogle, inputIcloud, inputAsk].forEach(input => {
+      if (input) {
+        input.disabled = true;
+        input.checked = false;
+      }
+    });
+  } else {
+    if (sectionDest) sectionDest.classList.remove("disabled");
+
+    if (provider === "google") {
+      // Google Calendarのみ: iCloudを選択不可
+      if (cardDestGoogle) cardDestGoogle.classList.remove("disabled");
+      if (inputGoogle) inputGoogle.disabled = false;
+
+      if (cardDestIcloud) cardDestIcloud.classList.add("disabled");
+      if (inputIcloud) {
+        inputIcloud.disabled = true;
+        if (inputIcloud.checked) {
+          if (inputGoogle) inputGoogle.checked = true;
+        }
+      }
+
+      if (cardDestAsk) cardDestAsk.classList.remove("disabled");
+      if (inputAsk) inputAsk.disabled = false;
+
+      // 何も選択されていなければGoogleを選択
+      if (!inputGoogle?.checked && !inputAsk?.checked) {
+        if (inputGoogle) inputGoogle.checked = true;
+      }
+    } else if (provider === "icloud") {
+      // iCloudのみ: Googleを選択不可
+      if (cardDestIcloud) cardDestIcloud.classList.remove("disabled");
+      if (inputIcloud) inputIcloud.disabled = false;
+
+      if (cardDestGoogle) cardDestGoogle.classList.add("disabled");
+      if (inputGoogle) {
+        inputGoogle.disabled = true;
+        if (inputGoogle.checked) {
+          if (inputIcloud) inputIcloud.checked = true;
+        }
+      }
+
+      if (cardDestAsk) cardDestAsk.classList.remove("disabled");
+      if (inputAsk) inputAsk.disabled = false;
+
+      // 何も選択されていなければiCloudを選択
+      if (!inputIcloud?.checked && !inputAsk?.checked) {
+        if (inputIcloud) inputIcloud.checked = true;
+      }
+    } else if (provider === "both") {
+      // 両方: Google / iCloud / 毎回選択する すべて選択可能
+      [cardDestGoogle, cardDestIcloud, cardDestAsk].forEach(card => card && card.classList.remove("disabled"));
+      [inputGoogle, inputIcloud, inputAsk].forEach(input => input && (input.disabled = false));
+
+      if (!inputGoogle?.checked && !inputIcloud?.checked && !inputAsk?.checked) {
+        if (inputAsk) inputAsk.checked = true;
+      }
+    }
   }
 }
 
@@ -167,15 +279,22 @@ function updateSettingsIndicator() {
  * カレンダー連携設定モーダルを開く
  */
 function openCalendarSettingsModal() {
-  // 現在のstate値をフォームのラジオボタンに反映
   const form = elements.calendarSettingsForm;
   if (!form) return;
 
-  const connRadio = form.querySelector(`input[name="connectedCalendar"][value="${state.calendarSettings.connectedCalendar}"]`);
-  if (connRadio) connRadio.checked = true;
+  const currentProvider = state.calendarSettings.calendarProvider || "both";
+  const currentDest = state.calendarSettings.defaultCalendar || "ask";
 
-  const destRadio = form.querySelector(`input[name="defaultDestination"][value="${state.calendarSettings.defaultDestination}"]`);
+  // プロバイダーラジオ反映
+  const provRadio = form.querySelector(`input[name="calendarProvider"][value="${currentProvider}"]`);
+  if (provRadio) provRadio.checked = true;
+
+  // 追加先ラジオ反映
+  const destRadio = form.querySelector(`input[name="defaultCalendar"][value="${currentDest}"]`);
   if (destRadio) destRadio.checked = true;
+
+  // 選択肢の無効・有効化状態を更新
+  updateDestinationOptionsInteractivity(currentProvider);
 
   elements.calendarSettingsModal.showModal();
 }
@@ -187,14 +306,31 @@ function saveCalendarSettings() {
   const form = elements.calendarSettingsForm;
   if (!form) return;
 
-  const selectedConn = form.querySelector('input[name="connectedCalendar"]:checked');
-  const selectedDest = form.querySelector('input[name="defaultDestination"]:checked');
+  const selectedProv = form.querySelector('input[name="calendarProvider"]:checked');
+  const selectedDest = form.querySelector('input[name="defaultCalendar"]:checked');
 
-  if (selectedConn) state.calendarSettings.connectedCalendar = selectedConn.value;
-  if (selectedDest) state.calendarSettings.defaultDestination = selectedDest.value;
+  const provider = selectedProv ? selectedProv.value : "both";
+  let defaultCal = "ask";
+
+  if (provider === "none") {
+    defaultCal = "ask"; // 連携しない場合はaskを規定値とする
+  } else if (selectedDest && !selectedDest.disabled) {
+    defaultCal = selectedDest.value;
+  } else {
+    // 選択肢がdisabledだった場合のフォールバック
+    if (provider === "google") defaultCal = "google";
+    else if (provider === "icloud") defaultCal = "icloud";
+    else defaultCal = "ask";
+  }
+
+  state.calendarSettings.calendarProvider = provider;
+  state.calendarSettings.defaultCalendar = defaultCal;
 
   try {
-    localStorage.setItem(CALENDAR_SETTINGS_KEY, JSON.stringify(state.calendarSettings));
+    localStorage.setItem(CALENDAR_SETTINGS_KEY, JSON.stringify({
+      calendarProvider: state.calendarSettings.calendarProvider,
+      defaultCalendar: state.calendarSettings.defaultCalendar
+    }));
   } catch (e) {
     console.warn("Failed to save calendar settings to localStorage:", e);
   }
@@ -202,13 +338,13 @@ function saveCalendarSettings() {
   updateSettingsIndicator();
   elements.calendarSettingsModal.close();
 
-  const connLabels = {
+  const providerLabels = {
     google: "Google Calendar",
     icloud: "Apple / iCloud Calendar",
     both: "Google + iCloud の両方",
     none: "連携しない"
   };
-  showToast(`⚙️ カレンダー設定を保存しました (${connLabels[state.calendarSettings.connectedCalendar]})`);
+  showToast(`⚙️ カレンダー設定を保存しました (${providerLabels[provider]})`);
 }
 
 /**
@@ -369,6 +505,15 @@ function setupEventListeners() {
   }
   if (elements.saveCalSettingsBtn) {
     elements.saveCalSettingsBtn.addEventListener("click", saveCalendarSettings);
+  }
+
+  // 利用するカレンダー変更時のリアルタイム連動（グレーアウト・選択肢無効化）
+  if (elements.calendarSettingsForm) {
+    elements.calendarSettingsForm.addEventListener("change", (e) => {
+      if (e.target.name === "calendarProvider") {
+        updateDestinationOptionsInteractivity(e.target.value);
+      }
+    });
   }
 }
 
@@ -847,7 +992,7 @@ function addToCalendar(event) {
   const startIso = `${dateStr.replace(/-/g, "")}T${safeStartTime.replace(":", "")}00`;
   const endIso = `${dateStr.replace(/-/g, "")}T${safeEndTime.replace(":", "")}00`;
 
-  const dest = state.calendarSettings.defaultDestination || "ask";
+  const dest = state.calendarSettings.defaultCalendar || "ask";
 
   // Google Calendar URL
   const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startIso}/${endIso}&details=${encodeURIComponent(event.description + "\n\n主催: " + event.sponsor + "\n単位: " + event.credits + "\n公式URL: " + event.officialUrl)}&location=${encodeURIComponent(event.venue)}`;
