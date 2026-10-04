@@ -1368,6 +1368,82 @@ button, input, select, textarea {
     display: inline-flex !important;
   }
 
+  /* ヘッダーの高さ自動化 & パディング調整 */
+  .app-header {
+    height: auto;
+    min-height: var(--header-height);
+    padding: 10px 0;
+  }
+
+  .header-container {
+    height: auto;
+    padding: 0 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .brand {
+    justify-content: flex-start;
+  }
+
+  /* 上部操作エリア：2段構成
+     1段目: 「カレンダー連携設定」と「登録済み一覧」（横並び・均等）
+     2段目: 「条件で絞り込む」（全幅）
+  */
+  .header-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .header-actions #calendar-settings-btn {
+    grid-column: 1 / 2;
+    width: 100%;
+    min-width: 0;
+    padding: 8px 6px;
+    font-size: 0.78rem;
+    justify-content: center;
+  }
+
+  .header-actions #calendar-settings-btn span:first-of-type {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header-actions #calendar-settings-btn .setting-active-pill {
+    flex-shrink: 0;
+    font-size: 0.68rem;
+    padding: 1px 6px;
+  }
+
+  .header-actions #toggle-registered-filter {
+    grid-column: 2 / 3;
+    width: 100%;
+    min-width: 0;
+    padding: 8px 6px;
+    font-size: 0.78rem;
+    justify-content: center;
+  }
+
+  .header-actions #toggle-registered-filter span:first-of-type {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header-actions #mobile-filter-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-width: 0;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    justify-content: center;
+  }
+
+  /* サイドバー（スマホドロワー） */
   .sidebar {
     position: fixed;
     top: 0;
@@ -1409,21 +1485,115 @@ button, input, select, textarea {
   }
 
   .main-layout {
-    padding: 16px;
+    padding: 14px 12px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .content-area {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .content-header-bar {
+    padding: 14px 14px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .sort-selector-wrapper {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .sort-select {
+    flex: 1;
+    max-width: 220px;
+  }
+
+  .event-card {
+    padding: 16px 14px;
+    width: 100%;
+    max-width: 100%;
   }
 
   .card-top-row {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
+  }
+
+  .date-time-block {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .time-and-region {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .time-text {
+    font-size: 0.88rem;
+    flex-wrap: wrap;
+  }
+
+  .location-text {
+    word-break: break-all;
   }
 
   .badges-group {
     justify-content: flex-start;
+    gap: 6px;
+  }
+
+  /* 予定重複アラート */
+  .conflict-alert-box {
+    padding: 8px 10px;
+  }
+
+  .conflict-item-line {
+    flex-wrap: wrap;
+    gap: 4px;
+    word-break: break-all;
+  }
+
+  /* 学会情報ボックス */
+  .conference-special-box {
+    padding: 10px 12px;
+  }
+
+  .conf-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .conf-label {
+    min-width: 0;
   }
 
   .conf-deadlines-row {
     grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  /* メタ情報リストのminmax(280px)解除 */
+  .card-meta-list {
+    grid-template-columns: 1fr;
+    padding: 10px 12px;
     gap: 6px;
+  }
+
+  .card-meta-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .card-meta-label {
+    min-width: 0;
   }
 
   .card-actions-row {
@@ -1433,5 +1603,57 @@ button, input, select, textarea {
 
   .card-actions-row .btn {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-actions {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .header-actions #calendar-settings-btn,
+  .header-actions #toggle-registered-filter {
+    padding: 7px 4px;
+    font-size: 0.74rem;
+    gap: 4px;
+  }
+
+  .header-actions #calendar-settings-btn svg,
+  .header-actions #toggle-registered-filter svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  .header-actions #calendar-settings-btn .setting-active-pill {
+    padding: 1px 4px;
+    font-size: 0.65rem;
+    margin-left: 2px;
+  }
+
+  .badge-count {
+    margin-left: 3px;
+    padding: 0 4px;
+    min-width: 18px;
+    height: 18px;
+    font-size: 0.68rem;
+  }
+
+  .date-badge {
+    min-width: 68px;
+    padding: 5px 6px;
+  }
+
+  .date-badge .month-day {
+    font-size: 0.95rem;
+  }
+
+  .date-badge .day-week {
+    font-size: 0.66rem;
+  }
+
+  .card-title {
+    font-size: 1.05rem;
   }
 }
