@@ -13,6 +13,7 @@
  *  - date, endDate: 開催期間（YYYY-MM-DD）
  *  - time: 開催時間帯 / セッション時間
  *  - region: 国内地域区分（北海道/東北/関東/中部/関西/中国/四国/九州・沖縄、または "海外"）
+ *  - venueId: 任意。venues.js の安定ID（未指定の場合は venue を使用）
  *  - venue: 開催会場（未定の場合は "未定"）
  *  - specialty: 専門領域（一般眼科/網膜・硝子体/緑内障/白内障/角膜・外眼部/小児・斜視弱視/神経眼科/眼形成/その他）
  *  - eventType: "国内学会" | "海外学会" | "講演会・勉強会" | "地方会・研究会"
@@ -1054,6 +1055,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-jrvs-2026",
+    "venueId": "tokyo-international-forum",
     "title": "第65回 日本網膜硝子体学会総会",
     "subtitle": "網膜硝子体疾患の病態解明と外科・内科的治療革新",
     "date": "2026-12-04",
@@ -1750,6 +1752,7 @@ const sampleEvents = [
   },
   {
     "id": "oph-014",
+    "venueId": "kyoto-international-conference-center",
     "title": "第38回 日本緑内障学会",
     "subtitle": "World Glaucoma Congress (WGC 2027) 併催",
     "date": "2027-04-20",
@@ -1900,6 +1903,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-lowvision-2027",
+    "venueId": "osaka-international-convention-center",
     "title": "第28回 日本ロービジョン学会学術総会",
     "subtitle": "共生社会の実現に向けたロービジョンケアの深化",
     "date": "2027-05-22",
@@ -2196,6 +2200,7 @@ const sampleEvents = [
   },
   {
     "id": "oph-013",
+    "venueId": "kobe-international-conference-center",
     "title": "第42回 JSCRS学術総会 (日本白内障屈折矯正手術学会)",
     "subtitle": "屈折矯正と水晶体再建術の次世代スタンダード",
     "date": "2027-06-25",
@@ -2297,6 +2302,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-int-iois-2027",
+    "venueId": "fukuoka-international-congress-center",
     "title": "IOIS 2027 (International Ocular Inflammation Society Congress)",
     "subtitle": "New Horizons in Uveitis and Ocular Immunology",
     "date": "2027-07-07",
@@ -3983,6 +3989,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-jscrs-2028",
+    "venueId": "pacifico-yokohama",
     "title": "第43回 JSCRS学術総会 (日本白内障屈折矯正手術学会)",
     "subtitle": "白内障屈折手術の新たな到達点",
     "date": "2028-06-30",

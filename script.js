@@ -1638,7 +1638,8 @@ function isPhysicalVenue(venue) {
  * @returns {string} HTML string
  */
 function renderVenueHtml(event) {
-  const venue = event.venue;
+  const masterVenue = getEventVenue(event);
+  const venue = getEventVenueName(event);
   if (!isPhysicalVenue(venue)) {
     return escapeHtml(venue || "");
   }
@@ -1661,7 +1662,7 @@ function renderVenueHtml(event) {
     }
   }
 
-  const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchQuery)}`;
+  const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(masterVenue?.googleMaps.searchQuery || searchQuery)}`;
 
   return `<a href="${mapUrl}" target="_blank" rel="noopener noreferrer" class="venue-map-link" title="Googleマップで場所を表示">${escapeHtml(venue)}</a>`;
 }
@@ -2119,7 +2120,7 @@ function addToCalendar(event) {
   const dest = state.calendarSettings.defaultCalendar || "ask";
 
   // Google Calendar URL
-  const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startIso}/${endIso}&details=${encodeURIComponent(event.description + "\n\n主催: " + event.sponsor + "\n単位: " + event.credits + "\n公式URL: " + event.officialUrl)}&location=${encodeURIComponent(event.venue)}`;
+  const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startIso}/${endIso}&details=${encodeURIComponent(event.description + "\n\n主催: " + event.sponsor + "\n単位: " + event.credits + "\n公式URL: " + event.officialUrl)}&location=${encodeURIComponent(getEventVenueName(event))}`;
 
   // iCalendar (.ics) データ
   const icsData = [
@@ -2130,7 +2131,7 @@ function addToCalendar(event) {
     "BEGIN:VEVENT",
     `SUMMARY:${event.title}`,
     `DESCRIPTION:${event.description.replace(/\n/g, " ")} (${event.credits})\\n公式: ${event.officialUrl}`,
-    `LOCATION:${event.venue}`,
+    `LOCATION:${getEventVenueName(event)}`,
     `DTSTART:${startIso}`,
     `DTEND:${endIso}`,
     `STATUS:CONFIRMED`,
