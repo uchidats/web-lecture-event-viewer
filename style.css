@@ -2303,6 +2303,43 @@ button, input, select, textarea {
   .card-title {
     font-size: 1.05rem;
   }
+
+  /* スマホでは項目名と値を同じ行に置き、長い値だけ折り返す。 */
+  .conference-special-box {
+    padding: 8px 10px;
+    gap: 4px;
+    line-height: 1.4;
+  }
+
+  .conf-item,
+  .card-meta-item {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .conf-label,
+  .card-meta-label {
+    white-space: nowrap;
+  }
+
+  .conf-val,
+  .card-meta-item > :last-child {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .conf-deadlines-row {
+    gap: 4px;
+  }
+
+  .card-meta-list {
+    padding: 8px 10px;
+    gap: 4px;
+    line-height: 1.4;
+  }
 }
 
 /* ==========================================================================
