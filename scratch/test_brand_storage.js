@@ -24,7 +24,7 @@ function load(initial = {}, fail = () => false) {
       setItem(key, value) { if (fail('set', key)) throw new Error('quota exceeded'); data.set(key, value); writes++; }
     }
   });
-  for (const file of ['venues.js', 'events.js', 'script.js']) vm.runInContext(fs.readFileSync(path.join(root, file), 'utf8'), context);
+  for (const file of ['venues.js', 'companies.js', 'events.js', 'script.js']) vm.runInContext(fs.readFileSync(path.join(root, file), 'utf8'), context);
   return { data, evaluate: code => vm.runInContext(code, context), writes: () => writes };
 }
 const legacy = Object.fromEntries(Object.entries(values).map(([name, value]) => [legacyPrefix + name, value]));

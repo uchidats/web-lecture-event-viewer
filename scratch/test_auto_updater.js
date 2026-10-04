@@ -147,7 +147,7 @@ async function main() {
   assert.equal(cli.status, 0); assert.ok(cli.stdout.includes('dry-run'));
   assert.equal(fs.readFileSync(path.join(root, 'events.js'), 'utf8'), dataset.original);
   const webContext = { document: { getElementById: () => null, addEventListener: () => {} }, console, setTimeout, clearTimeout };
-  for (const file of ['venues.js', 'events.js', 'script.js']) vm.runInNewContext(fs.readFileSync(path.join(root, file), 'utf8'), webContext);
+  for (const file of ['venues.js', 'companies.js', 'events.js', 'script.js']) vm.runInNewContext(fs.readFileSync(path.join(root, file), 'utf8'), webContext);
   assert.equal(vm.runInNewContext('sampleEvents.filter(e => typeof createEventCardHtml(e) === "string").length', webContext), 94);
   console.log('PASS: 5 official HTML pilots; normalization; abstract updates; confidence; exceptions; mass stop; fetch failure; redirects; dry-run; apply/rollback/backups; IDs; 94 cards');
 }

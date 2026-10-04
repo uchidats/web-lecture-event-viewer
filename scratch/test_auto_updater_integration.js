@@ -10,7 +10,7 @@ async function main() {
   const root = path.resolve(__dirname, '..');
   const original = fs.readFileSync(path.join(root, 'events.js'), 'utf8');
   const isolated = fs.mkdtempSync(path.join(os.tmpdir(), 'conference-updater-integration-'));
-  for (const file of ['events.js', 'script.js', 'venues.js', 'index.html', 'style.css', 'conference-sources.js']) fs.copyFileSync(path.join(root, file), path.join(isolated, file));
+  for (const file of ['events.js', 'script.js', 'venues.js', 'companies.js', 'index.html', 'style.css', 'conference-sources.js']) fs.copyFileSync(path.join(root, file), path.join(isolated, file));
   for (const dir of ['scripts', 'scratch', 'docs']) fs.cpSync(path.join(root, dir), path.join(isolated, dir), { recursive: true });
   const data = loadEvents(isolated);
   const baselines = JSON.parse(fs.readFileSync(path.join(root, 'scratch/fixtures/auto-updater/baseline-pilots.json'), 'utf8'));

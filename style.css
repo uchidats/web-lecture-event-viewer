@@ -504,6 +504,16 @@ button, input, select, textarea {
   white-space: nowrap;
 }
 
+.company-filter-empty {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+#filter-company .chip-btn {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 .group-select-domestic {
   padding: 4px 0;
   border: 0;

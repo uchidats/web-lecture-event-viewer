@@ -7,7 +7,7 @@ const context = vm.createContext({
   assert, console, setTimeout, clearTimeout,
   document: { getElementById: () => null, addEventListener: () => {} }
 });
-for (const file of ['venues.js', 'events.js', 'script.js']) vm.runInContext(read(file), context);
+for (const file of ['venues.js', 'companies.js', 'events.js', 'script.js']) vm.runInContext(read(file), context);
 vm.runInContext(`
   getTodayString = () => '2026-10-04';
   const template = sampleEvents.find(e => e.isConference && !isConferenceEnded(e));

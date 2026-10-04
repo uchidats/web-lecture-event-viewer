@@ -19,6 +19,7 @@
  *  - eventType: "国内学会" | "海外学会" | "講演会・勉強会" | "地方会・研究会"
  *  - format: "現地" | "Web" | "ハイブリッド"
  *  - sponsor: 主催・共催団体
+ *  - sponsors: 任意。[{ companyId: companies.js の会社ID, role: "co-sponsor" }]（確認済みの共催企業）
  *  - credits: 認定単位情報
  *  - conferenceRegion: "domestic" | "international"
  *  - conferenceCategory: "総合" | "網膜硝子体" | "緑内障" | "白内障屈折" | "角膜" | "小児斜視" | "神経眼科" | "形成腫瘍" | "眼炎症感染" | "眼光学CL近視" | "ロービジョン" | "AI" | "その他"
@@ -742,6 +743,7 @@ const sampleEvents = [
     "eventType": "講演会・勉強会",
     "format": "現地",
     "sponsor": "第80回日本臨床眼科学会 / ノバルティス ファーマ株式会社",
+    "sponsors": [{ "companyId": "novartis", "role": "co-sponsor" }],
     "credits": "日本眼科学会生涯教育 1単位",
     "calendarStatus": {
       "google": {
@@ -779,6 +781,7 @@ const sampleEvents = [
     "eventType": "講演会・勉強会",
     "format": "現地",
     "sponsor": "第80回日本臨床眼科学会 / 参天製薬株式会社",
+    "sponsors": [{ "companyId": "santen", "role": "co-sponsor" }],
     "credits": "日本眼科学会生涯教育 1単位",
     "calendarStatus": {
       "google": {

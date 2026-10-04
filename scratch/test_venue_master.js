@@ -9,6 +9,7 @@ function load(original = false) {
     console, setTimeout, clearTimeout
   });
   vm.runInContext(read('venues.js'), context);
+  vm.runInContext(read('companies.js'), context);
   vm.runInContext(read('events.js'), context);
   vm.runInContext(original && process.argv[2] ? fs.readFileSync(process.argv[2], 'utf8') : read('script.js'), context);
   return code => vm.runInContext(code, context);

@@ -14,6 +14,7 @@ let state = {
     abstractStatus: new Set(), // 演題募集状況 (学会)
     format: new Set(),
     region: new Set(),
+    company: new Set(),
     scheduleStatus: new Set(["free", "partial_conflict", "conflict", "registered"]), // 全ステータスを初期表示
     registeredOnly: false,
     includeEndedConferences: false // 終了した学会も表示 (デフォルトOFF)
@@ -1053,6 +1054,14 @@ function isConferenceEnded(event, todayStr = getTodayString()) {
  * フィルター項目のチェックボックス（チップUI）を動的生成
  */
 function renderFilterOptions() {
+  const companyContainer = document.getElementById("filter-company");
+  const companyOptions = getCoSponsorCompanyOptions(state.events);
+  companyContainer.innerHTML = companyOptions.length ? companyOptions.map(company => `
+    <label class="chip-label">
+      <input type="checkbox" name="company" value="${escapeHtml(company.id)}">
+      <span class="chip-btn">${escapeHtml(company.shortName)} <span class="chip-count">(${company.count})</span></span>
+    </label>
+  `).join("") : '<span class="company-filter-empty">共催情報のある製薬会社はありません</span>';
   // 1. 開催年フィルター（eventsデータから動的抽出・昇順生成）
   const yearContainer = document.getElementById("filter-year");
   if (yearContainer) {
@@ -1195,7 +1204,7 @@ function setupEventListeners() {
     elements.keywordSearch.value = "";
     elements.clearSearchBtn.style.display = "none";
 
-    ["year", "specialty", "eventType", "abstractStatus", "format", "region"].forEach(key => {
+    ["year", "specialty", "eventType", "abstractStatus", "format", "region", "company"].forEach(key => {
       state.filters[key].clear();
     });
 
@@ -1538,6 +1547,10 @@ function getFilteredEvents() {
       return false;
     }
 
+    if (!matchesCoSponsorCompanies(event, state.filters.company, state.events)) {
+      return false;
+    }
+
     // 予定空き状況（未連携の場合は除外しない）
     if (effective.statusKey !== "unlinked") {
       if (state.filters.scheduleStatus.size > 0 && !state.filters.scheduleStatus.has(effective.statusKey)) {
@@ -1589,6 +1602,10 @@ function renderEvents() {
  */
 function renderActiveFilterChips() {
   const chips = [];
+  state.filters.company.forEach(id => {
+    const company = COMPANY_MASTER.find(company => company.id === id);
+    chips.push({ group: "company", label: `共催: ${company?.shortName || id}`, value: id });
+  });
 
   if (state.filters.keyword) {
     chips.push({ group: "keyword", label: `検索: "${state.filters.keyword}"`, value: "" });
