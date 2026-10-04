@@ -253,6 +253,18 @@ function getEventVenueName(event) {
   return event.venue || getEventVenue(event)?.name || "";
 }
 
+// Display only: classification, region labels and Maps queries retain their existing rules.
+function getEventCityDisplay(event) {
+  const cityCountry = typeof event.cityCountry === "string" ? event.cityCountry.trim() : "";
+  const [city, legacyCountry] = cityCountry.split(/[/／]/).map(part => part.trim());
+  const country = getEventVenue(event)?.country?.trim() || legacyCountry;
+  const domestic = country === "日本" || (!country && event.region && event.region !== "海外");
+  return {
+    label: domestic ? "開催都市" : "開催都市・国",
+    value: (domestic ? city : cityCountry) || getEventVenueName(event)
+  };
+}
+
 // 表示専用。フィルターや学会分類に使う region / conferenceRegion は変更しない。
 function getEventVenueRegionLabel(event) {
   const masterCountry = getEventVenue(event)?.country;

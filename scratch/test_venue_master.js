@@ -24,6 +24,30 @@ assert.equal(run('getEventVenue({venueId:"missing"})'), null);
 assert.ok(run('Object.values(venueMaster).every(v => v.name && v.city && v.prefecture && v.country && v.googleMaps.searchQuery && Array.isArray(v.access.airports) && Array.isArray(v.accommodation.hotels))'));
 
 const events = JSON.parse(run('JSON.stringify(sampleEvents)'));
+for (const [event, label, value] of [
+  [{ cityCountry: '京都市（京都府） / 日本', region: '関西' }, '開催都市', '京都市（京都府）'],
+  [{ cityCountry: '東京 ／ 日本', region: '関東', conferenceRegion: 'international' }, '開催都市', '東京'],
+  [{ cityCountry: 'New Orleans, LA / 米国', region: '海外' }, '開催都市・国', 'New Orleans, LA / 米国'],
+  [{ cityCountry: 'ウィーン / オーストリア', venueId: 'messe-wien' }, '開催都市・国', 'ウィーン / オーストリア'],
+  [{ cityCountry: '京都市（京都府）', venueId: 'kyoto-international-conference-center' }, '開催都市', '京都市（京都府）'],
+  [{ region: '関東', venue: '会場未定' }, '開催都市', '会場未定'],
+  [{ cityCountry: '未定 / 欧州', region: '海外' }, '開催都市・国', '未定 / 欧州'],
+  [{ cityCountry: null, venueId: 'tokyo-international-forum' }, '開催都市', '東京国際フォーラム']
+]) {
+  const display = JSON.parse(run(`JSON.stringify(getEventCityDisplay(${JSON.stringify(event)}))`));
+  assert.deepEqual(display, { label, value });
+}
+for (const event of events.filter(e => e.isConference)) {
+  const serialized = JSON.stringify(event);
+  const display = JSON.parse(run(`JSON.stringify(getEventCityDisplay(${serialized}))`));
+  const card = run(`createEventCardHtml(${serialized})`);
+  assert.ok(card.includes(`<span class="conf-label">${display.label}：</span>`), event.id);
+  assert.ok(card.includes(`<span class="conf-val">${run(`escapeHtml(${JSON.stringify(display.value)})`)}</span>`), event.id);
+  if (event.cityCountry?.split(/[/／]/)[1]?.trim() === '日本') {
+    assert.equal(display.label, '開催都市');
+    assert.ok(!display.value.includes('/ 日本'));
+  }
+}
 for (const event of events) {
   if (!event.venueId) {
     const expr = `renderVenueHtml(${JSON.stringify(event)})`;

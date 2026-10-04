@@ -51,7 +51,7 @@ async function main() {
 
 
 
-    await evaluate(`getTodayString = () => '2026-10-05'; const template = sampleEvents.find(e => e.id === 'oph-004'); const multi = {...template, id:'dst-test', date:'2026-03-07', endDate:'2026-03-09', timeZone:'America/Chicago'}; elements.eventList.innerHTML = [template, sampleEvents.find(e => e.id === 'oph-010'), multi].map(createEventCardHtml).join('');`);
+    await evaluate(`getTodayString = () => '2026-10-05'; const template = sampleEvents.find(e => e.id === 'oph-004'); const multi = {...template, id:'dst-test', date:'2026-03-07', endDate:'2026-03-09', timeZone:'America/Chicago'}; elements.eventList.innerHTML = [template, sampleEvents.find(e => e.id === 'oph-010'), multi, sampleEvents.find(e => e.id === 'conf-int-wgc-2027')].map(createEventCardHtml).join('');`);
     for (const width of [320, 360, 480, 1280]) {
       await call('Emulation.setDeviceMetricsOverride', {width, height:900, deviceScaleFactor:1, mobile:width<500});
       const layout = await evaluate(`(() => {
@@ -63,10 +63,23 @@ async function main() {
       assert.equal(layout.count,3); assert.equal(layout.multi,3);
       assert.equal(layout.noOverflow,true,width+'px time overflow'); assert.equal(layout.pageFits,true,width+'px page overflow');
       if(width<500) assert.equal(layout.stacked,true,width+'px times stacked');
+      const cities = await evaluate(`['conf-int-wgc-2027', 'oph-004'].map(id => {
+        const card = document.querySelector('[data-id="'+id+'"]');
+        const label = [...card.querySelectorAll('.conf-label')].find(e => e.textContent.startsWith('開催都市'));
+        return {label: label.textContent, value: label.nextElementSibling.textContent,
+          maps: !!card.querySelector('a[href*="google.com/maps"]'),
+          countryLabel: card.querySelector('.location-text').textContent};
+      })`);
+      assert.equal(cities[0].label, '開催都市：');
+      assert.equal(cities[0].value, '京都市（京都府）');
+      assert.equal(cities[1].label, '開催都市・国：');
+      assert.ok(cities[1].value.endsWith('/ 米国'));
+      assert.ok(cities[1].countryLabel.includes('[米国]'));
+      assert.ok(cities.every(city => city.maps));
     }
     const modal = await evaluate(`(() => {showPdfModal(sampleEvents.find(e => e.id === 'oph-004')); return document.querySelector('dialog[open]').innerHTML.includes('japan-time');})()`);
     assert.equal(modal,true);
-    console.log('PASS: international times and DST daily rows at 320/360/480/1280px, mobile stacked, no page/time overflow, detail modal');
+    console.log('PASS: international times, DST daily rows, domestic/overseas city labels, Maps and country labels at 320/360/480/1280px, mobile stacked, no overflow, detail modal');
     await call('Browser.close');
   } finally { if(socket) socket.close(); if(browser.exitCode===null) browser.kill(); }
 }

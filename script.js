@@ -344,7 +344,7 @@ function renderHiddenConferencesModal() {
         <h4 class="hidden-item-title">${escapeHtml(e.title)}</h4>
         <div class="hidden-item-meta">
           <span>📅 ${escapeHtml(e.period || e.date)}</span>
-          <span>📍 ${escapeHtml(e.cityCountry || e.venue || e.region)}</span>
+          <span>📍 ${escapeHtml(getEventCityDisplay(e).value || e.region)}</span>
         </div>
       </div>
       <button type="button" class="btn btn-sm btn-outline btn-restore-conf" data-conference-id="${escapeHtml(e.id)}" title="一覧に再表示">
@@ -677,7 +677,7 @@ function renderConferenceHistoryModal() {
               </h5>
               <div class="history-conf-meta">
                 <span>📅 ${escapeHtml(conf.period || conf.date)}</span>
-                <span>📍 ${escapeHtml(conf.cityCountry || conf.venue || '')}</span>
+                <span>📍 ${escapeHtml(getEventCityDisplay(conf).value)}</span>
               </div>
             </div>
             <div class="history-conf-actions">
@@ -1935,8 +1935,8 @@ function createEventCardHtml(event) {
           <span class="conf-val">${escapeHtml(event.period || event.date)}</span>
         </div>
         <div class="conf-item conf-item-full">
-          <span class="conf-label">開催都市・国:</span>
-          <span class="conf-val">${escapeHtml(event.cityCountry || event.venue)}</span>
+          <span class="conf-label">${getEventCityDisplay(event).label}：</span>
+          <span class="conf-val">${escapeHtml(getEventCityDisplay(event).value)}</span>
         </div>
         ${event.conferenceCategory || event.conferenceRegion ? `
         <div class="conf-item conf-item-full">
