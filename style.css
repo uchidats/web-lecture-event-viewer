@@ -1226,17 +1226,31 @@ button, input, select, textarea {
 
 /* 参加予定は、輪郭と内側の丸で選択状態を示す。 */
 .conf-planned-choice-group {
+  flex-wrap: wrap;
   background: transparent;
   border: none;
   padding: 0;
-  gap: 8px;
+  gap: 6px;
+}
+
+.conf-attendance-bar.conf-planned-attendance-bar {
+  justify-content: flex-start;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.conf-planned-choice-group .conf-attendance-main-text {
+  font-size: 0.82rem;
+  white-space: nowrap;
 }
 
 .conf-planned-choice-group .conf-choice-btn {
-  min-height: 44px;
-  gap: 8px;
-  padding: 8px 12px;
-  font-size: 0.875rem;
+  min-height: 36px;
+  gap: 6px;
+  padding: 6px 8px;
+  font-size: 0.78rem;
+  white-space: nowrap;
   color: #334155;
   background: #ffffff;
   border: 1px solid #cbd5e1;

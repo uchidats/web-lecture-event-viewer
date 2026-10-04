@@ -1901,13 +1901,9 @@ function createEventCardHtml(event) {
         </div>
         ` : `
         <!-- 会期終了前: 参加予定（あり・なし 排他2択）切り替えバー -->
-        <div class="conf-attendance-bar ${isConferenceAttending ? 'attending' : ''}">
-          <div class="conf-attendance-label-wrap">
-            <span class="conf-attendance-main-text">参加予定:</span>
-            <span class="conf-attendance-hint">（あり：関連セミナー表示 / なし：非表示）</span>
-          </div>
-
+        <div class="conf-attendance-bar conf-planned-attendance-bar ${isConferenceAttending ? 'attending' : ''}">
           <div class="conf-choice-group conf-planned-choice-group" role="group" aria-label="参加予定の選択">
+            <span class="conf-attendance-main-text">参加予定：</span>
             <button type="button" 
               class="conf-choice-btn choice-yes ${isConferenceAttending ? 'active' : ''}" 
               data-action="attend-choice" 
@@ -1916,7 +1912,7 @@ function createEventCardHtml(event) {
               aria-pressed="${isConferenceAttending ? 'true' : 'false'}"
               title="${isConferenceAttending ? '参加予定を解除' : '参加予定にする（関連セミナーを表示）'}">
               <span class="choice-dot"></span>
-              <span class="choice-text">あり</span>
+              <span class="choice-text">あり（関連セミナー表示）</span>
             </button>
 
             <button type="button" 
@@ -1927,11 +1923,10 @@ function createEventCardHtml(event) {
               aria-pressed="${isConferenceHidden ? 'true' : 'false'}"
               title="参加しない（一覧から非表示にする）">
               <span class="choice-dot"></span>
-              <span class="choice-text">なし</span>
+              <span class="choice-text">なし（非表示）</span>
             </button>
           </div>
 
-          ${isConferenceAttending ? '<span class="conf-attending-active-tag">✓ 関連セミナー表示中</span>' : ''}
         </div>
         `}
 
