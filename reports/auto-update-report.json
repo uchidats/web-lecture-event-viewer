@@ -1,0 +1,456 @@
+{
+  "version": 1,
+  "checkedAt": "2026-10-04T14:00:08.901Z",
+  "mode": "dry-run",
+  "outcome": "stopped",
+  "sourceCount": 5,
+  "autoChanges": [
+    {
+      "field": "abstractSubmission.url",
+      "value": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
+      "confidence": 0.98,
+      "method": "official-abstract-page",
+      "url": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
+      "evidence": "演題募集|第80回日本臨床眼科学会",
+      "oldValue": "https://convention.jtbcom.co.jp/80ringan/index.html",
+      "eventId": "oph-001"
+    },
+    {
+      "field": "abstractSubmission.startDate",
+      "value": "2026-06-01",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://50.jsos.jp/abstract",
+      "evidence": "2026年6月1日〜8月31日",
+      "oldValue": null,
+      "eventId": "conf-jp-surgery-2027"
+    },
+    {
+      "field": "abstractSubmission.deadline",
+      "value": "2026-08-31",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://50.jsos.jp/abstract",
+      "evidence": "2026年6月1日〜8月31日",
+      "oldValue": null,
+      "eventId": "conf-jp-surgery-2027"
+    },
+    {
+      "field": "abstractSubmission.status",
+      "value": "closed",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://50.jsos.jp/abstract",
+      "evidence": "2026年6月1日(月)〜8月31日(月)\n一般演題登録は終了しました。",
+      "oldValue": "unknown",
+      "eventId": "conf-jp-surgery-2027"
+    },
+    {
+      "field": "abstractSubmission.url",
+      "value": "https://50.jsos.jp/abstract",
+      "confidence": 0.98,
+      "method": "official-abstract-page",
+      "url": "https://50.jsos.jp/abstract",
+      "evidence": "一般演題登録 | 第50回日本眼科手術学会学術総会",
+      "oldValue": "https://50.jsos.jp/",
+      "eventId": "conf-jp-surgery-2027"
+    },
+    {
+      "field": "abstractSubmission.startDate",
+      "value": "2026-04-01",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
+      "evidence": "2026年4月1日~\n5月21日正午",
+      "oldValue": null,
+      "eventId": "conf-jp-glaucoma-2026"
+    },
+    {
+      "field": "abstractSubmission.deadline",
+      "value": "2026-05-21 12:00",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
+      "evidence": "2026年4月1日~\n5月21日正午",
+      "oldValue": null,
+      "eventId": "conf-jp-glaucoma-2026"
+    },
+    {
+      "field": "abstractSubmission.url",
+      "value": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
+      "confidence": 0.98,
+      "method": "official-abstract-page",
+      "url": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
+      "evidence": "一般演題募集|第37回日本緑内障学会",
+      "oldValue": null,
+      "eventId": "conf-jp-glaucoma-2026"
+    },
+    {
+      "field": "abstractSubmission.startDate",
+      "value": "2026-05-19 12:00",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+      "evidence": "2026年5月19日正午~7月23日正午",
+      "oldValue": null,
+      "eventId": "conf-jp-jrvs-2026"
+    },
+    {
+      "field": "abstractSubmission.deadline",
+      "value": "2026-07-23 12:00",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+      "evidence": "2026年5月19日正午~7月23日正午",
+      "oldValue": null,
+      "eventId": "conf-jp-jrvs-2026"
+    },
+    {
+      "field": "abstractSubmission.url",
+      "value": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+      "confidence": 0.98,
+      "method": "official-abstract-page",
+      "url": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+      "evidence": "演題募集|第65回日本網膜硝子体学会総会",
+      "oldValue": null,
+      "eventId": "conf-jp-jrvs-2026"
+    }
+  ],
+  "needsReview": [
+    {
+      "field": "abstractSubmission.deadline",
+      "value": "2026-11-05 13:00",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html",
+      "evidence": "2026年10月1日10時 ~11月5日13時",
+      "oldValue": "2026-11-05 13:00",
+      "reason": "multiple-candidates",
+      "eventId": "oph-011"
+    },
+    {
+      "field": "abstractSubmission.deadline",
+      "value": "2026-12-10 13:00",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html",
+      "evidence": "2026年10月1日10時 ~12月10日13時",
+      "oldValue": "2026-11-05 13:00",
+      "reason": "multiple-candidates",
+      "eventId": "oph-011"
+    },
+    {
+      "field": "abstractSubmission.startDate",
+      "value": "2026-10-01 10:00",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html",
+      "evidence": "2026年10月1日10時 ~11月5日13時",
+      "oldValue": "2026-10-01",
+      "reason": "related-field-needs-review",
+      "eventId": "oph-011"
+    },
+    {
+      "field": "abstractSubmission.deadline",
+      "value": "2026-05-21 12:00",
+      "confidence": 0.8,
+      "method": "labeled-html",
+      "url": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
+      "evidence": "3月3日正午~5月21日正午",
+      "oldValue": null,
+      "reason": "multiple-candidates",
+      "eventId": "oph-001"
+    },
+    {
+      "field": "abstractSubmission.deadline",
+      "value": "2026-06-01 12:00",
+      "confidence": 0.8,
+      "method": "labeled-html",
+      "url": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
+      "evidence": "3月3日正午~6月1日正午",
+      "oldValue": null,
+      "reason": "multiple-candidates",
+      "eventId": "oph-001"
+    },
+    {
+      "field": "title",
+      "value": "第80回日本臨床眼科学会",
+      "confidence": 0.96,
+      "method": "official-title",
+      "url": "https://convention.jtbcom.co.jp/80ringan/summary/index.html",
+      "evidence": "開催概要|第80回日本臨床眼科学会",
+      "oldValue": "第80回 日本臨床眼科学会 (臨眼 2026)",
+      "reason": "conference-name-change",
+      "eventId": "oph-001"
+    },
+    {
+      "field": "abstractSubmission.startDate",
+      "value": "2026-03-03 12:00",
+      "confidence": 0.8,
+      "method": "labeled-html",
+      "url": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
+      "evidence": "3月3日正午~5月21日正午",
+      "oldValue": null,
+      "reason": "low-confidence",
+      "eventId": "oph-001"
+    },
+    {
+      "field": "officialUrl",
+      "value": "https://www.congre.co.jp/jgs2026/",
+      "confidence": 0.99,
+      "method": "pinned-official-url",
+      "url": "https://www.congre.co.jp/jgs2026/contents/outline.html",
+      "evidence": "開催概要|第37回日本緑内障学会",
+      "oldValue": "https://www.ryokunaisho.jp/",
+      "reason": "official-domain-changed",
+      "eventId": "conf-jp-glaucoma-2026"
+    },
+    {
+      "field": "officialUrl",
+      "value": "https://convention.jtbcom.co.jp/65moumaku/index.html",
+      "confidence": 0.99,
+      "method": "pinned-official-url",
+      "url": "https://convention.jtbcom.co.jp/65moumaku/summary/index.html",
+      "evidence": "開催概要|第65回日本網膜硝子体学会総会",
+      "oldValue": "https://www.jrvs.jp/",
+      "reason": "official-domain-changed",
+      "eventId": "conf-jp-jrvs-2026"
+    },
+    {
+      "field": "abstractSubmission.url",
+      "value": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
+      "confidence": 0.98,
+      "method": "official-abstract-page",
+      "url": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
+      "evidence": "演題募集|第80回日本臨床眼科学会",
+      "oldValue": "https://convention.jtbcom.co.jp/80ringan/index.html",
+      "eventId": "oph-001",
+      "reason": "mass-change-limit"
+    },
+    {
+      "field": "abstractSubmission.startDate",
+      "value": "2026-06-01",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://50.jsos.jp/abstract",
+      "evidence": "2026年6月1日〜8月31日",
+      "oldValue": null,
+      "eventId": "conf-jp-surgery-2027",
+      "reason": "mass-change-limit"
+    },
+    {
+      "field": "abstractSubmission.deadline",
+      "value": "2026-08-31",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://50.jsos.jp/abstract",
+      "evidence": "2026年6月1日〜8月31日",
+      "oldValue": null,
+      "eventId": "conf-jp-surgery-2027",
+      "reason": "mass-change-limit"
+    },
+    {
+      "field": "abstractSubmission.status",
+      "value": "closed",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://50.jsos.jp/abstract",
+      "evidence": "2026年6月1日(月)〜8月31日(月)\n一般演題登録は終了しました。",
+      "oldValue": "unknown",
+      "eventId": "conf-jp-surgery-2027",
+      "reason": "mass-change-limit"
+    },
+    {
+      "field": "abstractSubmission.url",
+      "value": "https://50.jsos.jp/abstract",
+      "confidence": 0.98,
+      "method": "official-abstract-page",
+      "url": "https://50.jsos.jp/abstract",
+      "evidence": "一般演題登録 | 第50回日本眼科手術学会学術総会",
+      "oldValue": "https://50.jsos.jp/",
+      "eventId": "conf-jp-surgery-2027",
+      "reason": "mass-change-limit"
+    },
+    {
+      "field": "abstractSubmission.startDate",
+      "value": "2026-04-01",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
+      "evidence": "2026年4月1日~\n5月21日正午",
+      "oldValue": null,
+      "eventId": "conf-jp-glaucoma-2026",
+      "reason": "mass-change-limit"
+    },
+    {
+      "field": "abstractSubmission.deadline",
+      "value": "2026-05-21 12:00",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
+      "evidence": "2026年4月1日~\n5月21日正午",
+      "oldValue": null,
+      "eventId": "conf-jp-glaucoma-2026",
+      "reason": "mass-change-limit"
+    },
+    {
+      "field": "abstractSubmission.url",
+      "value": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
+      "confidence": 0.98,
+      "method": "official-abstract-page",
+      "url": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
+      "evidence": "一般演題募集|第37回日本緑内障学会",
+      "oldValue": null,
+      "eventId": "conf-jp-glaucoma-2026",
+      "reason": "mass-change-limit"
+    },
+    {
+      "field": "abstractSubmission.startDate",
+      "value": "2026-05-19 12:00",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+      "evidence": "2026年5月19日正午~7月23日正午",
+      "oldValue": null,
+      "eventId": "conf-jp-jrvs-2026",
+      "reason": "mass-change-limit"
+    },
+    {
+      "field": "abstractSubmission.deadline",
+      "value": "2026-07-23 12:00",
+      "confidence": 0.98,
+      "method": "labeled-html",
+      "url": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+      "evidence": "2026年5月19日正午~7月23日正午",
+      "oldValue": null,
+      "eventId": "conf-jp-jrvs-2026",
+      "reason": "mass-change-limit"
+    },
+    {
+      "field": "abstractSubmission.url",
+      "value": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+      "confidence": 0.98,
+      "method": "official-abstract-page",
+      "url": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+      "evidence": "演題募集|第65回日本網膜硝子体学会総会",
+      "oldValue": null,
+      "eventId": "conf-jp-jrvs-2026",
+      "reason": "mass-change-limit"
+    }
+  ],
+  "sources": [
+    {
+      "eventId": "oph-011",
+      "officialUrl": "https://convention.jtbcom.co.jp/131jos/index.html",
+      "lastChecked": "2026-10-04T14:00:08.901Z",
+      "lastChanged": null,
+      "confidence": 0.96,
+      "fingerprint": "74dc1ae2dc3fc8b2b39cfe58a34edd42fef99dd407ed0c2f03afec0fb0cb527a",
+      "extractionMethod": "official-html",
+      "autoUpdateEnabled": true,
+      "fetchSucceeded": true,
+      "pages": [
+        {
+          "url": "https://convention.jtbcom.co.jp/131jos/summary/index.html",
+          "fingerprint": "83549b2d8cf3d5673861a4c78261cf14b2e2d9247454dcb53b096e1298061288"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html",
+          "fingerprint": "00fb31f5b65b085fc2ae460d664e2671110009f6f24f2059685aa87ed084fe82"
+        }
+      ],
+      "candidateCount": 12
+    },
+    {
+      "eventId": "oph-001",
+      "officialUrl": "https://convention.jtbcom.co.jp/80ringan/index.html",
+      "lastChecked": "2026-10-04T14:00:08.901Z",
+      "lastChanged": null,
+      "confidence": 0.8,
+      "fingerprint": "7ec5041cd61e85a5eae46534d482aa3e4d467c6abaef55674d3073c2b270f2a0",
+      "extractionMethod": "official-html",
+      "autoUpdateEnabled": true,
+      "fetchSucceeded": true,
+      "pages": [
+        {
+          "url": "https://convention.jtbcom.co.jp/80ringan/summary/index.html",
+          "fingerprint": "9a7ea0ad365ba7bd586d2b0bb22629b9247ad9d1b01545eeb63d250d7d8a0a2c"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
+          "fingerprint": "ea438d30ee9ea9da763bf777c956075023e6b8ad9082ada80519ebd8d91a45b5"
+        }
+      ],
+      "candidateCount": 13
+    },
+    {
+      "eventId": "conf-jp-surgery-2027",
+      "officialUrl": "https://50.jsos.jp/",
+      "lastChecked": "2026-10-04T14:00:08.901Z",
+      "lastChanged": null,
+      "confidence": 0.96,
+      "fingerprint": "52249e8f380b2c9a2bf5f51e8c9f2733253d4debbe4dc5a2cde5de211603f98c",
+      "extractionMethod": "official-html",
+      "autoUpdateEnabled": true,
+      "fetchSucceeded": true,
+      "pages": [
+        {
+          "url": "https://50.jsos.jp/",
+          "fingerprint": "e4401c1ee5b78e1fa6c0f7fddb774e998551d3719cf98ad823c14ee930f15c1f"
+        },
+        {
+          "url": "https://50.jsos.jp/abstract",
+          "fingerprint": "b3e7a7298544a81f7e86fc88b514ca83aa611650b8be0b746f5e913f97fec91f"
+        }
+      ],
+      "candidateCount": 9
+    },
+    {
+      "eventId": "conf-jp-glaucoma-2026",
+      "officialUrl": "https://www.congre.co.jp/jgs2026/",
+      "lastChecked": "2026-10-04T14:00:08.901Z",
+      "lastChanged": null,
+      "confidence": 0.96,
+      "fingerprint": "2ae8f2f957cc2897be797b080107efa4ff0ac99388e5c776304806aff1828c29",
+      "extractionMethod": "official-html",
+      "autoUpdateEnabled": true,
+      "fetchSucceeded": true,
+      "pages": [
+        {
+          "url": "https://www.congre.co.jp/jgs2026/contents/outline.html",
+          "fingerprint": "1948c61861afd43bad085842fbb236ee947805cf984536f7ea9df2157a4afec6"
+        },
+        {
+          "url": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
+          "fingerprint": "e269d6100ec33f51964bd1c70c1d6284e7d707fd457c3b01b921513baa499aee"
+        }
+      ],
+      "candidateCount": 8
+    },
+    {
+      "eventId": "conf-jp-jrvs-2026",
+      "officialUrl": "https://convention.jtbcom.co.jp/65moumaku/index.html",
+      "lastChecked": "2026-10-04T14:00:08.901Z",
+      "lastChanged": null,
+      "confidence": 0.96,
+      "fingerprint": "bdc8689d3b09becf4f075924653f17185163149899dab16323f0525b0c1460ce",
+      "extractionMethod": "official-html",
+      "autoUpdateEnabled": true,
+      "fetchSucceeded": true,
+      "pages": [
+        {
+          "url": "https://convention.jtbcom.co.jp/65moumaku/summary/index.html",
+          "fingerprint": "5f9e61173adaf9ac42cf5ede050345576b77bc0e8e96add1fd618051fe40c5c7"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+          "fingerprint": "df37483aff2e8f722b3ff5b35c23f86c9d72c592af79b391ea46abab298f546a"
+        }
+      ],
+      "candidateCount": 9
+    }
+  ],
+  "stopped": true,
+  "tests": null,
+  "stopReason": "mass-change-limit"
+}

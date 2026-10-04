@@ -25,3 +25,8 @@ yarn-error.log*
 # Temporary files
 *.tmp
 *.bak
+
+# Updater raw downloads, locks and recoverable snapshots (CI uploads backups as artifacts).
+reports/auto-update-raw/
+reports/auto-update-backups/
+reports/auto-update.lock

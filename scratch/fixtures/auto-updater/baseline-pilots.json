@@ -1,0 +1,262 @@
+{
+  "oph-011": {
+    "id": "oph-011",
+    "title": "第131回 日本眼科学会総会",
+    "subtitle": "眼科学の見渡す限り",
+    "date": "2027-04-15",
+    "endDate": "2027-04-18",
+    "time": "全日程（全プログラム現地開催）",
+    "region": "北海道",
+    "venue": "グランドメルキュール札幌大通公園、札幌プリンスホテル国際館パミール、札幌市教育文化会館",
+    "specialty": "一般眼科",
+    "eventType": "国内学会",
+    "format": "現地",
+    "sponsor": "公益財団法人 日本眼科学会",
+    "credits": "日本眼科学会生涯教育 10単位 / 専門医認定",
+    "conferenceRegion": "domestic",
+    "conferenceCategory": "総合",
+    "conferenceTier": "primary",
+    "period": "2027年4月15日(木) 〜 4月18日(日)",
+    "cityCountry": "札幌市（北海道） / 日本",
+    "abstractDeadline": "2026年11月5日(木) 13:00 (募集中)",
+    "earlyBirdDeadline": "未定",
+    "officialUrl": "https://convention.jtbcom.co.jp/131jos/index.html",
+    "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+    "note": "総会長: 石田 晋 教授（北海道大学）",
+    "abstractSubmission": {
+      "status": "open",
+      "startDate": "2026-10-01",
+      "deadline": "2026-11-05 13:00",
+      "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html"
+    },
+    "calendarStatus": {
+      "google": {
+        "status": "free",
+        "conflicts": []
+      },
+      "icloud": {
+        "status": "free",
+        "conflicts": []
+      },
+      "isAdded": false
+    },
+    "tags": [
+      "日本眼科学会総会",
+      "基幹学会",
+      "演題募集中",
+      "現地開催",
+      "専門医単位"
+    ],
+    "description": "日本眼科学会の年次総会。基礎研究から最新臨床まで眼科学の全領域を見渡す最高峰の学術集会。",
+    "isConference": true
+  },
+  "oph-001": {
+    "id": "oph-001",
+    "title": "第80回 日本臨床眼科学会 (臨眼 2026)",
+    "subtitle": "臨床眼科80年の軌跡と新次元への跳躍",
+    "date": "2026-10-29",
+    "endDate": "2026-11-01",
+    "time": "09:00 - 18:00 (全日程)",
+    "region": "関西",
+    "venue": "国立京都国際会館、ザ・プリンス 京都宝ヶ池",
+    "specialty": "一般眼科",
+    "eventType": "国内学会",
+    "format": "ハイブリッド",
+    "sponsor": "公益財団法人 日本眼科学会 / 日本眼科医会",
+    "credits": "日本眼科学会生涯教育 8単位 / 専門医制度認定",
+    "conferenceRegion": "domestic",
+    "conferenceCategory": "総合",
+    "conferenceTier": "primary",
+    "period": "2026年10月29日(木) 〜 11月1日(日)",
+    "cityCountry": "京都市（京都府） / 日本",
+    "abstractDeadline": "締切済",
+    "earlyBirdDeadline": "2026年8月31日(月) 締切済",
+    "officialUrl": "https://convention.jtbcom.co.jp/80ringan/index.html",
+    "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+    "note": "",
+    "abstractSubmission": {
+      "status": "closed",
+      "startDate": null,
+      "deadline": null,
+      "url": "https://convention.jtbcom.co.jp/80ringan/index.html"
+    },
+    "calendarStatus": {
+      "google": {
+        "status": "partial",
+        "conflicts": [
+          {
+            "start": "13:00",
+            "end": "17:00",
+            "title": "外来手術枠"
+          }
+        ]
+      },
+      "icloud": {
+        "status": "free",
+        "conflicts": []
+      },
+      "isAdded": false
+    },
+    "tags": [
+      "国内最大規模",
+      "臨床眼科",
+      "シンポジウム",
+      "機器展示",
+      "専門医単位"
+    ],
+    "description": "国内最大規模の眼科学術集会。全サブスペシャリティの最新実臨床知見が集結。",
+    "isConference": true
+  },
+  "conf-jp-surgery-2027": {
+    "id": "conf-jp-surgery-2027",
+    "title": "第50回 日本眼科手術学会学術総会",
+    "subtitle": "眼科手術の集大成と次世代への継承",
+    "date": "2027-01-29",
+    "endDate": "2027-01-31",
+    "time": "全日程",
+    "region": "関東",
+    "venue": "東京国際フォーラム",
+    "specialty": "その他",
+    "eventType": "国内学会",
+    "format": "現地",
+    "sponsor": "日本眼科手術学会",
+    "credits": "日本眼科学会認定単位",
+    "conferenceRegion": "domestic",
+    "conferenceCategory": "その他",
+    "conferenceTier": "subspecialty",
+    "period": "2027年1月29日(金) 〜 1月31日(日)",
+    "cityCountry": "千代田区（東京都） / 日本",
+    "abstractDeadline": "未定",
+    "earlyBirdDeadline": "未定",
+    "officialUrl": "https://50.jsos.jp/",
+    "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+    "note": "",
+    "abstractSubmission": {
+      "status": "unknown",
+      "startDate": null,
+      "deadline": null,
+      "url": "https://50.jsos.jp/"
+    },
+    "calendarStatus": {
+      "google": {
+        "status": "free",
+        "conflicts": []
+      },
+      "icloud": {
+        "status": "free",
+        "conflicts": []
+      },
+      "isAdded": false
+    },
+    "tags": [
+      "眼科手術",
+      "白内障手術",
+      "硝子体手術",
+      "緑内障手術",
+      "ビデオシンポジウム"
+    ],
+    "description": "白内障・網膜・緑内障・角膜・眼形成まで全領域の手術手技が集う年次学術集会。",
+    "isConference": true
+  },
+  "conf-jp-glaucoma-2026": {
+    "id": "conf-jp-glaucoma-2026",
+    "title": "第37回 日本緑内障学会",
+    "subtitle": "緑内障診療の深耕と未来開拓",
+    "date": "2026-10-02",
+    "endDate": "2026-10-04",
+    "time": "全日程",
+    "region": "中部",
+    "venue": "静岡県コンベンションアーツセンター グランシップ",
+    "specialty": "緑内障",
+    "eventType": "国内学会",
+    "format": "現地",
+    "sponsor": "日本緑内障学会",
+    "credits": "日本眼科学会生涯教育単位",
+    "conferenceRegion": "domestic",
+    "conferenceCategory": "緑内障",
+    "conferenceTier": "subspecialty",
+    "period": "2026年10月2日(金) 〜 10月4日(日)",
+    "cityCountry": "静岡市（静岡県） / 日本",
+    "abstractDeadline": "締切済",
+    "earlyBirdDeadline": "締切済",
+    "officialUrl": "https://www.ryokunaisho.jp/",
+    "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+    "note": "",
+    "abstractSubmission": {
+      "status": "closed",
+      "startDate": null,
+      "deadline": null,
+      "url": null
+    },
+    "calendarStatus": {
+      "google": {
+        "status": "free",
+        "conflicts": []
+      },
+      "icloud": {
+        "status": "free",
+        "conflicts": []
+      },
+      "isAdded": false
+    },
+    "tags": [
+      "緑内障",
+      "MIGS",
+      "眼圧管理",
+      "神経保護"
+    ],
+    "description": "緑内障の基礎研究から薬物治療・低侵襲手術(MIGS)・濾過手術まで最新知見を網羅。",
+    "isConference": true
+  },
+  "conf-jp-jrvs-2026": {
+    "id": "conf-jp-jrvs-2026",
+    "venueId": "tokyo-international-forum",
+    "title": "第65回 日本網膜硝子体学会総会",
+    "subtitle": "網膜硝子体疾患の病態解明と外科・内科的治療革新",
+    "date": "2026-12-04",
+    "endDate": "2026-12-06",
+    "time": "全日程",
+    "region": "関東",
+    "venue": "東京国際フォーラム",
+    "specialty": "網膜・硝子体",
+    "eventType": "国内学会",
+    "format": "現地",
+    "sponsor": "日本網膜硝子体学会",
+    "credits": "日本眼科学会認定単位",
+    "conferenceRegion": "domestic",
+    "conferenceCategory": "網膜硝子体",
+    "conferenceTier": "subspecialty",
+    "period": "2026年12月4日(金) 〜 12月6日(日)",
+    "cityCountry": "千代田区（東京都） / 日本",
+    "abstractDeadline": "締切済",
+    "earlyBirdDeadline": "締切済",
+    "officialUrl": "https://www.jrvs.jp/",
+    "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+    "note": "Asia Retina Congress (ARC) 併催",
+    "abstractSubmission": {
+      "status": "closed",
+      "startDate": null,
+      "deadline": null,
+      "url": null
+    },
+    "calendarStatus": {
+      "google": {
+        "status": "free",
+        "conflicts": []
+      },
+      "icloud": {
+        "status": "free",
+        "conflicts": []
+      },
+      "isAdded": false
+    },
+    "tags": [
+      "網膜硝子体手術",
+      "加齢黄斑変性",
+      "糖尿病網膜症",
+      "ARC併催"
+    ],
+    "description": "国内最大の網膜専門学会。最新の手術手技および抗VEGF療法エビデンス。",
+    "isConference": true
+  }
+}

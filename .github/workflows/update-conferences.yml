@@ -1,0 +1,68 @@
+name: Conference Auto Updater v1
+
+on:
+  schedule:
+    - cron: '17 21 * * *' # 06:17 JST daily
+  workflow_dispatch:
+
+concurrency:
+  group: conference-auto-updater-main
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    if: github.ref == 'refs/heads/main' && vars.CONFERENCE_AUTO_UPDATE_DISABLED != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TZ: Asia/Tokyo
+      AUTO_APPLY: ${{ vars.CONFERENCE_AUTO_APPLY }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Validate existing site and reproducible updater fixtures
+        run: |
+          node scripts/check-conference-regressions.js
+          node scratch/test_auto_updater_integration.js
+      - name: Fetch, classify, and optionally apply high-confidence changes
+        id: update
+        run: |
+          if [ "$AUTO_APPLY" = "true" ]; then
+            node scripts/update-conferences.js --apply
+          else
+            node scripts/update-conferences.js --dry-run
+          fi
+      - name: Validate integrated result
+        run: node scripts/check-conference-regressions.js
+      - name: Commit safe updates and persistent exception queue
+        if: success() && env.AUTO_APPLY == 'true'
+        run: |
+          node -e "const r=require('./reports/auto-update-report.json');if(r.stopped||!['applied','no-changes'].includes(r.outcome))process.exit(1)"
+          git add events.js reports/auto-update-report.json reports/auto-update-review.json
+          for file in reports/auto-update-source-state.json reports/auto-update-history.json; do
+            if [ -f "$file" ]; then git add "$file"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m "chore: automatically update verified conference data"
+            git push origin HEAD:main
+          fi
+      - name: Preserve reports and rollback snapshots even when stopped
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: conference-auto-update-${{ github.run_id }}
+          path: |
+            reports/auto-update-*.json
+            reports/auto-update-backups/
+          retention-days: 30
+          if-no-files-found: warn

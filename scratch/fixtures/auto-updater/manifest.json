@@ -1,0 +1,66 @@
+{
+  "capturedAt": "2026-10-04",
+  "description": "Official HTML snapshots. Abstract fixtures contain the title and original labeled period fragments only.",
+  "pages": [
+    {
+      "eventId": "oph-011",
+      "role": "overview",
+      "url": "https://convention.jtbcom.co.jp/131jos/summary/index.html",
+      "file": "oph-011-overview.html"
+    },
+    {
+      "eventId": "oph-011",
+      "role": "abstract",
+      "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html",
+      "file": "oph-011-abstract.html"
+    },
+    {
+      "eventId": "oph-001",
+      "role": "overview",
+      "url": "https://convention.jtbcom.co.jp/80ringan/summary/index.html",
+      "file": "oph-001-overview.html"
+    },
+    {
+      "eventId": "oph-001",
+      "role": "abstract",
+      "url": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
+      "file": "oph-001-abstract.html"
+    },
+    {
+      "eventId": "conf-jp-surgery-2027",
+      "role": "overview",
+      "url": "https://50.jsos.jp/",
+      "file": "conf-jp-surgery-2027-overview.html"
+    },
+    {
+      "eventId": "conf-jp-surgery-2027",
+      "role": "abstract",
+      "url": "https://50.jsos.jp/abstract",
+      "file": "conf-jp-surgery-2027-abstract.html"
+    },
+    {
+      "eventId": "conf-jp-glaucoma-2026",
+      "role": "overview",
+      "url": "https://www.congre.co.jp/jgs2026/contents/outline.html",
+      "file": "conf-jp-glaucoma-2026-overview.html"
+    },
+    {
+      "eventId": "conf-jp-glaucoma-2026",
+      "role": "abstract",
+      "url": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
+      "file": "conf-jp-glaucoma-2026-abstract.html"
+    },
+    {
+      "eventId": "conf-jp-jrvs-2026",
+      "role": "overview",
+      "url": "https://convention.jtbcom.co.jp/65moumaku/summary/index.html",
+      "file": "conf-jp-jrvs-2026-overview.html"
+    },
+    {
+      "eventId": "conf-jp-jrvs-2026",
+      "role": "abstract",
+      "url": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+      "file": "conf-jp-jrvs-2026-abstract.html"
+    }
+  ]
+}
