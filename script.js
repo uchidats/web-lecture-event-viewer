@@ -29,7 +29,9 @@ let state = {
   // 非表示にした学会IDセット (localStorage永続化: 「なし」)
   hiddenConferences: new Set(),
   // 学会参加履歴 (localStorage永続化: key: eventId, value: { status, updatedAt, roles, notes })
-  conferenceHistory: new Map()
+  conferenceHistory: new Map(),
+  // マイ学会履歴モーダルの表示選択年度 ("all" または 年度数値)
+  historySelectedFiscalYear: "all"
 };
 
 // DOM要素の参照キャッシュ
@@ -79,6 +81,7 @@ const elements = {
   closeHistoryModalBtn: document.getElementById("close-history-modal"),
   dismissHistoryModalBtn: document.getElementById("dismiss-history-modal"),
   historyOverallSummary: document.getElementById("history-overall-summary"),
+  historyFyTabs: document.getElementById("history-fy-tabs"),
   conferenceHistoryContent: document.getElementById("conference-history-content"),
   // ダイアログ & トースト
   pdfModal: document.getElementById("pdf-modal"),
@@ -519,6 +522,10 @@ function renderConferenceHistoryModal() {
   if (grandTotal === 0) {
     elements.historyOverallSummary.innerHTML = "";
     elements.historyOverallSummary.style.display = "none";
+    if (elements.historyFyTabs) {
+      elements.historyFyTabs.innerHTML = "";
+      elements.historyFyTabs.style.display = "none";
+    }
     elements.conferenceHistoryContent.innerHTML = `
       <div class="history-empty-state">
         <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: #94a3b8; margin: 0 auto 12px; display: block;">
@@ -571,8 +578,52 @@ function renderConferenceHistoryModal() {
     </div>
   `;
 
+  // 選択中の年度が有効か確認（削除された年度等の場合は "all" に戻す）
+  const validFiscalYears = new Set(fyGroups.map(g => g.fiscalYear));
+  if (state.historySelectedFiscalYear !== "all" && !validFiscalYears.has(state.historySelectedFiscalYear)) {
+    state.historySelectedFiscalYear = "all";
+  }
+
+  // 年度切り替えタブの描画（過去年度も切り替えて確認可能）
+  if (elements.historyFyTabs) {
+    elements.historyFyTabs.style.display = "flex";
+    elements.historyFyTabs.innerHTML = `
+      <button type="button" 
+        class="history-fy-tab-btn ${state.historySelectedFiscalYear === 'all' ? 'active' : ''}" 
+        data-fy="all" 
+        aria-pressed="${state.historySelectedFiscalYear === 'all' ? 'true' : 'false'}">
+        <span>すべての年度</span>
+        <span class="tab-count-badge">${grandTotal}</span>
+      </button>
+      ${fyGroups.map(g => `
+        <button type="button" 
+          class="history-fy-tab-btn ${state.historySelectedFiscalYear === g.fiscalYear ? 'active' : ''}" 
+          data-fy="${g.fiscalYear}" 
+          aria-pressed="${state.historySelectedFiscalYear === g.fiscalYear ? 'true' : 'false'}">
+          <span>${g.fiscalYear}年度</span>
+          <span class="tab-count-badge">${g.totalCount}</span>
+        </button>
+      `).join("")}
+    `;
+
+    // タブクリックイベントの設定
+    const tabButtons = elements.historyFyTabs.querySelectorAll(".history-fy-tab-btn");
+    tabButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const fyAttr = btn.getAttribute("data-fy");
+        state.historySelectedFiscalYear = fyAttr === "all" ? "all" : parseInt(fyAttr, 10);
+        renderConferenceHistoryModal();
+      });
+    });
+  }
+
+  // 表示対象の年度グループを抽出（全年度または特定年度）
+  const displayedGroups = state.historySelectedFiscalYear === "all"
+    ? fyGroups
+    : fyGroups.filter(g => g.fiscalYear === state.historySelectedFiscalYear);
+
   // 年度別カード描画
-  elements.conferenceHistoryContent.innerHTML = fyGroups.map(group => `
+  elements.conferenceHistoryContent.innerHTML = displayedGroups.map(group => `
     <div class="history-fiscal-year-card">
       <div class="history-fy-header">
         <div class="history-fy-title-group">

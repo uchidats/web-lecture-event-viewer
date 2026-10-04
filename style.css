@@ -1862,12 +1862,12 @@ button, input, select, textarea {
   }
 
   /* 上部操作エリア：2段構成
-     1段目: 「カレンダー連携設定」と「登録済み一覧」（横並び・均等）
+     1段目: 「カレンダー連携設定」「登録済み一覧」「マイ学会履歴」（3等分）
      2段目: 「条件で絞り込む」（全幅）
   */
   .header-actions {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     width: 100%;
   }
@@ -1876,8 +1876,8 @@ button, input, select, textarea {
     grid-column: 1 / 2;
     width: 100%;
     min-width: 0;
-    padding: 7px 6px;
-    font-size: 0.74rem;
+    padding: 7px 4px;
+    font-size: 0.72rem;
     justify-content: center;
     gap: 4px;
     white-space: nowrap;
@@ -1893,7 +1893,7 @@ button, input, select, textarea {
   .header-actions #calendar-settings-btn .setting-active-pill {
     flex-shrink: 0;
     font-size: 0.65rem;
-    padding: 1px 5px;
+    padding: 1px 4px;
     margin-left: 2px;
     white-space: nowrap;
   }
@@ -1902,14 +1902,32 @@ button, input, select, textarea {
     grid-column: 2 / 3;
     width: 100%;
     min-width: 0;
-    padding: 7px 6px;
-    font-size: 0.74rem;
+    padding: 7px 4px;
+    font-size: 0.72rem;
     justify-content: center;
     gap: 4px;
     white-space: nowrap;
   }
 
   .header-actions #toggle-registered-filter span:first-of-type {
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+    flex-shrink: 0;
+  }
+
+  .header-actions #conference-history-btn {
+    grid-column: 3 / 4;
+    width: 100%;
+    min-width: 0;
+    padding: 7px 4px;
+    font-size: 0.72rem;
+    justify-content: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+
+  .header-actions #conference-history-btn span:first-of-type {
     white-space: nowrap;
     overflow: visible;
     text-overflow: clip;
@@ -2113,7 +2131,7 @@ button, input, select, textarea {
 
 @media (max-width: 480px) {
   .header-actions {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 6px;
   }
 
@@ -2236,6 +2254,63 @@ button, input, select, textarea {
   width: 1px;
   height: 32px;
   background: #e2e8f0;
+}
+
+/* 年度切り替えタブバー */
+.history-fy-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px 0;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.history-fy-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: #f1f5f9;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.history-fy-tab-btn:hover {
+  background: #e2e8f0;
+  color: var(--text-main);
+}
+
+.history-fy-tab-btn.active {
+  background: #0d9488;
+  border-color: #0f766e;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(13, 148, 136, 0.25);
+}
+
+.history-fy-tab-btn .tab-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 6px;
+  font-size: 0.70rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.08);
+  color: inherit;
+}
+
+.history-fy-tab-btn.active .tab-count-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
 }
 
 .conference-history-container {

@@ -176,7 +176,36 @@ if (!mockState.hiddenConferences.has("conf-jp-eyelid-2026")) {
 }
 console.log("PASS: Conference history is strictly decoupled from attending/hidden sets");
 
-// 5. HTML & CSS 要素のチェック
+// 5. 年度切り替えロジックのテスト
+function simulateFiscalYearSwitch(selectedFy, fyGroups) {
+  if (selectedFy === "all") {
+    return fyGroups;
+  }
+  return fyGroups.filter(g => g.fiscalYear === selectedFy);
+}
+
+const allView = simulateFiscalYearSwitch("all", fyGroups);
+if (allView.length !== 2) {
+  console.error(`FAIL: All view should have 2 fiscal years, got ${allView.length}`);
+  process.exit(1);
+}
+console.log("PASS: Switching to 'all' displays all fiscal years (2)");
+
+const fy2025View = simulateFiscalYearSwitch(2025, fyGroups);
+if (fy2025View.length !== 1 || fy2025View[0].fiscalYear !== 2025) {
+  console.error("FAIL: Switching to 2025 should display only FY2025");
+  process.exit(1);
+}
+console.log("PASS: Switching to FY2025 displays only FY2025 (1 total, 1 domestic, 0 intl)");
+
+const fy2026View = simulateFiscalYearSwitch(2026, fyGroups);
+if (fy2026View.length !== 1 || fy2026View[0].fiscalYear !== 2026) {
+  console.error("FAIL: Switching to 2026 should display only FY2026");
+  process.exit(1);
+}
+console.log("PASS: Switching to FY2026 displays only FY2026 (3 total, 2 domestic, 1 intl)");
+
+// 6. HTML & CSS 要素のチェック
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 const css = fs.readFileSync(path.join(__dirname, '..', 'style.css'), 'utf8');
 const script = fs.readFileSync(path.join(__dirname, '..', 'script.js'), 'utf8');
@@ -189,6 +218,7 @@ const requiredHtmlIds = [
   'close-history-modal',
   'dismiss-history-modal',
   'history-overall-summary',
+  'history-fy-tabs',
   'conference-history-content'
 ];
 requiredHtmlIds.forEach(id => {
@@ -207,7 +237,9 @@ const requiredCssClasses = [
   '.conference-history-dialog',
   '.history-fiscal-year-card',
   '.history-fy-header',
-  '.history-fy-stat-chips'
+  '.history-fy-stat-chips',
+  '.history-fy-tabs',
+  '.history-fy-tab-btn'
 ];
 requiredCssClasses.forEach(cls => {
   if (!css.includes(cls)) {
