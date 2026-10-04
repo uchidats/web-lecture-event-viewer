@@ -27,7 +27,9 @@ let state = {
   // 参加予定の学会IDセット (localStorage永続化: 「あり」)
   attendingConferences: new Set(),
   // 非表示にした学会IDセット (localStorage永続化: 「なし」)
-  hiddenConferences: new Set()
+  hiddenConferences: new Set(),
+  // 学会参加履歴 (localStorage永続化: key: eventId, value: { status, updatedAt, roles, notes })
+  conferenceHistory: new Map()
 };
 
 // DOM要素の参照キャッシュ
@@ -69,6 +71,15 @@ const elements = {
   hiddenConferencesList: document.getElementById("hidden-conferences-list"),
   hiddenConferencesCountBadge: document.getElementById("hidden-conferences-count-badge"),
   unhideAllBtn: document.getElementById("unhide-all-conferences-btn"),
+  // マイ学会履歴モーダル関連
+  conferenceHistoryBtn: document.getElementById("conference-history-btn"),
+  historyBadgeCount: document.getElementById("history-badge-count"),
+  sidebarHistoryBtn: document.getElementById("sidebar-history-btn"),
+  conferenceHistoryModal: document.getElementById("conference-history-modal"),
+  closeHistoryModalBtn: document.getElementById("close-history-modal"),
+  dismissHistoryModalBtn: document.getElementById("dismiss-history-modal"),
+  historyOverallSummary: document.getElementById("history-overall-summary"),
+  conferenceHistoryContent: document.getElementById("conference-history-content"),
   // ダイアログ & トースト
   pdfModal: document.getElementById("pdf-modal"),
   closePdfModal: document.getElementById("close-pdf-modal"),
@@ -127,9 +138,11 @@ function initApp() {
   loadCalendarSettings();
   loadAttendingConferences();
   loadHiddenConferences();
+  loadConferenceHistory();
   renderFilterOptions();
   updateRegisteredBadge();
   updateHiddenConferencesBadge();
+  updateHistoryBadgeCount();
   setupEventListeners();
   renderEvents();
 }
@@ -310,6 +323,315 @@ function renderHiddenConferencesModal() {
       </button>
     </div>
   `).join("");
+}
+
+/**
+ * ==========================================================================
+ * 学会参加履歴の永続化管理 & 年度別集計 (マイ学会履歴)
+ * ==========================================================================
+ */
+const CONFERENCE_HISTORY_KEY = "ophthahub_conference_attendance_history";
+
+/**
+ * localStorageから学会参加履歴をロード
+ * データ構造: { [conferenceId]: { status: "attended"|"not_attended", updatedAt: string, roles: [], notes: "" } }
+ */
+function loadConferenceHistory() {
+  try {
+    const saved = localStorage.getItem(CONFERENCE_HISTORY_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed && typeof parsed === "object") {
+        state.conferenceHistory = new Map(Object.entries(parsed));
+      }
+    }
+  } catch (e) {
+    console.warn("Failed to load conference history from localStorage:", e);
+  }
+}
+
+/**
+ * 学会参加履歴をlocalStorageに保存
+ */
+function saveConferenceHistory() {
+  try {
+    const obj = Object.fromEntries(state.conferenceHistory);
+    localStorage.setItem(CONFERENCE_HISTORY_KEY, JSON.stringify(obj));
+  } catch (e) {
+    console.warn("Failed to save conference history to localStorage:", e);
+  }
+}
+
+/**
+ * ヘッダーの「マイ学会履歴」バッジ件数を更新
+ */
+function updateHistoryBadgeCount() {
+  if (!elements.historyBadgeCount) return;
+  let count = 0;
+  for (const [, record] of state.conferenceHistory) {
+    if (record && record.status === "attended") {
+      count++;
+    }
+  }
+  if (count > 0) {
+    elements.historyBadgeCount.textContent = `${count}`;
+    elements.historyBadgeCount.style.display = "inline-flex";
+  } else {
+    elements.historyBadgeCount.style.display = "none";
+  }
+}
+
+/**
+ * 学会参加実績（参加した／参加しなかった／未選択）を記録
+ * @param {string} conferenceId
+ * @param {"attended"|"not_attended"|"none"} choice
+ */
+function setConferenceHistoryStatus(conferenceId, choice) {
+  const conf = state.events.find(e => e.id === conferenceId);
+  const confTitle = conf ? conf.title : "学会";
+  const existing = state.conferenceHistory.get(conferenceId) || {};
+
+  if (choice === "attended") {
+    state.conferenceHistory.set(conferenceId, {
+      status: "attended",
+      updatedAt: new Date().toISOString(),
+      roles: existing.roles || [],
+      notes: existing.notes || ""
+    });
+    saveConferenceHistory();
+    updateHistoryBadgeCount();
+    renderEvents();
+    renderConferenceHistoryModal();
+    showToast(`✓ 「${confTitle}」をマイ学会履歴に記録しました`);
+  } else if (choice === "not_attended") {
+    state.conferenceHistory.set(conferenceId, {
+      status: "not_attended",
+      updatedAt: new Date().toISOString(),
+      roles: existing.roles || [],
+      notes: existing.notes || ""
+    });
+    saveConferenceHistory();
+    updateHistoryBadgeCount();
+    renderEvents();
+    renderConferenceHistoryModal();
+    showToast(`「${confTitle}」を「参加しなかった」として記録しました`);
+  } else {
+    state.conferenceHistory.delete(conferenceId);
+    saveConferenceHistory();
+    updateHistoryBadgeCount();
+    renderEvents();
+    renderConferenceHistoryModal();
+    showToast(`「${confTitle}」の参加記録を解除しました`);
+  }
+}
+
+/**
+ * 日付文字列 (YYYY-MM-DD) から日本の年度を取得 (4月1日〜翌年3月31日基準)
+ * @param {string} dateStr
+ * @returns {number|null} 年度 (例: 2026)
+ */
+function getJapaneseFiscalYear(dateStr) {
+  if (!dateStr || typeof dateStr !== "string") return null;
+  const parts = dateStr.split("-");
+  if (parts.length < 2) return null;
+  const year = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10);
+  if (isNaN(year) || isNaN(month)) return null;
+  return month >= 4 ? year : year - 1;
+}
+
+/**
+ * 西暦年度を和暦併記ラベルに変換 (例: "2026年度（令和8年度）")
+ * @param {number} fy
+ * @returns {string}
+ */
+function formatFiscalYearLabel(fy) {
+  if (!fy) return "";
+  let era = "";
+  if (fy >= 2019) {
+    const rYear = fy - 2018;
+    era = rYear === 1 ? "令和元" : `令和${rYear}`;
+  } else if (fy >= 1989) {
+    const hYear = fy - 1988;
+    era = hYear === 1 ? "平成元" : `平成${hYear}`;
+  }
+  return era ? `${fy}年度（${era}年度）` : `${fy}年度`;
+}
+
+/**
+ * 参加した学会を日本の年度ごとに集計
+ * @returns {Array<{ fiscalYear: number, fiscalYearLabel: string, totalCount: number, domesticCount: number, internationalCount: number, conferences: Array<Object> }>}
+ */
+function getAttendedConferencesByFiscalYear() {
+  const attendedEvents = state.events.filter(event => {
+    if (!event.isConference) return false;
+    const rec = state.conferenceHistory.get(event.id);
+    return rec && rec.status === "attended";
+  });
+
+  const fyMap = new Map();
+  attendedEvents.forEach(event => {
+    const fy = getJapaneseFiscalYear(event.date) || 9999;
+    if (!fyMap.has(fy)) {
+      fyMap.set(fy, []);
+    }
+    fyMap.get(fy).push(event);
+  });
+
+  const sortedYears = Array.from(fyMap.keys()).sort((a, b) => b - a);
+
+  return sortedYears.map(fy => {
+    const confs = fyMap.get(fy);
+    confs.sort((a, b) => (a.date > b.date ? 1 : -1));
+    const totalCount = confs.length;
+    const internationalCount = confs.filter(c => c.conferenceRegion === "international").length;
+    const domesticCount = totalCount - internationalCount;
+
+    return {
+      fiscalYear: fy,
+      fiscalYearLabel: formatFiscalYearLabel(fy),
+      totalCount,
+      domesticCount,
+      internationalCount,
+      conferences: confs
+    };
+  });
+}
+
+/**
+ * マイ学会参加履歴モーダルの内容を描画
+ */
+function renderConferenceHistoryModal() {
+  if (!elements.conferenceHistoryContent || !elements.historyOverallSummary) return;
+
+  const fyGroups = getAttendedConferencesByFiscalYear();
+
+  // 累計集計
+  let grandTotal = 0;
+  let grandDomestic = 0;
+  let grandInternational = 0;
+  fyGroups.forEach(g => {
+    grandTotal += g.totalCount;
+    grandDomestic += g.domesticCount;
+    grandInternational += g.internationalCount;
+  });
+
+  if (grandTotal === 0) {
+    elements.historyOverallSummary.innerHTML = "";
+    elements.historyOverallSummary.style.display = "none";
+    elements.conferenceHistoryContent.innerHTML = `
+      <div class="history-empty-state">
+        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: #94a3b8; margin: 0 auto 12px; display: block;">
+          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+          <line x1="9" y1="9" x2="15" y2="9"></line>
+          <line x1="9" y1="13" x2="13" y2="13"></line>
+        </svg>
+        <p class="history-empty-title">まだ参加履歴の記録がありません</p>
+        <p class="history-empty-desc">
+          会期が終了した学会カードに表示される「参加しましたか？」で「参加した」を選択すると、日本の年度別（4月〜翌3月）に自動集計・記録されます。
+        </p>
+        <button type="button" id="history-view-ended-btn" class="btn btn-primary btn-sm" style="margin-top: 14px;">
+          終了した学会を表示して記録する
+        </button>
+      </div>
+    `;
+    const viewEndedBtn = document.getElementById("history-view-ended-btn");
+    if (viewEndedBtn) {
+      viewEndedBtn.addEventListener("click", () => {
+        closeConferenceHistoryModal();
+        state.filters.includeEndedConferences = true;
+        if (elements.filterIncludeEnded) {
+          elements.filterIncludeEnded.checked = true;
+        }
+        renderEvents();
+        showToast("終了した学会を一覧に表示しました");
+      });
+    }
+    return;
+  }
+
+  // 累計サマリー表示
+  elements.historyOverallSummary.style.display = "block";
+  elements.historyOverallSummary.innerHTML = `
+    <div class="history-summary-box">
+      <div class="history-summary-stat">
+        <span class="summary-stat-label">参加学会数（累計）</span>
+        <span class="summary-stat-value">${grandTotal} <small>学会</small></span>
+      </div>
+      <div class="history-summary-divider"></div>
+      <div class="history-summary-stat">
+        <span class="summary-stat-label">国内学会</span>
+        <span class="summary-stat-value">${grandDomestic} <small>学会</small></span>
+      </div>
+      <div class="history-summary-divider"></div>
+      <div class="history-summary-stat">
+        <span class="summary-stat-label">海外学会</span>
+        <span class="summary-stat-value">${grandInternational} <small>学会</small></span>
+      </div>
+    </div>
+  `;
+
+  // 年度別カード描画
+  elements.conferenceHistoryContent.innerHTML = fyGroups.map(group => `
+    <div class="history-fiscal-year-card">
+      <div class="history-fy-header">
+        <div class="history-fy-title-group">
+          <h4 class="history-fy-title">${escapeHtml(group.fiscalYearLabel)}</h4>
+        </div>
+        <div class="history-fy-stat-chips">
+          <span class="history-stat-chip total">参加計 <strong>${group.totalCount}</strong>学会</span>
+          <span class="history-stat-chip domestic">国内 <strong>${group.domesticCount}</strong></span>
+          <span class="history-stat-chip international">海外 <strong>${group.internationalCount}</strong></span>
+        </div>
+      </div>
+
+      <div class="history-conf-list">
+        ${group.conferences.map(conf => `
+          <div class="history-conf-item">
+            <div class="history-conf-info">
+              <div class="history-conf-badges">
+                <span class="conf-category-badge region ${conf.conferenceRegion === 'international' ? 'international' : 'domestic'}">
+                  ${conf.conferenceRegion === 'international' ? '海外学会' : '国内学会'}
+                </span>
+                ${conf.conferenceCategory ? `<span class="conf-category-badge category">${escapeHtml(conf.conferenceCategory)}</span>` : ''}
+              </div>
+              <h5 class="history-conf-title">
+                ${conf.officialUrl ? `<a href="${escapeHtml(conf.officialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(conf.title)} ↗</a>` : escapeHtml(conf.title)}
+              </h5>
+              <div class="history-conf-meta">
+                <span>📅 ${escapeHtml(conf.period || conf.date)}</span>
+                <span>📍 ${escapeHtml(conf.cityCountry || conf.venue || '')}</span>
+              </div>
+            </div>
+            <div class="history-conf-actions">
+              <button type="button" class="btn btn-sm btn-outline btn-cancel-attended" data-action="cancel-attended" data-conference-id="${escapeHtml(conf.id)}" title="参加記録を解除">
+                取消
+              </button>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+}
+
+function openConferenceHistoryModal() {
+  if (!elements.conferenceHistoryModal) return;
+  renderConferenceHistoryModal();
+  if (typeof elements.conferenceHistoryModal.showModal === "function") {
+    elements.conferenceHistoryModal.showModal();
+  } else {
+    elements.conferenceHistoryModal.setAttribute("open", "");
+  }
+}
+
+function closeConferenceHistoryModal() {
+  if (!elements.conferenceHistoryModal) return;
+  if (typeof elements.conferenceHistoryModal.close === "function") {
+    elements.conferenceHistoryModal.close();
+  } else {
+    elements.conferenceHistoryModal.removeAttribute("open");
+  }
 }
 
 /**
@@ -870,6 +1192,31 @@ function setupEventListeners() {
       }
     });
   }
+
+  // モーダルダイアログ (マイ学会履歴)
+  if (elements.conferenceHistoryBtn) {
+    elements.conferenceHistoryBtn.addEventListener("click", openConferenceHistoryModal);
+  }
+  if (elements.sidebarHistoryBtn) {
+    elements.sidebarHistoryBtn.addEventListener("click", openConferenceHistoryModal);
+  }
+  if (elements.closeHistoryModalBtn) {
+    elements.closeHistoryModalBtn.addEventListener("click", closeConferenceHistoryModal);
+  }
+  if (elements.dismissHistoryModalBtn) {
+    elements.dismissHistoryModalBtn.addEventListener("click", closeConferenceHistoryModal);
+  }
+  if (elements.conferenceHistoryContent) {
+    elements.conferenceHistoryContent.addEventListener("click", (e) => {
+      const cancelBtn = e.target.closest('[data-action="cancel-attended"]');
+      if (cancelBtn) {
+        const confId = cancelBtn.getAttribute("data-conference-id");
+        if (confId) {
+          setConferenceHistoryStatus(confId, "none");
+        }
+      }
+    });
+  }
 }
 
 /**
@@ -1374,12 +1721,53 @@ function createEventCardHtml(event) {
   const isConferenceHidden = event.isConference && state.hiddenConferences.has(event.id);
   const isConferenceEndedEvent = event.isConference && isConferenceEnded(event);
 
+  // 学会参加履歴ステータス（参加した・参加しなかった・未選択）
+  const historyRecord = event.isConference ? state.conferenceHistory.get(event.id) : null;
+  const historyStatus = historyRecord ? historyRecord.status : "none";
+  const isAttended = historyStatus === "attended";
+  const isNotAttended = historyStatus === "not_attended";
+
   // 学会（国内学会・海外学会）特有の表示ブロック
   let conferenceBlockHtml = "";
   if (event.isConference) {
     conferenceBlockHtml = `
       <div class="conference-special-box">
-        <!-- 参加予定（あり・なし 排他2択）切り替えバー -->
+        ${isConferenceEndedEvent ? `
+        <!-- 会期終了後: 参加実績記録（参加した／参加しなかった 排他2択）バー -->
+        <div class="conf-attendance-bar conf-history-record-bar ${isAttended ? 'history-attended' : ''}">
+          <div class="conf-attendance-label-wrap">
+            <span class="conf-attendance-main-text">参加しましたか？</span>
+            <span class="conf-attendance-hint">（マイ学会履歴に記録）</span>
+          </div>
+
+          <div class="conf-choice-group" role="group" aria-label="学会参加実績の選択">
+            <button type="button" 
+              class="conf-choice-btn choice-attended ${isAttended ? 'active' : ''}" 
+              data-action="record-history" 
+              data-history-choice="attended" 
+              data-conference-id="${escapeHtml(event.id)}" 
+              aria-pressed="${isAttended ? 'true' : 'false'}"
+              title="${isAttended ? '参加記録を解除' : '参加した（マイ学会履歴に記録）'}">
+              <span class="choice-dot"></span>
+              <span class="choice-text">参加した</span>
+            </button>
+
+            <button type="button" 
+              class="conf-choice-btn choice-not-attended ${isNotAttended ? 'active' : ''}" 
+              data-action="record-history" 
+              data-history-choice="not_attended" 
+              data-conference-id="${escapeHtml(event.id)}" 
+              aria-pressed="${isNotAttended ? 'true' : 'false'}"
+              title="${isNotAttended ? '記録を解除' : '参加しなかった'}">
+              <span class="choice-dot"></span>
+              <span class="choice-text">参加しなかった</span>
+            </button>
+          </div>
+
+          ${isAttended ? '<span class="conf-attended-active-tag">✓ 参加履歴に記録済み</span>' : ''}
+        </div>
+        ` : `
+        <!-- 会期終了前: 参加予定（あり・なし 排他2択）切り替えバー -->
         <div class="conf-attendance-bar ${isConferenceAttending ? 'attending' : ''}">
           <div class="conf-attendance-label-wrap">
             <span class="conf-attendance-main-text">参加予定:</span>
@@ -1412,6 +1800,7 @@ function createEventCardHtml(event) {
 
           ${isConferenceAttending ? '<span class="conf-attending-active-tag">✓ 関連セミナー表示中</span>' : ''}
         </div>
+        `}
 
         <div class="conf-item conf-item-full">
           <span class="conf-label">会期:</span>
@@ -1487,7 +1876,7 @@ function createEventCardHtml(event) {
   }
 
   return `
-    <article class="event-card ${effective.isRegistered ? 'status-registered-card' : ''} ${isConferenceAttending ? 'card-attending-conference' : ''} ${event.parentConferenceId ? 'card-seminar-related' : ''} ${isConferenceEndedEvent ? 'card-conference-ended' : ''}" data-id="${event.id}">
+    <article class="event-card ${effective.isRegistered ? 'status-registered-card' : ''} ${isConferenceAttending ? 'card-attending-conference' : ''} ${event.parentConferenceId ? 'card-seminar-related' : ''} ${isConferenceEndedEvent ? 'card-conference-ended' : ''} ${isAttended ? 'card-history-attended' : ''}" data-id="${event.id}">
       <!-- 上段: 日程・地域・ステータスバッジ -->
       <div class="card-top-row">
         <div class="date-time-block">
@@ -1516,8 +1905,10 @@ function createEventCardHtml(event) {
         <div class="badges-group">
           <!-- 終了学会バッジ -->
           ${isConferenceEndedEvent ? '<span class="conf-ended-badge">終了</span>' : ''}
-          <!-- 学会参加予定バッジ -->
-          ${isConferenceAttending ? '<span class="conf-attending-badge">✓ 参加予定</span>' : ''}
+          <!-- 学会参加実績バッジ (マイ学会履歴: 参加した) -->
+          ${isAttended ? '<span class="conf-history-attended-badge">✓ 参加済</span>' : ''}
+          <!-- 学会参加予定バッジ (会期前の学会のみ) -->
+          ${!isConferenceEndedEvent && isConferenceAttending ? '<span class="conf-attending-badge">✓ 参加予定</span>' : ''}
           <!-- 開催形式バッジ -->
           <span class="format-badge ${formatClass}">${escapeHtml(event.format)}</span>
           <!-- カレンダー予定空き状況バッジ -->
@@ -1638,6 +2029,23 @@ function attachCardActionListeners() {
         } else if (choice === "no") {
           // 「なし」へ設定（一覧から非表示）
           setConferenceAttendance(event.id, "no");
+        }
+      });
+    });
+
+    // 学会カードの「参加しましたか？（参加した・参加しなかった）」排他2択ボタン
+    const historyChoiceButtons = card.querySelectorAll('[data-action="record-history"]');
+    historyChoiceButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const choice = btn.getAttribute("data-history-choice");
+        const existing = state.conferenceHistory.get(event.id);
+        const currentStatus = existing ? existing.status : "none";
+
+        if (choice === currentStatus) {
+          // すでに選択済みのボタンを再度クリックしたら解除
+          setConferenceHistoryStatus(event.id, "none");
+        } else {
+          setConferenceHistoryStatus(event.id, choice);
         }
       });
     });

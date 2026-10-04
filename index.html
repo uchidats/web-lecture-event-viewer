@@ -46,6 +46,14 @@
           <span>登録済み一覧</span>
           <span id="registered-badge-count" class="badge-count">0</span>
         </button>
+        <button id="conference-history-btn" class="btn btn-outline-nav" title="学会参加履歴を確認">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+            <polyline points="10 2 10 10 13 7 16 10 16 2"></polyline>
+          </svg>
+          <span>マイ学会履歴</span>
+          <span id="history-badge-count" class="badge-count" style="display: none;">0</span>
+        </button>
         <button id="mobile-filter-btn" class="btn btn-primary mobile-only" aria-label="絞り込みフィルターを開く">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -194,6 +202,22 @@
                 <line x1="1" y1="1" x2="23" y2="23"></line>
               </svg>
               <span>非表示にした学会を表示・管理</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- 学会参加履歴導線 -->
+        <section class="filter-group filter-group-history-nav" id="section-history-nav">
+          <div class="filter-group-header">
+            <h3 class="filter-label">学会参加履歴</h3>
+          </div>
+          <div class="history-nav-control">
+            <button type="button" id="sidebar-history-btn" class="btn btn-outline-nav btn-block btn-manage-history">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+                <polyline points="10 2 10 10 13 7 16 10 16 2"></polyline>
+              </svg>
+              <span>マイ学会履歴を確認</span>
             </button>
           </div>
         </section>
@@ -449,6 +473,42 @@
       <div class="dialog-footer">
         <button type="button" id="unhide-all-conferences-btn" class="btn btn-outline" style="display: none;">すべて再表示</button>
         <button type="button" id="dismiss-hidden-modal" class="btn btn-secondary">閉じる</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- マイ学会参加履歴モーダルダイアログ -->
+  <dialog id="conference-history-modal" class="custom-dialog conference-history-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <div class="dialog-title-wrapper" style="color: #0d9488;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+            <polyline points="10 2 10 10 13 7 16 10 16 2"></polyline>
+          </svg>
+          <h3>マイ学会参加履歴</h3>
+        </div>
+        <button id="close-history-modal" class="close-btn" aria-label="閉じる">&times;</button>
+      </div>
+
+      <div class="dialog-body">
+        <p class="settings-section-desc">
+          会期終了後に「参加した」と記録した学会の履歴です。日本の年度（4月1日〜翌年3月31日）基準で自動集計しています。
+        </p>
+
+        <!-- 累計サマリー -->
+        <div id="history-overall-summary" class="history-overall-summary">
+          <!-- JSで動的生成 -->
+        </div>
+
+        <!-- 年度別学会リスト -->
+        <div id="conference-history-content" class="conference-history-container">
+          <!-- JSで年度別参加学会リストが動的挿入されます -->
+        </div>
+      </div>
+
+      <div class="dialog-footer">
+        <button type="button" id="dismiss-history-modal" class="btn btn-secondary">閉じる</button>
       </div>
     </div>
   </dialog>

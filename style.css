@@ -1163,6 +1163,50 @@ button, input, select, textarea {
   background: #ffffff;
 }
 
+/* 「参加した」アクティブ時 */
+.conf-choice-btn.choice-attended.active {
+  background: #0d9488;
+  color: #ffffff;
+  border-color: #0f766e;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.conf-choice-btn.choice-attended.active .choice-dot {
+  background: #ffffff;
+}
+
+/* 「参加しなかった」アクティブ時 */
+.conf-choice-btn.choice-not-attended.active {
+  background: #64748b;
+  color: #ffffff;
+  border-color: #475569;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.conf-choice-btn.choice-not-attended.active .choice-dot {
+  background: #ffffff;
+}
+
+/* 参加実績バー（ハイライト） */
+.conf-history-record-bar.history-attended {
+  background: #f0fdfa;
+  border-color: #99f6e4;
+}
+
+.conf-attended-active-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #ccfbf1;
+  color: #0f766e;
+  border: 1px solid #99f6e4;
+  white-space: nowrap;
+}
+
 .conf-attending-active-tag {
   display: inline-flex;
   align-items: center;
@@ -1203,10 +1247,28 @@ button, input, select, textarea {
   border: 1px solid #cbd5e1;
 }
 
+/* 学会参加実績バッジ（カード右上: マイ学会履歴「参加した」） */
+.conf-history-attended-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: #ccfbf1;
+  color: #0f766e;
+  border: 1px solid #5eead4;
+}
+
 /* 参加予定設定中の学会カードハイライト */
 .event-card.card-attending-conference {
   border-color: #86efac;
   box-shadow: 0 4px 12px rgba(22, 163, 74, 0.08);
+}
+
+/* 参加記録ありの学会カードハイライト */
+.event-card.card-history-attended {
+  border-color: #5eead4;
 }
 
 /* 終了済み学会カード */
@@ -2056,7 +2118,8 @@ button, input, select, textarea {
   }
 
   .header-actions #calendar-settings-btn,
-  .header-actions #toggle-registered-filter {
+  .header-actions #toggle-registered-filter,
+  .header-actions #conference-history-btn {
     padding: 7px 3px;
     font-size: 0.70rem;
     gap: 3px;
@@ -2064,7 +2127,8 @@ button, input, select, textarea {
   }
 
   .header-actions #calendar-settings-btn svg,
-  .header-actions #toggle-registered-filter svg {
+  .header-actions #toggle-registered-filter svg,
+  .header-actions #conference-history-btn svg {
     width: 13px;
     height: 13px;
     flex-shrink: 0;
@@ -2101,4 +2165,245 @@ button, input, select, textarea {
   .card-title {
     font-size: 1.05rem;
   }
+}
+
+/* ==========================================================================
+   マイ学会履歴モーダル & 参加履歴機能スタイル
+   ========================================================================== */
+.conference-history-dialog .dialog-content {
+  max-width: 680px;
+}
+
+.history-nav-control .btn-manage-history {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #0f766e;
+  border-color: #99f6e4;
+  background: #f0fdfa;
+  font-weight: 600;
+}
+
+.history-nav-control .btn-manage-history:hover {
+  background: #ccfbf1;
+  border-color: #5eead4;
+  color: #115e59;
+}
+
+.history-overall-summary {
+  margin: 16px 0 20px 0;
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+}
+
+.history-summary-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 12px;
+}
+
+.history-summary-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.summary-stat-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.summary-stat-value {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0d9488;
+}
+
+.summary-stat-value small {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+
+.history-summary-divider {
+  width: 1px;
+  height: 32px;
+  background: #e2e8f0;
+}
+
+.conference-history-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 55vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* 年度別カード */
+.history-fiscal-year-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.history-fy-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.history-fy-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.history-fy-stat-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.history-stat-chip {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+}
+
+.history-stat-chip.total {
+  background: #ccfbf1;
+  color: #0f766e;
+}
+
+.history-stat-chip.domestic {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.history-stat-chip.international {
+  background: #f3e8ff;
+  color: #7e22ce;
+}
+
+.history-conf-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.history-conf-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.15s ease;
+}
+
+.history-conf-item:last-child {
+  border-bottom: none;
+}
+
+.history-conf-item:hover {
+  background: #f8fafc;
+}
+
+.history-conf-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.history-conf-badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.history-conf-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.history-conf-title a {
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.history-conf-title a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.history-conf-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+.history-conf-actions {
+  flex-shrink: 0;
+}
+
+.btn-cancel-attended {
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  color: #64748b;
+  border-color: #cbd5e1;
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-cancel-attended:hover {
+  color: #ef4444;
+  border-color: #fca5a5;
+  background: #fef2f2;
+}
+
+.history-empty-state {
+  padding: 36px 16px;
+  text-align: center;
+}
+
+.history-empty-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.history-empty-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  max-width: 440px;
+  margin: 0 auto;
 }
