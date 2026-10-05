@@ -68,11 +68,15 @@ async function main() {
     assert.equal(await evaluate('computeEffectiveScheduleStatus(fixture).statusKey'),'free');
     await evaluate(`calendarTestRows=[{id:'busy',summary:'private fixture',start:{dateTime:'2026-10-15T18:30:00+09:00'},end:{dateTime:'2026-10-15T19:30:00+09:00'}}];GoogleCalendar.refresh();await GoogleCalendar.ensure([fixture]);renderEvents();`);
     assert.equal(await evaluate('computeEffectiveScheduleStatus(fixture).statusKey'),'partial_conflict');
-    await evaluate('window.calendarVerifyGate=new Promise(resolve=>window.verifyRelease=resolve);window.insertTask=addToCalendar(fixture);true;');
+    await evaluate(`document.querySelector('[data-action="view-pdf"]').click();`);
+    assert.equal(await evaluate('elements.pdfModal.open'),true);
+    await evaluate('elements.pdfModal.close();');
+    assert.equal(await evaluate(`document.querySelector('.btn-official').getAttribute('href')`), await evaluate('fixture.officialUrl'));
+    await evaluate('window.calendarVerifyGate=new Promise(resolve=>window.verifyRelease=resolve);window.originalAddToCalendar=addToCalendar;addToCalendar=event=>window.insertTask=originalAddToCalendar(event);document.querySelector(\'[data-action="add-calendar"]\').click();true;');
     for(let i=0;i<100;i++){if(await evaluate(`calendarTestCalls.some(call=>call.url.endsWith('/events/new'))`))break;await delay(20);}
     assert.equal(await evaluate('computeEffectiveScheduleStatus(fixture).isRegistered'),false);
     assert.equal(await evaluate(`document.querySelector('[data-action="add-calendar"]').disabled`),true);
-    assert.equal(await evaluate(`document.querySelector('[data-action="add-calendar"]').textContent.trim()`),'カレンダーに追加中…');
+    assert.equal(await evaluate(`document.querySelector('[data-action="add-calendar"]').innerText.trim()`),'追加中…');
     await evaluate('verifyRelease();await insertTask;');assert.equal(await evaluate('computeEffectiveScheduleStatus(fixture).statusKey'),'registered');
     assert.equal(await evaluate('GoogleCalendar.getLastWriteResult().verified'),true);
     assert.equal(await evaluate(`document.querySelector('.toast-action-btn').textContent`),'Google Calendarで確認');

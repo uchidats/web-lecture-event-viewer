@@ -44,7 +44,7 @@ vm.runInContext(`
   assert.equal(rows[2].text, rows[1].text);
   const multiHtml = renderEventTimeHtml(multi);
   for (const date of ['2026-03-07', '2026-03-08', '2026-03-09']) assert.ok(multiHtml.includes(date));
-  assert.ok(renderEventTimeHtml(event('2026-07-01', 'Asia/Singapore', {endDate: '2026-07-03'})).includes('各日'));
+  assert.ok(!renderEventTimeHtml(event('2026-07-01', 'Asia/Singapore', {endDate: '2026-07-03'})).includes('各日'));
   for (const e of [event('2026-07-01', undefined), event('2026-07-01', 'Bad/Zone'),
     event('2026-07-01', '+09:00'), event('2026-07-01', 'Etc/GMT+6'),
     event('2026-07-01', 'Asia/Tokyo'), event('2026-07-01', 'America/Chicago', {cityCountry: '東京 / 日本'}),

@@ -65,10 +65,10 @@
     const formatter = root.getTimeZoneFormatter("Asia/Tokyo");
     const start = root.getZonedTimeParts(interval.start, formatter), end = root.getZonedTimeParts(interval.end, formatter);
     const clock = parts => `${String(parts.hour).padStart(2, "0")}:${String(parts.minute).padStart(2, "0")}`;
-    const sameDay = start.year === end.year && start.month === end.month && start.day === end.day;
     return {providerLabel: "Google", title: item.summary || "予定（タイトル非公開）", allDay: !!item.start.date,
       dateLabel: multiDay ? `${start.month}/${start.day}` : "",
-      start: clock(start), end: `${sameDay ? "" : `${end.month}/${end.day} `}${clock(end)}`};
+      start: clock(start), end: clock(end), startTimestamp: interval.start, endTimestamp: interval.end,
+      ...(item.start.date ? {startDate: item.start.date, endDate: new Date(root.parseEventDate(item.end.date) - DAY).toISOString().slice(0, 10)} : {})};
   }
 
   function createAdapter({config = {}, fetchImpl = (...args) => root.fetch(...args), oauth = () => root.google?.accounts?.oauth2,

@@ -64,7 +64,7 @@ function fixture(items=[],options={}) {
  ctx.GoogleCalendar={snapshot:()=>({state:'ready',status:'partial',registered:false,conflicts:Array.from({length:6},(_,i)=>({providerLabel:'Google',dateLabel:'10/15',start:'13:00',end:'17:00',title:`mock-${i}`}))})};
  ctx.e={...JSON.parse(vm.runInContext('JSON.stringify(sampleEvents.find(e=>e.isConference))',ctx)),date:'2026-10-15',endDate:'2026-10-17'};
  const card=vm.runInContext('createEventCardHtml(e)',ctx);
- assert.ok(card.includes('会期中に予定あり'));assert.ok(card.includes('ほか3件'));assert.ok(card.includes('mock-2'));assert.ok(!card.includes('mock-3'));assert.ok(card.includes('10/15'));
+ assert.ok(card.includes('会期中に予定あり'));assert.ok(card.includes('ほか3件'));assert.ok(card.includes('mock-2'));assert.ok(!card.includes('mock-3'));assert.ok(card.includes('13:00–17:00'));
  ctx.GoogleCalendar=fixture().adapter;
  for(const provider of ['icloud','none']){vm.runInContext(`state.calendarSettings.calendarProvider="${provider}"`,ctx);assert.equal(vm.runInContext('computeEffectiveScheduleStatus(e).statusKey',ctx),provider==='none'?'unlinked':'free');}
  vm.runInContext('var registrationToasts=[]; renderEvents=()=>{};updateRegisteredBadge=()=>{};showToast=message=>registrationToasts.push(message);state.calendarSettings={calendarProvider:"google",defaultCalendar:"google"};',ctx);

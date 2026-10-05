@@ -65,14 +65,14 @@ async function main() {
       if(width<500) assert.equal(layout.stacked,true,width+'px times stacked');
       const cities = await evaluate(`['conf-int-wgc-2027', 'oph-004'].map(id => {
         const card = document.querySelector('[data-id="'+id+'"]');
-        const label = [...card.querySelectorAll('.conf-label')].find(e => e.textContent.startsWith('開催都市'));
-        return {label: label.textContent, value: label.nextElementSibling.textContent,
+        const label = card.querySelector('.conf-city-label');
+        return {label: label.innerText, value: label.nextElementSibling.textContent,
           maps: !!card.querySelector('a[href*="google.com/maps"]'),
           countryLabel: card.querySelector('.location-text').textContent};
       })`);
       assert.equal(cities[0].label, '開催都市：');
       assert.equal(cities[0].value, '京都市（京都府）');
-      assert.equal(cities[1].label, '開催都市・国：');
+      assert.equal(cities[1].label, width <= 480 ? '都市：' : '開催都市・国：');
       assert.ok(cities[1].value.endsWith('/ 米国'));
       assert.ok(cities[1].countryLabel.includes('[米国]'));
       assert.ok(cities.every(city => city.maps));

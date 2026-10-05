@@ -74,6 +74,11 @@ async function main() {
         stacked: rows.filter(row => {const [label, value] = row.children; return value.getBoundingClientRect().left < label.getBoundingClientRect().right - 1;}).length,
         heights: cards.map(card => card.getBoundingClientRect().height),
         maps: document.querySelectorAll('a[href*="google.com/maps"]').length,
+        actions: [...cards[0].querySelector('.card-actions-row').children].map(button => ({
+          text: button.innerText.trim(), top: button.getBoundingClientRect().top,
+          width: button.getBoundingClientRect().width, icons: button.querySelectorAll('svg').length,
+          overflow: button.scrollWidth > button.clientWidth + 1
+        })),
         badges: document.querySelectorAll('.abstract-status-tag').length
       };
     })()`);
@@ -97,6 +102,12 @@ async function main() {
       assert.equal(after.pageOverflow, false, `${width}px page overflow`);
       assert.equal(after.overflow, 0, `${width}px card/value overflow`);
       assert.equal(after.stacked, 0, `${width}px rows should be horizontal`);
+      assert.deepEqual(after.actions.map(action=>action.text), width <= 480 ? ['追加','PDF','申込'] : ['カレンダーに追加','案内PDF','公式申込ページ']);
+      assert.ok(after.actions.every(action=>action.icons===1 && !action.overflow), `${width}px action icons and content fit`);
+      if (width <= 480) {
+        assert.ok(after.actions.every(action=>Math.abs(action.top-after.actions[0].top)<1), `${width}px single action row`);
+        assert.ok(after.actions.every(action=>Math.abs(action.width-after.actions[0].width)<1), `${width}px equal action widths`);
+      }
       assert.ok(after.heights[0] <= before.heights[0], `${width}px card should not grow: ${before.heights[0]} -> ${after.heights[0]}`);
       if (width >= 600) assert.ok(after.heights[0] < before.heights[0], `${width}px card should be shorter`);
       results.push({ width, cards: after.cards, overflow: after.overflow, horizontalRows: after.stacked === 0,

@@ -68,7 +68,10 @@ for (const event of events.filter(e => e.isConference)) {
   const serialized = JSON.stringify(event);
   const display = JSON.parse(run(`JSON.stringify(getEventCityDisplay(${serialized}))`));
   const card = run(`createEventCardHtml(${serialized})`);
-  assert.ok(card.includes(`<span class="conf-label">${display.label}：</span>`), event.id);
+  const cityLabel = display.label === '開催都市・国'
+    ? '<span class="city-label-full">開催都市・国：</span><span class="city-label-mobile">都市：</span>'
+    : `${display.label}：`;
+  assert.ok(card.includes(`<span class="conf-label conf-city-label">${cityLabel}</span>`), event.id);
   assert.ok(card.includes(`<span class="conf-val">${run(`escapeHtml(${JSON.stringify(display.value)})`)}</span>`), event.id);
   if (event.cityCountry?.split(/[/／]/)[1]?.trim() === '日本') {
     assert.equal(display.label, '開催都市');

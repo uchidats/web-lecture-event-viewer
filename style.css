@@ -2768,3 +2768,26 @@ button, input, select, textarea {
 #google-calendar-message {font-size:.85rem; overflow-wrap:anywhere;}
 #google-calendar-connection[hidden], #google-calendar-connection button[hidden] {display:none;}
 .conflict-item-line {overflow-wrap:anywhere; min-width:0;}
+.city-label-mobile {display:none;}
+.card-action-mobile {display:none;}
+@media (max-width: 480px) {
+  .conf-city-label .city-label-full {display:none;}
+  .conf-city-label .city-label-mobile {display:inline;}
+  .card-actions-row {
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:6px;
+  }
+  .card-actions-row .btn {
+    min-width:0;
+    min-height:36px;
+    padding:7px 4px;
+    gap:4px;
+    font-size:clamp(.625rem, 3vw, .8rem);
+    line-height:1.2;
+    white-space:nowrap;
+  }
+  .card-actions-row .btn svg {flex-shrink:0;}
+  .card-actions-row .card-action-full {display:none;}
+  .card-actions-row .card-action-mobile {display:inline;}
+}

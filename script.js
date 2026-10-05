@@ -1816,12 +1816,51 @@ function renderVenueHtml(event) {
 /**
  * 1件の眼科イベントカードHTML生成
  */
+/** Shared Google/iCloud display. All-day endDate is inclusive after provider normalization. */
+function formatCalendarConflictTime(conflict, event = {}) {
+  const shortDate = parts => `${parts.month}/${parts.day}`;
+  const sameDate = (a, b) => a.year === b.year && a.month === b.month && a.day === b.day;
+  const dateParts = value => {
+    const timestamp = parseEventDate(value);
+    if (timestamp === null) return null;
+    const date = new Date(timestamp);
+    return {year: date.getUTCFullYear(), month: date.getUTCMonth() + 1, day: date.getUTCDate()};
+  };
+  if (conflict.allDay) {
+    const start = dateParts(conflict.startDate || event.date);
+    const end = dateParts(conflict.endDate || conflict.startDate || event.date);
+    if (!start || !end) return "終日";
+    return `${shortDate(start)}${sameDate(start, end) ? "" : `–${shortDate(end)}`} 終日`;
+  }
+  const endpoint = (side, fallback) => {
+    const timestamp = conflict[`${side}Timestamp`];
+    if (Number.isFinite(timestamp)) {
+      const parts = getZonedTimeParts(timestamp, getTimeZoneFormatter("Asia/Tokyo"));
+      return {...parts, clock: `${String(parts.hour).padStart(2, "0")}:${String(parts.minute).padStart(2, "0")}`};
+    }
+    const match = String(conflict[side] || "").match(/^(?:(\d{4}-\d{2}-\d{2}|\d{1,2}\/\d{1,2})\s+)?(\d{1,2}:\d{2})$/);
+    if (!match) return null;
+    let date = conflict[`${side}Date`] || match[1] || fallback;
+    if (/^\d{1,2}\/\d{1,2}$/.test(date || "")) {
+      const [month, day] = date.split("/");
+      date = `${event.date?.slice(0, 4)}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    }
+    const parts = dateParts(date);
+    return parts ? {...parts, clock: match[2]} : null;
+  };
+  const start = endpoint("start", event.date);
+  const fallbackEnd = start ? `${start.year}-${String(start.month).padStart(2, "0")}-${String(start.day).padStart(2, "0")}` : event.date;
+  const end = endpoint("end", fallbackEnd);
+  if (!start || !end) return `${conflict.start || ""}–${conflict.end || ""}`;
+  return sameDate(start, end) ? `${start.clock}–${end.clock}` : `${shortDate(start)} ${start.clock}–${shortDate(end)} ${end.clock}`;
+}
+
 function renderEventTimeHtml(event) {
   const rows = getEventJapanTimes(event);
   if (!rows.length) return escapeHtml(event.time || "");
   const localTime = event.time.replace(/\s*[（(]現地時間[）)]\s*$/, "") + "（現地時間）";
   const sameEveryDay = rows.every(row => row.text === rows[0].text);
-  const japanTimes = sameEveryDay ? `<span class="japan-time">${rows.length > 1 ? "各日 " : ""}${escapeHtml(rows[0].text)}</span>` :
+  const japanTimes = sameEveryDay ? `<span class="japan-time">${escapeHtml(rows[0].text)}</span>` :
     rows.map(row => `<span class="japan-time">${escapeHtml(row.date)}：${escapeHtml(row.text)}</span>`).join("");
   return `<span class="event-time-zones"><span class="local-time">${escapeHtml(localTime)}</span>${japanTimes}</span>`;
 }
@@ -1860,7 +1899,7 @@ function createEventCardHtml(event) {
     const conflictLinesHtml = (multiDay ? effective.conflicts.slice(0, 3) : effective.conflicts).map(c => `
       <div class="conflict-item-line">
         <span class="conflict-provider-tag ${c.providerLabel === 'Google' ? 'google' : 'icloud'}">${escapeHtml(c.providerLabel)}</span>
-        <span>${escapeHtml(c.dateLabel || "")} ${c.allDay ? "終日" : `${escapeHtml(c.start)}–${escapeHtml(c.end)}`} <strong>${escapeHtml(c.title)}</strong></span>
+        <span>${escapeHtml(formatCalendarConflictTime(c, event))} <strong>${escapeHtml(c.title)}</strong></span>
       </div>
     `).join("");
 
@@ -1972,7 +2011,7 @@ function createEventCardHtml(event) {
           <span class="conf-val">${escapeHtml(event.period || event.date)}</span>
         </div>
         <div class="conf-item conf-item-full">
-          <span class="conf-label">${getEventCityDisplay(event).label}：</span>
+          <span class="conf-label conf-city-label">${getEventCityDisplay(event).label === "開催都市・国" ? '<span class="city-label-full">開催都市・国：</span><span class="city-label-mobile">都市：</span>' : `${getEventCityDisplay(event).label}：`}</span>
           <span class="conf-val">${escapeHtml(getEventCityDisplay(event).value)}</span>
         </div>
         ${event.conferenceCategory || event.conferenceRegion ? `
@@ -2110,7 +2149,7 @@ function createEventCardHtml(event) {
             <line x1="12" y1="14" x2="12" y2="18"></line>
             <line x1="10" y1="16" x2="14" y2="16"></line>
           </svg>
-          ${effective.isAdding ? "カレンダーに追加中…" : "カレンダーに追加"}
+          <span class="card-action-full">${effective.isAdding ? "カレンダーに追加中…" : "カレンダーに追加"}</span><span class="card-action-mobile">${effective.isAdding ? "追加中…" : "追加"}</span>
         </button>
 
         <!-- 2. 案内PDF -->
@@ -2121,7 +2160,7 @@ function createEventCardHtml(event) {
             <line x1="16" y1="13" x2="8" y2="13"></line>
             <line x1="16" y1="17" x2="8" y2="17"></line>
           </svg>
-          案内PDF
+          <span class="card-action-full">案内PDF</span><span class="card-action-mobile">PDF</span>
         </button>
 
         <!-- 3. 公式申込ページ (別タブで開く) -->
@@ -2131,7 +2170,7 @@ function createEventCardHtml(event) {
             <polyline points="15 3 21 3 21 9"></polyline>
             <line x1="10" y1="14" x2="21" y2="3"></line>
           </svg>
-          公式申込ページ
+          <span class="card-action-full">公式申込ページ</span><span class="card-action-mobile">申込</span>
         </a>
       </div>
     </article>
