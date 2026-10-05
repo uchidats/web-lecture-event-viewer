@@ -28,7 +28,7 @@ const originalData = run('JSON.stringify(sampleEvents)');
 for (const event of events) {
   const card = run(`createEventCardHtml(${JSON.stringify(event)})`);
   const overseasConference = event.isConference && (event.conferenceRegion === 'international' || event.eventType === '海外学会');
-  assert.equal(card.includes('<span class="card-meta-label">認定単位:</span>'), !overseasConference, event.id);
+  assert.equal(card.includes('<span class="card-meta-label">認定単位:</span>'), !overseasConference && typeof event.creditUnits === 'number', event.id);
   assert.equal(card.includes('<p class="card-desc">'), !event.isConference || overseasConference, event.id);
   assert.ok(card.includes(`<p class="card-subtitle">${run(`escapeHtml(${JSON.stringify(event.subtitle)})`)}</p>`), event.id);
   if (!event.isConference || overseasConference) {
@@ -36,6 +36,21 @@ for (const event of events) {
   }
 }
 assert.equal(run('JSON.stringify(sampleEvents)'), originalData, 'Card display must not modify stored credits');
+for (const units of [null, '', '未定', '未確認', '2', undefined, -1, NaN, Infinity]) {
+  run('var creditFixture = {...sampleEvents.find(e => e.id === "oph-001")};');
+  run(`creditFixture.creditUnits = ${units === undefined ? 'undefined' : Number.isNaN(units) ? 'NaN' : units === Infinity ? 'Infinity' : JSON.stringify(units)};`);
+  assert.equal(run('getEventCreditLabel(creditFixture)'), '');
+  assert.ok(!run('createEventCardHtml(creditFixture)').includes('認定単位:'));
+}
+for (const units of [0, 2, 1.5]) {
+  run(`creditFixture.creditUnits = ${units}; creditFixture.credits = "日本眼科学会専門医制度";`);
+  assert.equal(run('getEventCreditLabel(creditFixture)'), `日本眼科学会専門医制度 ${units}単位`);
+  assert.ok(run('createEventCardHtml(creditFixture)').includes('認定単位:'));
+}
+run('creditFixture.creditUnits = null;');
+assert.ok(!run('createEventCardHtml(creditFixture)').includes('認定単位:'));
+run('creditFixture.creditUnits = 2;');
+assert.ok(run('createEventCardHtml(creditFixture)').includes('日本眼科学会専門医制度 2単位'));
 for (const [event, label, value] of [
   [{ cityCountry: '京都市（京都府） / 日本', region: '関西' }, '開催都市', '京都市（京都府）'],
   [{ cityCountry: '東京 ／ 日本', region: '関東', conferenceRegion: 'international' }, '開催都市', '東京'],

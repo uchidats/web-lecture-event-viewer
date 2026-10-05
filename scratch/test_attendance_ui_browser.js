@@ -69,12 +69,16 @@ async function main() {
           noOverflow:group.scrollWidth<=group.clientWidth+1 && document.documentElement.scrollWidth<=innerWidth+1,
           labelFirst: label.classList.contains('conf-attendance-main-text'),
           sameRow: buttons.every(b=>Math.abs(b.getBoundingClientRect().top-label.getBoundingClientRect().top)<15),
+          yesText: buttons[0].querySelector('.choice-text').innerText,
+          noText: buttons[1].querySelector('.choice-text').innerText,
           touch:buttons.every(b=>b.getBoundingClientRect().height>=36),
           unselected:buttons.every(b=>b.getAttribute('aria-pressed')==='false'),
           hints:bar.querySelectorAll('.conf-attendance-hint,.conf-attending-active-tag').length};
       })()`);
       assert.equal(after.noOverflow,true,width+'px overflow'); assert.equal(after.labelFirst,true); assert.equal(after.touch,true); assert.equal(after.unselected,true); assert.equal(after.hints,0);
-      if(width===1280) assert.equal(after.sameRow,true,'PC single row');
+      assert.equal(after.sameRow,true,width+'px single row');
+      assert.equal(after.yesText, width <= 480 ? 'あり' : 'あり（関連セミナー表示）');
+      assert.equal(after.noText, 'なし（非表示）');
       assert.ok(after.bar<before.bar,width+'px bar height '+JSON.stringify({before,after}));
       assert.ok(after.card<before.card,width+'px card height');
       measurements.push({width,before:before.bar,after:after.bar});

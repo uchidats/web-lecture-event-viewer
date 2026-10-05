@@ -1804,7 +1804,18 @@ function renderEventTimeHtml(event) {
   return `<span class="event-time-zones"><span class="local-time">${escapeHtml(localTime)}</span>${japanTimes}</span>`;
 }
 
+function getEventCreditLabel(event) {
+  const units = event.creditUnits;
+  if (typeof units !== "number" || !Number.isFinite(units) || units < 0) return "";
+  const credits = typeof event.credits === "string" ? event.credits.trim() : "";
+  if (!credits || /未定|未確認|不明|要確認/.test(credits)) return `${units}単位`;
+  if (/\d+(?:\.\d+)?\s*単位/.test(credits)) return credits.replace(/\d+(?:\.\d+)?\s*単位/, `${units}単位`);
+  const scheme = credits.replace(/(?:認定)?単位(?:情報)?$/, "").trim();
+  return `${scheme ? scheme + " " : ""}${units}単位`;
+}
+
 function createEventCardHtml(event) {
+  const creditLabel = getEventCreditLabel(event);
   const dateBadgeInfo = formatEventDateBadge(event);
   const effective = computeEffectiveScheduleStatus(event);
 
@@ -1914,7 +1925,7 @@ function createEventCardHtml(event) {
               aria-pressed="${isConferenceAttending ? 'true' : 'false'}"
               title="${isConferenceAttending ? '参加予定を解除' : '参加予定にする（関連セミナーを表示）'}">
               <span class="choice-dot"></span>
-              <span class="choice-text">あり（関連セミナー表示）</span>
+              <span class="choice-text">あり<span class="choice-seminar-hint">（関連セミナー表示）</span></span>
             </button>
 
             <button type="button" 
@@ -2050,10 +2061,10 @@ function createEventCardHtml(event) {
           <span class="card-meta-label">主催/共催:</span>
           <span>${escapeHtml(event.sponsor)}</span>
         </div>
-        ${event.isConference && (event.conferenceRegion === 'international' || event.eventType === '海外学会') ? '' : `
+        ${!creditLabel || (event.isConference && (event.conferenceRegion === 'international' || event.eventType === '海外学会')) ? '' : `
         <div class="card-meta-item">
           <span class="card-meta-label">認定単位:</span>
-          <span class="credits-highlight">${escapeHtml(event.credits)}</span>
+          <span class="credits-highlight">${escapeHtml(creditLabel)}</span>
         </div>
         `}
       </div>

@@ -22,6 +22,7 @@
  *  - sponsor: 主催・共催団体
  *  - sponsors: 任意。[{ companyId: companies.js の会社ID, role: "co-sponsor" }]（確認済みの共催企業）
  *  - credits: 認定単位情報
+ *  - creditUnits: 任意。確認済みの単位数（number）。未設定・null はカードの認定単位行を非表示
  *  - conferenceRegion: "domestic" | "international"
  *  - conferenceCategory: "総合" | "網膜硝子体" | "緑内障" | "白内障屈折" | "角膜" | "小児斜視" | "神経眼科" | "形成腫瘍" | "眼炎症感染" | "眼光学CL近視" | "ロービジョン" | "AI" | "その他"
  *  - conferenceTier: "primary" (基幹学会) | "subspecialty" (分科学会) | "allied" (準分科・関連)
@@ -300,6 +301,7 @@ const sampleEvents = [
     "format": "現地",
     "sponsor": "日本眼形成再建外科学会",
     "credits": "日本眼科学会 4単位 / 形成外科学会後援",
+    "creditUnits": 4,
     "conferenceRegion": "domestic",
     "conferenceCategory": "形成腫瘍",
     "conferenceTier": "subspecialty",
@@ -351,6 +353,7 @@ const sampleEvents = [
     "format": "現地",
     "sponsor": "第13回日本眼形成再建外科学会 / グラクソ・スミスクライン株式会社",
     "credits": "日本眼科学会 1単位",
+    "creditUnits": 1,
     "calendarStatus": {
       "google": {
         "status": "free",
@@ -591,6 +594,7 @@ const sampleEvents = [
     "format": "Web",
     "sponsor": "日本緑内障先端治療研究会 / 眼科メディカルファーマ",
     "credits": "日本眼科学会生涯教育 1単位",
+    "creditUnits": 1,
     "calendarStatus": {
       "google": {
         "status": "free",
@@ -627,6 +631,7 @@ const sampleEvents = [
     "format": "ハイブリッド",
     "sponsor": "公益財団法人 日本眼科学会 / 日本眼科医会",
     "credits": "日本眼科学会生涯教育 8単位 / 専門医制度認定",
+    "creditUnits": 8,
     "conferenceRegion": "domestic",
     "conferenceCategory": "総合",
     "conferenceTier": "primary",
@@ -684,6 +689,7 @@ const sampleEvents = [
     "format": "ハイブリッド",
     "sponsor": "日本小児眼科学会 / 日本弱視斜視学会",
     "credits": "日本眼科学会生涯教育 6単位",
+    "creditUnits": 6,
     "conferenceRegion": "domestic",
     "conferenceCategory": "小児斜視",
     "conferenceTier": "subspecialty",
@@ -748,6 +754,7 @@ const sampleEvents = [
     "sponsor": "第80回日本臨床眼科学会 / ノバルティス ファーマ株式会社",
     "sponsors": [{ "companyId": "novartis", "role": "co-sponsor" }],
     "credits": "日本眼科学会生涯教育 1単位",
+    "creditUnits": 1,
     "calendarStatus": {
       "google": {
         "status": "free",
@@ -786,6 +793,7 @@ const sampleEvents = [
     "sponsor": "第80回日本臨床眼科学会 / 参天製薬株式会社",
     "sponsors": [{ "companyId": "santen", "role": "co-sponsor" }],
     "credits": "日本眼科学会生涯教育 1単位",
+    "creditUnits": 1,
     "calendarStatus": {
       "google": {
         "status": "free",
@@ -823,6 +831,7 @@ const sampleEvents = [
     "format": "現地",
     "sponsor": "第80回日本臨床眼科学会 / アルコン ファーマ株式会社",
     "credits": "日本眼科学会生涯教育 1単位",
+    "creditUnits": 1,
     "calendarStatus": {
       "google": {
         "status": "free",
@@ -909,6 +918,7 @@ const sampleEvents = [
     "format": "ハイブリッド",
     "sponsor": "中部屈折矯正白内障手術懇話会",
     "credits": "日本眼科学会生涯教育 1.5単位",
+    "creditUnits": 1.5,
     "calendarStatus": {
       "google": {
         "status": "free",
@@ -945,6 +955,7 @@ const sampleEvents = [
     "format": "ハイブリッド",
     "sponsor": "近畿角膜疾患研究グループ",
     "credits": "日本眼科学会 2単位",
+    "creditUnits": 2,
     "calendarStatus": {
       "google": {
         "status": "free",
@@ -981,6 +992,7 @@ const sampleEvents = [
     "format": "Web",
     "sponsor": "日本弱視斜視臨床懇話会",
     "credits": "日本眼科学会専門医 1単位",
+    "creditUnits": 1,
     "calendarStatus": {
       "google": {
         "status": "free",
@@ -1174,6 +1186,7 @@ const sampleEvents = [
     "format": "ハイブリッド",
     "sponsor": "首都圏神経眼科研究会",
     "credits": "日本眼科学会生涯教育 1単位",
+    "creditUnits": 1,
     "calendarStatus": {
       "google": {
         "status": "busy",
@@ -1722,6 +1735,7 @@ const sampleEvents = [
     "format": "現地",
     "sponsor": "公益財団法人 日本眼科学会",
     "credits": "日本眼科学会生涯教育 10単位 / 専門医認定",
+    "creditUnits": 10,
     "conferenceRegion": "domestic",
     "conferenceCategory": "総合",
     "conferenceTier": "primary",

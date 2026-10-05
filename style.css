@@ -1265,6 +1265,26 @@ button, input, select, textarea {
   border-radius: 6px;
 }
 
+@media (max-width: 480px) {
+  .conf-planned-choice-group .choice-seminar-hint {
+    display: none;
+  }
+
+  .conf-planned-choice-group {
+    gap: 4px;
+  }
+
+  .conf-planned-choice-group .conf-choice-btn {
+    padding: 6px 4px;
+    gap: 4px;
+    font-size: 0.74rem;
+  }
+
+  .conf-planned-choice-group .conf-attendance-main-text {
+    font-size: 0.78rem;
+  }
+}
+
 .conf-planned-choice-group .choice-dot {
   display: inline-flex;
   align-items: center;
