@@ -350,7 +350,7 @@
               1. 利用するカレンダー（空き状況の判定元）
             </h4>
             <p class="settings-section-desc">
-              将来的に本人の予定を照合し、「🟢 空きあり」「🟡 一部重複」「🔴 重複」を自動判定するために連携するカレンダーを選択します。
+              Googleの実予定とiCloudのサンプル予定を照合し、「🟢 空きあり」「🟡 一部重複」「🔴 重複」を判定するカレンダーを選択します。
             </p>
 
             <div class="settings-radio-group">
@@ -402,6 +402,16 @@
           </section>
 
           <!-- セクション2: 既定の追加先 -->
+          <section id="google-calendar-connection" class="settings-section">
+            <strong id="google-calendar-state" role="status">Google Calendar　未接続</strong>
+            <p class="settings-section-desc">プライマリカレンダーの予定を確認します。予定情報はブラウザー内だけで利用します。iCloudは現在サンプル予定です。</p>
+            <div class="google-connection-actions">
+              <button type="button" class="btn btn-primary" id="google-calendar-connect">Google Calendarに接続</button>
+              <button type="button" class="btn btn-outline" id="google-calendar-disconnect" hidden>Google Calendarとの接続を解除</button>
+              <button type="button" class="btn btn-outline" id="google-calendar-refresh" hidden>予定を再取得</button>
+            </div>
+            <p id="google-calendar-message" role="status"></p>
+          </section>
           <section class="settings-section" id="section-default-destination">
             <h4 class="settings-section-title">
               2. 講演会を追加する既定のカレンダー
@@ -418,7 +428,7 @@
                     <span class="service-icon google">G</span>
                     <strong>Google Calendar</strong>
                   </div>
-                  <span class="radio-card-desc">直接Googleカレンダーの予定登録画面を開きます</span>
+                  <span class="radio-card-desc">接続済みなら直接登録、未接続ならICSをダウンロードします</span>
                 </div>
               </label>
 
@@ -531,9 +541,22 @@
   <div id="toast-notification" class="toast"></div>
 
   <!-- スクリプト読み込み -->
+  <dialog id="calendar-add-choice" class="custom-dialog">
+    <div class="dialog-content"><div class="dialog-body">
+      <p>カレンダーへの追加方法を選択してください。</p>
+      <form method="dialog" class="google-connection-actions">
+        <button class="btn btn-primary" value="google" id="calendar-choice-google">Google Calendar</button>
+        <button class="btn btn-outline" value="ics">ICSダウンロード</button>
+        <button class="btn btn-outline" value="cancel">キャンセル</button>
+      </form>
+    </div></div>
+  </dialog>
   <script src="venues.js"></script>
   <script src="companies.js"></script>
   <script src="events.js"></script>
+  <script src="google-calendar-config.js"></script>
+  <script src="google-calendar.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="script.js"></script>
 </body>
 </html>

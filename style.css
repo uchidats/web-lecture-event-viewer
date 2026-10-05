@@ -2762,3 +2762,9 @@ button, input, select, textarea {
   max-width: 440px;
   margin: 0 auto;
 }
+
+.google-connection-actions {display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;}
+.google-connection-actions .btn {white-space:normal; max-width:100%;}
+#google-calendar-message {font-size:.85rem; overflow-wrap:anywhere;}
+#google-calendar-connection[hidden], #google-calendar-connection button[hidden] {display:none;}
+.conflict-item-line {overflow-wrap:anywhere; min-width:0;}

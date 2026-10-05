@@ -149,6 +149,7 @@ function initApp() {
   updateHiddenConferencesBadge();
   updateHistoryBadgeCount();
   setupEventListeners();
+  if (typeof GoogleCalendar !== "undefined") GoogleCalendar.setupUI(() => {updateRegisteredBadge(); renderEvents();});
   renderEvents();
 }
 
@@ -793,6 +794,7 @@ function updateSettingsIndicator() {
  * モーダル内の「既定の追加先」選択肢の有効/無効・グレーアウト状態を更新
  */
 function updateDestinationOptionsInteractivity(provider) {
+  if (typeof GoogleCalendar !== "undefined") GoogleCalendar.updateConnectionUI(provider);
   const form = elements.calendarSettingsForm;
   if (!form) return;
 
@@ -1383,6 +1385,23 @@ function syncCheckboxesWithState() {
  *  - conflicts: Array<{ providerLabel: "Google" | "iCloud", start: string, end: string, title: string }>
  */
 function computeEffectiveScheduleStatus(event) {
+  const liveProvider = state.calendarSettings.calendarProvider || "both";
+  if (typeof GoogleCalendar !== "undefined" && ["google", "both"].includes(liveProvider)) {
+    const google = GoogleCalendar.snapshot(event);
+    if (google.state !== "ready") {
+      const labels = {loading: "カレンダー確認中…", disconnected: "Google Calendar 未接続", error: "Google Calendarを再接続してください", unknown: "開催日時・タイムゾーン要確認"};
+      return {statusKey: "unlinked", badgeClass: "unlinked", badgeText: labels[google.state], isRegistered: false,
+        conflicts: liveProvider === "both" ? (event.calendarStatus?.icloud?.conflicts || []).map(c => ({providerLabel: "iCloud", ...c})) : []};
+    }
+    if (google.registered) return {statusKey: "registered", badgeClass: "registered", badgeText: "✓ カレンダー登録済み", isRegistered: true, conflicts: []};
+    const icloud = liveProvider === "both" ? event.calendarStatus?.icloud : null;
+    const busy = google.status === "busy" || icloud?.status === "busy";
+    const partial = google.status === "partial" || icloud?.status === "partial";
+    const key = busy ? "conflict" : partial ? "partial_conflict" : "free";
+    return {statusKey: key, badgeClass: key, badgeText: busy ? "🔴 重複" : partial ? "🟡 一部重複" : "🟢 空きあり", isRegistered: false,
+      conflicts: [...google.conflicts, ...(icloud?.conflicts || []).map(c => ({providerLabel: "iCloud", ...c}))]};
+  }
+
   // カレンダー登録済みフラグ判定
   const isAdded = !!(event.calendarStatus?.isAdded || event.scheduleStatus === "registered");
   if (isAdded) {
@@ -1470,7 +1489,7 @@ function computeEffectiveScheduleStatus(event) {
 /**
  * フィルタリング & ソートの計算
  */
-function getFilteredEvents() {
+function getFilteredEvents(ignoreCalendar = false) {
   const todayStr = getTodayString();
   return state.events.filter(event => {
     // 終了済み学会の表示制御 (isConference: true のみ対象)
@@ -1504,7 +1523,7 @@ function getFilteredEvents() {
     const effective = computeEffectiveScheduleStatus(event);
 
     // 登録済み限定フィルター
-    if (state.filters.registeredOnly && !effective.isRegistered) {
+    if (!ignoreCalendar && state.filters.registeredOnly && !effective.isRegistered) {
       return false;
     }
 
@@ -1517,7 +1536,7 @@ function getFilteredEvents() {
     }
 
     // キーワード検索（タイトル、サブタイトル、診療科、主催、単位、重複タイトル、タグなど）
-    if (state.filters.keyword) {
+    if (state.filters.keyword && !ignoreCalendar) {
       const q = state.filters.keyword;
       const conflictText = effective.conflicts.map(c => `${c.providerLabel} ${c.title}`).join(" ");
       const combined = `${event.title} ${event.subtitle} ${event.specialty} ${event.sponsor} ${event.credits} ${event.region} ${event.tags.join(" ")} ${conflictText}`.toLowerCase();
@@ -1554,7 +1573,7 @@ function getFilteredEvents() {
     }
 
     // 予定空き状況（未連携の場合は除外しない）
-    if (effective.statusKey !== "unlinked") {
+    if (!ignoreCalendar && effective.statusKey !== "unlinked") {
       if (state.filters.scheduleStatus.size > 0 && !state.filters.scheduleStatus.has(effective.statusKey)) {
         return false;
       }
@@ -1580,6 +1599,7 @@ function getFilteredEvents() {
  * イベントカード一覧のレンダリング
  */
 function renderEvents() {
+  if (typeof GoogleCalendar !== "undefined" && ["google", "both"].includes(state.calendarSettings.calendarProvider)) GoogleCalendar.ensure(getFilteredEvents(true));
   const filtered = getFilteredEvents();
 
   // 件数表示
@@ -1832,12 +1852,13 @@ function createEventCardHtml(event) {
   if (effective.conflicts.length > 0) {
     const isFullConflict = effective.statusKey === "conflict";
     const alertBoxClass = isFullConflict ? "full" : "partial";
-    const alertTitle = isFullConflict ? "予定と重複しています:" : "予定と一部重複しています:";
+    const multiDay = event.endDate && event.endDate !== event.date;
+    const alertTitle = multiDay ? "会期中に予定あり" : isFullConflict ? "予定と重複しています:" : "予定と一部重複しています:";
 
-    const conflictLinesHtml = effective.conflicts.map(c => `
+    const conflictLinesHtml = (multiDay ? effective.conflicts.slice(0, 3) : effective.conflicts).map(c => `
       <div class="conflict-item-line">
         <span class="conflict-provider-tag ${c.providerLabel === 'Google' ? 'google' : 'icloud'}">${escapeHtml(c.providerLabel)}</span>
-        <span>${escapeHtml(c.start)}–${escapeHtml(c.end)} <strong>${escapeHtml(c.title)}</strong></span>
+        <span>${escapeHtml(c.dateLabel || "")} ${c.allDay ? "終日" : `${escapeHtml(c.start)}–${escapeHtml(c.end)}`} <strong>${escapeHtml(c.title)}</strong></span>
       </div>
     `).join("");
 
@@ -1857,6 +1878,7 @@ function createEventCardHtml(event) {
         <div class="conflict-alert-content">
           <span class="conflict-alert-title">${alertTitle}</span>
           ${conflictLinesHtml}
+          ${multiDay && effective.conflicts.length > 3 ? `<span>ほか${effective.conflicts.length - 3}件</span>` : ""}
         </div>
       </div>
     `;
@@ -2175,7 +2197,7 @@ function attachCardActionListeners() {
  * ヘッダーの登録件数バッジ更新
  */
 function updateRegisteredBadge() {
-  const registeredCount = state.events.filter(e => e.calendarStatus?.isAdded || e.scheduleStatus === "registered").length;
+  const registeredCount = state.events.filter(e => computeEffectiveScheduleStatus(e).isRegistered).length;
   elements.registeredBadgeCount.textContent = registeredCount;
 }
 
@@ -2224,7 +2246,24 @@ function showPdfModal(event) {
  *  - "icloud": .icsファイルを直接ダウンロード
  *  - "ask": 選択ダイアログ/トースト経由で両方を提供
  */
-function addToCalendar(event) {
+async function addToCalendar(event) {
+  let selected = state.calendarSettings.defaultCalendar || "ask";
+  if (typeof GoogleCalendar !== "undefined") {
+    if (selected === "ask") {
+      const dialog = document.getElementById("calendar-add-choice");
+      document.getElementById("calendar-choice-google").disabled = !GoogleCalendar.connected() || !["google", "both"].includes(state.calendarSettings.calendarProvider);
+      dialog.returnValue = "cancel";
+      selected = await new Promise(resolve => {dialog.addEventListener("close", () => resolve(dialog.returnValue), {once: true}); dialog.showModal();});
+      if (!["google", "ics"].includes(selected)) return;
+    }
+    if (selected === "google" && GoogleCalendar.connected() && ["google", "both"].includes(state.calendarSettings.calendarProvider)) {
+      try {showToast("Google Calendarに登録中…"); await GoogleCalendar.insert(event); updateRegisteredBadge(); renderEvents(); showToast("✓ カレンダー登録済み");}
+      catch (error) {showToast(error.message === "event-time-unknown" ? "開催日時・タイムゾーンを確認してください" : "Google Calendarへの登録に失敗しました。接続を確認してください");}
+      return;
+    }
+    selected = "icloud"; // Disconnected Google and explicit ICS keep the existing export.
+  }
+
   const dateStr = event.date; // YYYY-MM-DD
   const times = event.time.split("-").map(t => t.trim());
   const startTimeStr = times[0] ? times[0].replace(/[^0-9:]/g, "") : "19:00";
@@ -2236,7 +2275,7 @@ function addToCalendar(event) {
   const startIso = `${dateStr.replace(/-/g, "")}T${safeStartTime.replace(":", "")}00`;
   const endIso = `${dateStr.replace(/-/g, "")}T${safeEndTime.replace(":", "")}00`;
 
-  const dest = state.calendarSettings.defaultCalendar || "ask";
+  const dest = selected;
 
   // Google Calendar URL
   const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startIso}/${endIso}&details=${encodeURIComponent(event.description + "\n\n主催: " + event.sponsor + "\n単位: " + event.credits + "\n公式URL: " + event.officialUrl)}&location=${encodeURIComponent(getEventVenueName(event))}`;
