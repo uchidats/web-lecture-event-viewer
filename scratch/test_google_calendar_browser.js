@@ -60,7 +60,7 @@ async function main() {
     }
     assert.equal(await evaluate('GoogleCalendar.connected()'),false);
     const moduleSource=fs.readFileSync(path.join(root,'google-calendar.js'),'utf8').replace('const config = typeof GOOGLE_CALENDAR_CONFIG !== "undefined" ? GOOGLE_CALENDAR_CONFIG : {};','const config = {clientId:"browser-test"};');
-    await evaluate(`document.querySelectorAll('#google-calendar-connection button').forEach(button=>button.replaceWith(button.cloneNode(true))); window.google={accounts:{oauth2:{initTokenClient:options=>({requestAccessToken:()=>options.callback({access_token:'test',expires_in:3600})}),hasGrantedAllScopes:()=>true}}}; window.calendarTestRows=[];window.fetch=async(url,options)=>({ok:true,status:200,json:async()=> options.method==='POST'?{id:'new',...JSON.parse(options.body)}:url.includes('/events?')?{items:calendarTestRows}:{timeZone:'Asia/Tokyo'}});`);
+    await evaluate(`document.querySelectorAll('#google-calendar-connection button').forEach(button=>button.replaceWith(button.cloneNode(true))); window.google={accounts:{oauth2:{initTokenClient:options=>({requestAccessToken:()=>options.callback({access_token:'test',expires_in:3600})}),hasGrantedAllScopes:()=>true}}}; window.calendarTestRows=[];window.calendarTestCalls=[];window.fetch=async(url,options)=>{calendarTestCalls.push({url,method:options.method});if(options.method==='POST'&&window.calendarTestFailure)return {ok:false,status:calendarTestFailure,json:async()=>({error:{message:'Mock insufficient permissions',code:calendarTestFailure}})};if(options.method==='POST')window.insertedFixture={id:'new',status:'confirmed',htmlLink:'https://calendar.google.com/calendar/event?eid=mock',...JSON.parse(options.body)};if(url.endsWith('/events/new')&&window.calendarVerifyGate)await calendarVerifyGate;return {ok:true,status:200,json:async()=> options.method==='POST'||url.endsWith('/events/new')?insertedFixture:url.includes('/events?')?{items:calendarTestRows}:{timeZone:'Asia/Tokyo'}};};`);
     await evaluate(moduleSource);
     await evaluate(`GoogleCalendar.setupUI(()=>{updateRegisteredBadge();renderEvents();}); document.querySelector('input[name="calendarProvider"][value="google"]').click();document.getElementById('google-calendar-connect').click();`);
     assert.equal(await evaluate('GoogleCalendar.connected()'),true);
@@ -68,7 +68,20 @@ async function main() {
     assert.equal(await evaluate('computeEffectiveScheduleStatus(fixture).statusKey'),'free');
     await evaluate(`calendarTestRows=[{id:'busy',summary:'private fixture',start:{dateTime:'2026-10-15T18:30:00+09:00'},end:{dateTime:'2026-10-15T19:30:00+09:00'}}];GoogleCalendar.refresh();await GoogleCalendar.ensure([fixture]);renderEvents();`);
     assert.equal(await evaluate('computeEffectiveScheduleStatus(fixture).statusKey'),'partial_conflict');
-    await evaluate('await addToCalendar(fixture)');assert.equal(await evaluate('computeEffectiveScheduleStatus(fixture).statusKey'),'registered');
+    await evaluate('window.calendarVerifyGate=new Promise(resolve=>window.verifyRelease=resolve);window.insertTask=addToCalendar(fixture);true;');
+    for(let i=0;i<100;i++){if(await evaluate(`calendarTestCalls.some(call=>call.url.endsWith('/events/new'))`))break;await delay(20);}
+    assert.equal(await evaluate('computeEffectiveScheduleStatus(fixture).isRegistered'),false);
+    assert.equal(await evaluate(`document.querySelector('[data-action="add-calendar"]').disabled`),true);
+    assert.equal(await evaluate(`document.querySelector('[data-action="add-calendar"]').textContent.trim()`),'カレンダーに追加中…');
+    await evaluate('verifyRelease();await insertTask;');assert.equal(await evaluate('computeEffectiveScheduleStatus(fixture).statusKey'),'registered');
+    assert.equal(await evaluate('GoogleCalendar.getLastWriteResult().verified'),true);
+    assert.equal(await evaluate(`document.querySelector('.toast-action-btn').textContent`),'Google Calendarで確認');
+    assert.equal(await evaluate(`calendarTestCalls.filter(call=>call.method==='POST'&&call.url.endsWith('/calendars/primary/events')).length`),1);
+    assert.equal(await evaluate(`calendarTestCalls.some(call=>call.url.endsWith('/calendars/primary/events/new'))`),true);
+    await evaluate(`window.failureFixture={...fixture,id:'failure-fixture'};state.events=[failureFixture];window.calendarTestFailure=403;await addToCalendar(failureFixture);`);
+    assert.equal(await evaluate('computeEffectiveScheduleStatus(failureFixture).isRegistered'),false);
+    assert.equal(await evaluate(`document.querySelector('.toast-message').textContent`),'Google Calendarへの登録に失敗しました');
+    assert.equal(await evaluate(`document.querySelector('[data-action="add-calendar"]').disabled`),false);
     await evaluate(`GoogleCalendar.disconnect(); renderEvents();`);assert.equal(await evaluate('computeEffectiveScheduleStatus(fixture).statusKey'),'unlinked');
     assert.equal(await evaluate(`Object.values(localStorage).some(value=>value.includes('private fixture')||value.includes('access_token'))`),false);
     console.log('PASS: browser Google connection UI, four providers, 320-1280px modal, mocked GIS/API, partial conflict, direct registration, disconnect, privacy');

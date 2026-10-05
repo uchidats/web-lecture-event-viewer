@@ -75,13 +75,14 @@
     now = () => Date.now(), onChange = () => {}, timers = root} = {}) {
     let token = null, expiresAt = 0, expiryTimer = null, tokenClient = null, phase = "disconnected";
     let generation = 0, calendarZone = null, metadataPromise = null, authPromise = null;
-    const cache = new Map(), pending = new Map(), failures = new Set(), controllers = new Set(), inserting = new Map();
+    const cache = new Map(), pending = new Map(), failures = new Set(), controllers = new Set(), inserting = new Map(), unverified = new Map();
+    let lastWriteResult = null;
     const notify = () => onChange();
     function reset(nextPhase) {
       generation++; token = null; expiresAt = 0; phase = nextPhase;
       timers.clearTimeout(expiryTimer); expiryTimer = null;
       controllers.forEach(controller => controller.abort()); controllers.clear();
-      cache.clear(); pending.clear(); failures.clear(); inserting.clear();
+      cache.clear(); pending.clear(); failures.clear(); inserting.clear(); unverified.clear(); lastWriteResult = null;
       calendarZone = null; metadataPromise = null; notify();
     }
     function connected() {
@@ -99,11 +100,25 @@
           headers: {Authorization: `Bearer ${accessToken}`, ...(options.body ? {"Content-Type": "application/json"} : {})}
         });
         if (currentGeneration !== generation) throw new Error("session-changed");
-        if (response.status === 401 || response.status === 403) {reset("expired"); throw new Error("reconnect");}
-        if (!response.ok) throw new Error("calendar-request-failed");
-        const result = await response.json();
+        let result;
+        try {result = await response.json();} catch {result = {error: {message: "Invalid JSON response"}};}
         if (currentGeneration !== generation) throw new Error("session-changed");
+        if (!response.ok || result.error) {
+          // Never log Authorization headers, tokens, request bodies or appointment contents.
+          root.console?.error("Google Calendar API error", {method: options.method || "GET", path, httpStatus: response.status, error: result.error || result});
+          const error = new Error("calendar-request-failed");
+          error.httpStatus = response.status; error.apiError = result.error || result;
+          if (response.status === 401 || response.status === 403) reset("expired");
+          throw error;
+        }
+        if (options.method === "POST" || /\/events\/[^/?]+$/.test(path)) {
+          root.console?.info("Google Calendar API event response", {method: options.method || "GET", calendarId: config.calendarId || "primary",
+            httpStatus: response.status, id: result.id, htmlLink: result.htmlLink, status: result.status});
+        }
         return result;
+      } catch (error) {
+        if (!error.httpStatus) root.console?.error("Google Calendar API request failed", {method: options.method || "GET", path, message: error.message});
+        throw error;
       } finally {timers.clearTimeout(timeout); controllers.delete(controller);}
     }
     function connect() {
@@ -119,6 +134,7 @@
           callback: response => {
             if (currentGeneration !== generation) {reject(new Error("session-changed")); return;}
             if (response.error || !response.access_token || !gis.hasGrantedAllScopes(response, ...SCOPES) || !(Number(response.expires_in) > 0)) {fail(); return;}
+            root.console?.info("Google Calendar OAuth scopes granted", {scopes: SCOPES});
             token = response.access_token; expiresAt = now() + Number(response.expires_in) * 1000;
             phase = "connected";
             expiryTimer = timers.setTimeout(() => reset("expired"), Number(response.expires_in) * 1000);
@@ -208,6 +224,7 @@
       if (inserting.has(event.id)) return inserting.get(event.id);
       const currentGeneration = generation;
       const task = (async () => {
+        lastWriteResult = null;
         if (!connected()) throw new Error("reconnect");
         const range = eventRange(event);
         if (!range) throw new Error("event-time-unknown");
@@ -215,7 +232,11 @@
         if (currentGeneration !== generation) throw new Error("session-changed");
         const known = snapshot(event);
         if (known.state !== "ready") throw new Error("calendar-check-failed");
-        if (known.registered) return {alreadyRegistered: true};
+        const existing = known.registered ? quarters(range).flatMap(bucket => cache.get(bucket.key)).find(item => {
+          const interval = appointmentRange(item, calendarZone);
+          return item.id && item.status !== "cancelled" && interval?.start === range.start && interval.end === range.end &&
+            (item.extendedProperties?.private?.ophthalconfEventId === event.id || (item.description || "").split(/\r?\n/).includes(`OphthalConf-ID: ${event.id}`));
+        }) : null;
         const description = `${event.description || ""}\n主催: ${event.sponsor || ""}\n単位: ${event.credits || ""}\n公式URL: ${event.officialUrl || ""}\nOphthalConf-ID: ${event.id}`;
         const body = {summary: event.title, description, location: root.getEventVenueName(event),
           start: range.allDay ? {date: range.startDate} : {dateTime: new Date(range.start).toISOString(), timeZone: range.zone},
@@ -226,15 +247,32 @@
           body.start = {dateTime: new Date(range.start).toISOString(), timeZone: range.zone};
           body.end = {dateTime: new Date(range.end).toISOString(), timeZone: range.zone};
         }
-        const result = await request(`calendars/${encodeURIComponent(config.calendarId || "primary")}/events`, {method: "POST", body: JSON.stringify(body)});
+        const path = `calendars/${encodeURIComponent(config.calendarId || "primary")}/events`;
+        const result = existing || unverified.get(event.id) || await request(path, {method: "POST", body: JSON.stringify(body)});
         if (currentGeneration !== generation) throw new Error("session-changed");
-        if (!result.id || !appointmentRange(result, calendarZone)) throw new Error("insert-response-invalid");
-        for (const bucket of quarters(range)) if (cache.has(bucket.key)) cache.get(bucket.key).push(result);
-        notify(); return result;
+        if (!result.id || result.status === "cancelled" || !appointmentRange(result, calendarZone)) throw new Error("insert-response-invalid");
+        unverified.set(event.id, result);
+        lastWriteResult = {eventId: event.id, calendarId: config.calendarId || "primary", id: result.id, htmlLink: result.htmlLink || null, status: result.status || null, verified: false};
+        const verified = await request(`${path}/${encodeURIComponent(result.id)}`);
+        const interval = appointmentRange(verified, calendarZone);
+        const sameId = verified.extendedProperties?.private?.ophthalconfEventId === event.id ||
+          (verified.description || "").split(/\r?\n/).includes(`OphthalConf-ID: ${event.id}`);
+        if (currentGeneration !== generation) throw new Error("session-changed");
+        if (verified.id !== result.id || verified.status !== "confirmed" || !interval || interval.start !== range.start || interval.end !== range.end || !sameId) {
+          root.console?.error("Google Calendar registration verification failed", {id: verified.id, htmlLink: verified.htmlLink, status: verified.status});
+          throw new Error("insert-verification-failed");
+        }
+        for (const bucket of quarters(range)) if (cache.has(bucket.key)) {
+          cache.set(bucket.key, cache.get(bucket.key).filter(item => item.id !== verified.id).concat(verified));
+        }
+        unverified.delete(event.id);
+        lastWriteResult = {eventId: event.id, calendarId: config.calendarId || "primary", id: verified.id, htmlLink: verified.htmlLink || null, status: verified.status, verified: true};
+        notify(); return {...verified, verified: true};
       })().finally(() => {if (currentGeneration === generation) inserting.delete(event.id);});
       inserting.set(event.id, task); return task;
     }
     return {connect, disconnect: () => reset("disconnected"), connected, ensure, snapshot, insert,
+      getLastWriteResult: () => lastWriteResult ? {...lastWriteResult} : null,
       refresh: () => {if (connected()) {generation++; controllers.forEach(c => c.abort()); cache.clear(); pending.clear(); failures.clear(); inserting.clear(); metadataPromise = null; notify();}},
       connectionState: () => {connected(); return phase;}};
   }

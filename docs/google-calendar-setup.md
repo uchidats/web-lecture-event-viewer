@@ -25,7 +25,9 @@ Client IDは公開識別子です。Client Secret、秘密鍵、アクセスト�
 - 複数日学会は開始日から終了日までの期間で判定し、予定表示は最大3件です。表示時刻は日本時間です。
 - 国内はAsia/Tokyo、海外はイベントまたは会場の明示されたIANAタイムゾーンを利用します。不明・不正な時刻やDSTの曖昧な時刻は推測せず、要確認と表示します。会期のみのイベントは終日扱いです。
 - 登録済み判定は `extendedProperties.private.ophthalconfEventId`（または説明欄の `OphthalConf-ID:`）と開始・終了日時を照合します。以前ICSで追加した予定にはこのIDがなく、実データの登録済み判定には含まれません。
-- 接続済みGoogleへの直接登録だけが実登録を確認します。ICSのダウンロード後に実際のインポートが完了したかは確認できません。Google未接続時はICSへフォールバックします。ICS生成内容、iCloudのダミーデータ構造は維持しています。
+- 接続済みGoogleへの直接登録は、POST成功後に返されたIDでGETし、ID・confirmed状態・日時・OphthalConf-IDが一致してから登録済みにします。追加中はボタンを無効にし、失敗時は登録済みにしません。GET確認だけが失敗した場合、再試行は同じIDをGETして重複POSTを避けます。
+- ICSダウンロードやGoogleのテンプレート画面を開く操作では実登録を確認できないため、登録済みフラグは更新しません。Google未接続時はICSへフォールバックします。ICS生成内容、iCloudのダミーデータ構造は維持しています。
+- 開発時はconsoleでAPIエラーのHTTP statusとエラー本文を確認できます。成功時にはPOST/GETのHTTP status・calendarId・id・htmlLink・statusだけを表示します。トークン、Authorizationヘッダー、予定のタイトル・本文はログに出しません。`GoogleCalendar.getLastWriteResult()` で最後の登録結果とverified状態をメモリ上で確認でき、「Google Calendarで確認」から登録した予定を開けます。
 
 ## 自動テスト
 
@@ -55,3 +57,17 @@ node scratch/test_mobile_cards.js
 8. 接続解除、リロード、通信失敗で空きありと誤表示しないこと、一覧は利用できることを確認します。スマートフォンでも設定・追加選択・カードに横スクロールがないことを確認します。
 
 実際のOAuth同意・Google API呼び出しは、ユーザーのClient ID設定後にこの手順で確認してください。
+
+## 直接登録の調査・確認
+
+旧コードにはICSのダウンロードやGoogleテンプレート画面を開くだけで `calendarStatus.isAdded` を更新する経路がありました。また、接続状態と既定の追加先に加えて、空き状況判定の利用先までGoogleかどうかを要求していました。現在は「接続済み＋追加先Google」だけでPOSTし、エクスポート経路は登録フラグを更新しません。
+
+ローカルの `http://localhost:8000/` を強制再読み込みし、Googleを接続して既定追加先をGoogleに保存します。DevToolsのNetworkを開いて追加してください。
+
+1. 「カレンダーに追加中…」が表示され、二重クリックできないことを確認します。
+2. `POST https://www.googleapis.com/calendar/v3/calendars/primary/events` が発生することを確認します。レスポンスのHTTP statusとJSONを確認します。
+3. 続いて `/calendars/primary/events/{返されたID}` にGETが発生することを確認します。返された `id`、`htmlLink`、`status: "confirmed"` を確認します。
+4. 確認後にだけ登録済みとなり、成功トーストの「Google Calendarで確認」で該当予定を開けます。consoleの `GoogleCalendar.getLastWriteResult()` でもeventId・calendarId・id・htmlLink・status・verifiedを確認できます。
+5. 400/403/500などでは登録済みにせず、「Google Calendarへの登録に失敗しました」を表示します。consoleの `Google Calendar API error` にHTTP statusとGoogleのエラー本文が出ます。認証完了時には許可確認済みのスコープをconsoleに表示します。
+
+NetworkのAuthorizationヘッダーやアクセストークンを共有・保存しないでください。実アカウントのHTTPレスポンスがない段階では、権限不足・アカウント違いなどの原因を断定できません。

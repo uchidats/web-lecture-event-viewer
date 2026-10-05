@@ -174,7 +174,7 @@ for (const event of [events.find(e => e.venueId), events.find(e => !e.venueId), 
   assert.equal(url.searchParams.get('location'), location);
   assert.ok(url.searchParams.get('details').includes('単位: ' + event.credits));
   assert.ok(url.searchParams.get('details').includes(event.description));
-  assert.ok(run('calendarEvent.calendarStatus.isAdded'));
+  assert.equal(run('JSON.stringify(calendarEvent)'), serialized, 'Opening a Google template must not mark the event as registered');
   run(`state.calendarSettings.defaultCalendar = 'icloud'; addToCalendar(${serialized});`);
   assert.ok(run('downloadedIcs').includes(`LOCATION:${location}\r\n`));
   assert.ok(run('downloadedIcs').includes(`(${event.credits})\\n公式:`));

@@ -1384,16 +1384,18 @@ function syncCheckboxesWithState() {
  *  - isRegistered: boolean
  *  - conflicts: Array<{ providerLabel: "Google" | "iCloud", start: string, end: string, title: string }>
  */
+const calendarAddsInProgress = new Set();
 function computeEffectiveScheduleStatus(event) {
+  if (calendarAddsInProgress.has(event.id)) return {statusKey: "unlinked", badgeClass: "unlinked", badgeText: "カレンダーに追加中…", isRegistered: false, isAdding: true, conflicts: []};
   const liveProvider = state.calendarSettings.calendarProvider || "both";
+  const google = typeof GoogleCalendar !== "undefined" ? GoogleCalendar.snapshot(event) : null;
+  if (google?.state === "ready" && google.registered) return {statusKey: "registered", badgeClass: "registered", badgeText: "✓ カレンダー登録済み", isRegistered: true, conflicts: []};
   if (typeof GoogleCalendar !== "undefined" && ["google", "both"].includes(liveProvider)) {
-    const google = GoogleCalendar.snapshot(event);
     if (google.state !== "ready") {
       const labels = {loading: "カレンダー確認中…", disconnected: "Google Calendar 未接続", error: "Google Calendarを再接続してください", unknown: "開催日時・タイムゾーン要確認"};
       return {statusKey: "unlinked", badgeClass: "unlinked", badgeText: labels[google.state], isRegistered: false,
         conflicts: liveProvider === "both" ? (event.calendarStatus?.icloud?.conflicts || []).map(c => ({providerLabel: "iCloud", ...c})) : []};
     }
-    if (google.registered) return {statusKey: "registered", badgeClass: "registered", badgeText: "✓ カレンダー登録済み", isRegistered: true, conflicts: []};
     const icloud = liveProvider === "both" ? event.calendarStatus?.icloud : null;
     const busy = google.status === "busy" || icloud?.status === "busy";
     const partial = google.status === "partial" || icloud?.status === "partial";
@@ -2099,7 +2101,7 @@ function createEventCardHtml(event) {
       <!-- 下段: 3つの操作ボタン (カレンダーに追加 / 案内PDF / 公式申込ページ) -->
       <div class="card-actions-row">
         <!-- 1. カレンダーに追加 -->
-        <button class="btn btn-calendar" data-action="add-calendar" title="Google/iCloud/Outlookに追加 (.ics)">
+        <button class="btn btn-calendar" data-action="add-calendar" title="Google Calendarに登録 / ICSダウンロード" ${effective.isAdding ? 'disabled aria-busy="true"' : ''}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
             <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -2108,7 +2110,7 @@ function createEventCardHtml(event) {
             <line x1="12" y1="14" x2="12" y2="18"></line>
             <line x1="10" y1="16" x2="14" y2="16"></line>
           </svg>
-          カレンダーに追加
+          ${effective.isAdding ? "カレンダーに追加中…" : "カレンダーに追加"}
         </button>
 
         <!-- 2. 案内PDF -->
@@ -2247,18 +2249,35 @@ function showPdfModal(event) {
  *  - "ask": 選択ダイアログ/トースト経由で両方を提供
  */
 async function addToCalendar(event) {
+  if (calendarAddsInProgress.has(event.id)) return;
   let selected = state.calendarSettings.defaultCalendar || "ask";
   if (typeof GoogleCalendar !== "undefined") {
     if (selected === "ask") {
       const dialog = document.getElementById("calendar-add-choice");
-      document.getElementById("calendar-choice-google").disabled = !GoogleCalendar.connected() || !["google", "both"].includes(state.calendarSettings.calendarProvider);
+      document.getElementById("calendar-choice-google").disabled = !GoogleCalendar.connected();
       dialog.returnValue = "cancel";
       selected = await new Promise(resolve => {dialog.addEventListener("close", () => resolve(dialog.returnValue), {once: true}); dialog.showModal();});
       if (!["google", "ics"].includes(selected)) return;
     }
-    if (selected === "google" && GoogleCalendar.connected() && ["google", "both"].includes(state.calendarSettings.calendarProvider)) {
-      try {showToast("Google Calendarに登録中…"); await GoogleCalendar.insert(event); updateRegisteredBadge(); renderEvents(); showToast("✓ カレンダー登録済み");}
-      catch (error) {showToast(error.message === "event-time-unknown" ? "開催日時・タイムゾーンを確認してください" : "Google Calendarへの登録に失敗しました。接続を確認してください");}
+    if (selected === "google" && GoogleCalendar.connected()) {
+      calendarAddsInProgress.add(event.id);
+      renderEvents();
+      showToast("カレンダーに追加中…");
+      try {
+        const result = await GoogleCalendar.insert(event);
+        if (!result?.id || result.status !== "confirmed" || result.verified !== true) throw new Error("insert-success-not-verified");
+        showToast("✓ カレンダー登録済み", result.htmlLink ? {label: "Google Calendarで確認", onClick: () => {
+          const link = new URL(result.htmlLink);
+          if (link.protocol === "https:" && ["www.google.com", "calendar.google.com"].includes(link.hostname)) window.open(link.href, "_blank", "noopener,noreferrer");
+        }} : null);
+      } catch (error) {
+        console.error("Google Calendar registration failed", {message: error.message, httpStatus: error.httpStatus, apiError: error.apiError});
+        showToast("Google Calendarへの登録に失敗しました");
+      } finally {
+        calendarAddsInProgress.delete(event.id);
+        updateRegisteredBadge();
+        renderEvents();
+      }
       return;
     }
     selected = "icloud"; // Disconnected Google and explicit ICS keep the existing export.
@@ -2320,16 +2339,7 @@ async function addToCalendar(event) {
     showToast(`📅 カレンダーファイル(.ics)をダウンロードしました (Googleカレンダーにも追加可)`);
   }
 
-  // カレンダー登録済みステータスに更新
-  if (!event.calendarStatus) {
-    event.calendarStatus = { google: { status: "free", conflicts: [] }, icloud: { status: "free", conflicts: [] } };
-  }
-  event.calendarStatus.isAdded = true;
-  event.scheduleStatus = "registered";
-  event.conflictDetail = null;
-
-  updateRegisteredBadge();
-  renderEvents();
+  // Exporting an ICS or opening a template cannot prove that a calendar entry exists.
 }
 
 /**
