@@ -27,6 +27,14 @@
         </div>
       </div>
       <div class="header-actions">
+        <div class="auth-controls" aria-label="OphthalConfアカウント">
+          <div class="auth-buttons">
+            <span id="auth-user" class="auth-user" hidden></span>
+            <button id="auth-login" type="button" class="btn btn-outline-nav" disabled>Googleでログイン</button>
+            <button id="auth-logout" type="button" class="btn btn-outline-nav" hidden>ログアウト</button>
+          </div>
+          <span id="auth-status" class="auth-status" role="status" aria-live="polite">ログイン状態を確認中…</span>
+        </div>
         <button id="calendar-settings-btn" class="btn btn-outline-nav" title="カレンダー連携設定を開く">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
@@ -558,5 +566,7 @@
   <script src="google-calendar.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="script.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="firebase-auth.js"></script>
 </body>
 </html>

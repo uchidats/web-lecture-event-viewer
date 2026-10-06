@@ -131,6 +131,27 @@ button, input, select, textarea {
   gap: 12px;
 }
 
+.auth-controls { min-width: 0; max-width: 270px; }
+.auth-buttons { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.auth-user { max-width: 130px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.8rem; }
+.auth-status { display: block; font-size: 0.72rem; color: var(--text-muted); overflow-wrap: anywhere; }
+.auth-controls [hidden] { display: none; }
+.auth-buttons button { flex-shrink: 0; }
+.auth-buttons button:disabled { opacity: 0.6; cursor: default; }
+
+@media (min-width: 981px) {
+  .app-header { height: auto; min-height: var(--header-height); }
+  .header-container { min-height: var(--header-height); gap: 12px; padding-top: 8px; padding-bottom: 8px; flex-wrap: wrap; }
+  .header-actions { flex-wrap: wrap; }
+}
+
+@media (max-width: 980px) {
+  .header-actions .auth-controls { grid-column: 1 / -1; grid-row: 1; max-width: 100%; }
+  .auth-buttons { justify-content: flex-end; }
+  .auth-user { max-width: min(50vw, 240px); }
+  .auth-status { text-align: right; }
+}
+
 .badge-count {
   display: inline-flex;
   align-items: center;
