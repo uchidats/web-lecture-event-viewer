@@ -32,7 +32,7 @@ PC・スマホとも、クリック直後にsignInWithPopupを呼びます。ポ
 
 FirebaseログインとGoogle Calendar OAuthは独立しています。FirebaseログインはCalendar接続を開始せず、Calendar権限も要求しません。ログアウトしてもCalendar接続は維持されます。共用端末ではCalendar側も「解除」してください。両方で異なるGoogleアカウントを選ぶことも可能です。
 
-将来のバックエンド用に `OphthalAuth.getIdToken()` を用意しています。今回は送信・保存しません。将来Cloud Runで使う際はFirebase ID tokenをサーバーで検証し、検証済みuidを利用してください（フロントから渡されたuidだけを信用しません）。Firestore、Cloud Run、Google Calendar refresh token保存は今回未実装です。
+`OphthalAuth.getIdToken()` でFirebase ID tokenを取得できます。通常UIからバックエンドへは送信しません。開発用Consoleから `await OphthalAuth.testBackend("http://localhost:8080")` を呼ぶと `/api/me` に送信して検証済みuidを確認できます。バックエンドの骨格は [backend/README.md](../backend/README.md)、サーバーCalendar OAuth・refresh tokenのローカルメモリ保存と `getCalendarConnectionStatus()` 等の検証手順は [backend/OAUTH-LOCAL.md](../backend/OAUTH-LOCAL.md) を参照してください。Firestore本番保存・Cloud Runデプロイ・バックエンドCalendar API操作は未実装です。
 
 ## ローカル検証
 

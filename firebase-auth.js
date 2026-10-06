@@ -8,7 +8,7 @@
     ]);
     return {...app, ...auth};
   }
-  function createController({config = {}, load = loadSDK, onChange = () => {}} = {}) {
+  function createController({config = {}, load = loadSDK, onChange = () => {}, fetchImpl = (...args) => root.fetch(...args)} = {}) {
     let sdk, auth, user = null, phase = "loading", message = "", busy = false, ready;
     const listeners = new Set();
     const snapshot = () => ({phase, busy, message, user: user ? {
@@ -65,7 +65,52 @@
       busy = true; message = ""; notify();
       try {await sdk.signOut(auth);} catch (error) {fail(error);} finally {busy = false; notify();}
     }
-    return {init, login, logout, snapshot,
+    async function backendRequest(baseUrl, path, method = "GET", credentials = "omit") {
+      const endpoint = new URL(baseUrl);
+      const local = ["localhost", "127.0.0.1", "[::1]"].includes(endpoint.hostname);
+      if ((endpoint.protocol !== "https:" && !(local && endpoint.protocol === "http:")) ||
+          endpoint.username || endpoint.password || endpoint.search || endpoint.hash || endpoint.pathname !== "/") {
+        throw new Error("Use an HTTPS backend origin (or HTTP localhost), without a path or credentials");
+      }
+      const signedUser = user;
+      if (!signedUser) throw new Error("not-signed-in");
+      const idToken = await signedUser.getIdToken();
+      if (user !== signedUser) throw new Error("auth-state-changed");
+      endpoint.pathname = path;
+      const controller = new AbortController();
+      const timeout = root.setTimeout(() => controller.abort(), 15000);
+      try {
+        const response = await fetchImpl(endpoint.href, {method, headers: {Authorization: `Bearer ${idToken}`},
+          credentials, cache: "no-store", redirect: "error", signal: controller.signal});
+        if (!response.ok) throw new Error(`backend-http-${response.status}`);
+        const result = await response.json();
+        if (user !== signedUser) throw new Error("auth-state-changed");
+        return {result, uid:signedUser.uid};
+      } finally {root.clearTimeout(timeout);}
+    }
+    async function testBackend(baseUrl) {
+      const {result,uid} = await backendRequest(baseUrl,"/api/me");
+      if (result.authenticated !== true || result.uid !== uid) throw new Error("backend-identity-mismatch");
+      return {uid:result.uid,authenticated:true};
+    }
+    async function getCalendarConnectionStatus(baseUrl = "http://localhost:8080") {
+      const {result} = await backendRequest(baseUrl,"/api/google-calendar/status");
+      if (typeof result.connected !== "boolean") throw new Error("backend-invalid-status");
+      return {connected:result.connected};
+    }
+    async function connectServerCalendar(baseUrl = "http://localhost:8080") {
+      // Include the local backend's HttpOnly cookie to bind the callback to this browser.
+      const {result} = await backendRequest(baseUrl,"/api/google-calendar/connect","POST","include");
+      const url = new URL(result.authorizationUrl);
+      if (url.origin !== "https://accounts.google.com" || url.pathname !== "/o/oauth2/v2/auth") throw new Error("backend-invalid-authorization-url");
+      return {authorizationUrl:url.href};
+    }
+    async function disconnectServerCalendar(baseUrl = "http://localhost:8080") {
+      const {result} = await backendRequest(baseUrl,"/api/google-calendar/disconnect","POST");
+      if (result.connected !== false) throw new Error("backend-invalid-status");
+      return {connected:false,revoked:result.revoked===true};
+    }
+    return {init, login, logout, snapshot, testBackend, getCalendarConnectionStatus, connectServerCalendar, disconnectServerCalendar,
       getUid: () => user?.uid || null,
       // Obtain an ID token only when a future backend actually needs it; do not persist it yourself.
       getIdToken: (forceRefresh = false) => user ? user.getIdToken(forceRefresh) : Promise.reject(new Error("not-signed-in")),

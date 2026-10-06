@@ -1,0 +1,14 @@
+node_modules/
+.env
+.env.*
+*.log
+credentials/
+secrets/
+*service-account*.json
+*service_account*.json
+*credentials*.json
+client_secret*.json
+*.pem
+*.key
+.firebase/
+emulator-data/

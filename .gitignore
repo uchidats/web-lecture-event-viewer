@@ -22,7 +22,26 @@ yarn-error.log*
 *.key
 *.pem
 
+# Sensitive credential JSON files and local emulator exports.
+credentials/
+secrets/
+emulator-data/
+*[Cc]lient[_-][Ss]ecret*.json
+*[Cc]lient[Ss]ecret*.json
+*[Ss]ervice[_-][Aa]ccount*.json
+*[Ss]ervice[Aa]ccount*.json
+[Tt]okens.json
+[Tt]okens[_-]*.json
+*[Rr]efresh[_-][Tt]oken*.json
+*[Rr]efresh[Tt]oken*.json
+*[Aa]ccess[_-][Tt]oken*.json
+*[Aa]ccess[Tt]oken*.json
+*.[pP]12
+*.[pP][fF][xX]
+
 # Temporary files
+*-debug.log
+.firebase/
 *.tmp
 *.bak
 

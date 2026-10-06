@@ -47,6 +47,7 @@ async function main() {
     await evaluate('document.head.appendChild(document.createElement("style")).textContent='+JSON.stringify(fs.readFileSync(path.join(root,'style.css'),'utf8')));
     for(const file of ['venues.js','companies.js','events.js','google-calendar.js','script.js','firebase-config.js','firebase-auth.js']) {
       let expression = fs.readFileSync(path.join(root,file),'utf8');
+      if (file === 'firebase-config.js') expression = 'const FIREBASE_CONFIG = Object.freeze({});';
       if (file === 'google-calendar.js') expression = expression.replace('root.GoogleCalendar =', 'root.testCalendarFactory = createAdapter; root.GoogleCalendar =');
       const result = await call('Runtime.evaluate', {expression});
       assert.ok(!result.exceptionDetails, file + ': ' + JSON.stringify(result.exceptionDetails));
