@@ -36,10 +36,11 @@ const cases = [
     ctx.GoogleCalendar = {snapshot: () => ({state: 'ready', status: 'partial', registered: false, conflicts: [google]})};
     vm.runInContext('state.calendarSettings.calendarProvider="both";fixture.calendarStatus={icloud:{status:"partial",conflicts:[icloudConflict]}};', ctx);
     const html = vm.runInContext('createEventCardHtml(fixture)', ctx);
-    assert.equal(html.split(expected).length - 1, 2, 'Both provider rows must use the same display');
+    assert.equal(html.split(expected).length - 1, 1, 'Only the live Google provider row is displayed');
+    assert.ok(!html.includes('Mock iCloud'), 'iCloud mock rows must remain hidden');
     adapter.disconnect();
   }
   ctx.fixture = event;
   assert.equal(vm.runInContext('formatCalendarConflictTime({start:"11:00",end:"11/8 16:00"},fixture)', ctx), '11/7 11:00–11/8 16:00');
-  console.log('PASS: shared Google/iCloud timed, overnight, midnight, single/multiple all-day formats and exclusive all-day end dates; both provider card rows');
+  console.log('PASS: reusable Google/iCloud time formatting preserved; public cards show only live Google conflicts');
 })().catch(error => {console.error(error); process.exitCode = 1;});

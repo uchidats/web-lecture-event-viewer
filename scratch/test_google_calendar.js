@@ -39,7 +39,7 @@ function fixture(items=[],options={}) {
  const count=f.calls.length;await f.adapter.ensure([{...event,id:'second'}]);assert.equal(f.calls.length,count);
  vm.runInContext('state.calendarSettings.calendarProvider="google"',ctx);ctx.GoogleCalendar=f.adapter;ctx.e=event;
  assert.equal(vm.runInContext('computeEffectiveScheduleStatus(e).statusKey',ctx),status==='busy'?'conflict':status==='partial'?'partial_conflict':'free');
- vm.runInContext('state.calendarSettings.calendarProvider="both"',ctx);ctx.e={...event,calendarStatus:{icloud:{status:'busy',conflicts:[]}}};assert.equal(vm.runInContext('computeEffectiveScheduleStatus(e).statusKey',ctx),'conflict');
+ vm.runInContext('state.calendarSettings.calendarProvider="both"',ctx);ctx.e={...event,calendarStatus:{icloud:{status:'busy',conflicts:[]}}};assert.equal(vm.runInContext('computeEffectiveScheduleStatus(e).statusKey',ctx),status==='busy'?'conflict':status==='partial'?'partial_conflict':'free','iCloud samples must never affect live Google availability');
  f.adapter.disconnect();assert.equal(f.adapter.snapshot(event).state,'disconnected');
  }
  const registered=fixture([appointment('registered','19:00','20:00',{extendedProperties:{private:{ophthalconfEventId:event.id}}})]);await registered.adapter.connect();await registered.adapter.ensure([event]);assert.equal(registered.adapter.snapshot(event).registered,true);await registered.adapter.insert(event);assert.equal(registered.calls.filter(c=>c.opts.method==='POST').length,0);registered.adapter.disconnect();
@@ -66,7 +66,7 @@ function fixture(items=[],options={}) {
  const card=vm.runInContext('createEventCardHtml(e)',ctx);
  assert.ok(card.includes('会期中に予定あり'));assert.ok(card.includes('ほか3件'));assert.ok(card.includes('mock-2'));assert.ok(!card.includes('mock-3'));assert.ok(card.includes('13:00–17:00'));
  ctx.GoogleCalendar=fixture().adapter;
- for(const provider of ['icloud','none']){vm.runInContext(`state.calendarSettings.calendarProvider="${provider}"`,ctx);assert.equal(vm.runInContext('computeEffectiveScheduleStatus(e).statusKey',ctx),provider==='none'?'unlinked':'free');}
+ for(const provider of ['icloud','none']){vm.runInContext(`state.calendarSettings.calendarProvider="${provider}"`,ctx);assert.equal(vm.runInContext('computeEffectiveScheduleStatus(e).statusKey',ctx),'unlinked');}
  vm.runInContext('var registrationToasts=[]; renderEvents=()=>{};updateRegisteredBadge=()=>{};showToast=message=>registrationToasts.push(message);state.calendarSettings={calendarProvider:"google",defaultCalendar:"google"};',ctx);
  let releaseUi;const ui=fixture([],{delayGet:new Promise(resolve=>releaseUi=resolve)});await ui.adapter.connect();ctx.GoogleCalendar=ui.adapter;
  ctx.e={...event,calendarStatus:{isAdded:false},scheduleStatus:'free'};

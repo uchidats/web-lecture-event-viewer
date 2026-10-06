@@ -1387,6 +1387,25 @@ function syncCheckboxesWithState() {
 const calendarAddsInProgress = new Set();
 function computeEffectiveScheduleStatus(event) {
   if (calendarAddsInProgress.has(event.id)) return {statusKey: "unlinked", badgeClass: "unlinked", badgeText: "カレンダーに追加中…", isRegistered: false, isAdding: true, conflicts: []};
+  const provider = state.calendarSettings.calendarProvider || "both";
+  const google = typeof GoogleCalendar !== "undefined" ? GoogleCalendar.snapshot(event) : null;
+  if (google?.state === "ready" && google.registered) return {statusKey: "registered", badgeClass: "registered", badgeText: "✓ カレンダー登録済み", isRegistered: true, conflicts: []};
+  // Only an authenticated live adapter can supply availability to the public UI.
+  // iCloud settings/ICS exports remain available, but its sample appointments are not a live source.
+  if (!["google", "both"].includes(provider)) return {statusKey: "unlinked", badgeClass: "unlinked", badgeText: "未連携", isRegistered: false, conflicts: []};
+  if (google?.state !== "ready") {
+    const labels = {loading: "カレンダー確認中…", disconnected: "Google Calendar 未接続", error: "Google Calendarを再接続してください", unknown: "開催日時・タイムゾーン要確認"};
+    return {statusKey: "unlinked", badgeClass: "unlinked", badgeText: labels[google?.state] || labels.disconnected, isRegistered: false, conflicts: []};
+  }
+  const busy = google.status === "busy", partial = google.status === "partial";
+  const key = busy ? "conflict" : partial ? "partial_conflict" : "free";
+  return {statusKey: key, badgeClass: key, badgeText: busy ? "🔴 重複" : partial ? "🟡 一部重複" : "🟢 空きあり", isRegistered: false, conflicts: google.conflicts};
+}
+
+// Retain the legacy provider/mock calculation for development and future migration only.
+// Public cards, warnings and filters use computeEffectiveScheduleStatus above, never this helper.
+function computeLegacyCalendarMockStatus(event) {
+  if (calendarAddsInProgress.has(event.id)) return {statusKey: "unlinked", badgeClass: "unlinked", badgeText: "カレンダーに追加中…", isRegistered: false, isAdding: true, conflicts: []};
   const liveProvider = state.calendarSettings.calendarProvider || "both";
   const google = typeof GoogleCalendar !== "undefined" ? GoogleCalendar.snapshot(event) : null;
   if (google?.state === "ready" && google.registered) return {statusKey: "registered", badgeClass: "registered", badgeText: "✓ カレンダー登録済み", isRegistered: true, conflicts: []};
