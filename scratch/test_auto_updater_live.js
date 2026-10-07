@@ -16,7 +16,7 @@ async function main() {
     console.log(`PASS: ${source.id} ${page.role}: ${result.candidates.length} candidates`);
     checked++;
   }
-  assert.equal(checked, 10);
-  console.log('PASS: 5 pilots / 10 live official HTML pages (network-only smoke test)');
+  assert.equal(checked, config.sources.reduce((count, source) => count + source.pages.length, 0));
+  console.log(`PASS: ${config.sources.length} pilots / ${checked} live official HTML pages (network-only smoke test)`);
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

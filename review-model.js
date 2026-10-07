@@ -1,9 +1,11 @@
 (function (root) {
   'use strict';
   const storageKey = 'ophthalconf.review-decisions.v1';
-  const fieldLabels = { title: '学会名', date: '開催開始日', endDate: '開催終了日', venue: '開催会場', city: '開催都市', country: '開催国', officialUrl: '公式サイトURL',
+  const fieldLabels = { registration: '参加登録期間', title: '学会名', date: '開催開始日', endDate: '開催終了日', venue: '開催会場', city: '開催都市', country: '開催国', officialUrl: '公式サイトURL',
     'abstractSubmission.startDate': '演題募集開始', 'abstractSubmission.deadline': '演題締切', 'abstractSubmission.status': '演題募集状況', 'abstractSubmission.url': '演題募集URL' };
   const reasonLabels = { 'multiple-candidates': '公式サイトに複数の候補があります', 'related-field-needs-review': '関連する情報に確認が必要です',
+    'registration-periods-needs-review': '参加登録の各期間を公式情報と照合してください', 'invalid-registration': '参加登録期間の日付・構造を確認してください',
+    'registration-type-conflict': '国内・海外の区分が既存情報と異なります', 'registration-dates-unextractable': '参加登録期間を抽出できませんでした',
     'deadline-extension-possible': '締切延長の可能性があります', 'deadline-change-needs-review': '採用済みの締切日と異なるため確認が必要です',
     'mass-change-limit': '過去の大量変更停止で保留された候補', 'low-confidence': '情報の信頼度が基準未満です',
     'fetch-failed': '情報源を取得できませんでした', 'official-domain-changed': '公式サイトのドメインが変わっています',
@@ -30,6 +32,7 @@
   }
   function formatValue(field, value) {
     if (value == null || value === '') return '未入力';
+    if (field === 'registration' && Array.isArray(value.periods)) return value.periods.map(p => `${p?.label || '名称未確認'}：${p?.start ? p.start + ' ～ ' : ''}${p?.deadline || '締切未確認'}`).join(' / ');
     if (field === 'abstractSubmission.status') return statuses[value] || '未確認の状態';
     return String(value).replace(/^(\d{4})-(\d{2})-(\d{2})/, '$1/$2/$3');
   }
@@ -37,7 +40,9 @@
     return data.items.filter(item => item.status === 'needs-review' || !item.status).map(item => {
       const signature = JSON.stringify([item.eventId, item.field, item.oldValue, item.value, item.reason, item.url, item.evidence]);
       return { ...item, reviewId: item.id || signature, signature, riskLevel: riskLevel(item),
-        blocked: item.reason === 'mass-change-limit', actionable: !!item.field && typeof item.value === 'string' && !!item.value && !!safeUrl(item.url) };
+        blocked: item.reason === 'mass-change-limit', actionable: !!item.field && !!safeUrl(item.url) &&
+          (typeof item.value === 'string' && !!item.value || item.field === 'registration' && item.reason !== 'invalid-registration' && ['domestic', 'international'].includes(item.value?.type) &&
+            Array.isArray(item.value.periods) && item.value.periods.length > 0 && item.value.periods.every(p => p && typeof p.label === 'string' && !!p.label && (p.start || p.deadline))) };
     });
   }
   function createStore(storage) {
@@ -51,7 +56,7 @@
     function decide(item, decision, { reviewerId, automationCandidate = false, items = [], now = new Date().toISOString() }) {
       if (!reviewerId || !['approved', 'rejected', 'deferred'].includes(decision)) throw new Error('判断内容が正しくありません。');
       if (decision === 'approved' && !item.actionable) throw new Error('候補値や情報源がない項目は採用できません。');
-      if (decision === 'approved' && items.some(other => other.reviewId !== item.reviewId && other.eventId === item.eventId && other.field === item.field && other.value !== item.value && latest(other, reviewerId)?.decision === 'approved')) {
+      if (decision === 'approved' && items.some(other => other.reviewId !== item.reviewId && other.eventId === item.eventId && other.field === item.field && JSON.stringify(other.value) !== JSON.stringify(item.value) && latest(other, reviewerId)?.decision === 'approved')) {
         throw new Error('同じ項目の別候補が採用済みです。先にその判断を変更してください。');
       }
       const data = read();

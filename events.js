@@ -28,7 +28,9 @@
  *  - conferenceTier: "primary" (基幹学会) | "subspecialty" (分科学会) | "allied" (準分科・関連)
  *  - period: 会期テキスト表示
  *  - cityCountry: 開催都市・国
- *  - abstractDeadline, earlyBirdDeadline: 締切表記
+ *  - abstractDeadline, earlyBirdDeadline, earlyRegistrationDeadline: 旧締切表記（後方互換）
+ *  - registration: { type: "domestic" | "international", periods: [{ label, start?, deadline? }] }
+ *    start/deadline は YYYY-MM-DD または YYYY-MM-DDTHH:mm。新構造を優先表示。
  *  - officialUrl: 公式サイトURL（未確認時は ""）
  *  - sourceUrl: 情報ソースURL（日本眼科学会等）
  *  - abstractSubmission: { status: "open"|"upcoming"|"closed"|"unknown", startDate, deadline, url }
@@ -1075,6 +1077,13 @@ const sampleEvents = [
     "id": "conf-jp-jrvs-2026",
     "venueId": "tokyo-international-forum",
     "title": "第65回 日本網膜硝子体学会総会",
+    "registration": {
+      "type": "domestic",
+      "periods": [
+        { "label": "事前参加登録", "start": "2026-05-19T12:00", "deadline": "2026-10-16" },
+        { "label": "直前・当日登録", "start": "2026-11-12T12:00", "deadline": "2026-12-06" }
+      ]
+    },
     "subtitle": "網膜硝子体疾患の病態解明と外科・内科的治療革新",
     "date": "2026-12-04",
     "endDate": "2026-12-06",
@@ -1092,7 +1101,7 @@ const sampleEvents = [
     "period": "2026年12月4日(金) 〜 12月6日(日)",
     "cityCountry": "千代田区（東京都） / 日本",
     "abstractDeadline": "締切済",
-    "earlyBirdDeadline": "締切済",
+    "earlyBirdDeadline": "2026年10月16日",
     "officialUrl": "https://www.jrvs.jp/",
     "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
     "note": "Asia Retina Congress (ARC) 併催",

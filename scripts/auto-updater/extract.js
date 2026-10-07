@@ -64,6 +64,49 @@ function blocks(html) {
 
 function compact(value) { return text(value).replace(/\s+/g, ''); }
 
+function registrationPeriods(labeled, source) {
+  const type = source.registrationType || (source.id.startsWith('conf-jp-') || /日本/.test(source.name) ? 'domestic' : 'international');
+  const stage = type === 'domestic' ? /(事前参加登録|直前・当日登録|直前参加登録|当日登録|参加登録期間|参加登録受付期間)/ : /(Early\s*bird|Regular|Late|On[ -]?site)/i;
+  const periods = [], evidence = [];
+  for (const [label, html] of labeled) {
+    if (/演題|ランチョン|セミナー|協賛|展示/.test(label)) continue;
+    const content = text(html);
+    const combined = stage.test(content) ? content : stage.test(label) ? label + '：' + content : '';
+    const matches = [...combined.matchAll(new RegExp(stage.source, 'gi'))];
+    const inputs = matches.map((match, i) => combined.slice(match.index, matches[i + 1]?.index ?? combined.length));
+    for (const input of inputs) {
+      const match = input.match(stage);
+      if (!match) continue;
+      const periodLabel = match[0];
+      const dates = input.slice(match.index + periodLabel.length).replace(/^\s*[:：]\s*/, '');
+      const ranges = dateRanges(dates, source.year);
+      if (ranges.length) {
+        for (const range of ranges) if (range.start && range.end) {
+          periods.push({ label: periodLabel, start: range.start.replace(' ', 'T'), deadline: range.end.replace(' ', 'T') });
+          evidence.push(input);
+        }
+      } else {
+        // ISO and English month dates are common on international registration tables.
+        const tokens = dates.replace(/\([^)]*\)/g, '').match(/\d{4}[-/]\d{1,2}[-/]\d{1,2}(?:[ T]\d{1,2}:\d{2})?|(?:\d{4}年)?\d{1,2}月\d{1,2}日(?:\s*(?:正午|\d{1,2}:\d{2}))?|(?:\d{1,2}\s+)?(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+(?:\d{1,2},?\s+)?\d{4}/gi) || [];
+        const normalized = tokens.map(token => {
+          const date = normalizeDate(token, { year: source.year });
+          if (date) return date.replace(' ', 'T');
+          const parsed = Date.parse(token + ' UTC');
+          return Number.isFinite(parsed) ? new Date(parsed).toISOString().slice(0, 10) : null;
+        });
+        if (normalized.length && normalized.every(Boolean)) {
+          if (normalized.length > 2) {
+            for (const deadline of normalized) periods.push({ label: periodLabel, deadline });
+          } else periods.push({ label: periodLabel, ...(normalized.length > 1 ? { start: normalized[0] } : {}), deadline: normalized.at(-1) });
+          evidence.push(input);
+        }
+      }
+    }
+  }
+  const unique = [...new Map(periods.map(period => [JSON.stringify(period), period])).values()];
+  return { value: { type, periods: unique }, evidence: evidence.join('\n') };
+}
+
 function extractOfficialHtml(document, source) {
   const { html, url, role } = document;
   const candidates = [], issues = [];
@@ -81,6 +124,11 @@ function extractOfficialHtml(document, source) {
   const clean = html.replace(/<!--[\s\S]*?-->/g, '').replace(/<(script|style|nav|footer)\b[^>]*>[\s\S]*?<\/\1>/gi, '')
     .replace(/<(s|del)\b[^>]*>[\s\S]*?<\/\1>/gi, '');
   const labeled = blocks(clean);
+  if (role === 'registration' || role === 'overview') {
+    const registration = registrationPeriods(labeled, source);
+    if (registration.value.periods.length) add('registration', registration.value, 0.96, 'labeled-html', registration.evidence);
+    else if (role === 'registration') issues.push('registration-dates-unextractable');
+  }
   if (role === 'overview') {
     const name = text(title).split(/[|｜丨]/).at(-1).trim();
     add('title', name, 0.96, 'official-title', title);
@@ -157,4 +205,4 @@ function extractOfficialHtml(document, source) {
 }
 
 const adapters = { 'official-html': extractOfficialHtml };
-module.exports = { text, compact, blocks, normalizeVenue, normalizeDate, dateRanges, extractOfficialHtml, adapters };
+module.exports = { text, compact, blocks, normalizeVenue, normalizeDate, dateRanges, registrationPeriods, extractOfficialHtml, adapters };

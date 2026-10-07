@@ -1,6 +1,7 @@
 const { compact, normalizeDate, normalizeVenue } = require('./extract');
 const { trustedUrl } = require('./fetch');
-const fields = new Set(['title', 'date', 'endDate', 'venue', 'city', 'country', 'officialUrl',
+const { validRegistration, registrationKey } = require('./registration');
+const fields = new Set(['title', 'date', 'endDate', 'venue', 'city', 'country', 'officialUrl', 'registration',
   'abstractSubmission.startDate', 'abstractSubmission.deadline', 'abstractSubmission.status', 'abstractSubmission.url']);
 const dateFields = new Set(['date', 'endDate', 'abstractSubmission.startDate', 'abstractSubmission.deadline']);
 const countryAliases = { JP: '日本', Japan: '日本', US: '米国', USA: '米国', 'United States': '米国', AT: 'オーストリア', Austria: 'オーストリア', SG: 'シンガポール', Singapore: 'シンガポール', 'シンガポール共和国': 'シンガポール' };
@@ -9,12 +10,14 @@ function location(event) {
   return { city, country };
 }
 function oldValue(event, field) {
+  if (field === 'registration') return event.registration || event.earlyRegistrationDeadline || event.earlyBirdDeadline || null;
   if (field === 'city' || field === 'country') return location(event)[field];
   if (field === 'abstractSubmission.deadline') return event.abstractSubmission?.deadline ?? event.abstractSubmission?.currentDeadline ?? null;
   return field.split('.').reduce((value, key) => value?.[key], event) ?? null;
 }
 function canonical(field, value) {
   if (value == null) return '';
+  if (field === 'registration') return registrationKey(value);
   if (field === 'venue') return compact(normalizeVenue(value));
   if (field === 'city') return compact(value).replace(/[（(].*?[）)]/g, '');
   if (field === 'country') return Object.hasOwn(countryAliases, value) ? countryAliases[value] : String(value).trim();
@@ -53,9 +56,27 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
     }
   }
   const groups = new Map();
+  const registrations = candidates.filter(c => c.field === 'registration');
+  const multipleRegistrations = new Set(registrations.filter(c => validRegistration(c.value, limits)).map(c => registrationKey(c.value))).size > 1;
   for (const candidate of candidates) {
     if (!fields.has(candidate.field)) { reject(candidate, 'protected-or-unknown-field'); continue; }
     if (candidate.value === null || candidate.value === undefined || candidate.value === '') { reject(candidate, 'missing-value-never-deletes'); continue; }
+    if (candidate.field === 'registration') {
+      if (!trustedUrl(candidate.url, source)) { reject(candidate, 'untrusted-evidence-url'); continue; }
+      if (!validRegistration(candidate.value, limits)) { reject(candidate, 'invalid-registration'); continue; }
+      const expectedType = event.conferenceRegion === 'international' ? 'international' : 'domestic';
+      if (candidate.value.type !== expectedType) { reject(candidate, 'registration-type-conflict'); continue; }
+      const periods = candidate.value.periods;
+      const duplicateLabels = new Set(periods.map(p => compact(p.label).toLowerCase())).size !== periods.length;
+      if (multipleRegistrations || duplicateLabels) { reject(candidate, 'multiple-candidates'); continue; }
+      if (event.registration && registrationKey(event.registration) === registrationKey(candidate.value)) continue;
+      const legacy = normalizeDate(event.earlyRegistrationDeadline || event.earlyBirdDeadline || '');
+      const stored = event.registration?.periods || (legacy ? [{ label: expectedType === 'domestic' ? '事前参加登録' : 'Early bird', deadline: legacy.replace(' ', 'T') }] : []);
+      const changed = periods.filter(p => stored.some(old => compact(old.label).toLowerCase() === compact(p.label).toLowerCase() && old.deadline && p.deadline && old.deadline !== p.deadline));
+      const extended = changed.some(p => stored.some(old => compact(old.label).toLowerCase() === compact(p.label).toLowerCase() && p.deadline > old.deadline));
+      reject({ ...candidate, extended }, extended ? 'deadline-extension-possible' : changed.length ? 'deadline-change-needs-review' : 'registration-periods-needs-review');
+      continue;
+    }
     if (typeof candidate.value !== 'string') { reject(candidate, 'invalid-value-type'); continue; }
     if (candidate.field === 'venue' && !hasExplicitVenueEvidence(candidate)) { reject(candidate, 'venue-not-explicit-in-official-source'); continue; }
     const list = groups.get(candidate.field) || [];
@@ -150,6 +171,7 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
 
 function setField(event, field, value) {
   if (!fields.has(field)) throw new Error(`Protected field: ${field}`);
+  if (field === 'registration' && !validRegistration(value)) throw new Error('Invalid registration');
   if (field === 'city' || field === 'country') {
     const loc = location(event); loc[field] = value;
     event.cityCountry = `${loc.city} / ${loc.country}`;
@@ -169,6 +191,9 @@ function applyChanges(events, changes) {
   for (const change of changes) {
     const event = result.find(e => e.id === change.eventId);
     if (!event?.isConference) throw new Error('Unknown conference ID');
+    if (change.field === 'registration' && canonical('registration', event.registration) !== canonical('registration', change.value)) {
+      throw new Error('Registration change requires manual review');
+    }
     if (change.field === 'abstractSubmission.deadline' && oldValue(event, change.field) &&
         canonical(change.field, oldValue(event, change.field)) !== canonical(change.field, change.value)) {
       throw new Error('Existing deadline change requires manual review');

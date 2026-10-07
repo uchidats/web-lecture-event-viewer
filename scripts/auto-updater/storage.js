@@ -3,6 +3,7 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const { spawnSync } = require('node:child_process');
 const { normalizeDate } = require('./extract');
+const { validRegistration } = require('./registration');
 
 function loadEvents(root) {
   const file = path.join(root, 'events.js');
@@ -21,6 +22,7 @@ function validateEvents(events, baseline) {
   for (const e of events) {
     if (!e.id || ids.has(e.id)) throw new Error('Duplicate/missing event ID');
     ids.add(e.id);
+    if (e.registration && !validRegistration(e.registration)) throw new Error('Invalid registration periods');
     for (const field of ['date', 'endDate']) if (e[field] && (!/^\d{4}-\d{2}-\d{2}$/.test(e[field]) || !normalizeDate(e[field]))) throw new Error('Invalid event date format');
     if (e.date && e.endDate && e.endDate < e.date) throw new Error('Invalid event date order');
   }
@@ -54,12 +56,12 @@ function mergeReview(previous, entries, checkedAt) {
 const checks = [
   ...['events.js', 'script.js', 'companies.js', 'venues.js', 'conference-sources.js', 'scripts/update-conferences.js',
     'scripts/auto-updater/fetch.js', 'scripts/auto-updater/extract.js', 'scripts/auto-updater/policy.js',
-    'scripts/auto-updater/storage.js', 'scripts/auto-updater/pipeline.js', 'scripts/auto-updater/mass-change.js'].map(file => ['--check', file]),
+    'scripts/auto-updater/storage.js', 'scripts/auto-updater/pipeline.js', 'scripts/auto-updater/mass-change.js', 'scripts/auto-updater/registration.js'].map(file => ['--check', file]),
   ['scratch/test_ended_conferences.js'], ['scratch/test_conference_history.js'],
   ['scratch/test_venue_master.js'], ['scratch/test_comprehensive_regression.js'],
   ['scratch/test_abstract_submission.js'], ['scratch/test_auto_updater.js'],
   ['scratch/test_brand_storage.js'], ['scratch/test_companies.js'], ['scratch/test_time_zones.js'],
-  ['scratch/test_venue_update_policy.js']
+  ['scratch/test_venue_update_policy.js'], ['scratch/test_registration.js'], ['scratch/test_filter_state.js']
 ];
 function runChecks(root) {
   const results = [];

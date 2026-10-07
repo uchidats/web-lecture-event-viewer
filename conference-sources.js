@@ -63,7 +63,8 @@ module.exports = {
       identity: ['第65回', '日本網膜硝子体学会'], adapter: 'official-html',
       pages: [
         { role: 'overview', url: 'https://convention.jtbcom.co.jp/65moumaku/summary/index.html' },
-        { role: 'abstract', url: 'https://convention.jtbcom.co.jp/65moumaku/abstract/index.html' }
+        { role: 'abstract', url: 'https://convention.jtbcom.co.jp/65moumaku/abstract/index.html' },
+        { role: 'registration', url: 'https://convention.jtbcom.co.jp/65moumaku/join/index.html' }
       ]
     }
   ]

@@ -144,13 +144,57 @@ function initApp() {
   loadAttendingConferences();
   loadHiddenConferences();
   loadConferenceHistory();
+  loadFilterState();
   renderFilterOptions();
+  syncCheckboxesWithState();
   updateRegisteredBadge();
   updateHiddenConferencesBadge();
   updateHistoryBadgeCount();
   setupEventListeners();
   if (typeof GoogleCalendar !== "undefined") GoogleCalendar.setupUI(() => {updateRegisteredBadge(); renderEvents();});
   renderEvents();
+}
+
+const FILTER_STATE_KEY = 'ophthalconf_filter_state';
+const FILTER_SET_KEYS = ['year', 'specialty', 'eventType', 'abstractStatus', 'format', 'region', 'company', 'scheduleStatus'];
+const FILTER_BOOLEAN_KEYS = ['registeredOnly', 'includeEndedConferences'];
+const FILTER_SORT_VALUES = ['date-asc', 'abstract-deadline-asc', 'title-asc'];
+
+function saveFilterState() {
+  try {
+    const filters = { keyword: state.filters.keyword };
+    for (const key of FILTER_SET_KEYS) filters[key] = [...state.filters[key]];
+    for (const key of FILTER_BOOLEAN_KEYS) filters[key] = state.filters[key];
+    localStorage.setItem(FILTER_STATE_KEY, JSON.stringify({ version: 1, filters, sortBy: state.sortBy }));
+  } catch (error) {
+    console.warn('Failed to save filter state:', error);
+  }
+}
+
+function loadFilterState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(FILTER_STATE_KEY));
+    if (!saved || saved.version !== 1 || !saved.filters || typeof saved.filters !== 'object') return;
+    const options = { ...FILTER_OPTIONS, year: getAvailableEventYears(),
+      company: getCoSponsorCompanyOptions(state.events).map(company => company.id),
+      abstractStatus: ['open', 'deadline_30d', 'deadline_7d'],
+      scheduleStatus: ['free', 'partial_conflict', 'conflict', 'registered'] };
+    for (const key of FILTER_SET_KEYS) {
+      if (!Array.isArray(saved.filters[key])) continue;
+      const values = saved.filters[key].filter(value => typeof value === 'string' && options[key].includes(value));
+      if (!saved.filters[key].length || values.length) state.filters[key] = new Set(values);
+    }
+    for (const key of FILTER_BOOLEAN_KEYS) if (typeof saved.filters[key] === 'boolean') state.filters[key] = saved.filters[key];
+    if (typeof saved.filters.keyword === 'string') state.filters.keyword = saved.filters.keyword.trim().toLowerCase();
+    if (FILTER_SORT_VALUES.includes(saved.sortBy)) state.sortBy = saved.sortBy;
+  } catch (error) {
+    console.warn('Failed to load filter state:', error);
+  }
+}
+
+function clearSavedFilterState() {
+  try { localStorage.removeItem(FILTER_STATE_KEY); }
+  catch (error) { console.warn('Failed to clear filter state:', error); }
 }
 
 /** 旧保存キーから移行する。正規キーの既存値と旧データは変更しない。 */
@@ -999,6 +1043,32 @@ function parseAbstractDate(value) {
   return { year, month, day, timestamp };
 }
 
+function renderRegistrationHtml(event, today = getTodayString()) {
+  const international = (event.registration?.type || event.conferenceRegion) === 'international';
+  const defaultLabel = international ? 'Early bird' : '事前参加登録';
+  const legacy = event.earlyRegistrationDeadline || event.earlyBirdDeadline;
+  const legacyDate = typeof legacy === 'string' ? legacy.replace(/^(\d{4})年(\d{1,2})月(\d{1,2})日.*$/, (_, y, m, d) => `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`) : null;
+  const periods = Array.isArray(event.registration?.periods) ? event.registration.periods :
+    parseAbstractDate(legacyDate) ? [{ label: defaultLabel, deadline: legacyDate }] : null;
+  const rows = periods ? periods.map(period => {
+    const label = period.label || defaultLabel;
+    const deadline = parseAbstractDate(period.deadline);
+    const start = parseAbstractDate(period.start);
+    let value = '要確認';
+    if (deadline && period.deadline.slice(0, 10) < today) {
+      value = `${formatAbstractDeadline(period.deadline)} 締切済`;
+    } else if (start && period.start.slice(0, 10) > today) {
+      value = `${formatAbstractDeadline(period.start, { showTime: false })}開始`;
+    } else if (deadline) {
+      value = `${formatAbstractDeadline(period.deadline)}まで`;
+    } else if (start) {
+      value = `${formatAbstractDeadline(period.start, { showTime: false })}開始`;
+    }
+    return { label, value };
+  }) : [{ label: defaultLabel, value: legacy || '要確認' }];
+  return rows.map(({ label, value }) => `<div class="conf-item conf-registration-period"><span class="conf-label">${escapeHtml(label)}：</span><span class="conf-val deadline-highlight">${escapeHtml(value)}</span></div>`).join('');
+}
+
 function getAbstractSubmissionState(event, baseDate = getTodayString()) {
   const sub = event.isConference ? event.abstractSubmission : null;
   const days = getDaysUntilAbstractDeadline(event, baseDate);
@@ -1152,6 +1222,7 @@ function setupEventListeners() {
   elements.keywordSearch.addEventListener("input", (e) => {
     state.filters.keyword = e.target.value.trim().toLowerCase();
     elements.clearSearchBtn.style.display = state.filters.keyword ? "block" : "none";
+    saveFilterState();
     renderEvents();
   });
 
@@ -1159,6 +1230,7 @@ function setupEventListeners() {
     elements.keywordSearch.value = "";
     state.filters.keyword = "";
     elements.clearSearchBtn.style.display = "none";
+    saveFilterState();
     renderEvents();
   });
 
@@ -1168,12 +1240,13 @@ function setupEventListeners() {
       const groupName = e.target.name;
       const value = e.target.value;
 
-      if (state.filters[groupName]) {
+      if (state.filters[groupName] instanceof Set) {
         if (e.target.checked) {
           state.filters[groupName].add(value);
         } else {
           state.filters[groupName].delete(value);
         }
+        saveFilterState();
         renderEvents();
       }
     }
@@ -1187,6 +1260,7 @@ function setupEventListeners() {
       if (cb.checked) state.filters.region.add(cb.value);
     });
     document.querySelector('.group-select-all[data-target="region"]').textContent = "全選択";
+    saveFilterState();
     renderEvents();
   });
 
@@ -1207,6 +1281,7 @@ function setupEventListeners() {
         }
       });
       btn.textContent = allChecked ? "全選択" : "解除";
+      saveFilterState();
       renderEvents();
     });
   });
@@ -1225,6 +1300,8 @@ function setupEventListeners() {
     state.filters.scheduleStatus = new Set(["free", "partial_conflict", "conflict", "registered"]);
     state.filters.registeredOnly = false;
     state.filters.includeEndedConferences = false;
+    state.sortBy = 'date-asc';
+    clearSavedFilterState();
     if (elements.filterIncludeEnded) {
       elements.filterIncludeEnded.checked = false;
     }
@@ -1242,6 +1319,7 @@ function setupEventListeners() {
   // ソート順変更
   elements.sortSelect.addEventListener("change", (e) => {
     state.sortBy = e.target.value;
+    saveFilterState();
     renderEvents();
   });
 
@@ -1249,6 +1327,7 @@ function setupEventListeners() {
   if (elements.filterIncludeEnded) {
     elements.filterIncludeEnded.addEventListener("change", (e) => {
       state.filters.includeEndedConferences = e.target.checked;
+      saveFilterState();
       renderEvents();
     });
   }
@@ -1258,6 +1337,7 @@ function setupEventListeners() {
     state.filters.registeredOnly = !state.filters.registeredOnly;
     elements.toggleRegisteredFilter.classList.toggle("active", state.filters.registeredOnly);
     elements.registeredOnlyBadge.style.display = state.filters.registeredOnly ? "inline-flex" : "none";
+    saveFilterState();
     renderEvents();
   });
 
@@ -1265,6 +1345,7 @@ function setupEventListeners() {
     state.filters.registeredOnly = false;
     elements.toggleRegisteredFilter.classList.remove("active");
     elements.registeredOnlyBadge.style.display = "none";
+    saveFilterState();
     renderEvents();
   });
 
@@ -1372,14 +1453,21 @@ function syncCheckboxesWithState() {
   const sidebar = document.getElementById("filter-sidebar");
   sidebar.querySelectorAll('input[type="checkbox"]').forEach(cb => {
     const group = cb.name;
-    if (state.filters[group]) {
+    if (state.filters[group] instanceof Set) {
       cb.checked = state.filters[group].has(cb.value);
     }
   });
 
   document.querySelectorAll(".group-select-all").forEach(btn => {
-    btn.textContent = "全選択";
+    const checkboxes = document.getElementById(`filter-${btn.getAttribute('data-target')}`).querySelectorAll('input[type="checkbox"]');
+    btn.textContent = checkboxes.length && [...checkboxes].every(cb => cb.checked) ? '解除' : '全選択';
   });
+  elements.keywordSearch.value = state.filters.keyword;
+  elements.clearSearchBtn.style.display = state.filters.keyword ? 'block' : 'none';
+  elements.sortSelect.value = state.sortBy;
+  if (elements.filterIncludeEnded) elements.filterIncludeEnded.checked = state.filters.includeEndedConferences;
+  elements.toggleRegisteredFilter.classList.toggle('active', state.filters.registeredOnly);
+  elements.registeredOnlyBadge.style.display = state.filters.registeredOnly ? 'inline-flex' : 'none';
 }
 
 /**
@@ -1738,6 +1826,7 @@ function renderActiveFilterChips() {
         const cb = document.querySelector(`input[name="${grp}"][value="${val}"]`);
         if (cb) cb.checked = false;
       }
+      saveFilterState();
       renderEvents();
     });
   });
@@ -2058,10 +2147,7 @@ function createEventCardHtml(event) {
               ${renderAbstractSubmissionHtml(event)}
             </span>
           </div>
-          <div class="conf-item">
-            <span class="conf-label">早期登録締切:</span>
-            <span class="conf-val deadline-highlight">${escapeHtml(event.earlyBirdDeadline || "要確認")}</span>
-          </div>
+          <div class="conf-registration-list">${renderRegistrationHtml(event)}</div>
         </div>
       </div>
     `;

@@ -10,13 +10,14 @@ async function main() {
   const root = path.resolve(__dirname, '..');
   const original = fs.readFileSync(path.join(root, 'events.js'), 'utf8');
   const isolated = fs.mkdtempSync(path.join(os.tmpdir(), 'conference-updater-integration-'));
-  for (const file of ['events.js', 'script.js', 'venues.js', 'companies.js', 'index.html', 'style.css', 'conference-sources.js']) fs.copyFileSync(path.join(root, file), path.join(isolated, file));
+  for (const file of ['events.js', 'script.js', 'venues.js', 'companies.js', 'index.html', 'style.css', 'conference-sources.js', 'review-model.js']) fs.copyFileSync(path.join(root, file), path.join(isolated, file));
   for (const dir of ['scripts', 'scratch', 'docs']) fs.cpSync(path.join(root, dir), path.join(isolated, dir), { recursive: true });
   fs.mkdirSync(path.join(isolated, 'reports'), {recursive: true});
   fs.copyFileSync(path.join(root, 'reports/venue-corrections.json'), path.join(isolated, 'reports/venue-corrections.json'));
   const data = loadEvents(isolated);
   const baselines = JSON.parse(fs.readFileSync(path.join(root, 'scratch/fixtures/auto-updater/baseline-pilots.json'), 'utf8'));
-  const isolatedBaseline = data.serialize(data.events.map(e => baselines[e.id] || e));
+  // Restore updater pilot values while retaining newer, unrelated fields such as registration.
+  const isolatedBaseline = data.serialize(data.events.map(e => baselines[e.id] ? { ...e, ...baselines[e.id] } : e));
   fs.writeFileSync(path.join(isolated, 'events.js'), isolatedBaseline);
   const source = registry.sources.find(s => s.id === 'conf-jp-surgery-2027');
   const result = await runUpdater({

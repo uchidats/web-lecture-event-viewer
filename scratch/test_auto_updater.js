@@ -44,7 +44,8 @@ async function main() {
       assert.ok(!result.issues.includes('conference-identity-missing'));
       if (p.role === 'overview') {
         for (const field of ['title', 'date', 'endDate', 'venue', 'officialUrl']) assert.ok(result.candidates.some(c => c.field === field), `${s.id}:${field}`);
-      } else assert.ok(result.candidates.some(c => c.field === 'abstractSubmission.url'));
+      } else if (p.role === 'abstract') assert.ok(result.candidates.some(c => c.field === 'abstractSubmission.url'));
+      else if (p.role === 'registration') assert.ok(result.candidates.some(c => c.field === 'registration'));
       extracted.push(...result.candidates);
     }
     perSource.set(s.id, extracted);

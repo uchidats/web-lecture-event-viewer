@@ -56,7 +56,7 @@ async function runPipeline({ root, config, apply = false, getPage = fetchOfficia
       try {
         const document = await getPage(page, source, config.defaults);
         documents.push({ url: document.url, fingerprint: document.fingerprint || hash(document.html) });
-        const result = adapters[source.adapter](document, source);
+        const result = adapters[source.adapter](document, { ...source, registrationType: event.registration?.type || event.conferenceRegion || 'domestic' });
         candidates.push(...result.candidates); issues.push(...result.issues);
       } catch (error) {
         summary.needsReview.push({ eventId: source.id, field: null, oldValue: null, url: page.url,
