@@ -1080,6 +1080,29 @@ button, input, select, textarea {
   letter-spacing: -0.015em;
 }
 
+.conference-title-link {
+  color: inherit;
+  font: inherit;
+  padding-block: 6px;
+  text-decoration: underline;
+  text-decoration-color: #94a3b8;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.conference-title-link:hover {
+  color: var(--primary);
+  text-decoration-color: currentColor;
+}
+
+.conference-title-link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 .card-subtitle {
   font-size: 0.88rem;
   color: #334155;

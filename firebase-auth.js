@@ -12,7 +12,7 @@
     let sdk, auth, user = null, phase = "loading", message = "", busy = false, ready;
     const listeners = new Set();
     const snapshot = () => ({phase, busy, message, user: user ? {
-      uid: user.uid, displayName: user.displayName || "", email: user.email || ""
+      uid: user.uid, displayName: user.displayName || "", email: user.email || "", emailVerified: user.emailVerified === true
     } : null});
     function notify() {onChange(snapshot()); listeners.forEach(fn => fn(snapshot()));}
     function fail(error) {

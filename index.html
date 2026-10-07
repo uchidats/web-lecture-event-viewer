@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="review.css">
 </head>
 <body>
   <!-- ヘッダー -->
@@ -27,6 +28,7 @@
         </div>
       </div>
       <div class="header-actions">
+        <button id="review-entry" type="button" class="btn btn-outline-nav" hidden>更新確認</button>
         <div class="auth-controls" aria-label="OphthalConfアカウント">
           <div class="auth-buttons">
             <span id="auth-user" class="auth-user" hidden></span>
@@ -559,6 +561,14 @@
       </form>
     </div></div>
   </dialog>
+  <dialog id="review-dialog" aria-labelledby="review-title">
+    <div class="review-toolbar"><h2 id="review-title">学会情報の更新確認</h2><button id="review-close" type="button" class="btn btn-secondary">閉じる</button></div>
+    <p class="review-local-note">ローカル確認用：判断はこのブラウザに保存されます。学会データには反映されません。</p>
+    <p id="review-summary"></p>
+    <div class="review-controls"><label>表示 <select id="review-filter"><option value="pending">未判断・保留</option><option value="review">要確認すべて</option><option value="blocked">停止候補</option><option value="all">全候補・判断済み</option></select></label><button id="review-reload" type="button" class="btn btn-secondary">再読み込み</button></div>
+    <p id="review-message" role="status" aria-live="polite"></p>
+    <div id="review-list"></div>
+  </dialog>
   <script src="venues.js"></script>
   <script src="companies.js"></script>
   <script src="events.js"></script>
@@ -568,5 +578,9 @@
   <script src="script.js"></script>
   <script src="firebase-config.js"></script>
   <script src="firebase-auth.js"></script>
+  <script src="review-data.js"></script>
+  <script src="review-config.js"></script>
+  <script src="review-model.js"></script>
+  <script src="review-ui.js"></script>
 </body>
 </html>

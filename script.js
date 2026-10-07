@@ -2130,7 +2130,7 @@ function createEventCardHtml(event) {
       <!-- 中段: タイトル・サブタイトル・概要 -->
       <div class="card-content-block">
         ${parentConferenceBadgeHtml}
-        <h3 class="card-title">${escapeHtml(event.title)}</h3>
+        <h3 class="card-title">${event.isConference && event.officialUrl ? `<a class="conference-title-link" href="${escapeHtml(event.officialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}</h3>
         <p class="card-subtitle">${escapeHtml(event.subtitle)}</p>
         ${event.isConference && event.conferenceRegion !== 'international' && event.eventType !== '海外学会' ? '' : `<p class="card-desc">${escapeHtml(event.description)}</p>`}
       </div>

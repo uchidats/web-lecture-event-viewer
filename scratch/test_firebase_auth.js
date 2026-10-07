@@ -15,12 +15,16 @@ function fixture() {
   };
   return {controller: () => createController({config,load:async()=>sdk}), order,
     setError(value){error=value;},setHold(value){hold=value;},get popupCalls(){return popupCalls;},
+    setVerified(value){persisted.emailVerified=value;observer(persisted);},
     externalLogout(){persisted=null;observer(null);}};
 }
 async function main() {
   let loads=0;const missing=createController({config:{},load:()=>{loads++;}});await missing.init();assert.equal(missing.snapshot().phase,'unconfigured');await missing.login();assert.equal(loads,0);
   const f=fixture(), auth=f.controller();await auth.init();assert.deepEqual(f.order,['persistence','observer']);assert.equal(auth.getUid(),null);
   await auth.login();assert.equal(auth.getUid(),'same-google-uid');assert.equal(await auth.getIdToken(),'mock-id-token');
+  assert.equal(auth.snapshot().user.emailVerified,false,'missing verification must default to false');
+  f.setVerified(true);assert.equal(auth.snapshot().user.emailVerified,true);
+  f.setVerified('true');assert.equal(auth.snapshot().user.emailVerified,false,'only boolean true is verified');
   const restored=f.controller();await restored.init();assert.equal(restored.getUid(),auth.getUid(),'SDK persisted user restores after controller recreation');
   await restored.logout();assert.equal(restored.getUid(),null);await assert.rejects(restored.getIdToken(),/not-signed-in/);
   f.setError('auth/popup-blocked');await restored.login();assert.equal(restored.getUid(),null);assert.match(restored.snapshot().message,/ポップアップ/);assert.equal(restored.snapshot().busy,false);
