@@ -8,7 +8,8 @@ async function main() {
   if (args.includes('--help')) { console.log('node scripts/update-conferences.js [--dry-run | --apply]\nDefault: dry-run. AUTO_UPDATE_DISABLED=1 stops all fetch/apply.'); return; }
   const result = await runUpdater({ root: path.resolve(__dirname, '..'), config: require('../conference-sources'), apply: args.includes('--apply') });
   console.log(JSON.stringify({ outcome: result.outcome, mode: result.mode, sources: result.sourceCount,
-    autoChanges: result.autoChanges.length, needsReview: result.needsReview.length, stopReason: result.stopReason,
+    autoChanges: result.autoChanges.length, needsReview: result.needsReview.length,
+    blockedAutoChanges: result.blockedAutoChanges.length, stopReason: result.stopReason,
     report: 'reports/auto-update-report.json', review: 'reports/auto-update-review.json' }, null, 2));
   if (result.stopped) process.exitCode = 2;
 }

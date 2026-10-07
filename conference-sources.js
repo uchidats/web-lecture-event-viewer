@@ -6,8 +6,10 @@ module.exports = {
   defaults: {
     dryRun: true,
     minConfidence: 0.95,
-    maxAutoChanges: 10, // Number of changed source fields, not conference records.
+    maxAutoChanges: 10, // Risk budget: official null abstract completions cost 0.25; others cost 1.
     maxChangedConferences: 5,
+    maxTotalAutoChanges: 20,
+    maxFieldsPerEvent: 6,
     maxDateShiftDays: 14,
     maxDeadlineShiftDays: 90,
     timeoutMs: 15000,

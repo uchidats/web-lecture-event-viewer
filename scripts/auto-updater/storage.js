@@ -54,7 +54,7 @@ function mergeReview(previous, entries, checkedAt) {
 const checks = [
   ...['events.js', 'script.js', 'companies.js', 'venues.js', 'conference-sources.js', 'scripts/update-conferences.js',
     'scripts/auto-updater/fetch.js', 'scripts/auto-updater/extract.js', 'scripts/auto-updater/policy.js',
-    'scripts/auto-updater/storage.js', 'scripts/auto-updater/pipeline.js'].map(file => ['--check', file]),
+    'scripts/auto-updater/storage.js', 'scripts/auto-updater/pipeline.js', 'scripts/auto-updater/mass-change.js'].map(file => ['--check', file]),
   ['scratch/test_ended_conferences.js'], ['scratch/test_conference_history.js'],
   ['scratch/test_venue_master.js'], ['scratch/test_comprehensive_regression.js'],
   ['scratch/test_abstract_submission.js'], ['scratch/test_auto_updater.js'],

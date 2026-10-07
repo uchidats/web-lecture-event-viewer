@@ -4,12 +4,13 @@ const vm = require('node:vm');
 const { fetchOfficialPage } = require('./fetch');
 const { adapters } = require('./extract');
 const { assess, applyChanges } = require('./policy');
+const { evaluateMassChanges } = require('./mass-change');
 const { loadEvents, validateEvents, readJson, atomicWrite, writeJson, hash, mergeReview, runChecks, assertCleanMain } = require('./storage');
 
 function validateConfig(config, events) {
   if (config.version !== 1 || !Array.isArray(config.sources) || config.sources.length < 1) throw new Error('Invalid source registry');
   const ids = new Set();
-  for (const key of ['minConfidence', 'maxAutoChanges', 'maxChangedConferences', 'maxDateShiftDays', 'maxDeadlineShiftDays', 'timeoutMs', 'maxResponseBytes', 'minYear', 'maxYear']) {
+  for (const key of ['minConfidence', 'maxAutoChanges', 'maxChangedConferences', 'maxTotalAutoChanges', 'maxFieldsPerEvent', 'maxDateShiftDays', 'maxDeadlineShiftDays', 'timeoutMs', 'maxResponseBytes', 'minYear', 'maxYear']) {
     if (!Number.isFinite(config.defaults[key]) || config.defaults[key] <= 0) throw new Error(`Invalid limit ${key}`);
   }
   if (config.defaults.minConfidence > 1) throw new Error('Invalid confidence threshold');
@@ -35,7 +36,7 @@ async function runPipeline({ root, config, apply = false, getPage = fetchOfficia
   const previousHistory = readJson(historyFile, { version: 1, changes: [] });
   if (!previousState.sources || !Array.isArray(previousHistory.changes)) throw new Error('Invalid metadata/history JSON');
   const summary = { version: 1, checkedAt, mode: apply ? 'apply' : 'dry-run', outcome: 'dry-run',
-    sourceCount: config.sources.length, autoChanges: [], needsReview: [], sources: [], stopped: false, tests: null };
+    sourceCount: config.sources.length, autoChanges: [], needsReview: [], blockedAutoChanges: [], sources: [], stopped: false, stopReason: null, tests: null };
   const finish = () => {
     writeJson(reviewFile, mergeReview(previousQueue, summary.needsReview, checkedAt));
     writeJson(summaryFile, summary);
@@ -76,13 +77,13 @@ async function runPipeline({ root, config, apply = false, getPage = fetchOfficia
     state.sources[source.id] = meta;
     summary.sources.push({ eventId: source.id, ...meta, candidateCount: candidates.length });
   }
-  const conferenceCount = new Set(summary.autoChanges.map(c => c.eventId)).size;
-  if (summary.autoChanges.length > config.defaults.maxAutoChanges || conferenceCount > config.defaults.maxChangedConferences) {
+  summary.massChangeAssessment = evaluateMassChanges(summary.autoChanges, config);
+  if (summary.massChangeAssessment.stopped) {
     summary.stopped = true; summary.stopReason = 'mass-change-limit';
   }
   if (summary.stopped) {
     summary.outcome = 'stopped'; summary.stopReason ||= 'abnormal-date-or-structured-data';
-    summary.needsReview.push(...summary.autoChanges.map(c => ({ ...c, reason: summary.stopReason })));
+    summary.blockedAutoChanges = summary.autoChanges.splice(0).map(c => ({ ...c, reason: summary.stopReason }));
     return finish();
   }
   const updated = applyChanges(dataset.events, summary.autoChanges);

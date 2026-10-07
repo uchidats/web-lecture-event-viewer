@@ -8,6 +8,7 @@ const config = require('../conference-sources');
 const { extractOfficialHtml, normalizeDate, normalizeVenue, dateRanges } = require('../scripts/auto-updater/extract');
 const { assess, applyChanges } = require('../scripts/auto-updater/policy');
 const { runUpdater } = require('../scripts/auto-updater/pipeline');
+const { evaluateMassChanges } = require('../scripts/auto-updater/mass-change');
 const { loadEvents, mergeReview, assertCleanMain } = require('../scripts/auto-updater/storage');
 const { fetchOfficialPage } = require('../scripts/auto-updater/fetch');
 const root = path.resolve(__dirname, '..');
@@ -102,8 +103,35 @@ async function main() {
   fs.copyFileSync(path.join(root, 'venues.js'), path.join(tmp, 'venues.js'));
   const baseline = fs.readFileSync(path.join(tmp, 'events.js'), 'utf8');
   const options = { root: tmp, config, getPage: fixturePage, checkedAt, enforceGit: false };
-  const mass = await runUpdater({ ...options, apply: true, check: () => { throw new Error('Must not reach tests'); } });
+  const reproduced = await runUpdater(options);
+  assert.equal(reproduced.sourceCount, 5);
+  assert.equal(reproduced.autoChanges.length, 11);
+  assert.equal(reproduced.massChangeAssessment.changedEvents, 4);
+  assert.equal(reproduced.stopped, false);
+  assert.equal(reproduced.stopReason, null);
+  assert.equal(reproduced.blockedAutoChanges.length, 0);
+  assert.ok(reproduced.needsReview.every(c => c.reason !== 'mass-change-limit'));
+  console.log('Artifact-equivalent dry-run:', JSON.stringify({ autoChanges: reproduced.autoChanges.length,
+    genuineNeedsReview: reproduced.needsReview.length, blockedChanges: reproduced.blockedAutoChanges.length,
+    stopReason: reproduced.stopReason, assessment: reproduced.massChangeAssessment }));
+  const evaluate = (changes, defaults = {}) => evaluateMassChanges(changes, { ...config, defaults: { ...config.defaults, ...defaults } });
+  const overwrites = reproduced.autoChanges.map(c => ({ ...c, oldValue: 'existing-value' }));
+  assert.equal(evaluate(overwrites).stopped, true);
+  for (const field of ['date', 'endDate', 'venue', 'city', 'country', 'title', 'officialUrl']) {
+    assert.equal(evaluate([{ ...reproduced.autoChanges[0], field, oldValue: null }]).lowRiskCompletions, 0);
+  }
+  assert.equal(evaluate([{ ...reproduced.autoChanges[1], confidence: 0.5 }]).lowRiskCompletions, 0);
+  assert.equal(evaluate([{ ...reproduced.autoChanges[1], url: 'https://evil.example/' }]).lowRiskCompletions, 0);
+  assert.ok(evaluate(reproduced.autoChanges, { maxTotalAutoChanges: 10 }).exceeded.includes('total-fields'));
+  assert.ok(evaluate(reproduced.autoChanges, { maxFieldsPerEvent: 3 }).exceeded.includes('fields-per-event'));
+  const mass = await runUpdater({ ...options, config: { ...config, defaults: { ...config.defaults, maxChangedConferences: 3 } },
+    apply: true, check: () => { throw new Error('Must not reach tests'); } });
   assert.equal(mass.outcome, 'stopped'); assert.equal(mass.stopReason, 'mass-change-limit');
+  assert.equal(mass.autoChanges.length, 0);
+  assert.equal(mass.blockedAutoChanges.length, 11);
+  assert.deepEqual(mass.needsReview, reproduced.needsReview);
+  const queue = JSON.parse(fs.readFileSync(path.join(tmp, 'reports/auto-update-review.json')));
+  assert.ok(queue.items.every(c => c.reason !== 'mass-change-limit'));
   assert.equal(fs.readFileSync(path.join(tmp, 'events.js'), 'utf8'), baseline);
   const single = { ...config, sources: [source] };
   const dry = await runUpdater({ ...options, config: single });
@@ -116,9 +144,10 @@ async function main() {
   assert.equal(fs.readFileSync(path.join(tmp, 'events.js'), 'utf8'), baseline);
   const malformed = await runUpdater({ ...options, config: single, getPage: async p => ({ ...p, html: '<html><title>error page</title></html>' }) });
   assert.equal(malformed.autoChanges.length, 0);
-  const exactLimit = { ...single, defaults: { ...config.defaults, maxAutoChanges: 4 } };
+  const singleRisk = evaluate(dry.autoChanges).riskWeightedFields;
+  const exactLimit = { ...single, defaults: { ...config.defaults, maxAutoChanges: singleRisk } };
   assert.equal((await runUpdater({ ...options, config: exactLimit })).stopped, false);
-  assert.equal((await runUpdater({ ...options, config: { ...exactLimit, defaults: { ...exactLimit.defaults, maxAutoChanges: 3 } } })).stopped, true);
+  assert.equal((await runUpdater({ ...options, config: { ...exactLimit, defaults: { ...exactLimit.defaults, maxAutoChanges: singleRisk - 0.25 } } })).stopped, true);
   const disabled = await runUpdater({ ...options, config: { ...single, enabled: false }, getPage: () => { throw new Error('Disabled must never fetch'); } });
   assert.equal(disabled.outcome, 'disabled');
   const rollback = await runUpdater({ ...options, config: single, apply: true, check: () => ({ passed: false, results: [] }) });
