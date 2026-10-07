@@ -971,11 +971,21 @@ function getAvailableEventYears() {
  * @returns {number|null} 残り日数 (負なら締切超過)
  */
 function getDaysUntilAbstractDeadline(event, baseDate = new Date()) {
-  if (!event.isConference || !event.abstractSubmission?.deadline) return null;
-  const deadline = parseAbstractDate(event.abstractSubmission.deadline);
+  if (!event.isConference) return null;
+  const deadline = parseAbstractDate(getCurrentAbstractDeadline(event.abstractSubmission));
   const today = parseAbstractDate(typeof baseDate === "string" ? baseDate :
     `${baseDate.getFullYear()}-${String(baseDate.getMonth() + 1).padStart(2, "0")}-${String(baseDate.getDate()).padStart(2, "0")}`);
   return deadline && today ? (deadline.timestamp - today.timestamp) / 86400000 : null;
+}
+
+// deadline remains the accepted baseline; currentDeadline supports future extension records.
+function getCurrentAbstractDeadline(sub) { return sub?.deadline ?? sub?.currentDeadline ?? null; }
+
+function formatAbstractDeadline(value, { showTime = true } = {}) {
+  const date = parseAbstractDate(value);
+  if (!date) return null;
+  const time = showTime && typeof value === 'string' && value.match(/[ T](\d{2}):(\d{2})/);
+  return `${date.year}年${date.month}月${date.day}日${time ? ` ${time[1]}:${time[2]}` : ''}`;
 }
 
 // 日時付きの既存データも、締切日の暦日として比較する。
@@ -1013,12 +1023,11 @@ function renderAbstractSubmissionHtml(event, baseDate = getTodayString()) {
   const labels = { open: "演題募集中", upcoming: "演題募集予定", closed: "演題募集終了" };
   const isClosed = sub.status === "closed" || (info.days !== null && info.days < 0);
   const displayStatus = isClosed ? "closed" : info.status;
-  const date = parseAbstractDate(sub.deadline);
-  const today = parseAbstractDate(baseDate);
-  const deadlineLabel = date ? `${date.year !== today?.year ? date.year + "/" : ""}${date.month}/${date.day}` : sub.deadline;
+  const deadlineLabel = formatAbstractDeadline(getCurrentAbstractDeadline(sub));
+  const extensionLabel = sub.extended === true ? '（延長）' : '';
   const parts = [];
-  if (labels[displayStatus]) parts.push(`<span class="abstract-status-tag ${displayStatus}">${labels[displayStatus]}</span>`);
-  if (!isClosed && deadlineLabel) parts.push(`<span class="deadline-highlight">演題締切 ${escapeHtml(deadlineLabel)}</span>`);
+  if (labels[displayStatus]) parts.push(`<span class="abstract-status-tag ${displayStatus}">${isClosed && deadlineLabel ? escapeHtml(deadlineLabel) + ' 締切済' + extensionLabel : labels[displayStatus]}</span>`);
+  if (!isClosed && deadlineLabel) parts.push(`<span class="deadline-highlight">締切：${escapeHtml(deadlineLabel)}${extensionLabel}</span>`);
   if (!isClosed && info.isOpen && info.days !== null) {
     const text = info.days === 0 ? "本日締切" : `${info.urgency === "urgent" ? "締切間近・" : info.urgency === "soon" ? "注意・" : ""}締切まで${info.days}日`;
     parts.push(`<span class="abstract-status-tag ${info.urgency}">${text}</span>`);
@@ -1605,8 +1614,8 @@ function getFilteredEvents(ignoreCalendar = false) {
     if (state.sortBy === "date-asc") {
       return new Date(a.date) - new Date(b.date);
     } else if (state.sortBy === "abstract-deadline-asc") {
-      const deadlineA = parseAbstractDate(a.abstractSubmission?.deadline)?.timestamp ?? Infinity;
-      const deadlineB = parseAbstractDate(b.abstractSubmission?.deadline)?.timestamp ?? Infinity;
+      const deadlineA = parseAbstractDate(getCurrentAbstractDeadline(a.abstractSubmission))?.timestamp ?? Infinity;
+      const deadlineB = parseAbstractDate(getCurrentAbstractDeadline(b.abstractSubmission))?.timestamp ?? Infinity;
       if (deadlineA !== deadlineB) return deadlineA - deadlineB;
       return new Date(a.date) - new Date(b.date);
     } else if (state.sortBy === "title-asc") {

@@ -10,6 +10,7 @@ function location(event) {
 }
 function oldValue(event, field) {
   if (field === 'city' || field === 'country') return location(event)[field];
+  if (field === 'abstractSubmission.deadline') return event.abstractSubmission?.deadline ?? event.abstractSubmission?.currentDeadline ?? null;
   return field.split('.').reduce((value, key) => value?.[key], event) ?? null;
 }
 function canonical(field, value) {
@@ -91,6 +92,14 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
         reject(candidate, 'abnormal-date'); halt = true; continue;
       }
       if (previous && normalizeDate(previous)?.includes(' ') && !normalized.includes(' ')) { reject(candidate, 'deadline-time-would-be-lost'); continue; }
+      if (field === 'abstractSubmission.deadline' && previous && canonical(field, previous) !== canonical(field, value)) {
+        const stored = normalizeDate(previous);
+        const extended = !!stored && normalized > stored &&
+          (normalized.slice(0, 10) > stored.slice(0, 10) || (normalized.includes(' ') && stored.includes(' ')));
+        reject({ ...candidate, originalDeadline: event.abstractSubmission?.originalDeadline || previous,
+          currentDeadline: normalized, extended }, extended ? 'deadline-extension-possible' : 'deadline-change-needs-review');
+        continue;
+      }
       const shift = previous && normalizeDate(previous) ? Math.abs(day(value) - day(previous)) / 86400000 : 0;
       if (shift > (field.startsWith('abstractSubmission') ? limits.maxDeadlineShiftDays : limits.maxDateShiftDays)) { reject(candidate, 'large-date-shift'); continue; }
     }
@@ -145,6 +154,12 @@ function setField(event, field, value) {
     const loc = location(event); loc[field] = value;
     event.cityCountry = `${loc.city} / ${loc.country}`;
   } else if (field.startsWith('abstractSubmission.')) {
+    if (field === 'abstractSubmission.deadline') {
+      const sub = event.abstractSubmission || {};
+      const originalDeadline = sub.originalDeadline || sub.deadline || sub.currentDeadline || value;
+      event.abstractSubmission = { ...sub, originalDeadline, currentDeadline: value,
+        extended: (normalizeDate(value) || '') > (normalizeDate(originalDeadline) || '') };
+    }
     event.abstractSubmission = { ...event.abstractSubmission, [field.split('.')[1]]: value };
   } else event[field] = value;
 }
@@ -154,6 +169,10 @@ function applyChanges(events, changes) {
   for (const change of changes) {
     const event = result.find(e => e.id === change.eventId);
     if (!event?.isConference) throw new Error('Unknown conference ID');
+    if (change.field === 'abstractSubmission.deadline' && oldValue(event, change.field) &&
+        canonical(change.field, oldValue(event, change.field)) !== canonical(change.field, change.value)) {
+      throw new Error('Existing deadline change requires manual review');
+    }
     if (change.field === 'venue') {
       if (!hasExplicitVenueEvidence(change) || !change.sourceUrl || change.sourceUrl !== change.url ||
         !/^https:\/\//.test(change.sourceUrl)) throw new Error('Venue change requires explicit official evidence and source URL');
