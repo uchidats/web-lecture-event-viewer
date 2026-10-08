@@ -112,6 +112,22 @@ async function main() {
         assert.ok(await evaluate('document.getElementById("review-dialog").scrollWidth <= document.getElementById("review-dialog").clientWidth'));
         await evaluate('document.getElementById("review-close").click()');
         assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'));
+        const beta = await evaluate(`(() => {
+          const badge=document.querySelector('.beta-badge'), footer=document.querySelector('.beta-notice'), title=document.querySelector('.brand-title');
+          const inside=el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&el.scrollWidth<=el.clientWidth+1;};
+          return {badge:badge.textContent,notice:footer.textContent.trim(),title:title.textContent,
+            badgeFits:inside(badge),footerFits:inside(footer),brandFits:inside(document.querySelector('.brand')),
+            background:getComputedStyle(badge).backgroundColor,color:getComputedStyle(badge).color,
+            footerFont:parseFloat(getComputedStyle(footer).fontSize),footerLine:parseFloat(getComputedStyle(footer).lineHeight),
+            badgeHeight:badge.getBoundingClientRect().height,footerHeight:footer.getBoundingClientRect().height};
+        })()`);
+        assert.equal(beta.badge, 'β版｜機能・掲載情報を随時改善中');
+        assert.equal(beta.notice, '本サイトはβ版です。機能および掲載情報は順次確認・更新しています。参加登録、演題締切、開催日程等の重要情報については、必ず各学会の公式サイトでもご確認ください。');
+        assert.equal(beta.title, 'OphthalConf');
+        assert.ok(beta.badgeFits && beta.footerFits && beta.brandFits, `${width}px ${route}: beta layout`);
+        assert.equal(beta.background, 'rgb(241, 245, 249)'); assert.equal(beta.color, 'rgb(71, 85, 105)');
+        assert.ok(beta.footerFont >= 14 && beta.footerLine >= beta.footerFont * 1.6);
+        console.log(`Beta layout: ${width}px ${route}, badge ${Math.round(beta.badgeHeight)}px, footer ${Math.round(beta.footerHeight)}px, no overflow`);
         const assets = await evaluate('[...document.querySelectorAll("script[src],link[rel=stylesheet]")].map(e=>new URL(e.src||e.href).pathname)');
         assert.ok(assets.every(p => p.startsWith(route)));
       }
