@@ -570,12 +570,16 @@
   </dialog>
   <dialog id="review-dialog" aria-labelledby="review-title">
     <div class="review-toolbar"><h2 id="review-title">学会情報の更新確認</h2><button id="review-close" type="button" class="btn btn-secondary">閉じる</button></div>
-    <p class="review-local-note">ローカル確認用：判断はこのブラウザに保存されます。学会データには反映されません。</p>
-    <p id="review-summary"></p>
-    <div class="review-controls"><label>表示 <select id="review-filter"><option value="pending">未判断・保留</option><option value="review">要確認すべて</option><option value="blocked">停止候補</option><option value="all">全候補・判断済み</option></select></label><button id="review-reload" type="button" class="btn btn-secondary">再読み込み</button><button id="review-export-urls" type="button" class="btn btn-secondary">承認したURLを出力</button></div>
-    <p id="review-message" role="status" aria-live="polite"></p>
-    <button id="review-export-metadata" type="button" class="btn btn-secondary">承認した監査修正を出力</button>
-    <div id="review-list"></div>
+    <div id="gemini-monitor-panel"></div>
+    <details class="legacy-review-details">
+      <summary style="cursor: pointer; padding: 0.5rem 0; font-weight: bold; color: #475569;">旧方式の監査・更新候補一覧（互換性維持のため表示）</summary>
+      <p class="review-local-note">ローカル確認用：判断はこのブラウザに保存されます。学会データには反映されません。</p>
+      <p id="review-summary"></p>
+      <div class="review-controls"><label>表示 <select id="review-filter"><option value="pending">未判断・保留</option><option value="review">要確認すべて</option><option value="blocked">停止候補</option><option value="all">全候補・判断済み</option></select></label><button id="review-reload" type="button" class="btn btn-secondary">再読み込み</button><button id="review-export-urls" type="button" class="btn btn-secondary">承認したURLを出力</button></div>
+      <p id="review-message" role="status" aria-live="polite"></p>
+      <button id="review-export-metadata" type="button" class="btn btn-secondary">承認した監査修正を出力</button>
+      <div id="review-list"></div>
+    </details>
   </dialog>
   <script src="venues.js"></script>
   <script src="companies.js"></script>
@@ -590,5 +594,6 @@
   <script src="review-config.js"></script>
   <script src="review-model.js"></script>
   <script src="review-ui.js"></script>
+  <script src="gemini-review-ui.js"></script>
 </body>
 </html>

@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "updatedAt": "2026-10-08T17:28:30.693Z",
+  "snapshots": [
+    {
+      "id": "rb-conf-int-soe-2027-2026-10-08T17-27-15-230Z",
+      "eventId": "conf-int-soe-2027",
+      "eventName": "SOE 2027 (European Society of Ophthalmology Congress)",
+      "timestamp": "2026-10-08T17:27:15.230Z",
+      "status": "shadow_recorded",
+      "beforeValues": {
+        "venue": "Megaron Athens International Conference Centre"
+      },
+      "afterValues": {
+        "venue": "TheMegaronAthensInternationalConferenceCentre(Megaron)islocatedincentralAthens,closetomajorhotels,culturalattractionsandthecity’smainbusinessdistricts.Thevenueiseasilyreachedbypublictransport,taxiandprivatecar.AthensInternationalAirportEleftheriosVenizelos(ATH)isapproximately30kmfromMegaronandtypicallytakesaround30-45minutesbycarortaxi,dependingontraffic.Formetro,busandtraminformation,visittheAthenspublictransportnetwork:https://www.oasa.gr/en/Forsuburbanrail(Proastiakos)andrailservices,visitHellenicTrain:https://www.hellenictrain.gr/enForairporttransportoptions,includingmetroandsuburbanrailconnections,visittheAthensInternationalAirporttransportpage:https://www.aia.gr/traveler/access-and-transportation/transportation/"
+      },
+      "fieldChanges": [
+        {
+          "field": "venue",
+          "before": "Megaron Athens International Conference Centre",
+          "after": "TheMegaronAthensInternationalConferenceCentre(Megaron)islocatedincentralAthens,closetomajorhotels,culturalattractionsandthecity’smainbusinessdistricts.Thevenueiseasilyreachedbypublictransport,taxiandprivatecar.AthensInternationalAirportEleftheriosVenizelos(ATH)isapproximately30kmfromMegaronandtypicallytakesaround30-45minutesbycarortaxi,dependingontraffic.Formetro,busandtraminformation,visittheAthenspublictransportnetwork:https://www.oasa.gr/en/Forsuburbanrail(Proastiakos)andrailservices,visitHellenicTrain:https://www.hellenictrain.gr/enForairporttransportoptions,includingmetroandsuburbanrailconnections,visittheAthensInternationalAirporttransportpage:https://www.aia.gr/traveler/access-and-transportation/transportation/",
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "url": "https://soe2027.soevision.org/",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.97,
+        "reason": "Official event page explicitly matches year and contains confirmed schedule/venue."
+      },
+      "rollback": null
+    },
+    {
+      "id": "rb-conf-jp-pediatric-2027-2026-10-08T17-27-14-629Z",
+      "eventId": "conf-jp-pediatric-2027",
+      "eventName": "第83回 日本弱視斜視学会総会・第52回 日本小児眼科学会総会",
+      "timestamp": "2026-10-08T17:27:14.629Z",
+      "status": "shadow_recorded",
+      "beforeValues": {
+        "venue": "天童ホテル",
+        "title": "第83回 日本弱視斜視学会総会・第52回 日本小児眼科学会総会"
+      },
+      "afterValues": {
+        "venue": "天童ホテル〒994-0025山形県天童市鎌田本町2丁目1-3 天童ホテル〒994-0025山形県天童市鎌田本町2丁目1-3→アクセス(公式HP)",
+        "title": "第83回日本弱視斜視学会総会/第52回日本小児眼科学会総会"
+      },
+      "fieldChanges": [
+        {
+          "field": "venue",
+          "before": "天童ホテル",
+          "after": "天童ホテル〒994-0025山形県天童市鎌田本町2丁目1-3 天童ホテル〒994-0025山形県天童市鎌田本町2丁目1-3→アクセス(公式HP)",
+          "severity": "medium"
+        },
+        {
+          "field": "title",
+          "before": "第83回 日本弱視斜視学会総会・第52回 日本小児眼科学会総会",
+          "after": "第83回日本弱視斜視学会総会/第52回日本小児眼科学会総会",
+          "severity": "low"
+        }
+      ],
+      "evidence": {
+        "url": "https://jasa-japo2027.jp/",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.97,
+        "reason": "Official event page explicitly matches year and contains confirmed schedule/venue."
+      },
+      "rollback": null
+    }
+  ],
+  "suppressions": [],
+  "sourceLearningMeta": {}
+}

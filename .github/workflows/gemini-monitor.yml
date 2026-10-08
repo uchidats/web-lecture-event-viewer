@@ -1,0 +1,79 @@
+name: Gemini Conference Monitor (Shadow Mode)
+
+on:
+  schedule:
+    - cron: '15 21 * * *' # 06:15 JST daily
+  workflow_dispatch:
+    inputs:
+      force_all:
+        description: 'Force check all events ignoring schedule interval'
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: gemini-conference-monitor
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  monitor:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TZ: Asia/Tokyo
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      - name: Validate system regressions
+        run: |
+          node scripts/check-conference-regressions.js
+          node scratch/test_gemini_monitor_regression.js
+
+      - name: Run Gemini 3.8 Flash monitor in shadow mode
+        id: run_monitor
+        run: |
+          FLAGS="--dry-run"
+          if [ "${{ inputs.force_all }}" = "true" ]; then
+            FLAGS="$FLAGS --force-all"
+          fi
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "GEMINI_API_KEY secret not found or empty; running with offline deterministic validator"
+            FLAGS="$FLAGS --offline"
+          fi
+          node scripts/run-gemini-monitor.js $FLAGS
+
+      - name: Commit shadow reports and state cache
+        run: |
+          git add reports/gemini-monitor/ reports/gemini-monitor-state.json reports/gemini-rollback-history.json
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m "chore: record daily gemini conference monitor report (shadow mode)"
+            git push origin HEAD:main
+          else
+            echo "No monitoring state changes to commit."
+          fi
+
+      - name: Upload monitoring report artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: gemini-monitor-reports-${{ github.run_id }}
+          path: |
+            reports/gemini-monitor/
+            reports/gemini-monitor-state.json
+            reports/gemini-rollback-history.json
+          retention-days: 30
+          if-no-files-found: warn

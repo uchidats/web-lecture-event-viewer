@@ -40,3 +40,30 @@
   .review-actions { flex-direction: column; }
   .review-actions .btn { width: 100%; justify-content: center; }
 }
+
+/* Gemini 3.8 Flash Monitor Panel Styles */
+.gemini-monitor-box { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.gemini-monitor-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.gemini-monitor-header h3 { font-size: 1.15rem; margin: 0; color: #1e293b; }
+.gemini-monitor-meta { font-size: 0.85rem; color: #64748b; margin: 4px 0 16px; }
+.gemini-monitor-empty { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 14px; color: #166534; font-size: 0.9rem; }
+.gemini-review-list { margin-top: 14px; }
+.gemini-review-list h4 { font-size: 0.95rem; margin: 0 0 10px; color: #334155; }
+.gemini-review-card { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 5px solid #64748b; border-radius: 8px; padding: 14px; margin-bottom: 12px; }
+.gemini-review-card.severity-high { border-left-color: #ef4444; background: #fef2f2; }
+.gemini-review-card.severity-medium { border-left-color: #f59e0b; background: #fffbeb; }
+.gemini-review-card.severity-low { border-left-color: #3b82f6; background: #eff6ff; }
+.gemini-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.gemini-badge { font-size: 0.75rem; font-weight: bold; padding: 2px 8px; border-radius: 9999px; }
+.gemini-badge.severity-high { background: #fee2e2; color: #991b1b; }
+.gemini-badge.severity-medium { background: #fef3c7; color: #92400e; }
+.gemini-badge.severity-low { background: #dbeafe; color: #1e40af; }
+.gemini-changes-table table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 0.85rem; }
+.gemini-changes-table th, .gemini-changes-table td { border: 1px solid #cbd5e1; padding: 6px 10px; text-align: left; }
+.gemini-changes-table th { background: #f1f5f9; }
+.gemini-card-actions { display: flex; gap: 8px; margin-top: 10px; }
+.gemini-card-actions .btn-sm { padding: 4px 10px; font-size: 0.8rem; border-radius: 6px; cursor: pointer; }
+.gemini-shadow-details { margin-top: 14px; font-size: 0.85rem; color: #475569; }
+.gemini-shadow-details summary { cursor: pointer; font-weight: 600; }
+.legacy-review-details { margin-top: 20px; border-top: 1px solid #cbd5e1; padding-top: 10px; }
+

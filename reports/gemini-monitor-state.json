@@ -1,0 +1,671 @@
+{
+  "version": 1,
+  "lastRun": "2026-10-08T17:28:29.536Z",
+  "sources": {
+    "oph-001": {
+      "url": "https://convention.jtbcom.co.jp/80ringan/index.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "889021702fb49ca3c099d8d061c1da27b9fdb0730672a2af45b638514d960c96",
+      "lastGeminiDecision": "no_change",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-10"
+    },
+    "oph-001-s1": {
+      "url": "https://convention.jtbcom.co.jp/80ringan/index.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "889021702fb49ca3c099d8d061c1da27b9fdb0730672a2af45b638514d960c96",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-10"
+    },
+    "oph-001-s2": {
+      "url": "https://convention.jtbcom.co.jp/80ringan/index.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "889021702fb49ca3c099d8d061c1da27b9fdb0730672a2af45b638514d960c96",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-10"
+    },
+    "oph-001-s3": {
+      "url": "https://convention.jtbcom.co.jp/80ringan/index.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "889021702fb49ca3c099d8d061c1da27b9fdb0730672a2af45b638514d960c96",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-10"
+    },
+    "conf-jp-pharmacology-2026": {
+      "url": "https://square.umin.ac.jp/jsop46/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "a16676c57900155012027c5fa00c0d1fcdc0099e60ae3b660c9d403ffd3fab0b",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-10"
+    },
+    "conf-jp-neuro-2026": {
+      "url": "https://n-practice.co.jp/64thJNOS/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "9cb7d2e20376d819342333ca962c50f8d3c1712fb581fb39420dd9d6d6b30dfc",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-10"
+    },
+    "conf-jp-jrvs-2026": {
+      "url": "https://convention.jtbcom.co.jp/65moumaku/index.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "4b42e722f548f497862a47fa7f7da64dac9bf04100b49f4014652f3c7a4f5772",
+      "lastGeminiDecision": "no_change",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-10"
+    },
+    "conf-int-arc-2026": {
+      "url": "https://convention.jtbcom.co.jp/arc2026/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "2e18fdaee35019b269e7ebac320ad3f71f19fafde3ba7b864aeea135ffb824b8",
+      "lastGeminiDecision": "no_change",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-10"
+    },
+    "conf-jp-surgery-2027": {
+      "url": "https://50.jsos.jp/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "02e26a6822f9038d33c0fe0cb5d7879089f73134b42a39fdcc06b5ecffe84085",
+      "lastGeminiDecision": "no_change",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-12"
+    },
+    "conf-jp-cornea-2027": {
+      "url": "https://www.okinawa-congre.co.jp/cornea2027/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "1da2b34cd18e05451a5938fdd3fadf92729600205b3a8a0e74e33d17d2814829",
+      "lastGeminiDecision": "no_change",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-12"
+    },
+    "conf-jp-eyelid-2027": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-12"
+    },
+    "conf-jp-diabetic-2027": {
+      "url": "https://convention.jtbcom.co.jp/jsod33/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "2c93a2e340948f4c9984a68bffdd92489f409e85fc9cd8f5c3af6d98ed7f9ec8",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.88,
+      "nextCheckDate": "2026-10-12"
+    },
+    "conf-jp-iscev-2027": {
+      "url": "https://www.congre.co.jp/73jscev/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "ef1f2f51d1a9a934fa78fe5227a1cb3042c0571a6231046e16b42bb9c1b3573f",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.88,
+      "nextCheckDate": "2026-10-12"
+    },
+    "conf-int-apao-2027": {
+      "url": "https://2027.apaophth.org/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "0e54e7403293e077c739796d8357df1134d60dc52938926ce5773cc8a30ad6f1",
+      "lastGeminiDecision": "no_change",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-12"
+    },
+    "conf-int-fujiretina-2027": {
+      "url": "https://convention.jtbcom.co.jp/fujiretina/index.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "f9a7745370479acc4a3491e5ccf53bc15bd11a628c738fd3ca17e6b3720f3bc2",
+      "lastGeminiDecision": "no_change",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-12"
+    },
+    "oph-011": {
+      "url": "https://convention.jtbcom.co.jp/131jos/index.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "dc8263dc4400ab8a0bc46d06dfbff0c3475622771b2ec17b24eb925dab7a592b",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.88,
+      "nextCheckDate": "2026-10-16"
+    },
+    "oph-014": {
+      "url": "https://site2.convention.co.jp/jgs2027/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "4cc02fe6e30323af625e4bd658c07a131f6024095eede3ea7202175375ab53e8",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-int-wgc-2027": {
+      "url": "https://worldglaucomacongress.org/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "8d469b0b0399595b66d2db155048ef4b1ed538397ad1870e8b839575e6e4455b",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-jp-lowvision-2027": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-int-apacrs-2027": {
+      "url": "https://apacrs2027.org/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "7b1b9c12ae8b8e2042b61de0fb16b05951e6c1d7ee7705c3e9879c664965f4c2",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-jp-perimetry-2027": {
+      "url": "https://www.ganki.jp/jips2027/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "c2a0012689604f6c8c446320e0ccbae3b2ec07b232c4be1b5d6e564927f89b04",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.88,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-jp-jsoprs-2027": {
+      "url": "https://orbit-cs.net/jsoprs2027/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "0ef8eef993b866b37d8d71c821d6107d6504bb0f96c9e9fbdeb04fca0bc4c02a",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-jp-pediatric-2027": {
+      "url": "https://jasa-japo2027.jp/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "43af51ce052294f57e874928d0d8b13e15236cb52722d3b82c7d58486e57ad48",
+      "lastGeminiDecision": "safe_auto_update",
+      "lastGeminiConfidence": 0.97,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-int-soe-2027": {
+      "url": "https://soe2027.soevision.org/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "269791cce3db42bd6eccb900e0febb08f1d87f1d61961ab23905fdfaa65ffb64",
+      "lastGeminiDecision": "safe_auto_update",
+      "lastGeminiConfidence": 0.97,
+      "nextCheckDate": "2026-10-16"
+    },
+    "oph-013": {
+      "url": "https://www.kwcs.jp/42jscrs/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "01b4236abca83b9c12c25fad6ef0b2457f945acc9e2b38955dc92a3923ed3e50",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.88,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-jp-myopia-2027": {
+      "url": "https://www.ganki.jp/myopia2027/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "dd53caf01329aaaea860126b29db5e3e1b72920605cda404783b2f835a086c2c",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.88,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-int-iois-2027": {
+      "url": "https://www.iois.info/page.php?edi_id=1697",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "49d2a5bca9e7535233910ce9c9bd1359fbb36d05ce33f969409acd6c3bc91e58",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-jp-inflammation-2027": {
+      "url": "https://www.congre.co.jp/oiw2027/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "e13367002924b74aa07f8ea242c08541a63a7ebfc23142bf55f994458dab3695",
+      "lastGeminiDecision": "no_change",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-jp-circulation-2027": {
+      "url": "https://convention.jtbcom.co.jp/43jsoc/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "532d82f840e20f7c40d891b9b40b2fff787981723f20b3b4a7be56e449bb914a",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.88,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-jp-cl-2027": {
+      "url": "https://www.congre.co.jp/jcls2027/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "39785217af6f2cf86278e01a2a366485d688bdfce12b0f10db05b1ba03842ba9",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.88,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-jp-optics-2027": {
+      "url": "https://www.jsoo-ws.com/63jsoo",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "b1faa7d8fa179278304effa8ec909f957c2ca3e300f25fe6957183658ac73642",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-jp-cataract-2027": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-jp-pharmacology-2027": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-int-euretina-2027": {
+      "url": "https://euretina.org/copenhagen-27/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "0893bcd998f8362bb5443556244119a292c94d6ea5d4c658c27afbb6d3b4a7b4",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-jp-oncology-2027": {
+      "url": "https://www.ganki.jp/jsoo2027/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "22fd0a20dbe897ff1650f3659077e68af41029798c6e10a8a8b14403be341828",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.88,
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-int-escrs-2027": {
+      "url": "https://www.escrs.org/escrs-annual-events/45th-congress-of-the-escrs",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "e9517382a5bf3c1b8b6cf27e59f5d88b1ef2816d2d8f7bf16298dee756b76fbf",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-ringan-2027": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-int-aao-2027": {
+      "url": "https://www.aao.org/annual-meeting",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "c1bb28c8a8945c04847f24fcb2599bcf69e6269d22e1dc8a61424786a2dbffe7",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.88,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-neuro-2027": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-int-asnos-2027": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "6924f332fec2ccd0943d7b8379bdc1a26417d561a114cf65c382d7638eb50ca2",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-ai-2027": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-jrvs-2027": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-presbyopia-2028": {
+      "url": "https://www.rousi.jp/jps5",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "87f228d39ecfd2741f626ae1b27d81b6f9824c564f7f67f9a827eaaca954e69f",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.88,
+      "nextCheckDate": "2026-10-12"
+    },
+    "conf-jp-surgery-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-cornea-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-eyelid-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-iscev-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-diabetic-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-int-ips-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "6924f332fec2ccd0943d7b8379bdc1a26417d561a114cf65c382d7638eb50ca2",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-perimetry-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-int-apao-2028": {
+      "url": "https://apaophth.org/",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "deeaec5fc33a9216bb4ab49e462d063a24d2395ab2ae5eb31f0f6a404344d119",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.88,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-int-fujiretina-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "6924f332fec2ccd0943d7b8379bdc1a26417d561a114cf65c382d7638eb50ca2",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-jos-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-myopia-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-lowvision-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-pediatric-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-optics-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-jscrs-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-inflammation-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-cl-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-cataract-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-oncology-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-ringan-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-int-escrs-2028": {
+      "url": "https://www.escrs.org/escrs-annual-events/46th-congress-of-the-escrs",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "a7bc1016a9ea96a1fa46c7bda97cffec0a3ed1498b6586f7d39a2bae0791e6d3",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-int-aao-2028": {
+      "url": "https://www.aao.org/annual-meeting",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "c1bb28c8a8945c04847f24fcb2599bcf69e6269d22e1dc8a61424786a2dbffe7",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.88,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-pharmacology-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-neuro-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-jrvs-2028": {
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 200,
+      "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.96,
+      "nextCheckDate": "2026-11-08"
+    },
+    "oph-003": {
+      "lastChecked": "2026-10-09",
+      "nextCheckDate": "2026-10-10",
+      "hasOfficialUrl": false
+    },
+    "oph-004": {
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 0,
+      "lastError": "untrusted-domain",
+      "nextCheckDate": "2026-10-10"
+    },
+    "conf-int-ascrs-2027": {
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 0,
+      "lastError": "bot-protected",
+      "nextCheckDate": "2026-10-12"
+    },
+    "oph-012": {
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 0,
+      "lastError": "bot-protected",
+      "nextCheckDate": "2026-10-16"
+    },
+    "conf-int-ascrs-2028": {
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 0,
+      "lastError": "bot-protected",
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-int-arvo-2028": {
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 0,
+      "lastError": "bot-protected",
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-jp-jsoprs-2028": {
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 0,
+      "lastError": "untrusted-domain",
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-int-apvrs-2028": {
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 0,
+      "lastError": "untrusted-domain",
+      "nextCheckDate": "2026-11-08"
+    },
+    "conf-int-woc-2028": {
+      "lastChecked": "2026-10-09",
+      "lastHttpStatus": 0,
+      "lastError": "non-html-response",
+      "nextCheckDate": "2026-11-08"
+    }
+  }
+}

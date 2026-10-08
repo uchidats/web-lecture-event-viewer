@@ -13,9 +13,9 @@ async function main() {
   for (const file of ['events.js', 'script.js', 'venues.js', 'companies.js', 'index.html', 'style.css', 'conference-sources.js', 'conference-discovery-sources.js', 'review-model.js']) fs.copyFileSync(path.join(root, file), path.join(isolated, file));
   for (const dir of ['scripts', 'scratch', 'docs']) fs.cpSync(path.join(root, dir), path.join(isolated, dir), { recursive: true });
   fs.mkdirSync(path.join(isolated, 'reports'), {recursive: true});
-  fs.copyFileSync(path.join(root, 'reports/venue-corrections.json'), path.join(isolated, 'reports/venue-corrections.json'));
-  fs.copyFileSync(path.join(root, 'reports/event-url-audit-2026-10-07.json'), path.join(isolated, 'reports/event-url-audit-2026-10-07.json'));
-  fs.copyFileSync(path.join(root, 'reports/event-url-missing-audit-2026-10-08.json'), path.join(isolated, 'reports/event-url-missing-audit-2026-10-08.json'));
+  for (const entry of fs.readdirSync(path.join(root, 'reports'), { withFileTypes: true })) {
+    if (entry.isFile()) fs.copyFileSync(path.join(root, 'reports', entry.name), path.join(isolated, 'reports', entry.name));
+  }
   const data = loadEvents(isolated);
   const baselines = JSON.parse(fs.readFileSync(path.join(root, 'scratch/fixtures/auto-updater/baseline-pilots.json'), 'utf8'));
   // Restore updater pilot values while retaining newer, unrelated fields such as registration.

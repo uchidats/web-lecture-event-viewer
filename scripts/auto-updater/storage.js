@@ -65,12 +65,16 @@ const checks = [
   ...['events.js', 'script.js', 'companies.js', 'venues.js', 'conference-sources.js', 'scripts/update-conferences.js',
     'scripts/auto-updater/fetch.js', 'scripts/auto-updater/extract.js', 'scripts/auto-updater/policy.js',
     'scripts/auto-updater/storage.js', 'scripts/auto-updater/pipeline.js', 'scripts/auto-updater/mass-change.js', 'scripts/auto-updater/registration.js', 'scripts/auto-updater/event-urls.js',
-    'conference-discovery-sources.js', 'scripts/auto-updater/discovery.js', 'scripts/apply-reviewed-event-urls.js'].map(file => ['--check', file]),
+    'conference-discovery-sources.js', 'scripts/auto-updater/discovery.js', 'scripts/apply-reviewed-event-urls.js',
+    'scripts/gemini-monitor/constants.js', 'scripts/gemini-monitor/scheduler.js', 'scripts/gemini-monitor/fetcher.js',
+    'scripts/gemini-monitor/extractor.js', 'scripts/gemini-monitor/gemini-analyzer.js', 'scripts/gemini-monitor/classifier.js',
+    'scripts/gemini-monitor/rollback-manager.js', 'scripts/gemini-monitor/monitor.js', 'scripts/run-gemini-monitor.js'].map(file => ['--check', file]),
   ['scratch/test_ended_conferences.js'], ['scratch/test_conference_history.js'],
   ['scratch/test_venue_master.js'], ['scratch/test_comprehensive_regression.js'],
   ['scratch/test_abstract_submission.js'], ['scratch/test_auto_updater.js'],
   ['scratch/test_brand_storage.js'], ['scratch/test_companies.js'], ['scratch/test_time_zones.js'],
-  ['scratch/test_venue_update_policy.js'], ['scratch/test_registration.js'], ['scratch/test_filter_state.js'], ['scratch/test_event_urls.js'], ['scratch/test_event_url_discovery.js'], ['scratch/test_bot_protected_event_urls.js']
+  ['scratch/test_venue_update_policy.js'], ['scratch/test_registration.js'], ['scratch/test_filter_state.js'], ['scratch/test_event_urls.js'], ['scratch/test_event_url_discovery.js'], ['scratch/test_bot_protected_event_urls.js'],
+  ['scratch/test_gemini_monitor_regression.js']
 ];
 function runChecks(root) {
   const results = [];
