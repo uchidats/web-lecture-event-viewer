@@ -8,7 +8,7 @@ const ROUTES = new Map([
   ['/api/google-calendar/connect','POST'], ['/api/google-calendar/callback','GET'],
   ['/api/google-calendar/status','GET'], ['/api/google-calendar/disconnect','POST']
 ]);
-const ALLOWED_ORIGINS = new Set(['https://uchidats.github.io', 'http://localhost:8000']);
+const ALLOWED_ORIGINS = new Set(['https://uchidats.github.io', 'http://localhost:8000', 'https://medconf.jp']);
 const INVALID_TOKEN_CODES = new Set([
   'auth/argument-error', 'auth/invalid-argument', 'auth/invalid-id-token',
   'auth/id-token-expired', 'auth/id-token-revoked', 'auth/user-disabled', 'auth/user-not-found'

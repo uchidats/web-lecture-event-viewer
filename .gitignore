@@ -49,3 +49,6 @@ emulator-data/
 reports/auto-update-raw/
 reports/auto-update-backups/
 reports/auto-update.lock
+
+# Generated dual-path GitHub Pages artifact.
+/_site/

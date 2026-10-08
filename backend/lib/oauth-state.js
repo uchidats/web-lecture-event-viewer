@@ -1,5 +1,6 @@
 'use strict';
 const {randomBytes,createHash,timingSafeEqual}=require('node:crypto');
+const {ALLOWED_FRONTEND_URLS}=require('./frontend-urls');
 const randomId=()=>randomBytes(32).toString('base64url');
 const digest=value=>createHash('sha256').update(value).digest('base64url');
 const validId=value=>typeof value==='string'&&/^[A-Za-z0-9_-]{43}$/.test(value);
@@ -7,7 +8,7 @@ function validateSession(data){
   if(!data||typeof data.uid!=='string'||!data.uid||data.uid.includes('/')||typeof data.googleSubject!=='string'||!data.googleSubject||
     !validId(data.generation)||!validId(data.codeVerifier)||!validId(data.browserDigest)||!Number.isFinite(data.createdAt)||!Number.isFinite(data.expiresAt)||
     data.expiresAt<=data.createdAt||data.expiresAt-data.createdAt>600000||
-    !['http://localhost:8000/','https://uchidats.github.io/web-lecture-event-viewer/'].includes(data.frontendUrl)||
+    !ALLOWED_FRONTEND_URLS.has(data.frontendUrl)||
     typeof data.clientId!=='string'||typeof data.redirectUri!=='string')throw new Error('invalid_oauth_session');
   return Object.fromEntries(['uid','googleSubject','generation','codeVerifier','browserDigest','createdAt','expiresAt','frontendUrl','clientId','redirectUri'].map(key=>[key,data[key]]));
 }

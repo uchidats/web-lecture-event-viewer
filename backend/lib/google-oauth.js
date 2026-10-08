@@ -2,6 +2,7 @@
 const {MemoryTokenStore}=require('./token-store');
 const {MemoryOAuthSessionStore,randomId,digest}=require('./oauth-state');
 const {OAuth2Client}=require('google-auth-library');
+const {ALLOWED_FRONTEND_URLS}=require('./frontend-urls');
 const CALENDAR_SCOPES=['https://www.googleapis.com/auth/calendar.readonly','https://www.googleapis.com/auth/calendar.events'];
 const SCOPES=[...CALENDAR_SCOPES,'openid'];
 const COOKIE_NAME='ophthalconf_calendar_oauth';
@@ -18,7 +19,7 @@ function readOAuthConfig(env=process.env,clientSecret,{requireSecret=true}={}){
   const redirect=new URL(config.redirectUri),frontend=new URL(config.frontendUrl);
   const local=redirect.protocol==='http:'&&redirect.hostname==='localhost'&&redirect.port==='8080';
   if((!local&&redirect.protocol!=='https:')||redirect.username||redirect.password||redirect.search||redirect.hash||redirect.pathname!=='/api/google-calendar/callback')throw new Error('Invalid GOOGLE_OAUTH_REDIRECT_URI');
-  if(!['http://localhost:8000/','https://uchidats.github.io/web-lecture-event-viewer/'].includes(frontend.href))throw new Error('FRONTEND_URL must be an allowed frontend URL');
+  if(!ALLOWED_FRONTEND_URLS.has(frontend.href))throw new Error('FRONTEND_URL must be an allowed frontend URL');
   if(env.OAUTH_SESSION_STORE==='firestore'&&env.TOKEN_STORE!=='firestore')throw new Error('Firestore sessions require TOKEN_STORE=firestore');
   if(env.K_SERVICE||env.NODE_ENV==='production'){
     if(env.OAUTH_SESSION_STORE!=='firestore'||env.TOKEN_STORE!=='firestore')throw new Error('Memory OAuth storage is local-only');
