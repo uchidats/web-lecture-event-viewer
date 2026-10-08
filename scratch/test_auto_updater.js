@@ -4,7 +4,7 @@ const os = require('node:os');
 const path = require('node:path');
 const vm = require('node:vm');
 const { spawnSync } = require('node:child_process');
-const config = require('../conference-sources');
+const config = { ...require('../conference-sources'), discovery: { enabled: false } }; // Pinned-source fixtures; discovery has separate tests.
 const { extractOfficialHtml, normalizeDate, normalizeVenue, dateRanges } = require('../scripts/auto-updater/extract');
 const { assess, applyChanges, setField } = require('../scripts/auto-updater/policy');
 const { runUpdater } = require('../scripts/auto-updater/pipeline');
@@ -19,7 +19,8 @@ const fixturePage = async (page, source) => ({ ...page, html: fs.readFileSync(pa
 async function main() {
   const dataset = loadEvents(root);
   const baselinePilots = JSON.parse(fs.readFileSync(path.join(fixtureDir, 'baseline-pilots.json'), 'utf8'));
-  dataset.events = dataset.events.map(e => baselinePilots[e.id] || e);
+  // Preserve independently reviewed URL fields while restoring updater pilot values.
+  dataset.events = dataset.events.map(e => baselinePilots[e.id] ? { ...e, ...baselinePilots[e.id] } : e);
   const source = config.sources.find(s => s.id === 'conf-jp-surgery-2027');
   const event = dataset.events.find(e => e.id === source.id);
   const candidate = (field, value, confidence = 0.98) => ({ field, value, confidence, method: 'labeled-html',
@@ -43,7 +44,7 @@ async function main() {
       const result = extractOfficialHtml(await fixturePage(p, s), s);
       assert.ok(!result.issues.includes('conference-identity-missing'));
       if (p.role === 'overview') {
-        for (const field of ['title', 'date', 'endDate', 'venue', 'officialUrl']) assert.ok(result.candidates.some(c => c.field === field), `${s.id}:${field}`);
+        for (const field of ['title', 'date', 'endDate', 'venue', 'eventOfficialUrl']) assert.ok(result.candidates.some(c => c.field === field), `${s.id}:${field}`);
       } else if (p.role === 'abstract') assert.ok(result.candidates.some(c => c.field === 'abstractSubmission.url'));
       else if (p.role === 'registration') assert.ok(result.candidates.some(c => c.field === 'registration'));
       extracted.push(...result.candidates);

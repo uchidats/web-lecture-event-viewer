@@ -10,7 +10,7 @@ async function main() {
     const result = extractOfficialHtml(document, source);
     assert.ok(!result.issues.includes('conference-identity-missing'), source.id);
     assert.ok(result.candidates.length, `${source.id}:${page.role}`);
-    if (page.role === 'overview') for (const field of ['date', 'endDate', 'venue']) {
+    if (page.role === 'overview') for (const field of ['date', 'endDate', 'venue', 'eventOfficialUrl']) {
       assert.ok(result.candidates.some(c => c.field === field), `${source.id}:${field}`);
     }
     console.log(`PASS: ${source.id} ${page.role}: ${result.candidates.length} candidates`);

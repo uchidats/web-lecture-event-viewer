@@ -135,6 +135,11 @@ const FILTER_OPTIONS = {
 // 曜日表記ヘルパー
 const WEEKDAYS = ["日", "月", "火", "水", "木", "金", "土"];
 
+// 表示だけ統一し、既存のデータ・フィルタ値は維持する。
+function getSpecialtyDisplayLabel(value) {
+  return value === "網膜・硝子体" ? "網膜硝子体" : value;
+}
+
 /**
  * 初期化処理
  */
@@ -1054,8 +1059,9 @@ function renderRegistrationHtml(event, today = getTodayString()) {
     const label = period.label || defaultLabel;
     const deadline = parseAbstractDate(period.deadline);
     const start = parseAbstractDate(period.start);
+    const closed = !!deadline && period.deadline.slice(0, 10) < today;
     let value = '要確認';
-    if (deadline && period.deadline.slice(0, 10) < today) {
+    if (closed) {
       value = `${formatAbstractDeadline(period.deadline)} 締切済`;
     } else if (start && period.start.slice(0, 10) > today) {
       value = `${formatAbstractDeadline(period.start, { showTime: false })}開始`;
@@ -1064,9 +1070,9 @@ function renderRegistrationHtml(event, today = getTodayString()) {
     } else if (start) {
       value = `${formatAbstractDeadline(period.start, { showTime: false })}開始`;
     }
-    return { label, value };
-  }) : [{ label: defaultLabel, value: legacy || '要確認' }];
-  return rows.map(({ label, value }) => `<div class="conf-item conf-registration-period"><span class="conf-label">${escapeHtml(label)}：</span><span class="conf-val deadline-highlight">${escapeHtml(value)}</span></div>`).join('');
+    return { label, value, closed };
+  }) : [{ label: defaultLabel, value: legacy || '要確認', closed: /締切済|受付終了/.test(legacy || '') }];
+  return rows.map(({ label, value, closed }) => `<div class="conf-item conf-registration-period"><span class="conf-label">${escapeHtml(label)}：</span><span class="conf-val deadline-highlight${closed ? ' closed' : ''}">${escapeHtml(value)}</span></div>`).join('');
 }
 
 function getAbstractSubmissionState(event, baseDate = getTodayString()) {
@@ -1205,7 +1211,7 @@ function renderFilterOptions() {
         <label class="chip-label">
           <input type="checkbox" name="${key}" value="${val}">
           <span class="chip-btn">
-            ${escapeHtml(val)}
+            ${escapeHtml(key === 'specialty' ? getSpecialtyDisplayLabel(val) : val)}
             <span class="chip-count">(${count})</span>
           </span>
         </label>
@@ -1775,7 +1781,7 @@ function renderActiveFilterChips() {
 
   ["specialty", "eventType", "format", "region"].forEach(group => {
     state.filters[group].forEach(val => {
-      chips.push({ group, label: val, value: val });
+      chips.push({ group, label: group === 'specialty' ? getSpecialtyDisplayLabel(val) : val, value: val });
     });
   });
 
@@ -2216,7 +2222,7 @@ function createEventCardHtml(event) {
       <!-- 中段: タイトル・サブタイトル・概要 -->
       <div class="card-content-block">
         ${parentConferenceBadgeHtml}
-        <h3 class="card-title">${event.isConference && event.officialUrl ? `<a class="conference-title-link" href="${escapeHtml(event.officialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}</h3>
+        <h3 class="card-title">${event.isConference && event.eventOfficialUrl ? `<a class="conference-title-link" href="${escapeHtml(event.eventOfficialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}</h3>
         <p class="card-subtitle">${escapeHtml(event.subtitle)}</p>
         ${event.isConference && event.conferenceRegion !== 'international' && event.eventType !== '海外学会' ? '' : `<p class="card-desc">${escapeHtml(event.description)}</p>`}
       </div>
@@ -2228,7 +2234,7 @@ function createEventCardHtml(event) {
       <div class="card-meta-list">
         <div class="card-meta-item">
           <span class="card-meta-label">専門領域:</span>
-          <strong>${escapeHtml(event.specialty)}</strong>
+          <strong>${escapeHtml(getSpecialtyDisplayLabel(event.specialty))}</strong>
         </div>
         <div class="card-meta-item">
           <span class="card-meta-label">種別:</span>

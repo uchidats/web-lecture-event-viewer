@@ -1,7 +1,8 @@
 const { compact, normalizeDate, normalizeVenue } = require('./extract');
 const { trustedUrl } = require('./fetch');
 const { validRegistration, registrationKey } = require('./registration');
-const fields = new Set(['title', 'date', 'endDate', 'venue', 'city', 'country', 'officialUrl', 'registration',
+const { eventSourceUrl, eventUrlReviewReason } = require('./event-urls');
+const fields = new Set(['title', 'date', 'endDate', 'venue', 'city', 'country', 'officialUrl', 'eventOfficialUrl', 'societyUrl', 'registration',
   'abstractSubmission.startDate', 'abstractSubmission.deadline', 'abstractSubmission.status', 'abstractSubmission.url']);
 const dateFields = new Set(['date', 'endDate', 'abstractSubmission.startDate', 'abstractSubmission.deadline']);
 const countryAliases = { JP: '日本', Japan: '日本', US: '米国', USA: '米国', 'United States': '米国', AT: 'オーストリア', Austria: 'オーストリア', SG: 'シンガポール', Singapore: 'シンガポール', 'シンガポール共和国': 'シンガポール' };
@@ -41,9 +42,10 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
   const accepted = [], review = [];
   let halt = issues.includes('invalid-date') || issues.includes('invalid-json-ld');
   const reject = (candidate, reason) => review.push({ ...candidate, oldValue: candidate.field ? oldValue(event, candidate.field) : null, reason });
-  for (const reason of issues) reject({ field: null, url: source.officialUrl, confidence: 0 }, reason);
+  for (const reason of issues) reject({ field: null, url: eventSourceUrl(source), confidence: 0 }, reason);
   if (issues.includes('conference-identity-missing') || issues.includes('invalid-html')) {
-    for (const candidate of candidates) reject(candidate, 'source-identity-or-html-invalid');
+    for (const candidate of candidates) reject(candidate, candidate.field === 'eventOfficialUrl' ?
+      eventUrlReviewReason(candidate, source) || 'source-identity-or-html-invalid' : 'source-identity-or-html-invalid');
     return { accepted, review, halt };
   }
   // Existing curated venue geography can supply missing city/country without guessing from the venue name.
@@ -100,11 +102,27 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
   for (const candidate of unique.values()) {
     const { field, value, confidence } = candidate;
     const previous = oldValue(event, field);
-    if (!trustedUrl(candidate.url, source)) { reject(candidate, 'untrusted-evidence-url'); continue; }
-    const methodCaps = { 'official-title': 0.96, 'pinned-official-url': 0.99, 'labeled-html': 0.98,
+    if (!trustedUrl(candidate.url, source, candidate.field === 'societyUrl' && candidate.method === 'official-society-page' ? 'society' : 'event')) { reject(candidate, 'untrusted-evidence-url'); continue; }
+    const methodCaps = { 'official-title': 0.96, 'pinned-official-url': 0.99, 'pinned-event-url': 0.99, 'pinned-society-url': 0.99, 'official-society-page': 0.98, 'official-canonical-url': 0.98, 'labeled-html': 0.98,
       'venue-address': 0.96, 'curated-venue-geography': 0.96, 'official-abstract-page': 0.98, 'json-ld': 0.99, 'validated-period-state': 0.98,
       pdf: 0.8, 'surrounding-text': 0.7, ai: 0.4 };
     if (!Object.hasOwn(methodCaps, candidate.method) || confidence > methodCaps[candidate.method]) { reject(candidate, 'unsupported-confidence'); continue; }
+    if (field === 'eventOfficialUrl') {
+      const reason = Number(event.date?.slice(0, 4)) !== source.year ? 'event-url-year-mismatch' : eventUrlReviewReason(candidate, source);
+      if (reason) { reject(candidate, reason); continue; }
+      if (!trustedUrl(value, source)) { reject(candidate, 'untrusted-domain'); continue; }
+      if (canonical(field, previous) !== canonical(field, value)) reject(candidate, 'event-url-change-needs-review');
+      continue;
+    }
+    if (field === 'societyUrl') {
+      if (!trustedUrl(value, source, 'society')) { reject(candidate, 'untrusted-society-domain'); continue; }
+      if (canonical(field, previous) !== canonical(field, value)) reject(candidate, 'society-url-change-needs-review');
+      continue;
+    }
+    // Keep legacy application/PDF/calendar links stable during the URL-role migration.
+    if (field === 'officialUrl' && canonical(field, previous) !== canonical(field, value)) {
+      reject(candidate, 'legacy-official-url-needs-review'); continue;
+    }
     if (dateFields.has(field)) {
       const normalized = normalizeDate(value);
       const year = Number(normalized?.slice(0, 4));
@@ -131,7 +149,7 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
       if (previousHost && previousHost !== new URL(value).hostname) { reject(candidate, 'official-domain-changed'); continue; }
       if (!previous || canonical(field, previous) !== canonical(field, value)) {
         // Other editions on the same organizer host must not replace this edition.
-        const root = new URL(source.officialUrl);
+        const root = new URL(eventSourceUrl(source));
         const editionPath = root.pathname.replace(/index\.html$/, '');
         if (!new URL(value).pathname.startsWith(editionPath)) { reject(candidate, 'different-edition-url'); continue; }
       }
@@ -164,13 +182,17 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
       projected.abstractSubmission.deadline && day(projected.abstractSubmission.deadline) > day(projected.endDate || projected.date)) {
     halt = true;
     for (const change of accepted.splice(0)) reject(change, 'invalid-date-order');
-    reject({ field: null, confidence: 0, url: source.officialUrl }, 'invalid-date-order');
+    reject({ field: null, confidence: 0, url: eventSourceUrl(source) }, 'invalid-date-order');
   }
   return { accepted, review, halt };
 }
 
 function setField(event, field, value) {
   if (!fields.has(field)) throw new Error(`Protected field: ${field}`);
+  if (['eventOfficialUrl', 'societyUrl'].includes(field)) {
+    const url = new URL(value);
+    if (url.protocol !== 'https:' || url.username || url.password) throw new Error('Invalid official URL');
+  }
   if (field === 'registration' && !validRegistration(value)) throw new Error('Invalid registration');
   if (field === 'city' || field === 'country') {
     const loc = location(event); loc[field] = value;
@@ -191,6 +213,9 @@ function applyChanges(events, changes) {
   for (const change of changes) {
     const event = result.find(e => e.id === change.eventId);
     if (!event?.isConference) throw new Error('Unknown conference ID');
+    if (['eventOfficialUrl', 'societyUrl', 'officialUrl'].includes(change.field) && canonical(change.field, oldValue(event, change.field)) !== canonical(change.field, change.value)) {
+      throw new Error('Official URL change requires manual review');
+    }
     if (change.field === 'registration' && canonical('registration', event.registration) !== canonical('registration', change.value)) {
       throw new Error('Registration change requires manual review');
     }

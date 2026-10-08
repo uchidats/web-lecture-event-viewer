@@ -14,7 +14,7 @@
 | 第37回日本緑内障学会（2026） | `conf-jp-glaucoma-2026` | [開催概要](https://www.congre.co.jp/jgs2026/contents/outline.html)・[一般演題募集](https://www.congre.co.jp/jgs2026/contents/cfa.html) |
 | 第65回日本網膜硝子体学会総会（2026） | `conf-jp-jrvs-2026` | [開催概要](https://convention.jtbcom.co.jp/65moumaku/summary/index.html)・[演題募集](https://convention.jtbcom.co.jp/65moumaku/abstract/index.html) |
 
-公式HTMLの開催概要・募集期間を取得できることを2026-10-04に確認した。学会団体トップページから毎年の開催回を推測せず、開催回ごとのURLに固定する。緑内障・網膜硝子体は現在データの団体ドメインと公式大会ドメインが異なるため、その `officialUrl` 変更は要確認となる。
+公式HTMLの開催概要・募集期間を取得できることを2026-10-04に確認した。学会団体トップページから毎年の開催回を推測せず、開催回ごとのURLに固定する。情報源では `eventOfficialUrl` と `societyUrl` を分離し、イベントページと学会本体ページの許可ホストも別々に管理する。イベントURLの追加・変更は同一ホスト内を含め要確認。旧 `officialUrl` は既存の申込・カレンダー等の互換用として維持し、自動更新では書き換えない。
 
 ## パイプライン
 
@@ -143,6 +143,8 @@ applyコマンド自体はGit commit/pushを行わない。安全な適用後の
 5. 強制終了でlockが残った場合はプロセスが終了済みであることを確認して `reports/auto-update.lock` を取り除く。ロックの自動強奪は行わない。
 
 ## 全科への展開
+
+空欄のイベント公式URLは、既存開催回の監視とは別に `conference-discovery-sources.js` の公式一覧を入口に探索し、管理レビューへ送る。探索条件、20件の整合性保留、HTTPログとテストは [event-url-discovery.md](event-url-discovery.md) を参照。探索結果からURLを自動反映しない。
 
 対象はregistryに安定ID・開催回・year・公式URL・許可ホスト・概要／演題ページを追加する。HTMLレイアウトが共通ならadapterコードを増やさない。JSON-LD、PDFなど追加の抽出器は `adapters` のインターフェース `{ candidates, issues, fingerprint }` を実装し、候補ごとにfield/value/confidence/method/url/evidenceを返す。methodのconfidence上限もpolicyへ登録する。
 

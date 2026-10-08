@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "checkedAt": "2026-10-04T14:00:08.901Z",
+  "checkedAt": "2026-10-08T02:57:26.243Z",
   "mode": "dry-run",
-  "outcome": "stopped",
+  "outcome": "dry-run",
   "sourceCount": 5,
   "autoChanges": [
     {
@@ -195,154 +195,465 @@
       "eventId": "oph-001"
     },
     {
-      "field": "officialUrl",
-      "value": "https://www.congre.co.jp/jgs2026/",
-      "confidence": 0.99,
-      "method": "pinned-official-url",
-      "url": "https://www.congre.co.jp/jgs2026/contents/outline.html",
-      "evidence": "開催概要|第37回日本緑内障学会",
-      "oldValue": "https://www.ryokunaisho.jp/",
-      "reason": "official-domain-changed",
-      "eventId": "conf-jp-glaucoma-2026"
-    },
-    {
-      "field": "officialUrl",
-      "value": "https://convention.jtbcom.co.jp/65moumaku/index.html",
-      "confidence": 0.99,
-      "method": "pinned-official-url",
-      "url": "https://convention.jtbcom.co.jp/65moumaku/summary/index.html",
-      "evidence": "開催概要|第65回日本網膜硝子体学会総会",
-      "oldValue": "https://www.jrvs.jp/",
-      "reason": "official-domain-changed",
+      "field": "registration",
+      "value": {
+        "type": "domestic",
+        "periods": [
+          {
+            "label": "事前参加登録",
+            "start": "2026-05-19T12:00",
+            "deadline": "2026-10-16"
+          },
+          {
+            "label": "直前・当日登録",
+            "start": "2026-11-12T12:00",
+            "deadline": "2026-12-06"
+          },
+          {
+            "label": "直前・当日登録",
+            "start": "2026-10-21T12:00",
+            "deadline": "2026-10-27"
+          },
+          {
+            "label": "事前参加登録",
+            "deadline": "2026-10-16"
+          },
+          {
+            "label": "事前参加登録",
+            "deadline": "2026-05-19T12:00"
+          },
+          {
+            "label": "直前・当日登録",
+            "deadline": "2026-12-07"
+          }
+        ]
+      },
+      "confidence": 0.96,
+      "method": "labeled-html",
+      "url": "https://convention.jtbcom.co.jp/65moumaku/join/index.html",
+      "evidence": "事前参加登録 :2026年5月19日(火)正午~10月16日(金)\n直前・当日登録:2026年11月12日(木)正午~12月6日(日)\n※参加登録費のご入金をもって登録完了となります。上記期間内にお支払いください。\n参加登録方法、支払方法\n本会の参加登録はオンライン登録のみとさせていただきます。\n本ページ下部の「参加登録はこちら」ボタンを押して参加登録システムよりお申込ください。\n(当日申込もオンライン登録のみ受け付けます。現地会場での登録は行いません。事前にオンライン登録をお済ませの上、会場へお越しください。)\nお支払い方法は、クレジットカード決済のみとなります。\n(クレジットカードでの決済ができない方は、参加登録デスクまでご連絡ください。)\n※ご入金後は如何なる理由においてもキャンセルとそれに伴う返金ができませんので、二重登録等にご注意ください。\nご自身の都合により学会参加ができなくなった場合も、返金はいたしかねます。\n携帯電話用のメールアドレスについて\n参加登録での利用はご遠慮ください。\n迷惑メール対策設定により、システムからの通知メールが受信できないという不具合が生じます。\nフ",
+      "oldValue": {
+        "type": "domestic",
+        "periods": [
+          {
+            "label": "事前参加登録",
+            "start": "2026-05-19T12:00",
+            "deadline": "2026-10-16"
+          },
+          {
+            "label": "直前・当日登録",
+            "start": "2026-11-12T12:00",
+            "deadline": "2026-12-06"
+          }
+        ]
+      },
+      "reason": "multiple-candidates",
       "eventId": "conf-jp-jrvs-2026"
     },
     {
-      "field": "abstractSubmission.url",
-      "value": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
-      "confidence": 0.98,
-      "method": "official-abstract-page",
-      "url": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
-      "evidence": "演題募集|第80回日本臨床眼科学会",
-      "oldValue": "https://convention.jtbcom.co.jp/80ringan/index.html",
-      "eventId": "oph-001",
-      "reason": "mass-change-limit"
-    },
-    {
-      "field": "abstractSubmission.startDate",
-      "value": "2026-06-01",
-      "confidence": 0.98,
-      "method": "labeled-html",
-      "url": "https://50.jsos.jp/abstract",
-      "evidence": "2026年6月1日〜8月31日",
+      "eventId": "conf-jp-perimetry-2026",
+      "field": null,
       "oldValue": null,
-      "eventId": "conf-jp-surgery-2027",
-      "reason": "mass-change-limit"
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html",
+      "evidence": "公式は2026年第15回。カードの第38回と不一致。開催年・会場は対応するが、名称レビューが先。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本視野画像学会学術集会 2026 第38回 公式",
+        "日本視野画像学会学術集会 学術集会案内 Annual Meeting Congress"
+      ]
     },
     {
-      "field": "abstractSubmission.deadline",
-      "value": "2026-08-31",
-      "confidence": 0.98,
-      "method": "labeled-html",
-      "url": "https://50.jsos.jp/abstract",
-      "evidence": "2026年6月1日〜8月31日",
+      "eventId": "oph-003",
+      "field": null,
       "oldValue": null,
-      "eventId": "conf-jp-surgery-2027",
-      "reason": "mass-change-limit"
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.jasa-web.jp/event/programs",
+      "evidence": "2026年は第82回弱視斜視（6月5–6日）と第51回小児眼科の別開催という前回記録。今回も第35回合同・10月30日に対応する公式ページを確認できない。レコード自体をレビュー。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本小児眼科学会・日本弱視斜視学会 合同学会 2026 第35回 公式",
+        "日本小児眼科学会・日本弱視斜視学会 合同学会 学術集会案内 Annual Meeting Congress"
+      ]
     },
     {
-      "field": "abstractSubmission.status",
-      "value": "closed",
-      "confidence": 0.98,
-      "method": "labeled-html",
-      "url": "https://50.jsos.jp/abstract",
-      "evidence": "2026年6月1日(月)〜8月31日(月)\n一般演題登録は終了しました。",
-      "oldValue": "unknown",
-      "eventId": "conf-jp-surgery-2027",
-      "reason": "mass-change-limit"
-    },
-    {
-      "field": "abstractSubmission.url",
-      "value": "https://50.jsos.jp/abstract",
-      "confidence": 0.98,
-      "method": "official-abstract-page",
-      "url": "https://50.jsos.jp/abstract",
-      "evidence": "一般演題登録 | 第50回日本眼科手術学会学術総会",
-      "oldValue": "https://50.jsos.jp/",
-      "eventId": "conf-jp-surgery-2027",
-      "reason": "mass-change-limit"
-    },
-    {
-      "field": "abstractSubmission.startDate",
-      "value": "2026-04-01",
-      "confidence": 0.98,
-      "method": "labeled-html",
-      "url": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
-      "evidence": "2026年4月1日~\n5月21日正午",
+      "eventId": "oph-010",
+      "field": null,
       "oldValue": null,
-      "eventId": "conf-jp-glaucoma-2026",
-      "reason": "mass-change-limit"
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.apacrs.org/",
+      "evidence": "公式は2026年6月4–6日、Pattaya、第38回。カードの12月17日・Singaporeと不一致。公式URLは存在するがURL単独の追加を保留。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "APACRS 2026  公式",
+        "APACRS 学術集会案内 Annual Meeting Congress"
+      ]
     },
     {
-      "field": "abstractSubmission.deadline",
-      "value": "2026-05-21 12:00",
-      "confidence": 0.98,
-      "method": "labeled-html",
-      "url": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
-      "evidence": "2026年4月1日~\n5月21日正午",
+      "eventId": "conf-jp-presbyopia-2027",
+      "field": null,
       "oldValue": null,
-      "eventId": "conf-jp-glaucoma-2026",
-      "reason": "mass-change-limit"
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.rousi.jp/",
+      "evidence": "第4回は2026年。カード日程・会場に対応する2027年は第5回（jps5）。開催回修正前は保留。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本老視学会学術総会 2027 第4回 公式",
+        "日本老視学会学術総会 学術集会案内 Annual Meeting Congress"
+      ]
     },
     {
-      "field": "abstractSubmission.url",
-      "value": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
-      "confidence": 0.98,
-      "method": "official-abstract-page",
-      "url": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
-      "evidence": "一般演題募集|第37回日本緑内障学会",
+      "eventId": "conf-jp-iscev-2027",
+      "field": null,
       "oldValue": null,
-      "eventId": "conf-jp-glaucoma-2026",
-      "reason": "mass-change-limit"
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://n-practice.co.jp/jscev/meeting/latest.html",
+      "evidence": "公式は2027年第73回。カードの第75回と不一致。学会本体が73jscevへ明示リンク。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本臨床視覚電気生理学会 2027 第75回 公式",
+        "日本臨床視覚電気生理学会 学術集会案内 Annual Meeting Congress"
+      ]
     },
     {
-      "field": "abstractSubmission.startDate",
-      "value": "2026-05-19 12:00",
-      "confidence": 0.98,
-      "method": "labeled-html",
-      "url": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
-      "evidence": "2026年5月19日正午~7月23日正午",
+      "eventId": "conf-int-ascrs-2027",
+      "field": null,
       "oldValue": null,
-      "eventId": "conf-jp-jrvs-2026",
-      "reason": "mass-change-limit"
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+      "evidence": "Annual Meetingホームは403で年度を検証できない。2027年演題登録ページは確認できるが、イベントホームと用途が異なるため保留。同略称の大腸肛門外科学会を除外。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "ASCRS  Annual Meeting 2027  公式",
+        "ASCRS  Annual Meeting 学術集会案内 Annual Meeting Congress"
+      ]
     },
     {
-      "field": "abstractSubmission.deadline",
-      "value": "2026-07-23 12:00",
-      "confidence": 0.98,
-      "method": "labeled-html",
-      "url": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
-      "evidence": "2026年5月19日正午~7月23日正午",
+      "eventId": "conf-jp-lowvision-2027",
+      "field": null,
+      "value": null,
       "oldValue": null,
-      "eventId": "conf-jp-jrvs-2026",
-      "reason": "mass-change-limit"
+      "candidateUrl": "https://www.ganki.jp/lowvision2027/",
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.ganki.jp/",
+      "evidence": "第28回日本ロービジョン学会学術総会   新着情報",
+      "reason": "discovery-search-limit",
+      "candidateReason": "event-url-edition-unverified",
+      "checks": {
+        "nameMatches": true,
+        "yearMatches": false,
+        "editionMatches": true,
+        "years": [],
+        "editions": [
+          28
+        ],
+        "urlYears": [
+          2027
+        ]
+      },
+      "searchQueries": [
+        "日本ロービジョン学会学術総会 2027 第28回 公式",
+        "日本ロービジョン学会学術総会 学術集会案内 Annual Meeting Congress"
+      ]
     },
     {
-      "field": "abstractSubmission.url",
-      "value": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
-      "confidence": 0.98,
-      "method": "official-abstract-page",
-      "url": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
-      "evidence": "演題募集|第65回日本網膜硝子体学会総会",
+      "eventId": "conf-jp-perimetry-2027",
+      "field": null,
       "oldValue": null,
-      "eventId": "conf-jp-jrvs-2026",
-      "reason": "mass-change-limit"
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html",
+      "evidence": "公式は2027年第16回。カードの第39回と不一致。jips2027は対象年・会場に対応するが開催回修正前は保留。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本視野画像学会学術集会 2027 第39回 公式",
+        "日本視野画像学会学術集会 学術集会案内 Annual Meeting Congress"
+      ]
+    },
+    {
+      "eventId": "conf-jp-myopia-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.ganki.jp/",
+      "evidence": "公式の2027年は第9回。カードの第8回は2026年の開催回。myopia2027は開催回修正前は保留。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本近視学会総会 2027 第8回 公式",
+        "日本近視学会総会 学術集会案内 Annual Meeting Congress"
+      ]
+    },
+    {
+      "eventId": "conf-jp-cataract-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "url": "https://www.jscr.net/member/index.html",
+      "confidence": 0,
+      "reason": "discovery-fetch-failed",
+      "error": "fetch failed",
+      "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
+    },
+    {
+      "eventId": "conf-jp-oncology-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.jsoo.jp/society",
+      "evidence": "公式の2027年は第44回、富山国際会議場。カードの第14回と不一致。公式一覧内の2026年第43回と混同しない。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本眼腫瘍学会 2027 第14回 公式",
+        "日本眼腫瘍学会 学術集会案内 Annual Meeting Congress"
+      ]
+    },
+    {
+      "eventId": "conf-int-aao-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "url": "https://www.aao.org/Assets/d9eaad8a-70a7-4655-91d6-5b4160dd1d54/636800504037330000/past-academy-annual-meetings-pdf?inline=1",
+      "confidence": 0,
+      "reason": "discovery-fetch-failed",
+      "error": "non-html-response",
+      "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
+    },
+    {
+      "eventId": "conf-int-asnos-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "url": "https://asnos.org/future-meetings/",
+      "confidence": 0,
+      "reason": "discovery-fetch-failed",
+      "error": "http-403",
+      "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
+    },
+    {
+      "eventId": "conf-jp-ai-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "evidence": "第3回は2022年、2026年は第7回。カードの2027年第3回とは整合しない。現在の総会ページは2026年を案内するため採用しない。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本眼科AI学会総会 2027 第3回 公式",
+        "日本眼科AI学会総会 学術集会案内 Annual Meeting Congress"
+      ]
+    },
+    {
+      "eventId": "conf-jp-presbyopia-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.rousi.jp/",
+      "evidence": "第5回公式開催概要は2027年1月16–17日、御茶ノ水。カードの2028年・京都と不一致。jps5を付けない。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本老視学会学術総会 2028 第5回 公式",
+        "日本老視学会学術総会 学術集会案内 Annual Meeting Congress"
+      ]
+    },
+    {
+      "eventId": "conf-jp-iscev-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://n-practice.co.jp/jscev/meeting/latest.html",
+      "evidence": "本体は2028年第74回（韓日合同）。カードの第76回と不一致。対象回専用URL未確認。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本臨床視覚電気生理学会 2028 第76回 公式",
+        "日本臨床視覚電気生理学会 学術集会案内 Annual Meeting Congress"
+      ]
+    },
+    {
+      "eventId": "conf-int-ips-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html",
+      "evidence": "国内学会本体バナーにIPS2028第27回の表記。カードの26thと不一致。IPS本体のMeetingsは過去回中心で対象回専用URL未確認。Planetarium Society等の同略称別団体を除外。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "IPS 2028 第26回 公式",
+        "IPS 学術集会案内 Annual Meeting Congress"
+      ]
+    },
+    {
+      "eventId": "conf-jp-perimetry-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html",
+      "evidence": "本体は2028年第17回。カードの第40回と不一致。専用URL未確認。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本視野画像学会学術集会 2028 第40回 公式",
+        "日本視野画像学会学術集会 学術集会案内 Annual Meeting Congress"
+      ]
+    },
+    {
+      "eventId": "conf-int-apao-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+      "evidence": "年度サブドメインにAPAO2028・第43回の名称があるが初期投稿Hello worldのみ。開催情報が未整備で保留。取得502を不存在とは扱わない。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "APAO 2028 第43回 公式",
+        "APAO 学術集会案内 Annual Meeting Congress"
+      ]
+    },
+    {
+      "eventId": "conf-int-arvo-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "url": "https://www.arvo.org/annual-meeting/about/future-meetings",
+      "confidence": 0,
+      "reason": "discovery-fetch-failed",
+      "error": "http-403",
+      "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
+    },
+    {
+      "eventId": "conf-jp-myopia-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.ganki.jp/",
+      "evidence": "運営一覧の2028年は第10回。カードの第9回と不一致。対象回専用URL未確認。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本近視学会総会 2028 第9回 公式",
+        "日本近視学会総会 学術集会案内 Annual Meeting Congress"
+      ]
+    },
+    {
+      "eventId": "conf-jp-inflammation-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.ganki.jp/",
+      "evidence": "運営一覧の2028年は第61回眼炎症・第11回アレルギー・第16回涙道。カードのアレルギー第60回・涙道第47回と不一致。専用URL未確認。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本眼感染症学会・ 日本眼炎症学会・ 日本眼科アレルギー学会・ 日本涙道・涙液学会総会 2028 第65回 第61回 第60回 第47回 公式",
+        "日本眼感染症学会・ 日本眼炎症学会・ 日本眼科アレルギー学会・ 日本涙道・涙液学会総会 学術集会案内 Annual Meeting Congress"
+      ]
+    },
+    {
+      "eventId": "conf-jp-cataract-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "url": "https://www.jscr.net/member/index.html",
+      "confidence": 0,
+      "reason": "discovery-fetch-failed",
+      "error": "fetch failed",
+      "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
+    },
+    {
+      "eventId": "conf-jp-oncology-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.jsoo.jp/society",
+      "evidence": "カードの第15回は公式の2027年第44回という開催回系列と整合しない。2028年の正しい回数は年次加算だけで確定しない。対象回専用URL未確認。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本眼腫瘍学会 2028 第15回 公式",
+        "日本眼腫瘍学会 学術集会案内 Annual Meeting Congress"
+      ]
+    },
+    {
+      "eventId": "conf-int-aao-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "url": "https://www.aao.org/Assets/d9eaad8a-70a7-4655-91d6-5b4160dd1d54/636800504037330000/past-academy-annual-meetings-pdf?inline=1",
+      "confidence": 0,
+      "reason": "discovery-fetch-failed",
+      "error": "non-html-response",
+      "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
+    },
+    {
+      "eventId": "conf-int-apvrs-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+      "evidence": "本体Congressesの2028年は第21回、11月16–19日Bangkok。カードの第18回と不一致。対象回専用URL未確認。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "APVRS 2028 第18回 公式",
+        "APVRS 学術集会案内 Annual Meeting Congress"
+      ]
+    },
+    {
+      "eventId": "conf-int-woc-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+      "evidence": "ICOのCongress総合案内にはWOC2028の見出しがあるが複数年向けのページで、対象回専用URLを確定できない。同名に近い非ICO会議サイトを除外。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "WOC 2028  公式",
+        "WOC 学術集会案内 Annual Meeting Congress"
+      ]
     }
   ],
+  "blockedAutoChanges": [],
   "sources": [
     {
       "eventId": "oph-011",
       "officialUrl": "https://convention.jtbcom.co.jp/131jos/index.html",
-      "lastChecked": "2026-10-04T14:00:08.901Z",
+      "eventOfficialUrl": "https://convention.jtbcom.co.jp/131jos/index.html",
+      "societyUrl": "https://www.nichigan.or.jp/",
+      "lastChecked": "2026-10-08T02:57:26.243Z",
       "lastChanged": null,
       "confidence": 0.96,
       "fingerprint": "74dc1ae2dc3fc8b2b39cfe58a34edd42fef99dd407ed0c2f03afec0fb0cb527a",
@@ -364,21 +675,23 @@
     {
       "eventId": "oph-001",
       "officialUrl": "https://convention.jtbcom.co.jp/80ringan/index.html",
-      "lastChecked": "2026-10-04T14:00:08.901Z",
+      "eventOfficialUrl": "https://convention.jtbcom.co.jp/80ringan/index.html",
+      "societyUrl": "https://www.nichigan.or.jp/",
+      "lastChecked": "2026-10-08T02:57:26.243Z",
       "lastChanged": null,
       "confidence": 0.8,
-      "fingerprint": "7ec5041cd61e85a5eae46534d482aa3e4d467c6abaef55674d3073c2b270f2a0",
+      "fingerprint": "e6531b65b7e43c52df33b412f694859cf24d2d9703156a2d73dbb71efcdafdb2",
       "extractionMethod": "official-html",
       "autoUpdateEnabled": true,
       "fetchSucceeded": true,
       "pages": [
         {
           "url": "https://convention.jtbcom.co.jp/80ringan/summary/index.html",
-          "fingerprint": "9a7ea0ad365ba7bd586d2b0bb22629b9247ad9d1b01545eeb63d250d7d8a0a2c"
+          "fingerprint": "d84d8e5adec301bb8b027fbe01d459a5787a4c0e49af60afb7fdce3ba51e6dc1"
         },
         {
           "url": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
-          "fingerprint": "ea438d30ee9ea9da763bf777c956075023e6b8ad9082ada80519ebd8d91a45b5"
+          "fingerprint": "ac40d1f601472870edf5046c6970ff97359bce43ecca96cc90bbac2b1d80a601"
         }
       ],
       "candidateCount": 13
@@ -386,7 +699,9 @@
     {
       "eventId": "conf-jp-surgery-2027",
       "officialUrl": "https://50.jsos.jp/",
-      "lastChecked": "2026-10-04T14:00:08.901Z",
+      "eventOfficialUrl": "https://50.jsos.jp/",
+      "societyUrl": "https://jsos.jp/",
+      "lastChecked": "2026-10-08T02:57:26.243Z",
       "lastChanged": null,
       "confidence": 0.96,
       "fingerprint": "52249e8f380b2c9a2bf5f51e8c9f2733253d4debbe4dc5a2cde5de211603f98c",
@@ -403,12 +718,14 @@
           "fingerprint": "b3e7a7298544a81f7e86fc88b514ca83aa611650b8be0b746f5e913f97fec91f"
         }
       ],
-      "candidateCount": 9
+      "candidateCount": 10
     },
     {
       "eventId": "conf-jp-glaucoma-2026",
       "officialUrl": "https://www.congre.co.jp/jgs2026/",
-      "lastChecked": "2026-10-04T14:00:08.901Z",
+      "eventOfficialUrl": "https://www.congre.co.jp/jgs2026/",
+      "societyUrl": "https://www.ryokunaisho.jp/",
+      "lastChecked": "2026-10-08T02:57:26.243Z",
       "lastChanged": null,
       "confidence": 0.96,
       "fingerprint": "2ae8f2f957cc2897be797b080107efa4ff0ac99388e5c776304806aff1828c29",
@@ -430,10 +747,12 @@
     {
       "eventId": "conf-jp-jrvs-2026",
       "officialUrl": "https://convention.jtbcom.co.jp/65moumaku/index.html",
-      "lastChecked": "2026-10-04T14:00:08.901Z",
+      "eventOfficialUrl": "https://convention.jtbcom.co.jp/65moumaku/index.html",
+      "societyUrl": "https://www.jrvs.jp/",
+      "lastChecked": "2026-10-08T02:57:26.243Z",
       "lastChanged": null,
       "confidence": 0.96,
-      "fingerprint": "bdc8689d3b09becf4f075924653f17185163149899dab16323f0525b0c1460ce",
+      "fingerprint": "597ba6a9ce6b308a3e374c912b9a332b939182380c44f82ad8c59c5fe27fb968",
       "extractionMethod": "official-html",
       "autoUpdateEnabled": true,
       "fetchSucceeded": true,
@@ -444,13 +763,1898 @@
         },
         {
           "url": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
-          "fingerprint": "df37483aff2e8f722b3ff5b35c23f86c9d72c592af79b391ea46abab298f546a"
+          "fingerprint": "3b1328a2bf079e6e4b14c51f6b51e05e0765a43a22056dabe448fac10ce1453d"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/65moumaku/join/index.html",
+          "fingerprint": "a90a548dc557e7bce354c469dc7dd309965982a10fc67b9d05f7b8d9ee5f7eed"
         }
       ],
-      "candidateCount": 9
+      "candidateCount": 10
     }
   ],
-  "stopped": true,
+  "requests": [
+    {
+      "eventId": "oph-011",
+      "url": "https://convention.jtbcom.co.jp/131jos/summary/index.html",
+      "httpStatus": 200
+    },
+    {
+      "eventId": "oph-011",
+      "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html",
+      "httpStatus": 200
+    },
+    {
+      "eventId": "oph-001",
+      "url": "https://convention.jtbcom.co.jp/80ringan/summary/index.html",
+      "httpStatus": 200
+    },
+    {
+      "eventId": "oph-001",
+      "url": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
+      "httpStatus": 200
+    },
+    {
+      "eventId": "conf-jp-surgery-2027",
+      "url": "https://50.jsos.jp/",
+      "httpStatus": 200
+    },
+    {
+      "eventId": "conf-jp-surgery-2027",
+      "url": "https://50.jsos.jp/abstract",
+      "httpStatus": 200
+    },
+    {
+      "eventId": "conf-jp-glaucoma-2026",
+      "url": "https://www.congre.co.jp/jgs2026/contents/outline.html",
+      "httpStatus": 200
+    },
+    {
+      "eventId": "conf-jp-glaucoma-2026",
+      "url": "https://www.congre.co.jp/jgs2026/contents/cfa.html",
+      "httpStatus": 200
+    },
+    {
+      "eventId": "conf-jp-jrvs-2026",
+      "url": "https://convention.jtbcom.co.jp/65moumaku/summary/index.html",
+      "httpStatus": 200
+    },
+    {
+      "eventId": "conf-jp-jrvs-2026",
+      "url": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+      "httpStatus": 200
+    },
+    {
+      "eventId": "conf-jp-jrvs-2026",
+      "url": "https://convention.jtbcom.co.jp/65moumaku/join/index.html",
+      "httpStatus": 200
+    }
+  ],
+  "stopped": false,
+  "stopReason": null,
   "tests": null,
-  "stopReason": "mass-change-limit"
+  "discovery": {
+    "enabled": true,
+    "review": [
+      {
+        "eventId": "conf-jp-perimetry-2026",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html",
+        "evidence": "公式は2026年第15回。カードの第38回と不一致。開催年・会場は対応するが、名称レビューが先。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "日本視野画像学会学術集会 2026 第38回 公式",
+          "日本視野画像学会学術集会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "oph-003",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.jasa-web.jp/event/programs",
+        "evidence": "2026年は第82回弱視斜視（6月5–6日）と第51回小児眼科の別開催という前回記録。今回も第35回合同・10月30日に対応する公式ページを確認できない。レコード自体をレビュー。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "日本小児眼科学会・日本弱視斜視学会 合同学会 2026 第35回 公式",
+          "日本小児眼科学会・日本弱視斜視学会 合同学会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "oph-010",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.apacrs.org/",
+        "evidence": "公式は2026年6月4–6日、Pattaya、第38回。カードの12月17日・Singaporeと不一致。公式URLは存在するがURL単独の追加を保留。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "APACRS 2026  公式",
+          "APACRS 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-jp-presbyopia-2027",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.rousi.jp/",
+        "evidence": "第4回は2026年。カード日程・会場に対応する2027年は第5回（jps5）。開催回修正前は保留。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "日本老視学会学術総会 2027 第4回 公式",
+          "日本老視学会学術総会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-jp-iscev-2027",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://n-practice.co.jp/jscev/meeting/latest.html",
+        "evidence": "公式は2027年第73回。カードの第75回と不一致。学会本体が73jscevへ明示リンク。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "日本臨床視覚電気生理学会 2027 第75回 公式",
+          "日本臨床視覚電気生理学会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-int-ascrs-2027",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+        "evidence": "Annual Meetingホームは403で年度を検証できない。2027年演題登録ページは確認できるが、イベントホームと用途が異なるため保留。同略称の大腸肛門外科学会を除外。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "ASCRS  Annual Meeting 2027  公式",
+          "ASCRS  Annual Meeting 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-jp-lowvision-2027",
+        "field": null,
+        "value": null,
+        "oldValue": null,
+        "candidateUrl": "https://www.ganki.jp/lowvision2027/",
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.ganki.jp/",
+        "evidence": "第28回日本ロービジョン学会学術総会   新着情報",
+        "reason": "discovery-search-limit",
+        "candidateReason": "event-url-edition-unverified",
+        "checks": {
+          "nameMatches": true,
+          "yearMatches": false,
+          "editionMatches": true,
+          "years": [],
+          "editions": [
+            28
+          ],
+          "urlYears": [
+            2027
+          ]
+        },
+        "searchQueries": [
+          "日本ロービジョン学会学術総会 2027 第28回 公式",
+          "日本ロービジョン学会学術総会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-jp-perimetry-2027",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html",
+        "evidence": "公式は2027年第16回。カードの第39回と不一致。jips2027は対象年・会場に対応するが開催回修正前は保留。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "日本視野画像学会学術集会 2027 第39回 公式",
+          "日本視野画像学会学術集会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-jp-myopia-2027",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.ganki.jp/",
+        "evidence": "公式の2027年は第9回。カードの第8回は2026年の開催回。myopia2027は開催回修正前は保留。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "日本近視学会総会 2027 第8回 公式",
+          "日本近視学会総会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-jp-cataract-2027",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "url": "https://www.jscr.net/member/index.html",
+        "confidence": 0,
+        "reason": "discovery-fetch-failed",
+        "error": "fetch failed",
+        "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
+      },
+      {
+        "eventId": "conf-jp-oncology-2027",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.jsoo.jp/society",
+        "evidence": "公式の2027年は第44回、富山国際会議場。カードの第14回と不一致。公式一覧内の2026年第43回と混同しない。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "日本眼腫瘍学会 2027 第14回 公式",
+          "日本眼腫瘍学会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-int-aao-2027",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "url": "https://www.aao.org/Assets/d9eaad8a-70a7-4655-91d6-5b4160dd1d54/636800504037330000/past-academy-annual-meetings-pdf?inline=1",
+        "confidence": 0,
+        "reason": "discovery-fetch-failed",
+        "error": "non-html-response",
+        "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
+      },
+      {
+        "eventId": "conf-int-asnos-2027",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "url": "https://asnos.org/future-meetings/",
+        "confidence": 0,
+        "reason": "discovery-fetch-failed",
+        "error": "http-403",
+        "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
+      },
+      {
+        "eventId": "conf-jp-ai-2027",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+        "evidence": "第3回は2022年、2026年は第7回。カードの2027年第3回とは整合しない。現在の総会ページは2026年を案内するため採用しない。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "日本眼科AI学会総会 2027 第3回 公式",
+          "日本眼科AI学会総会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-jp-presbyopia-2028",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.rousi.jp/",
+        "evidence": "第5回公式開催概要は2027年1月16–17日、御茶ノ水。カードの2028年・京都と不一致。jps5を付けない。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "日本老視学会学術総会 2028 第5回 公式",
+          "日本老視学会学術総会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-jp-iscev-2028",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://n-practice.co.jp/jscev/meeting/latest.html",
+        "evidence": "本体は2028年第74回（韓日合同）。カードの第76回と不一致。対象回専用URL未確認。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "日本臨床視覚電気生理学会 2028 第76回 公式",
+          "日本臨床視覚電気生理学会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-int-ips-2028",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html",
+        "evidence": "国内学会本体バナーにIPS2028第27回の表記。カードの26thと不一致。IPS本体のMeetingsは過去回中心で対象回専用URL未確認。Planetarium Society等の同略称別団体を除外。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "IPS 2028 第26回 公式",
+          "IPS 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-jp-perimetry-2028",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html",
+        "evidence": "本体は2028年第17回。カードの第40回と不一致。専用URL未確認。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "日本視野画像学会学術集会 2028 第40回 公式",
+          "日本視野画像学会学術集会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-int-apao-2028",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+        "evidence": "年度サブドメインにAPAO2028・第43回の名称があるが初期投稿Hello worldのみ。開催情報が未整備で保留。取得502を不存在とは扱わない。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "APAO 2028 第43回 公式",
+          "APAO 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-int-arvo-2028",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "url": "https://www.arvo.org/annual-meeting/about/future-meetings",
+        "confidence": 0,
+        "reason": "discovery-fetch-failed",
+        "error": "http-403",
+        "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
+      },
+      {
+        "eventId": "conf-jp-myopia-2028",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.ganki.jp/",
+        "evidence": "運営一覧の2028年は第10回。カードの第9回と不一致。対象回専用URL未確認。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "日本近視学会総会 2028 第9回 公式",
+          "日本近視学会総会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-jp-inflammation-2028",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.ganki.jp/",
+        "evidence": "運営一覧の2028年は第61回眼炎症・第11回アレルギー・第16回涙道。カードのアレルギー第60回・涙道第47回と不一致。専用URL未確認。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "日本眼感染症学会・ 日本眼炎症学会・ 日本眼科アレルギー学会・ 日本涙道・涙液学会総会 2028 第65回 第61回 第60回 第47回 公式",
+          "日本眼感染症学会・ 日本眼炎症学会・ 日本眼科アレルギー学会・ 日本涙道・涙液学会総会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-jp-cataract-2028",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "url": "https://www.jscr.net/member/index.html",
+        "confidence": 0,
+        "reason": "discovery-fetch-failed",
+        "error": "fetch failed",
+        "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
+      },
+      {
+        "eventId": "conf-jp-oncology-2028",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.jsoo.jp/society",
+        "evidence": "カードの第15回は公式の2027年第44回という開催回系列と整合しない。2028年の正しい回数は年次加算だけで確定しない。対象回専用URL未確認。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "日本眼腫瘍学会 2028 第15回 公式",
+          "日本眼腫瘍学会 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-int-aao-2028",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "url": "https://www.aao.org/Assets/d9eaad8a-70a7-4655-91d6-5b4160dd1d54/636800504037330000/past-academy-annual-meetings-pdf?inline=1",
+        "confidence": 0,
+        "reason": "discovery-fetch-failed",
+        "error": "non-html-response",
+        "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
+      },
+      {
+        "eventId": "conf-int-apvrs-2028",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+        "evidence": "本体Congressesの2028年は第21回、11月16–19日Bangkok。カードの第18回と不一致。対象回専用URL未確認。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "APVRS 2028 第18回 公式",
+          "APVRS 学術集会案内 Annual Meeting Congress"
+        ]
+      },
+      {
+        "eventId": "conf-int-woc-2028",
+        "field": null,
+        "oldValue": null,
+        "value": null,
+        "confidence": 0,
+        "method": "official-index-discovery",
+        "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+        "evidence": "ICOのCongress総合案内にはWOC2028の見出しがあるが複数年向けのページで、対象回専用URLを確定できない。同名に近い非ICO会議サイトを除外。",
+        "reason": "discovery-card-integrity-needs-review",
+        "searchQueries": [
+          "WOC 2028  公式",
+          "WOC 学術集会案内 Annual Meeting Congress"
+        ]
+      }
+    ],
+    "records": [
+      {
+        "eventId": "conf-jp-perimetry-2026",
+        "expected": {
+          "year": 2026,
+          "editions": [
+            38
+          ],
+          "name": "日本視野画像学会学術集会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本視野画像学会学術集会 2026 第38回 公式",
+          "日本視野画像学会学術集会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "oph-003",
+        "expected": {
+          "year": 2026,
+          "editions": [
+            35
+          ],
+          "name": "日本小児眼科学会・日本弱視斜視学会 合同学会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本小児眼科学会・日本弱視斜視学会 合同学会 2026 第35回 公式",
+          "日本小児眼科学会・日本弱視斜視学会 合同学会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jasa-web.jp/event/programs"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "oph-010",
+        "expected": {
+          "year": 2026,
+          "editions": [],
+          "name": "APACRS",
+          "annual": false
+        },
+        "searchQueries": [
+          "APACRS 2026  公式",
+          "APACRS 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.apacrs.org/"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-jp-presbyopia-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [
+            4
+          ],
+          "name": "日本老視学会学術総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本老視学会学術総会 2027 第4回 公式",
+          "日本老視学会学術総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.rousi.jp/"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-jp-eyelid-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [
+            38
+          ],
+          "name": "日本眼瞼義眼床手術学会学術集会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本眼瞼義眼床手術学会学術集会 2027 第38回 公式",
+          "日本眼瞼義眼床手術学会学術集会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.nichigan.or.jp/member/syukai/hyoji_other.html"
+        ],
+        "requests": [
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/hyoji_other.html",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/sokai.html",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-search-limit",
+        "indexLimitReached": true
+      },
+      {
+        "eventId": "conf-jp-iscev-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [
+            75
+          ],
+          "name": "日本臨床視覚電気生理学会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本臨床視覚電気生理学会 2027 第75回 公式",
+          "日本臨床視覚電気生理学会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://n-practice.co.jp/jscev/meeting/latest.html"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-int-ascrs-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [],
+          "name": "ASCRS  Annual Meeting",
+          "annual": true
+        },
+        "searchQueries": [
+          "ASCRS  Annual Meeting 2027  公式",
+          "ASCRS  Annual Meeting 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.nichigan.or.jp/member/syukai/hyoji_international.html"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-jp-lowvision-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [
+            28
+          ],
+          "name": "日本ロービジョン学会学術総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本ロービジョン学会学術総会 2027 第28回 公式",
+          "日本ロービジョン学会学術総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jslrr.org/",
+          "https://www.ganki.jp/"
+        ],
+        "requests": [
+          {
+            "url": "https://www.jslrr.org/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.ganki.jp/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.ganki.jp/lowvision2027/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.ganki.jp/lowvision2027/",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [
+          {
+            "url": "https://www.ganki.jp/lowvision2027/",
+            "indexUrl": "https://www.ganki.jp/",
+            "evidence": "第28回日本ロービジョン学会学術総会   新着情報",
+            "reason": "event-url-edition-unverified",
+            "checks": {
+              "nameMatches": true,
+              "yearMatches": false,
+              "editionMatches": true,
+              "years": [],
+              "editions": [
+                28
+              ],
+              "urlYears": [
+                2027
+              ]
+            }
+          }
+        ],
+        "reason": "discovery-search-limit",
+        "indexLimitReached": true
+      },
+      {
+        "eventId": "conf-jp-perimetry-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [
+            39
+          ],
+          "name": "日本視野画像学会学術集会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本視野画像学会学術集会 2027 第39回 公式",
+          "日本視野画像学会学術集会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-jp-myopia-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [
+            8
+          ],
+          "name": "日本近視学会総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本近視学会総会 2027 第8回 公式",
+          "日本近視学会総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.ganki.jp/",
+          "https://www.myopiasociety.jp/member/meeting/"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-jp-cataract-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [
+            66,
+            53
+          ],
+          "name": "日本白内障学会総会・ 水晶体研究会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本白内障学会総会・ 水晶体研究会 2027 第66回 第53回 公式",
+          "日本白内障学会総会・ 水晶体研究会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jscr.net/member/index.html"
+        ],
+        "requests": [
+          {
+            "url": "https://www.jscr.net/member/index.html",
+            "httpStatus": null,
+            "error": "fetch failed"
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-fetch-failed",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-jp-pharmacology-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [
+            47
+          ],
+          "name": "日本眼薬理学会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本眼薬理学会 2027 第47回 公式",
+          "日本眼薬理学会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://jsop.umin.ne.jp/",
+          "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+          "https://www.ganki.jp/"
+        ],
+        "requests": [
+          {
+            "url": "https://jsop.umin.ne.jp/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.ganki.jp/",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-search-limit",
+        "indexLimitReached": true
+      },
+      {
+        "eventId": "conf-jp-oncology-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [
+            14
+          ],
+          "name": "日本眼腫瘍学会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本眼腫瘍学会 2027 第14回 公式",
+          "日本眼腫瘍学会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jsoo.jp/society"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-jp-ringan-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [
+            81
+          ],
+          "name": "日本臨床眼科学会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本臨床眼科学会 2027 第81回 公式",
+          "日本臨床眼科学会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.nichigan.or.jp/member/syukai/sokai.html"
+        ],
+        "requests": [
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/sokai.html",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-search-limit",
+        "indexLimitReached": true
+      },
+      {
+        "eventId": "conf-int-aao-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [],
+          "name": "AAO  Annual Meeting",
+          "annual": true
+        },
+        "searchQueries": [
+          "AAO  Annual Meeting 2027  公式",
+          "AAO  Annual Meeting 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.aao.org/annual-meeting/past-and-future-meetings"
+        ],
+        "requests": [
+          {
+            "url": "https://www.aao.org/annual-meeting/past-and-future-meetings",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.aao.org/annual-meeting/news",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.aao.org/Assets/d9eaad8a-70a7-4655-91d6-5b4160dd1d54/636800504037330000/past-academy-annual-meetings-pdf?inline=1",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-dedicated-url-not-found",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-jp-neuro-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [
+            65
+          ],
+          "name": "日本神経眼科学会総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本神経眼科学会総会 2027 第65回 公式",
+          "日本神経眼科学会総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.nichigan.or.jp/member/syukai/hyoji.html"
+        ],
+        "requests": [
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/sokai.html",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-search-limit",
+        "indexLimitReached": true
+      },
+      {
+        "eventId": "conf-int-asnos-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [],
+          "name": "ASNOS",
+          "annual": false
+        },
+        "searchQueries": [
+          "ASNOS 2027  公式",
+          "ASNOS 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://asnos.org/future-meetings/"
+        ],
+        "requests": [
+          {
+            "url": "https://asnos.org/future-meetings/",
+            "httpStatus": 403
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-fetch-failed",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-jp-ai-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [
+            3
+          ],
+          "name": "日本眼科AI学会総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本眼科AI学会総会 2027 第3回 公式",
+          "日本眼科AI学会総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+          "https://www.jsaio.jp/meeting/"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-jp-jrvs-2027",
+        "expected": {
+          "year": 2027,
+          "editions": [
+            66
+          ],
+          "name": "日本網膜硝子体学会総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本網膜硝子体学会総会 2027 第66回 公式",
+          "日本網膜硝子体学会総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jrvs.jp/meeting.html"
+        ],
+        "requests": [
+          {
+            "url": "https://www.jrvs.jp/meeting.html",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-dedicated-url-not-found",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-jp-presbyopia-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            5
+          ],
+          "name": "日本老視学会学術総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本老視学会学術総会 2028 第5回 公式",
+          "日本老視学会学術総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.rousi.jp/",
+          "https://www.rousi.jp/jps5-overview"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-jp-surgery-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            51
+          ],
+          "name": "日本眼科手術学会学術総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本眼科手術学会学術総会 2028 第51回 公式",
+          "日本眼科手術学会学術総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jsos.jp/annual-meetings"
+        ],
+        "requests": [
+          {
+            "url": "https://www.jsos.jp/annual-meetings",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-dedicated-url-not-found",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-jp-cornea-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [],
+          "name": "角膜カンファランス",
+          "annual": false
+        },
+        "searchQueries": [
+          "角膜カンファランス 2028  公式",
+          "角膜カンファランス 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://cornea.gr.jp/conference/future/",
+          "https://cornea.gr.jp/conference/info/"
+        ],
+        "requests": [
+          {
+            "url": "https://cornea.gr.jp/conference/future/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://cornea.gr.jp/conference/info/",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-dedicated-url-not-found",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-jp-eyelid-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            39
+          ],
+          "name": "日本眼瞼義眼床手術学会学術集会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本眼瞼義眼床手術学会学術集会 2028 第39回 公式",
+          "日本眼瞼義眼床手術学会学術集会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.nichigan.or.jp/member/syukai/hyoji_other.html"
+        ],
+        "requests": [
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/hyoji_other.html",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/sokai.html",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-search-limit",
+        "indexLimitReached": true
+      },
+      {
+        "eventId": "conf-jp-iscev-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            76
+          ],
+          "name": "日本臨床視覚電気生理学会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本臨床視覚電気生理学会 2028 第76回 公式",
+          "日本臨床視覚電気生理学会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://n-practice.co.jp/jscev/meeting/latest.html"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-jp-diabetic-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            34
+          ],
+          "name": "日本糖尿病眼学会総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本糖尿病眼学会総会 2028 第34回 公式",
+          "日本糖尿病眼学会総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jsod.jp/member/"
+        ],
+        "requests": [
+          {
+            "url": "https://www.jsod.jp/member/",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-dedicated-url-not-found",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-int-ips-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            26
+          ],
+          "name": "IPS",
+          "annual": false
+        },
+        "searchQueries": [
+          "IPS 2028 第26回 公式",
+          "IPS 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html",
+          "https://square.umin.ac.jp/jips/index.html"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-jp-perimetry-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            40
+          ],
+          "name": "日本視野画像学会学術集会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本視野画像学会学術集会 2028 第40回 公式",
+          "日本視野画像学会学術集会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-int-apao-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            43
+          ],
+          "name": "APAO",
+          "annual": false
+        },
+        "searchQueries": [
+          "APAO 2028 第43回 公式",
+          "APAO 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.nichigan.or.jp/member/syukai/hyoji_international.html"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-int-fujiretina-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [],
+          "name": "FujiRetina",
+          "annual": true
+        },
+        "searchQueries": [
+          "FujiRetina 2028  公式",
+          "FujiRetina 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jrvs.jp/meeting.html",
+          "https://www.jrvs.jp/fuji.html"
+        ],
+        "requests": [
+          {
+            "url": "https://www.jrvs.jp/meeting.html",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.jrvs.jp/fuji.html",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-dedicated-url-not-found",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-jp-jos-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            132
+          ],
+          "name": "日本眼科学会総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本眼科学会総会 2028 第132回 公式",
+          "日本眼科学会総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.nichigan.or.jp/member/syukai/sokai.html"
+        ],
+        "requests": [
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/sokai.html",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-search-limit",
+        "indexLimitReached": true
+      },
+      {
+        "eventId": "conf-int-ascrs-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [],
+          "name": "ASCRS  Annual Meeting",
+          "annual": true
+        },
+        "searchQueries": [
+          "ASCRS  Annual Meeting 2028  公式",
+          "ASCRS  Annual Meeting 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.nichigan.or.jp/member/syukai/hyoji_international.html"
+        ],
+        "requests": [
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/sokai.html",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-search-limit",
+        "indexLimitReached": true
+      },
+      {
+        "eventId": "conf-int-arvo-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [],
+          "name": "ARVO  Annual Meeting",
+          "annual": true
+        },
+        "searchQueries": [
+          "ARVO  Annual Meeting 2028  公式",
+          "ARVO  Annual Meeting 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+          "https://www.arvo.org/annual-meeting/about/future-meetings"
+        ],
+        "requests": [
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.arvo.org/annual-meeting/about/future-meetings",
+            "httpStatus": 403
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-search-limit",
+        "indexLimitReached": true
+      },
+      {
+        "eventId": "conf-jp-myopia-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            9
+          ],
+          "name": "日本近視学会総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本近視学会総会 2028 第9回 公式",
+          "日本近視学会総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.ganki.jp/"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-jp-lowvision-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            29
+          ],
+          "name": "日本ロービジョン学会学術総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本ロービジョン学会学術総会 2028 第29回 公式",
+          "日本ロービジョン学会学術総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jslrr.org/",
+          "https://www.ganki.jp/"
+        ],
+        "requests": [
+          {
+            "url": "https://www.jslrr.org/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.ganki.jp/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.ganki.jp/lowvision2027/",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-search-limit",
+        "indexLimitReached": true
+      },
+      {
+        "eventId": "conf-jp-pediatric-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            84,
+            53
+          ],
+          "name": "日本弱視斜視学会総会・ 日本小児眼科学会総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本弱視斜視学会総会・ 日本小児眼科学会総会 2028 第84回 第53回 公式",
+          "日本弱視斜視学会総会・ 日本小児眼科学会総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jasa-web.jp/event/programs"
+        ],
+        "requests": [
+          {
+            "url": "https://www.jasa-web.jp/event/programs",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-dedicated-url-not-found",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-jp-jsoprs-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            15
+          ],
+          "name": "日本眼形成再建外科学会学術集会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本眼形成再建外科学会学術集会 2028 第15回 公式",
+          "日本眼形成再建外科学会学術集会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jsoprs.jp/学術集会開催履歴"
+        ],
+        "requests": [
+          {
+            "url": "https://www.jsoprs.jp/%E5%AD%A6%E8%A1%93%E9%9B%86%E4%BC%9A%E9%96%8B%E5%82%AC%E5%B1%A5%E6%AD%B4",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-dedicated-url-not-found",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-jp-optics-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            64
+          ],
+          "name": "日本眼光学学会総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本眼光学学会総会 2028 第64回 公式",
+          "日本眼光学学会総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jsoo-ws.com/events"
+        ],
+        "requests": [
+          {
+            "url": "https://www.jsoo-ws.com/events",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-dedicated-url-not-found",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-jp-jscrs-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            43
+          ],
+          "name": "JSCRS学術総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "JSCRS学術総会 2028 第43回 公式",
+          "JSCRS学術総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jscrs.org/index/page/id/28"
+        ],
+        "requests": [
+          {
+            "url": "https://www.jscrs.org/index/page/id/28",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-dedicated-url-not-found",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-jp-inflammation-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            65,
+            61,
+            60,
+            47
+          ],
+          "name": "日本眼感染症学会・ 日本眼炎症学会・ 日本眼科アレルギー学会・ 日本涙道・涙液学会総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本眼感染症学会・ 日本眼炎症学会・ 日本眼科アレルギー学会・ 日本涙道・涙液学会総会 2028 第65回 第61回 第60回 第47回 公式",
+          "日本眼感染症学会・ 日本眼炎症学会・ 日本眼科アレルギー学会・ 日本涙道・涙液学会総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.ganki.jp/"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-jp-cl-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            70
+          ],
+          "name": "日本コンタクトレンズ学会総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本コンタクトレンズ学会総会 2028 第70回 公式",
+          "日本コンタクトレンズ学会総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.clgakkai.jp/"
+        ],
+        "requests": [
+          {
+            "url": "https://www.clgakkai.jp/",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-dedicated-url-not-found",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-jp-cataract-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            67,
+            54
+          ],
+          "name": "日本白内障学会総会・ 水晶体研究会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本白内障学会総会・ 水晶体研究会 2028 第67回 第54回 公式",
+          "日本白内障学会総会・ 水晶体研究会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jscr.net/member/index.html"
+        ],
+        "requests": [
+          {
+            "url": "https://www.jscr.net/member/index.html",
+            "httpStatus": null,
+            "error": "fetch failed"
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-fetch-failed",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-jp-oncology-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            15
+          ],
+          "name": "日本眼腫瘍学会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本眼腫瘍学会 2028 第15回 公式",
+          "日本眼腫瘍学会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jsoo.jp/society"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-jp-ringan-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            82
+          ],
+          "name": "日本臨床眼科学会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本臨床眼科学会 2028 第82回 公式",
+          "日本臨床眼科学会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.nichigan.or.jp/member/syukai/sokai.html"
+        ],
+        "requests": [
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/sokai.html",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-search-limit",
+        "indexLimitReached": true
+      },
+      {
+        "eventId": "conf-int-aao-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [],
+          "name": "AAO  Annual Meeting",
+          "annual": true
+        },
+        "searchQueries": [
+          "AAO  Annual Meeting 2028  公式",
+          "AAO  Annual Meeting 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.aao.org/annual-meeting/past-and-future-meetings"
+        ],
+        "requests": [
+          {
+            "url": "https://www.aao.org/annual-meeting/past-and-future-meetings",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.aao.org/annual-meeting/news",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.aao.org/Assets/d9eaad8a-70a7-4655-91d6-5b4160dd1d54/636800504037330000/past-academy-annual-meetings-pdf?inline=1",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-dedicated-url-not-found",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-int-apvrs-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            18
+          ],
+          "name": "APVRS",
+          "annual": false
+        },
+        "searchQueries": [
+          "APVRS 2028 第18回 公式",
+          "APVRS 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+          "https://apvrs.org/congresses/"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-int-woc-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [],
+          "name": "WOC",
+          "annual": false
+        },
+        "searchQueries": [
+          "WOC 2028  公式",
+          "WOC 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.nichigan.or.jp/member/syukai/hyoji_international.html"
+        ],
+        "requests": [],
+        "candidates": [],
+        "reason": "discovery-card-integrity-needs-review"
+      },
+      {
+        "eventId": "conf-jp-pharmacology-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            48
+          ],
+          "name": "日本眼薬理学会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本眼薬理学会 2028 第48回 公式",
+          "日本眼薬理学会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://jsop.umin.ne.jp/",
+          "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+          "https://www.ganki.jp/"
+        ],
+        "requests": [
+          {
+            "url": "https://jsop.umin.ne.jp/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.ganki.jp/",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-search-limit",
+        "indexLimitReached": true
+      },
+      {
+        "eventId": "conf-jp-neuro-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            66
+          ],
+          "name": "日本神経眼科学会総会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本神経眼科学会総会 2028 第66回 公式",
+          "日本神経眼科学会総会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.ganki.jp/"
+        ],
+        "requests": [
+          {
+            "url": "https://www.ganki.jp/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.ganki.jp/lowvision2027/",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://www.ganki.jp/jips2027/",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-dedicated-url-not-found",
+        "indexLimitReached": false
+      },
+      {
+        "eventId": "conf-jp-jrvs-2028",
+        "expected": {
+          "year": 2028,
+          "editions": [
+            67,
+            44
+          ],
+          "name": "日本網膜硝子体学会総会・ 日本眼循環学会",
+          "annual": false
+        },
+        "searchQueries": [
+          "日本網膜硝子体学会総会・ 日本眼循環学会 2028 第67回 第44回 公式",
+          "日本網膜硝子体学会総会・ 日本眼循環学会 学術集会案内 Annual Meeting Congress"
+        ],
+        "searchMethod": "official-index-links",
+        "indexUrls": [
+          "https://www.jrvs.jp/meeting.html"
+        ],
+        "requests": [
+          {
+            "url": "https://www.jrvs.jp/meeting.html",
+            "httpStatus": 200
+          }
+        ],
+        "candidates": [],
+        "reason": "discovery-dedicated-url-not-found",
+        "indexLimitReached": false
+      }
+    ]
+  },
+  "massChangeAssessment": {
+    "changedEvents": 4,
+    "totalFields": 11,
+    "fieldsPerEvent": {
+      "oph-001": 1,
+      "conf-jp-surgery-2027": 4,
+      "conf-jp-glaucoma-2026": 3,
+      "conf-jp-jrvs-2026": 3
+    },
+    "maxFieldsPerEvent": 4,
+    "lowRiskCompletions": 8,
+    "regularRiskChanges": 3,
+    "riskWeightedFields": 5,
+    "exceeded": [],
+    "stopped": false
+  }
 }

@@ -22,6 +22,11 @@ vm.runInContext(`
   assert.ok(!createEventCardHtml(event).includes('早期登録締切'));
   assert.ok(renderRegistrationHtml(event, '2026-10-16').includes('2026年10月16日まで'));
   assert.ok(renderRegistrationHtml(event, '2026-10-17').includes('2026年10月16日 締切済'));
+  const pastDeadline = renderRegistrationHtml(event, '2026-10-17');
+  assert.ok(pastDeadline.includes('deadline-highlight closed">2026年10月16日 締切済'));
+  assert.ok(pastDeadline.includes('deadline-highlight">2026年11月12日開始'));
+  assert.equal((pastDeadline.match(/conf-registration-period/g) || []).length, 2);
+  assert.ok(!renderRegistrationHtml(event, '2026-10-16').includes('deadline-highlight closed'));
   assert.ok(renderRegistrationHtml(event, '2026-11-12').includes('2026年12月6日まで'));
   assert.ok(renderRegistrationHtml(event, '2026-12-07').includes('2026年12月6日 締切済'));
   const international = { ...event, conferenceRegion: 'international', registration: { type: 'international', periods: [
@@ -29,11 +34,17 @@ vm.runInContext(`
     { label: 'Late', start: '2027-07-01' }, { label: 'On-site', start: '2027-07-10' }
   ] } };
   const overseas = renderRegistrationHtml(international, '2027-04-01');
-  assert.ok(overseas.includes('Early bird：</span><span class="conf-val deadline-highlight">2027年3月31日 締切済'));
+  assert.ok(overseas.includes('Early bird：</span><span class="conf-val deadline-highlight closed">2027年3月31日 締切済'));
   assert.ok(overseas.includes('Regular：</span><span class="conf-val deadline-highlight">2027年6月30日まで'));
   assert.ok(overseas.includes('Late') && overseas.includes('On-site'));
+  const closedOverseas = renderRegistrationHtml(international, '2027-07-01');
+  assert.ok(closedOverseas.includes('deadline-highlight closed">2027年6月30日 締切済'));
+  const closedLate = renderRegistrationHtml({ ...international, registration: { type: 'international', periods: [{ label: 'Late', deadline: '2027-07-09' }] } }, '2027-07-10');
+  assert.ok(closedLate.includes('deadline-highlight closed">2027年7月9日 締切済'));
   assert.ok(renderRegistrationHtml({ ...event, registration: undefined, earlyRegistrationDeadline: '2026-10-16' }).includes('2026年10月16日まで'));
   assert.ok(renderRegistrationHtml({ ...event, registration: undefined, earlyRegistrationDeadline: '2026-10-01' }).includes('2026年10月1日 締切済'));
+  assert.ok(renderRegistrationHtml({ ...event, registration: undefined, earlyRegistrationDeadline: '2026-10-01' }).includes('deadline-highlight closed'));
+  assert.ok(renderRegistrationHtml({ ...event, registration: undefined, earlyBirdDeadline: '締切済' }).includes('deadline-highlight closed'));
   assert.ok(renderRegistrationHtml({ ...event, registration: undefined, earlyBirdDeadline: '2026年10月16日(金)' }).includes('2026年10月16日まで'));
   assert.ok(renderRegistrationHtml({ ...event, registration: undefined }).includes('事前参加登録'));
   assert.ok(renderRegistrationHtml({ ...international, registration: undefined }).includes('Early bird'));

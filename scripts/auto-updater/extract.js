@@ -1,4 +1,5 @@
 const crypto = require('node:crypto');
+const { eventSourceUrl, isSocietyUrl } = require('./event-urls');
 
 function text(html) {
   return html.replace(/<!--[\s\S]*?-->/g, '').replace(/<(script|style|nav|footer)\b[^>]*>[\s\S]*?<\/\1>/gi, '')
@@ -117,8 +118,26 @@ function extractOfficialHtml(document, source) {
   };
   if (!/<(?:html|body|main|table|dl)\b/i.test(html)) return { candidates, issues: ['invalid-html'] };
   const title = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1] || '';
+  if (role === 'society') {
+    if (!source.societyIdentity?.length || !source.societyIdentity.every(token => compact(title).includes(compact(token)))) {
+      return { candidates, issues: ['society-identity-missing'] };
+    }
+    add('societyUrl', url, 0.98, 'official-society-page', title);
+    return { candidates, issues };
+  }
+  const identityMatched = source.identity.every(token => compact(title).includes(compact(token)));
+  const eventUrl = (value, confidence, method, evidence) => {
+    add('eventOfficialUrl', value, confidence, method, evidence);
+    const candidate = candidates.at(-1);
+    if (candidate?.field === 'eventOfficialUrl') Object.assign(candidate, {
+      sourceRole: role, eventIdentityMatched: identityMatched,
+      eventTitleYears: [...new Set([...text(title).matchAll(/(?<!\d)(20\d{2})(?!\d)/g)].map(match => Number(match[1])))],
+      eventPageKind: isSocietyUrl(value, source) || isSocietyUrl(url, source) ? 'society' : 'event', eventYears: []
+    });
+  };
   // Identity must occur in the document title, not a footer or a list of other editions.
-  if (!source.identity.every(token => compact(title).includes(compact(token)))) {
+  if (!identityMatched) {
+    if (role === 'overview') eventUrl(url, 0.99, 'pinned-event-url', title);
     return { candidates, issues: ['conference-identity-missing'] };
   }
   const clean = html.replace(/<!--[\s\S]*?-->/g, '').replace(/<(script|style|nav|footer)\b[^>]*>[\s\S]*?<\/\1>/gi, '')
@@ -132,7 +151,23 @@ function extractOfficialHtml(document, source) {
   if (role === 'overview') {
     const name = text(title).split(/[|｜丨]/).at(-1).trim();
     add('title', name, 0.96, 'official-title', title);
-    add('officialUrl', source.officialUrl, 0.99, 'pinned-official-url', title);
+    eventUrl(eventSourceUrl(source), 0.99, 'pinned-event-url', title);
+    for (const match of clean.matchAll(/<(?:link|meta)\b[^>]*>/gi)) {
+      const tag = match[0];
+      if (!/\brel\s*=\s*["']canonical["']|\bproperty\s*=\s*["']og:url["']/i.test(tag)) continue;
+      const target = tag.match(/\b(?:href|content)\s*=\s*["']([^"']+)["']/i)?.[1];
+      if (!target) continue;
+      try { eventUrl(new URL(target.replace(/&amp;/g, '&'), url).href, 0.98, 'official-canonical-url', title); }
+      catch { issues.push('invalid-event-canonical-url'); }
+    }
+    for (const match of clean.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
+      let target;
+      try { target = new URL(match[1].replace(/&amp;/g, '&'), url).href; } catch { continue; }
+      if (source.societyUrl && target === new URL(source.societyUrl).href &&
+          source.societyIdentity?.every(token => compact(match[2]).includes(compact(token)))) {
+        add('societyUrl', target, 0.99, 'pinned-society-url', text(match[2]));
+      }
+    }
     for (const [label, value] of labeled) {
       if (/^(会\s*期|日\s*時|開催期間)(?:\s*\/.*)?$/.test(label)) {
         const ranges = dateRanges(value, source.year);
@@ -197,10 +232,15 @@ function extractOfficialHtml(document, source) {
         add('city', event.location?.address?.addressLocality, 0.99, 'json-ld');
         const country = event.location?.address?.addressCountry;
         add('country', typeof country === 'object' ? country.name : country, 0.99, 'json-ld');
-        add('officialUrl', event.url, 0.99, 'json-ld');
+        if (event.url) eventUrl(event.url, 0.99, 'json-ld', event.name);
+        if (event.organizer?.url && source.societyIdentity?.every(token => compact(event.organizer.name || '').includes(compact(token)))) {
+          add('societyUrl', event.organizer.url, 0.99, 'json-ld', event.organizer.name);
+        }
       }
     } catch { issues.push('invalid-json-ld'); }
   }
+  const years = [...new Set(candidates.filter(c => c.field === 'date' && c.confidence >= 0.95).map(c => Number(c.value.slice(0, 4))))];
+  for (const candidate of candidates.filter(c => c.field === 'eventOfficialUrl')) candidate.eventYears = years;
   return { candidates, issues: [...new Set(issues)], fingerprint: document.fingerprint || crypto.createHash('sha256').update(html).digest('hex') };
 }
 

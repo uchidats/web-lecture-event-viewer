@@ -1,0 +1,2514 @@
+{
+  "version": 1,
+  "checkedOn": "2026-10-07",
+  "timeZone": "Asia/Tokyo",
+  "scope": "Audit and proposals only; events.js and updater/UI code unchanged.",
+  "summary": {
+    "total": 85,
+    "domestic": 60,
+    "international": 25,
+    "legacyUrlPresent": 33,
+    "legacyUrlMissing": 52,
+    "eventOfficialUrlPresent": 0,
+    "currentUrlKinds": {
+      "confirmed_event": 7,
+      "current_event_dynamic": 2,
+      "society_top": 18,
+      "other_society_listing": 1,
+      "placeholder": 2,
+      "wrong_year": 2,
+      "general_congress_portal": 1,
+      "missing": 52
+    },
+    "proposedEventOfficialUrls": 31
+  },
+  "limitations": [
+    "空欄の52件は未登録と判定した。全件の専用サイトの公開・未公開までは断定しない。",
+    "取得失敗を404やURL不存在とみなさない。一次情報の検索結果・主催者の明示リンクも根拠に使用し、保留候補は明記した。",
+    "URL内の年、著作権年、公開年だけで開催年を決めない。開催概要と開催回を照合した。",
+    "年度更新型URLは確認日現在のみ有効。別年度への内容切替は継続的な年度検証と管理レビューが必要。"
+  ],
+  "records": [
+    {
+      "id": "conf-jp-surgery-2026",
+      "title": "第49回 日本眼科手術学会学術総会",
+      "year": 2026,
+      "region": "domestic",
+      "currentOfficialUrl": "https://www.jsos.jp/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": "https://www.jsos.jp/jsos49",
+      "societyUrlCandidate": "https://jsos.jp/",
+      "candidate": {
+        "url": "https://www.jsos.jp/jsos49",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第49回2026年の専用パスは /jsos49。学会本体www付きトップは取得失敗、第50回公式ページからjsos.jpへの本体リンクを確認。"
+      },
+      "evidenceUrls": [
+        "https://50.jsos.jp/",
+        "https://www.jsos.jp/jsos49",
+        "https://jsos.jp/about/history"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "第49回2026年の専用パスは /jsos49。学会本体www付きトップは取得失敗、第50回公式ページからjsos.jpへの本体リンクを確認。"
+      ]
+    },
+    {
+      "id": "conf-jp-eyelid-2026",
+      "title": "第37回 日本眼瞼義眼床手術学会学術集会",
+      "year": 2026,
+      "region": "domestic",
+      "currentOfficialUrl": "https://jsprs.or.jp/member/meeting_info/2026/37gigan/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "other_society_listing",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": true,
+        "notSocietyTop": true
+      },
+      "proposedEventOfficialUrl": "https://www.ggigan.com/",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://www.ggigan.com/",
+        "verification": "confirmed",
+        "dynamic": true,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第37回。日本形成外科学会の案内で2026年2月7日と学術集会HP ggigan.comを確認。年度固定パスがないため開催回の継続照合が必要。"
+      },
+      "evidenceUrls": [
+        "https://jsprs.or.jp/member/meeting_info/2026/37gigan/",
+        "https://www.ggigan.com/"
+      ],
+      "notes": [
+        "日本形成外科学会の開催案内。イベント公式ホームページへの明示リンクを確認。",
+        "第37回。日本形成外科学会の案内で2026年2月7日と学術集会HP ggigan.comを確認。年度固定パスがないため開催回の継続照合が必要。"
+      ]
+    },
+    {
+      "id": "conf-jp-cornea-2026",
+      "title": "角膜カンファランス2026（第50回日本角膜学会総会／第42回日本角膜移植学会）",
+      "year": 2026,
+      "region": "domestic",
+      "currentOfficialUrl": "https://www.congre.co.jp/cornea2026/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "confirmed_event",
+      "currentChecks": {
+        "eventPage": true,
+        "yearMatches": true,
+        "notSocietyTop": true
+      },
+      "proposedEventOfficialUrl": "https://www.congre.co.jp/cornea2026/",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://www.congre.co.jp/cornea2026/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第50回日本角膜学会／第42回角膜移植学会。2026年2月19～21日の専用ページ。"
+      },
+      "evidenceUrls": [
+        "https://www.congre.co.jp/cornea2026/"
+      ],
+      "notes": [
+        "当該開催回の専用公式ページと開催年の一致を確認。",
+        "第50回日本角膜学会／第42回角膜移植学会。2026年2月19～21日の専用ページ。"
+      ]
+    },
+    {
+      "id": "conf-jp-jos-2026",
+      "title": "第130回 日本眼科学会総会",
+      "year": 2026,
+      "region": "domestic",
+      "currentOfficialUrl": "https://www.congre.co.jp/130jos/index.html",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "confirmed_event",
+      "currentChecks": {
+        "eventPage": true,
+        "yearMatches": true,
+        "notSocietyTop": true
+      },
+      "proposedEventOfficialUrl": "https://www.congre.co.jp/130jos/index.html",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://www.congre.co.jp/130jos/index.html",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第130回、2026年4月9～12日を開催概要で確認。"
+      },
+      "evidenceUrls": [
+        "https://www.congre.co.jp/130jos/outline.html",
+        "https://www.congre.co.jp/130jos/index.html"
+      ],
+      "notes": [
+        "当該開催回の専用公式ページと開催年の一致を確認。",
+        "第130回、2026年4月9～12日を開催概要で確認。"
+      ]
+    },
+    {
+      "id": "conf-jp-perimetry-2026",
+      "title": "第38回 日本視野画像学会学術集会",
+      "year": 2026,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "公式は2026年第15回。登録名の第38回と不一致。対応する2026年ページはhttps://n-practice.co.jp/jips2026/。名称レビュー前は採用保留。"
+      ]
+    },
+    {
+      "id": "oph-008",
+      "title": "第13回 日本眼形成再建外科学会学術集会 (JSOPRS 2026)",
+      "year": 2026,
+      "region": "domestic",
+      "currentOfficialUrl": "https://jsoprs2026.com/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "confirmed_event",
+      "currentChecks": {
+        "eventPage": true,
+        "yearMatches": true,
+        "notSocietyTop": true
+      },
+      "proposedEventOfficialUrl": "https://jsoprs2026.com/",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://jsoprs2026.com/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第13回、2026年6月20～21日。"
+      },
+      "evidenceUrls": [
+        "https://jsoprs2026.com/"
+      ],
+      "notes": [
+        "当該開催回の専用公式ページと開催年の一致を確認。",
+        "第13回、2026年6月20～21日。"
+      ]
+    },
+    {
+      "id": "conf-jp-lowvision-2026",
+      "title": "第27回 日本ロービジョン学会学術総会",
+      "year": 2026,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": "https://convention.jtbcom.co.jp/lowvision2026/",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://convention.jtbcom.co.jp/lowvision2026/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第27回、2026年9月19～21日の専用イベントページ。未登録からの追加候補。"
+      },
+      "evidenceUrls": [
+        "https://convention.jtbcom.co.jp/lowvision2026/"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "第27回、2026年9月19～21日の専用イベントページ。未登録からの追加候補。"
+      ]
+    },
+    {
+      "id": "conf-int-euretina-2026",
+      "title": "EURETINA 2026 (26th EURETINA Congress)",
+      "year": 2026,
+      "region": "international",
+      "currentOfficialUrl": "https://euretina.org/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": "https://euretina.org/vienna-2026/",
+      "societyUrlCandidate": "https://euretina.org/",
+      "candidate": {
+        "url": "https://euretina.org/vienna-2026/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第26回、2026年10月1～4日。Vienna 2026の専用ページ。本体Eventsから明示リンクを確認。古いTermsの記載年を開催年と混同しない。"
+      },
+      "evidenceUrls": [
+        "https://euretina.org/",
+        "https://euretina.org/vienna-2026/"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "第26回、2026年10月1～4日。Vienna 2026の専用ページ。本体Eventsから明示リンクを確認。古いTermsの記載年を開催年と混同しない。"
+      ]
+    },
+    {
+      "id": "conf-jp-glaucoma-2026",
+      "title": "第37回 日本緑内障学会",
+      "year": 2026,
+      "region": "domestic",
+      "currentOfficialUrl": "https://www.ryokunaisho.jp/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": "https://www.congre.co.jp/jgs2026/",
+      "societyUrlCandidate": "https://www.ryokunaisho.jp/",
+      "candidate": {
+        "url": "https://www.congre.co.jp/jgs2026/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第37回、2026年10月2～4日の専用ページはcongre.co.jp/jgs2026/。本体トップと別URL。"
+      },
+      "evidenceUrls": [
+        "https://www.ryokunaisho.jp/",
+        "https://www.congre.co.jp/jgs2026/"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "第37回、2026年10月2～4日の専用ページはcongre.co.jp/jgs2026/。本体トップと別URL。"
+      ]
+    },
+    {
+      "id": "oph-004",
+      "title": "AAO 2026 Annual Meeting (American Academy of Ophthalmology)",
+      "year": 2026,
+      "region": "international",
+      "currentOfficialUrl": "https://www.aao.org/annual-meeting",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "current_event_dynamic",
+      "currentChecks": {
+        "eventPage": true,
+        "yearMatches": true,
+        "notSocietyTop": true
+      },
+      "proposedEventOfficialUrl": "https://aao.org/annual-meeting",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://aao.org/annual-meeting",
+        "verification": "confirmed",
+        "dynamic": true,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "AAO公式Annual Meetingは現在2026年の案内。www付き現行URLは取得失敗、wwwなし公式URLで確認。2027年・2028年へ同じページを流用しない。"
+      },
+      "evidenceUrls": [
+        "https://aao.org/annual-meeting"
+      ],
+      "notes": [
+        "確認日現在は当該開催年。年度更新型URLのため別年に変われば採用停止・管理レビュー。",
+        "AAO公式Annual Meetingは現在2026年の案内。www付き現行URLは取得失敗、wwwなし公式URLで確認。2027年・2028年へ同じページを流用しない。"
+      ]
+    },
+    {
+      "id": "oph-001",
+      "title": "第80回 日本臨床眼科学会 (臨眼 2026)",
+      "year": 2026,
+      "region": "domestic",
+      "currentOfficialUrl": "https://convention.jtbcom.co.jp/80ringan/index.html",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "confirmed_event",
+      "currentChecks": {
+        "eventPage": true,
+        "yearMatches": true,
+        "notSocietyTop": true
+      },
+      "proposedEventOfficialUrl": "https://convention.jtbcom.co.jp/80ringan/index.html",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://convention.jtbcom.co.jp/80ringan/index.html",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第80回、2026年10月29日～11月1日。"
+      },
+      "evidenceUrls": [
+        "https://convention.jtbcom.co.jp/80ringan/index.html"
+      ],
+      "notes": [
+        "当該開催回の専用公式ページと開催年の一致を確認。",
+        "第80回、2026年10月29日～11月1日。"
+      ]
+    },
+    {
+      "id": "oph-003",
+      "title": "第35回 日本小児眼科学会・日本弱視斜視学会 合同学会",
+      "year": 2026,
+      "region": "domestic",
+      "currentOfficialUrl": "https://example.com/jasp-jsas-2026",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "placeholder",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://convention.jtbcom.co.jp/jasa2026/summary/index.html",
+        "https://www.congre.co.jp/japo2026/html/outline/"
+      ],
+      "notes": [
+        "example.comの仮URL。イベント公式URLにも学会本体URLにも採用しない。",
+        "2026年の公式は第82回弱視斜視（6月5～6日）と第51回小児眼科（7月24～25日）を別開催。登録済み「第35回合同・10月30日」に対応する開催回を確認できない。URLだけでなく学会レコード自体をレビュー。"
+      ]
+    },
+    {
+      "id": "conf-jp-pharmacology-2026",
+      "title": "第46回 日本眼薬理学会",
+      "year": 2026,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": "https://square.umin.ac.jp/jsop46/",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://square.umin.ac.jp/jsop46/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第46回、2026年11月7～8日の専用イベントページ。未登録からの追加候補。"
+      },
+      "evidenceUrls": [
+        "https://square.umin.ac.jp/jsop46/"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "第46回、2026年11月7～8日の専用イベントページ。未登録からの追加候補。"
+      ]
+    },
+    {
+      "id": "conf-jp-neuro-2026",
+      "title": "第64回 日本神経眼科学会総会",
+      "year": 2026,
+      "region": "domestic",
+      "currentOfficialUrl": "http://www.shinkeiganka.com/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": "https://n-practice.co.jp/64thJNOS/",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://n-practice.co.jp/64thJNOS/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第64回、2026年11月26～27日。現行本体URLは取得失敗。専用イベントページの開催概要で確認。"
+      },
+      "evidenceUrls": [
+        "https://n-practice.co.jp/64thJNOS/",
+        "https://n-practice.co.jp/64thJNOS/outline/index.html"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "第64回、2026年11月26～27日。現行本体URLは取得失敗。専用イベントページの開催概要で確認。"
+      ]
+    },
+    {
+      "id": "conf-jp-jrvs-2026",
+      "title": "第65回 日本網膜硝子体学会総会",
+      "year": 2026,
+      "region": "domestic",
+      "currentOfficialUrl": "https://www.jrvs.jp/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": "https://convention.jtbcom.co.jp/65moumaku/index.html",
+      "societyUrlCandidate": "https://www.jrvs.jp/",
+      "candidate": {
+        "url": "https://convention.jtbcom.co.jp/65moumaku/index.html",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第65回、2026年12月4～6日。本体の総会案内も65moumakuのイベントHPを明示。"
+      },
+      "evidenceUrls": [
+        "https://www.jrvs.jp/meeting.html",
+        "https://convention.jtbcom.co.jp/65moumaku/index.html"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "第65回、2026年12月4～6日。本体の総会案内も65moumakuのイベントHPを明示。"
+      ]
+    },
+    {
+      "id": "conf-int-arc-2026",
+      "title": "Asia Retina Congress 2026 (ARC 2026)",
+      "year": 2026,
+      "region": "international",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": "https://convention.jtbcom.co.jp/arc2026/",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://convention.jtbcom.co.jp/arc2026/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第6回ARC、2026年12月5～6日の専用イベントページ。"
+      },
+      "evidenceUrls": [
+        "https://convention.jtbcom.co.jp/arc2026/",
+        "https://convention.jtbcom.co.jp/65moumaku/join/index.html"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "第6回ARC、2026年12月5～6日の専用イベントページ。"
+      ]
+    },
+    {
+      "id": "oph-010",
+      "title": "APACRS 2026 (Asia-Pacific Association of Cataract & Refractive Surgeons)",
+      "year": 2026,
+      "region": "international",
+      "currentOfficialUrl": "https://example.com/apacrs2026-singapore",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "placeholder",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://apacrs2026.org/",
+        "verification": "identity-conflict",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": false
+        },
+        "note": "公式は第38回APACRS、2026年6月4～6日、Pattaya。現在データの12月17日・Singaporeと不一致。2026年専用URLは確認したが、当該登録レコードにURLだけ差し替え不可。"
+      },
+      "evidenceUrls": [
+        "https://apacrs2026.org/",
+        "https://apacrs.org/",
+        "https://apacrs2026.org/guidelines-for-abstract-submission-2026/"
+      ],
+      "notes": [
+        "example.comの仮URL。イベント公式URLにも学会本体URLにも採用しない。",
+        "公式は第38回APACRS、2026年6月4～6日、Pattaya。現在データの12月17日・Singaporeと不一致。2026年専用URLは確認したが、当該登録レコードにURLだけ差し替え不可。"
+      ]
+    },
+    {
+      "id": "conf-jp-presbyopia-2027",
+      "title": "第4回 日本老視学会学術総会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://www.rousi.jp/jps4"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "第4回は2026年開催。登録年2027と不一致。2026年ページを付けない。第5回の年・日程との照合が必要。"
+      ]
+    },
+    {
+      "id": "conf-jp-surgery-2027",
+      "title": "第50回 日本眼科手術学会学術総会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": "https://50.jsos.jp/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "confirmed_event",
+      "currentChecks": {
+        "eventPage": true,
+        "yearMatches": true,
+        "notSocietyTop": true
+      },
+      "proposedEventOfficialUrl": "https://50.jsos.jp/",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://50.jsos.jp/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第50回、2027年1月29～31日。"
+      },
+      "evidenceUrls": [
+        "https://50.jsos.jp/"
+      ],
+      "notes": [
+        "当該開催回の専用公式ページと開催年の一致を確認。",
+        "第50回、2027年1月29～31日。"
+      ]
+    },
+    {
+      "id": "conf-jp-cornea-2027",
+      "title": "角膜カンファランス2027",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": "https://www.okinawa-congre.co.jp/cornea2027/",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://www.okinawa-congre.co.jp/cornea2027/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "角膜カンファランス2027の専用ページ。学会本体のConference案内でもリンクを確認。"
+      },
+      "evidenceUrls": [
+        "https://www.okinawa-congre.co.jp/cornea2027/",
+        "https://cornea.gr.jp/conference/info/"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "角膜カンファランス2027の専用ページ。学会本体のConference案内でもリンクを確認。"
+      ]
+    },
+    {
+      "id": "conf-jp-eyelid-2027",
+      "title": "第38回 日本眼瞼義眼床手術学会学術集会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-diabetic-2027",
+      "title": "第33回 日本糖尿病眼学会総会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-iscev-2027",
+      "title": "第75回 日本臨床視覚電気生理学会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://n-practice.co.jp/jscev/meeting/latest.html"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "公式は2027年第73回。登録名の第75回と不一致。公式案内のHPはhttps://www.congre.co.jp/73jscev/。名称レビュー前は採用保留。"
+      ]
+    },
+    {
+      "id": "conf-int-apao-2027",
+      "title": "APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress)",
+      "year": 2027,
+      "region": "international",
+      "currentOfficialUrl": "https://apaophth.org/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": "https://2027.apaophth.org/",
+      "societyUrlCandidate": "https://apaophth.org/",
+      "candidate": {
+        "url": "https://2027.apaophth.org/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第42回、2027年3月18～21日。年度別Congress公式ページとFAQで確認。"
+      },
+      "evidenceUrls": [
+        "https://apaophth.org/congress/",
+        "https://2027.apaophth.org/",
+        "https://2027.apaophth.org/apao-2027-faqs/"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "第42回、2027年3月18～21日。年度別Congress公式ページとFAQで確認。"
+      ]
+    },
+    {
+      "id": "conf-int-fujiretina-2027",
+      "title": "FujiRetina 2027",
+      "year": 2027,
+      "region": "international",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": "https://convention.jtbcom.co.jp/fujiretina/index.html",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://convention.jtbcom.co.jp/fujiretina/index.html",
+        "verification": "confirmed",
+        "dynamic": true,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "現在は第6回、2027年3月26～28日の公式イベントサイト。2028年に同じページを流用しない。"
+      },
+      "evidenceUrls": [
+        "https://convention.jtbcom.co.jp/fujiretina/index.html",
+        "https://convention.jtbcom.co.jp/fujiretina/information/index.html"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "現在は第6回、2027年3月26～28日の公式イベントサイト。2028年に同じページを流用しない。"
+      ]
+    },
+    {
+      "id": "conf-int-ascrs-2027",
+      "title": "ASCRS 2027 Annual Meeting",
+      "year": 2027,
+      "region": "international",
+      "currentOfficialUrl": "https://ascrs.org/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://annualmeeting.ascrs.org/",
+        "verification": "unverified",
+        "dynamic": true,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": null,
+          "notSocietyTop": true,
+          "editionMatches": null
+        },
+        "note": "本体トップとAnnual Meetingホームの本文取得に失敗。公式演題登録ページでは2027年4月2～5日を確認したが、イベントホームの年度判定は保留。"
+      },
+      "evidenceUrls": [
+        "https://ascrs.confex.com/ascrs/27am/cfp.cgi",
+        "https://annualmeeting.ascrs.org/"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "本体トップとAnnual Meetingホームの本文取得に失敗。公式演題登録ページでは2027年4月2～5日を確認したが、イベントホームの年度判定は保留。"
+      ]
+    },
+    {
+      "id": "oph-011",
+      "title": "第131回 日本眼科学会総会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": "https://convention.jtbcom.co.jp/131jos/index.html",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "confirmed_event",
+      "currentChecks": {
+        "eventPage": true,
+        "yearMatches": true,
+        "notSocietyTop": true
+      },
+      "proposedEventOfficialUrl": "https://convention.jtbcom.co.jp/131jos/index.html",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://convention.jtbcom.co.jp/131jos/index.html",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第131回、2027年4月15～18日。"
+      },
+      "evidenceUrls": [
+        "https://convention.jtbcom.co.jp/131jos/index.html"
+      ],
+      "notes": [
+        "当該開催回の専用公式ページと開催年の一致を確認。",
+        "第131回、2027年4月15～18日。"
+      ]
+    },
+    {
+      "id": "oph-014",
+      "title": "第38回 日本緑内障学会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://site2.convention.co.jp/jgs2027/",
+        "verification": "unverified",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": null
+        },
+        "note": "第38回2027年の公式企業ページは確認したがホーム取得は失敗。ホームと会期（国内学会単体／WGC合同）の扱いを再確認する。"
+      },
+      "evidenceUrls": [
+        "https://site2.convention.co.jp/jgs2027/",
+        "https://site2.convention.co.jp/jgs2027/sponser/"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "第38回2027年の公式企業ページは確認したがホーム取得は失敗。ホームと会期（国内学会単体／WGC合同）の扱いを再確認する。"
+      ]
+    },
+    {
+      "id": "conf-int-wgc-2027",
+      "title": "World Glaucoma Congress 2027 (WGC 2027)",
+      "year": 2027,
+      "region": "international",
+      "currentOfficialUrl": "https://worldglaucomacongress.org/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "current_event_dynamic",
+      "currentChecks": {
+        "eventPage": true,
+        "yearMatches": true,
+        "notSocietyTop": true
+      },
+      "proposedEventOfficialUrl": "https://worldglaucomacongress.org/",
+      "societyUrlCandidate": "https://wga.one/",
+      "candidate": {
+        "url": "https://worldglaucomacongress.org/",
+        "verification": "confirmed",
+        "dynamic": true,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第12回WGC、2027年4月20～23日。学会本体はwga.one。イベントルート直接取得は失敗したが、主催者案内とイベント内Program、公式ルートの検索結果で当年・公式性を照合。"
+      },
+      "evidenceUrls": [
+        "https://wga.one/past-and-future-congresses/",
+        "https://worldglaucomacongress.org/program/",
+        "https://worldglaucomacongress.org/",
+        "https://wga.one/"
+      ],
+      "notes": [
+        "確認日現在は当該開催年。年度更新型URLのため別年に変われば採用停止・管理レビュー。",
+        "第12回WGC、2027年4月20～23日。学会本体はwga.one。イベントルート直接取得は失敗したが、主催者案内とイベント内Program、公式ルートの検索結果で当年・公式性を照合。"
+      ]
+    },
+    {
+      "id": "oph-012",
+      "title": "ARVO 2027 Annual Meeting",
+      "year": 2027,
+      "region": "international",
+      "currentOfficialUrl": "https://www.arvo.org/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": "https://www.arvo.org/annual-meeting",
+      "societyUrlCandidate": "https://www.arvo.org/",
+      "candidate": {
+        "url": "https://www.arvo.org/annual-meeting",
+        "verification": "confirmed",
+        "dynamic": true,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "本体ARVO.orgとは別のAnnual Meetingページ。現在は2027年5月2～6日。2028年には流用不可。"
+      },
+      "evidenceUrls": [
+        "https://www.arvo.org/",
+        "https://www.arvo.org/annual-meeting",
+        "https://www.arvo.org/annual-meeting/about"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "本体ARVO.orgとは別のAnnual Meetingページ。現在は2027年5月2～6日。2028年には流用不可。"
+      ]
+    },
+    {
+      "id": "conf-jp-lowvision-2027",
+      "title": "第28回 日本ロービジョン学会学術総会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-int-apacrs-2027",
+      "title": "APACRS 2027 Annual Meeting",
+      "year": 2027,
+      "region": "international",
+      "currentOfficialUrl": "https://apacrs.org/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": "https://apacrs2027.org/",
+      "societyUrlCandidate": "https://apacrs.org/",
+      "candidate": {
+        "url": "https://apacrs2027.org/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第39回、2027年6月3～5日。本体のConference Websiteからapacrs2027.orgを確認。"
+      },
+      "evidenceUrls": [
+        "https://apacrs.org/",
+        "https://apacrs2027.org/"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "第39回、2027年6月3～5日。本体のConference Websiteからapacrs2027.orgを確認。"
+      ]
+    },
+    {
+      "id": "conf-jp-perimetry-2027",
+      "title": "第39回 日本視野画像学会学術集会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "公式は2027年第16回。登録名の第39回と不一致。公式案内のHPはhttps://www.ganki.jp/jips2027/。名称レビュー前は採用保留。"
+      ]
+    },
+    {
+      "id": "conf-jp-jsoprs-2027",
+      "title": "第14回 日本眼形成再建外科学会学術集会 (JSOPRS 2027)",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": "http://www.jsoprs.jp/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": "https://orbit-cs.net/jsoprs2027/",
+      "societyUrlCandidate": "https://www.jsoprs.jp/",
+      "candidate": {
+        "url": "https://orbit-cs.net/jsoprs2027/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第14回、2027年6月12～13日。専用イベントサイトと学会本体の開催予定を照合。"
+      },
+      "evidenceUrls": [
+        "https://www.jsoprs.jp/",
+        "https://orbit-cs.net/jsoprs2027/",
+        "https://orbit-cs.net/jsoprs2027/greeting.html"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "第14回、2027年6月12～13日。専用イベントサイトと学会本体の開催予定を照合。"
+      ]
+    },
+    {
+      "id": "conf-jp-pediatric-2027",
+      "title": "第83回 日本弱視斜視学会総会・第52回 日本小児眼科学会総会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": "https://jasa-japo2027.jp/",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://jasa-japo2027.jp/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第83回弱視斜視／第52回小児眼科、2027年6月18～19日。学会本体の総会案内でもイベントURLを確認。"
+      },
+      "evidenceUrls": [
+        "https://jasa-japo2027.jp/",
+        "https://www.jasa-web.jp/event/programs"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "第83回弱視斜視／第52回小児眼科、2027年6月18～19日。学会本体の総会案内でもイベントURLを確認。"
+      ]
+    },
+    {
+      "id": "conf-int-soe-2027",
+      "title": "SOE 2027 (European Society of Ophthalmology Congress)",
+      "year": 2027,
+      "region": "international",
+      "currentOfficialUrl": "https://soe2027.soevision.org/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "confirmed_event",
+      "currentChecks": {
+        "eventPage": true,
+        "yearMatches": true,
+        "notSocietyTop": true
+      },
+      "proposedEventOfficialUrl": "https://soe2027.soevision.org/",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://soe2027.soevision.org/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "SOE Congress 2027、2027年6月18～20日。現行ドメインで当年イベントページを確認。"
+      },
+      "evidenceUrls": [
+        "https://soe2027.soevision.org/"
+      ],
+      "notes": [
+        "当該開催回の専用公式ページと開催年の一致を確認。",
+        "SOE Congress 2027、2027年6月18～20日。現行ドメインで当年イベントページを確認。"
+      ]
+    },
+    {
+      "id": "oph-013",
+      "title": "第42回 JSCRS学術総会 (日本白内障屈折矯正手術学会)",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": "https://www.kwcs.jp/42jscrs/",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://www.kwcs.jp/42jscrs/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第42回JSCRS、2027年6月25～27日。専用ページと開催概要を確認。"
+      },
+      "evidenceUrls": [
+        "https://www.kwcs.jp/42jscrs/",
+        "https://www.kwcs.jp/42jscrs/outl.html"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "第42回JSCRS、2027年6月25～27日。専用ページと開催概要を確認。"
+      ]
+    },
+    {
+      "id": "conf-jp-myopia-2027",
+      "title": "第8回 日本近視学会総会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://myopia2026.umin.ne.jp/"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "第8回は2026年。2027年の第8回という登録に2026年ページを付けない。"
+      ]
+    },
+    {
+      "id": "conf-int-iois-2027",
+      "title": "IOIS 2027 (International Ocular Inflammation Society Congress)",
+      "year": 2027,
+      "region": "international",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": "https://www.iois.info/page.php?edi_id=1697",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://www.iois.info/page.php?edi_id=1697",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "Congressメニューの2027が遷移する公式ページ。2027年7月7～10日、19th IOISを確認。"
+      },
+      "evidenceUrls": [
+        "https://www.iois.info/page.php?edi_id=1697",
+        "https://www.iois.info/page.php?edi_id=1698"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "Congressメニューの2027が遷移する公式ページ。2027年7月7～10日、19th IOISを確認。"
+      ]
+    },
+    {
+      "id": "conf-jp-inflammation-2027",
+      "title": "第60回 日本眼炎症学会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": "https://www.congre.co.jp/oiw2027/",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://www.congre.co.jp/oiw2027/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第60回日本眼炎症学会を含む眼炎症Week2027の公式サイト。開催概要で当該学会を確認。"
+      },
+      "evidenceUrls": [
+        "https://www.congre.co.jp/oiw2027/",
+        "https://www.congre.co.jp/oiw2027/outline.html"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "第60回日本眼炎症学会を含む眼炎症Week2027の公式サイト。開催概要で当該学会を確認。"
+      ]
+    },
+    {
+      "id": "conf-jp-circulation-2027",
+      "title": "第43回 日本眼循環学会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-cl-2027",
+      "title": "第69回 日本コンタクトレンズ学会総会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": "https://www.congre.co.jp/jcls2027/",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://www.congre.co.jp/jcls2027/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第69回、2027年7月24～25日の専用イベントページ。"
+      },
+      "evidenceUrls": [
+        "https://www.congre.co.jp/jcls2027/",
+        "https://www.clgakkai.jp/index.html"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "第69回、2027年7月24～25日の専用イベントページ。"
+      ]
+    },
+    {
+      "id": "conf-jp-optics-2027",
+      "title": "第63回 日本眼光学学会総会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": "https://www.jsoo-ws.com/63jsoo",
+      "societyUrlCandidate": null,
+      "candidate": {
+        "url": "https://www.jsoo-ws.com/63jsoo",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第63回、2027年8月28～29日。学会本体の総会案内が63jsooへのURLを明示。"
+      },
+      "evidenceUrls": [
+        "https://www.jsoo-ws.com/63jsoo",
+        "https://www.jsoo-ws.com/events"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "第63回、2027年8月28～29日。学会本体の総会案内が63jsooへのURLを明示。"
+      ]
+    },
+    {
+      "id": "conf-jp-cataract-2027",
+      "title": "第66回 日本白内障学会総会・第53回 水晶体研究会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-pharmacology-2027",
+      "title": "第47回 日本眼薬理学会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-int-euretina-2027",
+      "title": "EURETINA 2027 (27th EURETINA Congress)",
+      "year": 2027,
+      "region": "international",
+      "currentOfficialUrl": "https://euretina.org/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": "https://euretina.org/copenhagen-27/",
+      "societyUrlCandidate": "https://euretina.org/",
+      "candidate": {
+        "url": "https://euretina.org/copenhagen-27/",
+        "verification": "confirmed",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "第27回、2027年9月16～19日。Copenhagen 2027の専用ページ。本体Eventsから明示リンクを確認。古いTermsの記載年を開催年と混同しない。"
+      },
+      "evidenceUrls": [
+        "https://euretina.org/",
+        "https://euretina.org/copenhagen-27/"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "第27回、2027年9月16～19日。Copenhagen 2027の専用ページ。本体Eventsから明示リンクを確認。古いTermsの記載年を開催年と混同しない。"
+      ]
+    },
+    {
+      "id": "conf-jp-oncology-2027",
+      "title": "第14回 日本眼腫瘍学会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://www.jsoo.jp/society/50.html"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "学会本体では2027年第43回、運営側資料では第44回と表記にも不一致がある。登録名の第14回はいずれとも一致せず、学会名・開催回のレビューが必要。"
+      ]
+    },
+    {
+      "id": "conf-int-escrs-2027",
+      "title": "ESCRS 2027 (45th Congress of the ESCRS)",
+      "year": 2027,
+      "region": "international",
+      "currentOfficialUrl": "https://www.escrs.org/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": "https://www.escrs.org/",
+      "candidate": {
+        "url": "https://www.escrs.org/escrs-annual-events/45th-congress-of-the-escrs",
+        "verification": "official-event-announcement",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "45th Congressの2027年公式開催案内ページは確認。専用Congressサイトは未確認なので、開催案内ページを候補として保留。"
+      },
+      "evidenceUrls": [
+        "https://www.escrs.org/",
+        "https://www.escrs.org/escrs-annual-events/45th-congress-of-the-escrs"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "45th Congressの2027年公式開催案内ページは確認。専用Congressサイトは未確認なので、開催案内ページを候補として保留。"
+      ]
+    },
+    {
+      "id": "conf-jp-ringan-2027",
+      "title": "第81回 日本臨床眼科学会 (臨眼 2027)",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-int-aao-2027",
+      "title": "AAO 2027 Annual Meeting",
+      "year": 2027,
+      "region": "international",
+      "currentOfficialUrl": "https://www.aao.org/annual-meeting",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "wrong_year",
+      "currentChecks": {
+        "eventPage": true,
+        "yearMatches": false,
+        "notSocietyTop": true
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://aao.org/annual-meeting"
+      ],
+      "notes": [
+        "共通URLは現在AAO 2026のページ。2027年・2028年へ流用しない。対象年の専用ページは未確認。"
+      ]
+    },
+    {
+      "id": "conf-jp-neuro-2027",
+      "title": "第65回 日本神経眼科学会総会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-int-asnos-2027",
+      "title": "ASNOS 2027 (Asian Neuro-ophthalmology Society Congress)",
+      "year": 2027,
+      "region": "international",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-ai-2027",
+      "title": "第3回 日本眼科AI学会総会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-jrvs-2027",
+      "title": "第66回 日本網膜硝子体学会総会",
+      "year": 2027,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://www.jrvs.jp/meeting.html"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "学会本体で2027年第66回開催を確認。イベント専用URLは未確認。65moumakuの前年ページは流用しない。"
+      ]
+    },
+    {
+      "id": "conf-jp-presbyopia-2028",
+      "title": "第5回 日本老視学会学術総会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://www.rousi.jp/jps5-overview"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "第5回概要ページが公開済みだが本文の開催年を取得できなかった。2028年第5回という登録と再照合し、推測しない。"
+      ]
+    },
+    {
+      "id": "conf-jp-surgery-2028",
+      "title": "第51回 日本眼科手術学会学術総会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-cornea-2028",
+      "title": "角膜カンファランス2028",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-eyelid-2028",
+      "title": "第39回 日本眼瞼義眼床手術学会学術集会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-iscev-2028",
+      "title": "第76回 日本臨床視覚電気生理学会（韓日合同）",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://n-practice.co.jp/jscev/meeting/latest.html"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "公式は2028年第74回（韓日合同）。登録名の第76回と不一致。"
+      ]
+    },
+    {
+      "id": "conf-jp-diabetic-2028",
+      "title": "第34回 日本糖尿病眼学会総会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-int-ips-2028",
+      "title": "IPS 2028 (26th International Perimetric Society Congress)",
+      "year": 2028,
+      "region": "international",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-perimetry-2028",
+      "title": "第40回 日本視野画像学会学術集会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "公式は2028年第17回。登録名の第40回と不一致。専用URL未確認。"
+      ]
+    },
+    {
+      "id": "conf-int-apao-2028",
+      "title": "APAO 2028 (43rd Asia-Pacific Academy of Ophthalmology Congress)",
+      "year": 2028,
+      "region": "international",
+      "currentOfficialUrl": "https://apaophth.org/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": "https://apaophth.org/",
+      "candidate": {
+        "url": "https://2028.apaophth.org/",
+        "verification": "incomplete",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": null
+        },
+        "note": "2028年度別サブドメインは公式名を持つが初期投稿のみ。直接取得も失敗。開催案内の内容・開催回確認ができるまで採用保留。"
+      },
+      "evidenceUrls": [
+        "https://apaophth.org/congress/",
+        "https://2028.apaophth.org/"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "2028年度別サブドメインは公式名を持つが初期投稿のみ。直接取得も失敗。開催案内の内容・開催回確認ができるまで採用保留。"
+      ]
+    },
+    {
+      "id": "conf-int-fujiretina-2028",
+      "title": "FujiRetina 2028",
+      "year": 2028,
+      "region": "international",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://www.jrvs.jp/en/fuji.html"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "学会本体で2028年第7回開催予定を確認。共通イベントURLは現在2027年で流用しない。"
+      ]
+    },
+    {
+      "id": "conf-jp-jos-2028",
+      "title": "第132回 日本眼科学会総会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-int-ascrs-2028",
+      "title": "ASCRS 2028 Annual Meeting",
+      "year": 2028,
+      "region": "international",
+      "currentOfficialUrl": "https://ascrs.org/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://ascrs.confex.com/ascrs/27am/cfp.cgi"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "本体トップ取得失敗。2027年の演題登録ページやAnnual Meeting共通URLを2028年へ流用しない。"
+      ]
+    },
+    {
+      "id": "conf-int-arvo-2028",
+      "title": "ARVO 2028 Annual Meeting",
+      "year": 2028,
+      "region": "international",
+      "currentOfficialUrl": "https://www.arvo.org/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": "https://www.arvo.org/",
+      "candidate": null,
+      "evidenceUrls": [
+        "https://www.arvo.org/annual-meeting"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "本体トップをタイトルURLに使用しない。Annual Meetingページも現在2027年で、2028年専用ページは未確認。"
+      ]
+    },
+    {
+      "id": "conf-jp-myopia-2028",
+      "title": "第9回 日本近視学会総会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-lowvision-2028",
+      "title": "第29回 日本ロービジョン学会学術総会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-pediatric-2028",
+      "title": "第84回 日本弱視斜視学会総会・第53回 日本小児眼科学会総会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-jsoprs-2028",
+      "title": "第15回 日本眼形成再建外科学会学術集会 (JSOPRS 2028)",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": "http://www.jsoprs.jp/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": "https://www.jsoprs.jp/",
+      "candidate": null,
+      "evidenceUrls": [
+        "https://www.jsoprs.jp/"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "学会本体トップはイベント公式URLに使用しない。2028年第15回の専用URLは未確認。"
+      ]
+    },
+    {
+      "id": "conf-jp-optics-2028",
+      "title": "第64回 日本眼光学学会総会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-jscrs-2028",
+      "title": "第43回 JSCRS学術総会 (日本白内障屈折矯正手術学会)",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-inflammation-2028",
+      "title": "第65回 日本眼感染症学会・第61回 日本眼炎症学会・第60回 日本眼科アレルギー学会・第47回 日本涙道・涙液学会総会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-cl-2028",
+      "title": "第70回 日本コンタクトレンズ学会総会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-cataract-2028",
+      "title": "第67回 日本白内障学会総会・第54回 水晶体研究会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-oncology-2028",
+      "title": "第15回 日本眼腫瘍学会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-ringan-2028",
+      "title": "第82回 日本臨床眼科学会 (臨眼 2028)",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-int-escrs-2028",
+      "title": "ESCRS 2028 (46th Congress of the ESCRS)",
+      "year": 2028,
+      "region": "international",
+      "currentOfficialUrl": "https://www.escrs.org/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": "https://www.escrs.org/",
+      "candidate": {
+        "url": "https://www.escrs.org/escrs-annual-events/46th-congress-of-the-escrs",
+        "verification": "official-event-announcement",
+        "dynamic": false,
+        "checks": {
+          "eventPage": true,
+          "yearMatches": true,
+          "notSocietyTop": true,
+          "editionMatches": true
+        },
+        "note": "46th Congressの2028年公式開催案内ページは確認。専用Congressサイトは未確認なので、開催案内ページを候補として保留。"
+      },
+      "evidenceUrls": [
+        "https://www.escrs.org/",
+        "https://www.escrs.org/escrs-annual-events/46th-congress-of-the-escrs"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "46th Congressの2028年公式開催案内ページは確認。専用Congressサイトは未確認なので、開催案内ページを候補として保留。"
+      ]
+    },
+    {
+      "id": "conf-int-aao-2028",
+      "title": "AAO 2028 Annual Meeting",
+      "year": 2028,
+      "region": "international",
+      "currentOfficialUrl": "https://www.aao.org/annual-meeting",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "wrong_year",
+      "currentChecks": {
+        "eventPage": true,
+        "yearMatches": false,
+        "notSocietyTop": true
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://aao.org/annual-meeting"
+      ],
+      "notes": [
+        "共通URLは現在AAO 2026のページ。2027年・2028年へ流用しない。対象年の専用ページは未確認。"
+      ]
+    },
+    {
+      "id": "conf-int-apvrs-2028",
+      "title": "APVRS 2028 (18th Asia-Pacific Vitreo-retina Society Congress)",
+      "year": 2028,
+      "region": "international",
+      "currentOfficialUrl": "https://www.apvrs.org/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "society_top",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": false
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": "https://apvrs.org/",
+      "candidate": null,
+      "evidenceUrls": [
+        "https://apvrs.org/congresses/"
+      ],
+      "notes": [
+        "学会本体トップをeventOfficialUrlへ機械的にコピーしない。確認できた本体URLはsocietyUrl候補として分離。",
+        "www付き現行URLは取得失敗。学会本体のCongressesで2028年は第21回（11月16～19日、Bangkok）と確認。データの第18回と不一致。第18回は2025年で、2028年専用URLは未確認。"
+      ]
+    },
+    {
+      "id": "conf-int-woc-2028",
+      "title": "WOC 2028 (World Ophthalmology Congress)",
+      "year": 2028,
+      "region": "international",
+      "currentOfficialUrl": "https://icoph.org/woc/",
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "general_congress_portal",
+      "currentChecks": {
+        "eventPage": false,
+        "yearMatches": null,
+        "notSocietyTop": true
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://icoph.org/world-ophthalmology-congress/"
+      ],
+      "notes": [
+        "旧/woc/は取得失敗。現行ICOのCongress総合案内には複数年度が含まれる。WOC2028見出しだけでは当該開催回専用サイトを確定できない。"
+      ]
+    },
+    {
+      "id": "conf-jp-pharmacology-2028",
+      "title": "第48回 日本眼薬理学会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-neuro-2028",
+      "title": "第66回 日本神経眼科学会総会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。"
+      ]
+    },
+    {
+      "id": "conf-jp-jrvs-2028",
+      "title": "第67回 日本網膜硝子体学会総会・第44回 日本眼循環学会",
+      "year": 2028,
+      "region": "domestic",
+      "currentOfficialUrl": null,
+      "currentEventOfficialUrl": null,
+      "currentSocietyUrl": null,
+      "currentKind": "missing",
+      "currentChecks": {
+        "eventPage": null,
+        "yearMatches": null,
+        "notSocietyTop": null
+      },
+      "proposedEventOfficialUrl": null,
+      "societyUrlCandidate": null,
+      "candidate": null,
+      "evidenceUrls": [
+        "https://www.jrvs.jp/meeting.html"
+      ],
+      "notes": [
+        "旧officialUrlが空欄。未公開とは断定せず、確認できるまでタイトルは通常テキスト。",
+        "学会本体で2028年第67回・第44回眼循環との合同開催を確認。専用URLは未確認。"
+      ]
+    }
+  ]
+}

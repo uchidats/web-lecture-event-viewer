@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-04T14:00:08.901Z",
+  "updatedAt": "2026-10-08T02:57:26.243Z",
   "items": [
     {
       "field": "abstractSubmission.deadline",
@@ -15,8 +15,8 @@
       "id": "cda6feeb8c2030bb24e0d09a106546582486dd74e3337d873f1b25c9e3c68286",
       "status": "needs-review",
       "firstSeen": "2026-10-04T13:00:00Z",
-      "lastSeen": "2026-10-04T14:00:08.901Z",
-      "occurrences": 2
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 6
     },
     {
       "field": "abstractSubmission.deadline",
@@ -31,8 +31,8 @@
       "id": "b0baad68505550b3549c9f2575054ae8b2c3229d032832988bdb851aa7cff956",
       "status": "needs-review",
       "firstSeen": "2026-10-04T13:00:00Z",
-      "lastSeen": "2026-10-04T14:00:08.901Z",
-      "occurrences": 2
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 6
     },
     {
       "field": "abstractSubmission.startDate",
@@ -47,8 +47,8 @@
       "id": "481a93466c0a526ae10fba39e1791b9ae65913a538601cc232d30f22e2f0b047",
       "status": "needs-review",
       "firstSeen": "2026-10-04T13:00:00Z",
-      "lastSeen": "2026-10-04T14:00:08.901Z",
-      "occurrences": 2
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 6
     },
     {
       "field": "abstractSubmission.deadline",
@@ -63,8 +63,8 @@
       "id": "60c4fe6d3f1f0015f8500b21895ee0e175e3de9a7b123cb75dad9d8484a09bae",
       "status": "needs-review",
       "firstSeen": "2026-10-04T13:00:00Z",
-      "lastSeen": "2026-10-04T14:00:08.901Z",
-      "occurrences": 2
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 6
     },
     {
       "field": "abstractSubmission.deadline",
@@ -79,8 +79,8 @@
       "id": "cbd52e07abe145b40cdfb797db62482affbd982cddfae8801959847b84d1daab",
       "status": "needs-review",
       "firstSeen": "2026-10-04T13:00:00Z",
-      "lastSeen": "2026-10-04T14:00:08.901Z",
-      "occurrences": 2
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 6
     },
     {
       "field": "title",
@@ -95,8 +95,8 @@
       "id": "f23f7c245963465139ae89462c2018be7f93818872c51c1dbcb740ebbe26fb86",
       "status": "needs-review",
       "firstSeen": "2026-10-04T13:00:00Z",
-      "lastSeen": "2026-10-04T14:00:08.901Z",
-      "occurrences": 2
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 6
     },
     {
       "field": "abstractSubmission.startDate",
@@ -111,8 +111,8 @@
       "id": "665267f9fd555e549e4fe7a7ebe4b732fa872b11879213f911a42d65b2cef6d3",
       "status": "needs-review",
       "firstSeen": "2026-10-04T13:00:00Z",
-      "lastSeen": "2026-10-04T14:00:08.901Z",
-      "occurrences": 2
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 6
     },
     {
       "field": "officialUrl",
@@ -320,6 +320,724 @@
       "status": "needs-review",
       "firstSeen": "2026-10-04T13:00:00Z",
       "lastSeen": "2026-10-04T14:00:08.901Z",
+      "occurrences": 2
+    },
+    {
+      "field": "registration",
+      "value": {
+        "type": "domestic",
+        "periods": [
+          {
+            "label": "事前参加登録",
+            "start": "2026-05-19T12:00",
+            "deadline": "2026-10-16"
+          },
+          {
+            "label": "直前・当日登録",
+            "start": "2026-11-12T12:00",
+            "deadline": "2026-12-06"
+          },
+          {
+            "label": "直前・当日登録",
+            "start": "2026-10-21T12:00",
+            "deadline": "2026-10-27"
+          },
+          {
+            "label": "事前参加登録",
+            "deadline": "2026-10-16"
+          },
+          {
+            "label": "事前参加登録",
+            "deadline": "2026-05-19T12:00"
+          },
+          {
+            "label": "直前・当日登録",
+            "deadline": "2026-12-07"
+          }
+        ]
+      },
+      "confidence": 0.96,
+      "method": "labeled-html",
+      "url": "https://convention.jtbcom.co.jp/65moumaku/join/index.html",
+      "evidence": "事前参加登録 :2026年5月19日(火)正午~10月16日(金)\n直前・当日登録:2026年11月12日(木)正午~12月6日(日)\n※参加登録費のご入金をもって登録完了となります。上記期間内にお支払いください。\n参加登録方法、支払方法\n本会の参加登録はオンライン登録のみとさせていただきます。\n本ページ下部の「参加登録はこちら」ボタンを押して参加登録システムよりお申込ください。\n(当日申込もオンライン登録のみ受け付けます。現地会場での登録は行いません。事前にオンライン登録をお済ませの上、会場へお越しください。)\nお支払い方法は、クレジットカード決済のみとなります。\n(クレジットカードでの決済ができない方は、参加登録デスクまでご連絡ください。)\n※ご入金後は如何なる理由においてもキャンセルとそれに伴う返金ができませんので、二重登録等にご注意ください。\nご自身の都合により学会参加ができなくなった場合も、返金はいたしかねます。\n携帯電話用のメールアドレスについて\n参加登録での利用はご遠慮ください。\n迷惑メール対策設定により、システムからの通知メールが受信できないという不具合が生じます。\nフ",
+      "oldValue": {
+        "type": "domestic",
+        "periods": [
+          {
+            "label": "事前参加登録",
+            "start": "2026-05-19T12:00",
+            "deadline": "2026-10-16"
+          },
+          {
+            "label": "直前・当日登録",
+            "start": "2026-11-12T12:00",
+            "deadline": "2026-12-06"
+          }
+        ]
+      },
+      "reason": "multiple-candidates",
+      "eventId": "conf-jp-jrvs-2026",
+      "id": "7d8825837539ccb72a51ef3ab4d839e33bb79e0c579311340cb2a3dd06fb57fa",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-perimetry-2026",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html",
+      "evidence": "公式は2026年第15回。カードの第38回と不一致。開催年・会場は対応するが、名称レビューが先。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本視野画像学会学術集会 2026 第38回 公式",
+        "日本視野画像学会学術集会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "421a807b24230861d7ec3e57bc015f79b98d9db623040ff40229226062b44bea",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "oph-003",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.jasa-web.jp/event/programs",
+      "evidence": "2026年は第82回弱視斜視（6月5–6日）と第51回小児眼科の別開催という前回記録。今回も第35回合同・10月30日に対応する公式ページを確認できない。レコード自体をレビュー。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本小児眼科学会・日本弱視斜視学会 合同学会 2026 第35回 公式",
+        "日本小児眼科学会・日本弱視斜視学会 合同学会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "6b6af0938c1a3e625421cbabb3ff40d455447c10477f00145ae6649b29fa0cea",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "oph-010",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.apacrs.org/",
+      "evidence": "公式は2026年6月4–6日、Pattaya、第38回。カードの12月17日・Singaporeと不一致。公式URLは存在するがURL単独の追加を保留。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "APACRS 2026  公式",
+        "APACRS 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "49159e6677d6bc93568b21949ce88d4efa3f8b956c3e427a640ff3eaeb9012b9",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-presbyopia-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.rousi.jp/",
+      "evidence": "第4回は2026年。カード日程・会場に対応する2027年は第5回（jps5）。開催回修正前は保留。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本老視学会学術総会 2027 第4回 公式",
+        "日本老視学会学術総会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "8546470008817472a053f7da889c46d5dad9012a0f7b9e5d5346b1adf2521ad6",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-iscev-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://n-practice.co.jp/jscev/meeting/latest.html",
+      "evidence": "公式は2027年第73回。カードの第75回と不一致。学会本体が73jscevへ明示リンク。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本臨床視覚電気生理学会 2027 第75回 公式",
+        "日本臨床視覚電気生理学会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "fcb5ffca8d0d09c70b24e7bfac154682697854372921f9ad82970d120ea67028",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-int-ascrs-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+      "evidence": "Annual Meetingホームは403で年度を検証できない。2027年演題登録ページは確認できるが、イベントホームと用途が異なるため保留。同略称の大腸肛門外科学会を除外。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "ASCRS  Annual Meeting 2027  公式",
+        "ASCRS  Annual Meeting 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "aebbb1d4a252617c24d57567fdcc1c066105d76b95c26fcd5e26dde7a9e3b2b7",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-lowvision-2027",
+      "field": null,
+      "value": null,
+      "oldValue": null,
+      "candidateUrl": "https://www.ganki.jp/lowvision2027/",
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.ganki.jp/",
+      "evidence": "第28回日本ロービジョン学会学術総会   新着情報",
+      "reason": "multiple-candidates",
+      "candidateReason": "event-url-edition-unverified",
+      "checks": {
+        "nameMatches": true,
+        "yearMatches": false,
+        "editionMatches": true,
+        "years": [],
+        "editions": [
+          28
+        ]
+      },
+      "searchQueries": [
+        "日本ロービジョン学会学術総会 2027 第28回 公式",
+        "日本ロービジョン学会学術総会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "96c1f5b6ac6de19482d7ed5420a3714ef74b3d3fae71c9e97cbca0e0b5550ca7",
+      "status": "resolved",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-07T23:07:24.493Z",
+      "occurrences": 3,
+      "resolution": "一覧の隣接行の別学会を混入した初回探索結果。行・名称で絞る処理へ修正済み。lowvision2027は単独の開催年未確認項目でレビューを継続。URL未反映。"
+    },
+    {
+      "eventId": "conf-jp-perimetry-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html",
+      "evidence": "公式は2027年第16回。カードの第39回と不一致。jips2027は対象年・会場に対応するが開催回修正前は保留。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本視野画像学会学術集会 2027 第39回 公式",
+        "日本視野画像学会学術集会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "c7e38f625a3477960744d823c827f8f6da1a395986dfb962e2c1352a924b698d",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-myopia-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.ganki.jp/",
+      "evidence": "公式の2027年は第9回。カードの第8回は2026年の開催回。myopia2027は開催回修正前は保留。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本近視学会総会 2027 第8回 公式",
+        "日本近視学会総会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "2319ff5bb5910342e15201bb5b29a4551d57042cfa78e935c031a045fcc86f84",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-cataract-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "url": "https://www.jscr.net/member/index.html",
+      "confidence": 0,
+      "reason": "discovery-fetch-failed",
+      "error": "fetch failed",
+      "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。",
+      "id": "e41c4ca5457ad9aea0dcdc22ec270fd1e617ad62cbcf023505bcbb35e515963e",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-oncology-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.jsoo.jp/society",
+      "evidence": "公式の2027年は第44回、富山国際会議場。カードの第14回と不一致。公式一覧内の2026年第43回と混同しない。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本眼腫瘍学会 2027 第14回 公式",
+        "日本眼腫瘍学会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "4fd94715679a41207d7986a3857b6f4fba5ef206b7171c97f545cc5507d960cf",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-ai-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "evidence": "第3回は2022年、2026年は第7回。カードの2027年第3回とは整合しない。現在の総会ページは2026年を案内するため採用しない。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本眼科AI学会総会 2027 第3回 公式",
+        "日本眼科AI学会総会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "92bdd32c6917a36095b96fc52f8d99b5dde3b759124b80f1f9f7d95472b2c18e",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-presbyopia-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.rousi.jp/",
+      "evidence": "第5回公式開催概要は2027年1月16–17日、御茶ノ水。カードの2028年・京都と不一致。jps5を付けない。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本老視学会学術総会 2028 第5回 公式",
+        "日本老視学会学術総会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "de99ecc7579228c6f5ad93b4eb9f5cd56ac32561d072832fe23436eb41955344",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-cornea-2028",
+      "field": null,
+      "value": null,
+      "oldValue": null,
+      "candidateUrl": "https://cornea.gr.jp/conference/next/",
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://cornea.gr.jp/conference/future/",
+      "evidence": "次回の学会 | 日本角膜学会 次回の学会 角膜カンファランス2027\n第51回日本角膜学会総会、第43回日本角膜移植学会 角膜カンファランス 会期:\n2027 年 2月 11日(木)~ 2月 13日(土)\n会場:\n沖縄コンベンションセンター\n会長:\n臼井 智彦 ( 国際医療福祉大学 医学部眼科学 代表教授 )",
+      "reason": "event-url-year-mismatch",
+      "candidateReason": "event-url-year-mismatch",
+      "checks": {
+        "nameMatches": true,
+        "yearMatches": false,
+        "editionMatches": false,
+        "years": [
+          2027
+        ],
+        "editions": [
+          51,
+          43
+        ]
+      },
+      "searchQueries": [
+        "角膜カンファランス 2028  公式",
+        "角膜カンファランス 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "a2f6a4ac5b1633c76ef659af08fb11dee486b3b7d1c1f7424e9d1c8a994afb42",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-07T23:07:24.493Z",
+      "occurrences": 1
+    },
+    {
+      "eventId": "conf-jp-iscev-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://n-practice.co.jp/jscev/meeting/latest.html",
+      "evidence": "本体は2028年第74回（韓日合同）。カードの第76回と不一致。対象回専用URL未確認。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本臨床視覚電気生理学会 2028 第76回 公式",
+        "日本臨床視覚電気生理学会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "e5d3ca9f78d22af36f31855127376d9c8e122bf639632a24ae0b284ba23633bd",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-int-ips-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html",
+      "evidence": "国内学会本体バナーにIPS2028第27回の表記。カードの26thと不一致。IPS本体のMeetingsは過去回中心で対象回専用URL未確認。Planetarium Society等の同略称別団体を除外。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "IPS 2028 第26回 公式",
+        "IPS 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "4b641d53b4f51a82d940c0c63760bd81378c183f2aaa11b709bf9079ba9748f6",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-perimetry-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html",
+      "evidence": "本体は2028年第17回。カードの第40回と不一致。専用URL未確認。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本視野画像学会学術集会 2028 第40回 公式",
+        "日本視野画像学会学術集会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "5e2801b9eed74879391140433ec1d19654ad056bc54cdd549e44d9e0e576ec62",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-int-apao-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+      "evidence": "年度サブドメインにAPAO2028・第43回の名称があるが初期投稿Hello worldのみ。開催情報が未整備で保留。取得502を不存在とは扱わない。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "APAO 2028 第43回 公式",
+        "APAO 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "44021c789c8d6ad766765372c4ac5fe6162e92d653e57d78b1dd505f920a6c61",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-int-arvo-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "url": "https://www.arvo.org/annual-meeting/about/future-meetings",
+      "confidence": 0,
+      "reason": "discovery-fetch-failed",
+      "error": "http-403",
+      "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。",
+      "id": "0c91006c9b5d2bfc3c9e2f9c4f87579c7c20f7db14f25fb20f5d792d92644fec",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-myopia-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.ganki.jp/",
+      "evidence": "運営一覧の2028年は第10回。カードの第9回と不一致。対象回専用URL未確認。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本近視学会総会 2028 第9回 公式",
+        "日本近視学会総会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "fcb425e01d494cfe4696f5122005c2c04ac969040733792c0f493d65947a5cf3",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-inflammation-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.ganki.jp/",
+      "evidence": "運営一覧の2028年は第61回眼炎症・第11回アレルギー・第16回涙道。カードのアレルギー第60回・涙道第47回と不一致。専用URL未確認。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本眼感染症学会・ 日本眼炎症学会・ 日本眼科アレルギー学会・ 日本涙道・涙液学会総会 2028 第65回 第61回 第60回 第47回 公式",
+        "日本眼感染症学会・ 日本眼炎症学会・ 日本眼科アレルギー学会・ 日本涙道・涙液学会総会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "732eb7c1eedd8a44a33a8eb301a76e8f814b09eef16aca48002818f784f82f84",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-cl-2028",
+      "field": null,
+      "value": null,
+      "oldValue": null,
+      "candidateUrl": "https://www.clgakkai.jp/next_congress/next_congress.html",
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.clgakkai.jp/",
+      "evidence": "日本コンタクトレンズ学会|次回学会・総会 第69回日本コンタクトレンズ学会総会 会 期\n2027年7月24日(土)~25日(日)\n会 場\n東京建物 ぴあ シアター&カンファレンス\n会 長\n土至田 宏(聖マリアンナ医科大学横浜市西部病院眼科 教授)\nテーマ",
+      "reason": "event-url-year-mismatch",
+      "candidateReason": "event-url-year-mismatch",
+      "checks": {
+        "nameMatches": true,
+        "yearMatches": false,
+        "editionMatches": false,
+        "years": [
+          2027
+        ],
+        "editions": [
+          69
+        ]
+      },
+      "searchQueries": [
+        "日本コンタクトレンズ学会総会 2028 第70回 公式",
+        "日本コンタクトレンズ学会総会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "26688a32e72b4e96186dc0b874a8abce4c9150898500909aa82e6b3a63b0857f",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-07T23:07:24.493Z",
+      "occurrences": 1
+    },
+    {
+      "eventId": "conf-jp-cataract-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "url": "https://www.jscr.net/member/index.html",
+      "confidence": 0,
+      "reason": "discovery-fetch-failed",
+      "error": "fetch failed",
+      "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。",
+      "id": "4a8d3b4f05376301b529d8d7eccd1d25db20587c07083dff5ba9b793de4053ae",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-oncology-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.jsoo.jp/society",
+      "evidence": "カードの第15回は公式の2027年第44回という開催回系列と整合しない。2028年の正しい回数は年次加算だけで確定しない。対象回専用URL未確認。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "日本眼腫瘍学会 2028 第15回 公式",
+        "日本眼腫瘍学会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "0652e914a4c0c26f45e49cd3df8aef798b5c6cadd2173d388dfd8ac31c43a3d4",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-int-apvrs-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+      "evidence": "本体Congressesの2028年は第21回、11月16–19日Bangkok。カードの第18回と不一致。対象回専用URL未確認。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "APVRS 2028 第18回 公式",
+        "APVRS 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "3ef2f9064ec2e4a93847b3f2c667fb2a6f74390bed741fe252a088e8b1845daf",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-int-woc-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
+      "evidence": "ICOのCongress総合案内にはWOC2028の見出しがあるが複数年向けのページで、対象回専用URLを確定できない。同名に近い非ICO会議サイトを除外。",
+      "reason": "discovery-card-integrity-needs-review",
+      "searchQueries": [
+        "WOC 2028  公式",
+        "WOC 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "f31dede9c4916e9e0f52f6b60da42ca6d853e84307281bc5939c7b97a3efbdc0",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:07:24.493Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 4
+    },
+    {
+      "eventId": "conf-jp-lowvision-2027",
+      "field": null,
+      "value": null,
+      "oldValue": null,
+      "candidateUrl": "https://www.ganki.jp/lowvision2027/",
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.ganki.jp/",
+      "evidence": "第28回日本ロービジョン学会学術総会   新着情報",
+      "reason": "event-url-edition-unverified",
+      "candidateReason": "event-url-edition-unverified",
+      "checks": {
+        "nameMatches": true,
+        "yearMatches": false,
+        "editionMatches": true,
+        "years": [],
+        "editions": [
+          28
+        ]
+      },
+      "searchQueries": [
+        "日本ロービジョン学会学術総会 2027 第28回 公式",
+        "日本ロービジョン学会学術総会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "668e18ac70b8a51c035648aaf9da9b8f7617171a107ee7315959530da40cdd1d",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:10:11.804Z",
+      "lastSeen": "2026-10-07T23:10:11.804Z",
+      "occurrences": 1
+    },
+    {
+      "eventId": "conf-int-aao-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "url": "https://www.aao.org/Assets/d9eaad8a-70a7-4655-91d6-5b4160dd1d54/636800504037330000/past-academy-annual-meetings-pdf?inline=1",
+      "confidence": 0,
+      "reason": "discovery-fetch-failed",
+      "error": "non-html-response",
+      "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。",
+      "id": "0843ee1d634eca423471bbe7b705612c976df3cf2278c0121a7e2a8409b51565",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:10:11.804Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 3
+    },
+    {
+      "eventId": "conf-int-asnos-2027",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "url": "https://asnos.org/future-meetings/",
+      "confidence": 0,
+      "reason": "discovery-fetch-failed",
+      "error": "http-403",
+      "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。",
+      "id": "db01dbb48370607f4f613c2653bddc06feb5c046c2f46dcb787c528c9fa79f2f",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:10:11.804Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 3
+    },
+    {
+      "eventId": "conf-int-aao-2028",
+      "field": null,
+      "oldValue": null,
+      "value": null,
+      "url": "https://www.aao.org/Assets/d9eaad8a-70a7-4655-91d6-5b4160dd1d54/636800504037330000/past-academy-annual-meetings-pdf?inline=1",
+      "confidence": 0,
+      "reason": "discovery-fetch-failed",
+      "error": "non-html-response",
+      "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。",
+      "id": "4ea68ea5827f2e813b991846ddb849bb06720cf9a59b9b69c1a438e363a8cf3e",
+      "status": "needs-review",
+      "firstSeen": "2026-10-07T23:10:11.804Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
+      "occurrences": 3
+    },
+    {
+      "eventId": "conf-jp-lowvision-2027",
+      "field": null,
+      "value": null,
+      "oldValue": null,
+      "candidateUrl": "https://www.ganki.jp/lowvision2027/",
+      "confidence": 0,
+      "method": "official-index-discovery",
+      "url": "https://www.ganki.jp/",
+      "evidence": "第28回日本ロービジョン学会学術総会   新着情報",
+      "reason": "discovery-search-limit",
+      "candidateReason": "event-url-edition-unverified",
+      "checks": {
+        "nameMatches": true,
+        "yearMatches": false,
+        "editionMatches": true,
+        "years": [],
+        "editions": [
+          28
+        ]
+      },
+      "searchQueries": [
+        "日本ロービジョン学会学術総会 2027 第28回 公式",
+        "日本ロービジョン学会学術総会 学術集会案内 Annual Meeting Congress"
+      ],
+      "id": "a8c9598023e957a4194397f4524083ca47118a24a06e2c3cee32db858b9cf65c",
+      "status": "needs-review",
+      "firstSeen": "2026-10-08T02:55:30.662Z",
+      "lastSeen": "2026-10-08T02:57:26.243Z",
       "occurrences": 2
     }
   ]

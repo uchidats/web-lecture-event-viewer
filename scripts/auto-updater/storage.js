@@ -23,6 +23,10 @@ function validateEvents(events, baseline) {
     if (!e.id || ids.has(e.id)) throw new Error('Duplicate/missing event ID');
     ids.add(e.id);
     if (e.registration && !validRegistration(e.registration)) throw new Error('Invalid registration periods');
+    for (const field of ['eventOfficialUrl', 'societyUrl']) if (e[field]) {
+      const url = new URL(e[field]);
+      if (url.protocol !== 'https:' || url.username || url.password) throw new Error('Invalid official URL');
+    }
     for (const field of ['date', 'endDate']) if (e[field] && (!/^\d{4}-\d{2}-\d{2}$/.test(e[field]) || !normalizeDate(e[field]))) throw new Error('Invalid event date format');
     if (e.date && e.endDate && e.endDate < e.date) throw new Error('Invalid event date order');
   }
@@ -44,8 +48,12 @@ function mergeReview(previous, entries, checkedAt) {
   if (!Array.isArray(previous.items)) throw new Error('Invalid review queue schema');
   const items = structuredClone(previous.items);
   for (const entry of entries) {
-    const id = hash(JSON.stringify([entry.eventId, entry.field, entry.value, entry.reason, entry.url]));
-    const existing = items.find(item => item.id === id);
+    const identity = [entry.eventId, entry.field, entry.value, entry.reason, entry.url];
+    const legacyId = hash(JSON.stringify(identity));
+    const id = entry.candidateUrl ? hash(JSON.stringify([...identity, entry.candidateUrl])) : legacyId;
+    // Inspection-only discovery candidates have null values: preserve each distinct URL.
+    const existing = items.find(item => item.id === id ||
+      (entry.candidateUrl && item.id === legacyId && item.candidateUrl === entry.candidateUrl));
     if (existing) { existing.lastSeen = checkedAt; existing.occurrences++; }
     else items.push({ ...entry, id, status: 'needs-review', firstSeen: checkedAt, lastSeen: checkedAt, occurrences: 1 });
   }
@@ -56,19 +64,20 @@ function mergeReview(previous, entries, checkedAt) {
 const checks = [
   ...['events.js', 'script.js', 'companies.js', 'venues.js', 'conference-sources.js', 'scripts/update-conferences.js',
     'scripts/auto-updater/fetch.js', 'scripts/auto-updater/extract.js', 'scripts/auto-updater/policy.js',
-    'scripts/auto-updater/storage.js', 'scripts/auto-updater/pipeline.js', 'scripts/auto-updater/mass-change.js', 'scripts/auto-updater/registration.js'].map(file => ['--check', file]),
+    'scripts/auto-updater/storage.js', 'scripts/auto-updater/pipeline.js', 'scripts/auto-updater/mass-change.js', 'scripts/auto-updater/registration.js', 'scripts/auto-updater/event-urls.js',
+    'conference-discovery-sources.js', 'scripts/auto-updater/discovery.js'].map(file => ['--check', file]),
   ['scratch/test_ended_conferences.js'], ['scratch/test_conference_history.js'],
   ['scratch/test_venue_master.js'], ['scratch/test_comprehensive_regression.js'],
   ['scratch/test_abstract_submission.js'], ['scratch/test_auto_updater.js'],
   ['scratch/test_brand_storage.js'], ['scratch/test_companies.js'], ['scratch/test_time_zones.js'],
-  ['scratch/test_venue_update_policy.js'], ['scratch/test_registration.js'], ['scratch/test_filter_state.js']
+  ['scratch/test_venue_update_policy.js'], ['scratch/test_registration.js'], ['scratch/test_filter_state.js'], ['scratch/test_event_urls.js'], ['scratch/test_event_url_discovery.js']
 ];
 function runChecks(root) {
   const results = [];
   for (const args of checks) {
     const result = spawnSync(process.execPath, args, { cwd: root, encoding: 'utf8', timeout: 60000 });
     results.push({ command: `node ${args.join(' ')}`, passed: result.status === 0 && !result.error,
-      output: (result.stdout + result.stderr).trim(), error: result.error?.message });
+      output: ((result.stdout || '') + (result.stderr || '')).trim(), error: result.error?.message });
     if (!results.at(-1).passed) return { passed: false, results };
   }
   return { passed: true, results };

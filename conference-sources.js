@@ -3,6 +3,7 @@
 module.exports = {
   version: 1,
   enabled: true,
+  discovery: require('./conference-discovery-sources'),
   defaults: {
     dryRun: true,
     minConfidence: 0.95,
@@ -21,6 +22,9 @@ module.exports = {
     {
       id: 'oph-011', name: '第131回日本眼科学会総会', year: 2027,
       officialUrl: 'https://convention.jtbcom.co.jp/131jos/index.html',
+      eventOfficialUrl: 'https://convention.jtbcom.co.jp/131jos/index.html',
+      societyUrl: 'https://www.nichigan.or.jp/', societyIdentity: ['日本眼科学会'],
+      allowedSocietyHosts: ['www.nichigan.or.jp'],
       allowedHosts: ['convention.jtbcom.co.jp'], autoUpdateEnabled: true,
       identity: ['第131回', '日本眼科学会総会'], adapter: 'official-html',
       pages: [
@@ -31,6 +35,9 @@ module.exports = {
     {
       id: 'oph-001', name: '第80回日本臨床眼科学会', year: 2026,
       officialUrl: 'https://convention.jtbcom.co.jp/80ringan/index.html',
+      eventOfficialUrl: 'https://convention.jtbcom.co.jp/80ringan/index.html',
+      societyUrl: 'https://www.nichigan.or.jp/', societyIdentity: ['日本眼科学会'],
+      allowedSocietyHosts: ['www.nichigan.or.jp'],
       allowedHosts: ['convention.jtbcom.co.jp'], autoUpdateEnabled: true,
       identity: ['第80回', '日本臨床眼科学会'], adapter: 'official-html',
       pages: [
@@ -41,6 +48,9 @@ module.exports = {
     {
       id: 'conf-jp-surgery-2027', name: '第50回日本眼科手術学会学術総会', year: 2027,
       officialUrl: 'https://50.jsos.jp/', allowedHosts: ['50.jsos.jp'],
+      eventOfficialUrl: 'https://50.jsos.jp/',
+      societyUrl: 'https://jsos.jp/', societyIdentity: ['日本眼科手術学会'],
+      allowedSocietyHosts: ['jsos.jp'],
       autoUpdateEnabled: true, identity: ['第50回', '日本眼科手術学会'], adapter: 'official-html',
       pages: [
         { role: 'overview', url: 'https://50.jsos.jp/' },
@@ -50,6 +60,9 @@ module.exports = {
     {
       id: 'conf-jp-glaucoma-2026', name: '第37回日本緑内障学会', year: 2026,
       officialUrl: 'https://www.congre.co.jp/jgs2026/', allowedHosts: ['www.congre.co.jp'],
+      eventOfficialUrl: 'https://www.congre.co.jp/jgs2026/',
+      societyUrl: 'https://www.ryokunaisho.jp/', societyIdentity: ['日本緑内障学会'],
+      allowedSocietyHosts: ['www.ryokunaisho.jp'],
       autoUpdateEnabled: true, identity: ['第37回', '日本緑内障学会'], adapter: 'official-html',
       pages: [
         { role: 'overview', url: 'https://www.congre.co.jp/jgs2026/contents/outline.html' },
@@ -59,6 +72,9 @@ module.exports = {
     {
       id: 'conf-jp-jrvs-2026', name: '第65回日本網膜硝子体学会総会', year: 2026,
       officialUrl: 'https://convention.jtbcom.co.jp/65moumaku/index.html',
+      eventOfficialUrl: 'https://convention.jtbcom.co.jp/65moumaku/index.html',
+      societyUrl: 'https://www.jrvs.jp/', societyIdentity: ['日本網膜硝子体学会'],
+      allowedSocietyHosts: ['www.jrvs.jp'],
       allowedHosts: ['convention.jtbcom.co.jp'], autoUpdateEnabled: true,
       identity: ['第65回', '日本網膜硝子体学会'], adapter: 'official-html',
       pages: [

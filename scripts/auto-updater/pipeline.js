@@ -4,6 +4,9 @@ const vm = require('node:vm');
 const { fetchOfficialPage } = require('./fetch');
 const { adapters } = require('./extract');
 const { assess, applyChanges } = require('./policy');
+const { eventSourceUrl } = require('./event-urls');
+const { discoverMissingEventUrls } = require('./discovery');
+const { trustedUrl } = require('./fetch');
 const { evaluateMassChanges } = require('./mass-change');
 const { loadEvents, validateEvents, readJson, atomicWrite, writeJson, hash, mergeReview, runChecks, assertCleanMain } = require('./storage');
 
@@ -14,11 +17,17 @@ function validateConfig(config, events) {
     if (!Number.isFinite(config.defaults[key]) || config.defaults[key] <= 0) throw new Error(`Invalid limit ${key}`);
   }
   if (config.defaults.minConfidence > 1) throw new Error('Invalid confidence threshold');
+  if (config.discovery?.enabled && (!Array.isArray(config.discovery.entries) ||
+      !Array.isArray(config.discovery.allowedEventHosts) ||
+      !Number.isInteger(config.discovery.maxPagesPerEvent) || config.discovery.maxPagesPerEvent < 1 ||
+      !Number.isInteger(config.discovery.maxLinksPerIndex) || config.discovery.maxLinksPerIndex < 1)) throw new Error('Invalid discovery registry');
   for (const s of config.sources) {
     if (ids.has(s.id) || !events.some(e => e.id === s.id && e.isConference)) throw new Error('Unknown/duplicate configured ID');
     ids.add(s.id);
     if (!adapters[s.adapter] || !s.identity?.length || !Number.isInteger(s.year) || !s.pages?.some(p => p.role === 'overview')) throw new Error('Invalid adapter/identity/pages');
     if (Number(events.find(e => e.id === s.id).date?.slice(0, 4)) !== s.year) throw new Error('Source edition year differs from event year');
+    if (!trustedUrl(eventSourceUrl(s), s)) throw new Error('Invalid event source URL');
+    if (s.societyUrl && !trustedUrl(s.societyUrl, s, 'society')) throw new Error('Invalid society source URL');
   }
 }
 
@@ -36,7 +45,7 @@ async function runPipeline({ root, config, apply = false, getPage = fetchOfficia
   const previousHistory = readJson(historyFile, { version: 1, changes: [] });
   if (!previousState.sources || !Array.isArray(previousHistory.changes)) throw new Error('Invalid metadata/history JSON');
   const summary = { version: 1, checkedAt, mode: apply ? 'apply' : 'dry-run', outcome: 'dry-run',
-    sourceCount: config.sources.length, autoChanges: [], needsReview: [], blockedAutoChanges: [], sources: [], stopped: false, stopReason: null, tests: null };
+  sourceCount: config.sources.length, autoChanges: [], needsReview: [], blockedAutoChanges: [], sources: [], requests: [], stopped: false, stopReason: null, tests: null };
   const finish = () => {
     writeJson(reviewFile, mergeReview(previousQueue, summary.needsReview, checkedAt));
     writeJson(summaryFile, summary);
@@ -54,7 +63,8 @@ async function runPipeline({ root, config, apply = false, getPage = fetchOfficia
     const candidates = [], issues = [], documents = [];
     for (const page of source.pages) {
       try {
-        const document = await getPage(page, source, config.defaults);
+        const document = await getPage(page, source, { ...config.defaults,
+          onRequest: request => summary.requests.push({ eventId: source.id, ...request }) });
         documents.push({ url: document.url, fingerprint: document.fingerprint || hash(document.html) });
         const result = adapters[source.adapter](document, { ...source, registrationType: event.registration?.type || event.conferenceRegion || 'domestic' });
         candidates.push(...result.candidates); issues.push(...result.issues);
@@ -70,6 +80,7 @@ async function runPipeline({ root, config, apply = false, getPage = fetchOfficia
     summary.stopped ||= decision.halt;
     const fingerprint = documents.length ? hash(JSON.stringify(documents)) : previousState.sources[source.id]?.fingerprint || null;
     const meta = { ...previousState.sources[source.id], officialUrl: source.officialUrl,
+      eventOfficialUrl: eventSourceUrl(source), societyUrl: source.societyUrl || null,
       lastChecked: checkedAt, lastChanged: previousState.sources[source.id]?.lastChanged || null,
       confidence: candidates.length ? Math.min(...candidates.map(c => c.confidence)) : 0,
       fingerprint, extractionMethod: source.adapter, autoUpdateEnabled: source.autoUpdateEnabled,
@@ -77,6 +88,8 @@ async function runPipeline({ root, config, apply = false, getPage = fetchOfficia
     state.sources[source.id] = meta;
     summary.sources.push({ eventId: source.id, ...meta, candidateCount: candidates.length });
   }
+  summary.discovery = await discoverMissingEventUrls({ events: dataset.events, config, getPage });
+  summary.needsReview.push(...summary.discovery.review);
   summary.massChangeAssessment = evaluateMassChanges(summary.autoChanges, config);
   if (summary.massChangeAssessment.stopped) {
     summary.stopped = true; summary.stopReason = 'mass-change-limit';

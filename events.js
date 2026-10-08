@@ -32,6 +32,8 @@
  *  - registration: { type: "domestic" | "international", periods: [{ label, start?, deadline? }] }
  *    start/deadline は YYYY-MM-DD または YYYY-MM-DDTHH:mm。新構造を優先表示。
  *  - officialUrl: 公式サイトURL（未確認時は ""）
+ *  - eventOfficialUrl: 開催年・開催回を確認したイベント公式URL（タイトルリンク専用）
+ *  - societyUrl: 学会本体URL（タイトルのフォールバックには使用しない）
  *  - sourceUrl: 情報ソースURL（日本眼科学会等）
  *  - abstractSubmission: { status: "open"|"upcoming"|"closed"|"unknown", startDate, deadline, url }
  *  - calendarStatus: { google: { status, conflicts }, icloud: { status, conflicts }, isAdded }
@@ -40,6 +42,8 @@
 const sampleEvents = [
   {
     "id": "conf-jp-surgery-2026",
+    "eventOfficialUrl": "https://www.jsos.jp/jsos49",
+    "societyUrl": "https://jsos.jp/",
     "title": "第49回 日本眼科手術学会学術総会",
     "subtitle": "眼科手術の進化と未来への挑戦",
     "date": "2026-01-30",
@@ -91,6 +95,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-eyelid-2026",
+    "eventOfficialUrl": "https://www.ggigan.com/",
     "title": "第37回 日本眼瞼義眼床手術学会学術集会",
     "subtitle": "機能と整容の両立をめざす眼瞼・義眼床手術",
     "date": "2026-02-07",
@@ -141,6 +146,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-cornea-2026",
+    "eventOfficialUrl": "https://www.congre.co.jp/cornea2026/",
     "title": "角膜カンファランス2026（第50回日本角膜学会総会／第42回日本角膜移植学会）",
     "subtitle": "半世紀の歩みと未来への飛翔：角膜診療の最前線",
     "date": "2026-02-19",
@@ -191,6 +197,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-jos-2026",
+    "eventOfficialUrl": "https://www.congre.co.jp/130jos/index.html",
     "title": "第130回 日本眼科学会総会",
     "subtitle": "眼科学の原点と革新",
     "date": "2026-04-09",
@@ -291,6 +298,7 @@ const sampleEvents = [
   },
   {
     "id": "oph-008",
+    "eventOfficialUrl": "https://jsoprs2026.com/",
     "title": "第13回 日本眼形成再建外科学会学術集会 (JSOPRS 2026)",
     "subtitle": "眼形成再建の技術革新とエビデンス",
     "date": "2026-06-20",
@@ -382,6 +390,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-lowvision-2026",
+    "eventOfficialUrl": "https://convention.jtbcom.co.jp/lowvision2026/",
     "title": "第27回 日本ロービジョン学会学術総会",
     "subtitle": "見えにくさを支える医療・教育・福祉の包括的アプローチ",
     "date": "2026-09-19",
@@ -432,6 +441,8 @@ const sampleEvents = [
   },
   {
     "id": "conf-int-euretina-2026",
+    "eventOfficialUrl": "https://euretina.org/vienna-2026/",
+    "societyUrl": "https://euretina.org/",
     "title": "EURETINA 2026 (26th EURETINA Congress)",
     "subtitle": "European Society of Retina Specialists Annual Meeting",
     "date": "2026-10-01",
@@ -483,6 +494,8 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-glaucoma-2026",
+    "eventOfficialUrl": "https://www.congre.co.jp/jgs2026/",
+    "societyUrl": "https://www.ryokunaisho.jp/",
     "title": "第37回 日本緑内障学会",
     "subtitle": "緑内障診療の深耕と未来開拓",
     "date": "2026-10-02",
@@ -533,6 +546,7 @@ const sampleEvents = [
   },
   {
     "id": "oph-004",
+    "eventOfficialUrl": "https://aao.org/annual-meeting",
     "title": "AAO 2026 Annual Meeting (American Academy of Ophthalmology)",
     "subtitle": "Where all of ophthalmology meets",
     "date": "2026-10-10",
@@ -621,6 +635,8 @@ const sampleEvents = [
   },
   {
     "id": "oph-001",
+    "eventOfficialUrl": "https://convention.jtbcom.co.jp/80ringan/index.html",
+    "societyUrl": "https://www.nichigan.or.jp/",
     "title": "第80回 日本臨床眼科学会 (臨眼 2026)",
     "subtitle": "臨床眼科80年の軌跡と新次元への跳躍",
     "date": "2026-10-29",
@@ -754,7 +770,12 @@ const sampleEvents = [
     "eventType": "講演会・勉強会",
     "format": "現地",
     "sponsor": "第80回日本臨床眼科学会 / ノバルティス ファーマ株式会社",
-    "sponsors": [{ "companyId": "novartis", "role": "co-sponsor" }],
+    "sponsors": [
+      {
+        "companyId": "novartis",
+        "role": "co-sponsor"
+      }
+    ],
     "credits": "日本眼科学会生涯教育 1単位",
     "creditUnits": 1,
     "calendarStatus": {
@@ -793,7 +814,12 @@ const sampleEvents = [
     "eventType": "講演会・勉強会",
     "format": "現地",
     "sponsor": "第80回日本臨床眼科学会 / 参天製薬株式会社",
-    "sponsors": [{ "companyId": "santen", "role": "co-sponsor" }],
+    "sponsors": [
+      {
+        "companyId": "santen",
+        "role": "co-sponsor"
+      }
+    ],
     "credits": "日本眼科学会生涯教育 1単位",
     "creditUnits": 1,
     "calendarStatus": {
@@ -858,6 +884,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-pharmacology-2026",
+    "eventOfficialUrl": "https://square.umin.ac.jp/jsop46/",
     "title": "第46回 日本眼薬理学会",
     "subtitle": "眼科創薬の新展開とドラッグデリバリーシステム",
     "date": "2026-11-07",
@@ -1025,6 +1052,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-neuro-2026",
+    "eventOfficialUrl": "https://n-practice.co.jp/64thJNOS/",
     "title": "第64回 日本神経眼科学会総会",
     "subtitle": "視覚路・眼球運動障害の解剖と最先端臨床",
     "date": "2026-11-26",
@@ -1075,13 +1103,23 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-jrvs-2026",
+    "eventOfficialUrl": "https://convention.jtbcom.co.jp/65moumaku/index.html",
+    "societyUrl": "https://www.jrvs.jp/",
     "venueId": "tokyo-international-forum",
     "title": "第65回 日本網膜硝子体学会総会",
     "registration": {
       "type": "domestic",
       "periods": [
-        { "label": "事前参加登録", "start": "2026-05-19T12:00", "deadline": "2026-10-16" },
-        { "label": "直前・当日登録", "start": "2026-11-12T12:00", "deadline": "2026-12-06" }
+        {
+          "label": "事前参加登録",
+          "start": "2026-05-19T12:00",
+          "deadline": "2026-10-16"
+        },
+        {
+          "label": "直前・当日登録",
+          "start": "2026-11-12T12:00",
+          "deadline": "2026-12-06"
+        }
       ]
     },
     "subtitle": "網膜硝子体疾患の病態解明と外科・内科的治療革新",
@@ -1133,6 +1171,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-int-arc-2026",
+    "eventOfficialUrl": "https://convention.jtbcom.co.jp/arc2026/",
     "title": "Asia Retina Congress 2026 (ARC 2026)",
     "subtitle": "Advancing Vitreoretinal Care Across the Asia-Pacific",
     "date": "2026-12-05",
@@ -1333,6 +1372,8 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-surgery-2027",
+    "eventOfficialUrl": "https://50.jsos.jp/",
+    "societyUrl": "https://jsos.jp/",
     "title": "第50回 日本眼科手術学会学術総会",
     "subtitle": "眼科手術の集大成と次世代への継承",
     "date": "2027-01-29",
@@ -1384,6 +1425,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-cornea-2027",
+    "eventOfficialUrl": "https://www.okinawa-congre.co.jp/cornea2027/",
     "title": "角膜カンファランス2027",
     "subtitle": "南の風に乗る角膜診療のフロンティア",
     "date": "2027-02-11",
@@ -1529,7 +1571,8 @@ const sampleEvents = [
       "抗VEGF"
     ],
     "description": "糖尿病網膜症・黄斑浮腫の病態解明、早期発見、内科連携を議論。",
-    "isConference": true
+    "isConference": true,
+    "eventOfficialUrl": "https://convention.jtbcom.co.jp/jsod33/"
   },
   {
     "id": "conf-jp-iscev-2027",
@@ -1583,6 +1626,8 @@ const sampleEvents = [
   },
   {
     "id": "conf-int-apao-2027",
+    "eventOfficialUrl": "https://2027.apaophth.org/",
+    "societyUrl": "https://apaophth.org/",
     "title": "APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress)",
     "subtitle": "Vision for the Future in the Asia-Pacific",
     "date": "2027-03-18",
@@ -1633,6 +1678,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-int-fujiretina-2027",
+    "eventOfficialUrl": "https://convention.jtbcom.co.jp/fujiretina/index.html",
     "venueId": "toranomon-hills-forum",
     "title": "FujiRetina 2027",
     "subtitle": "The Premier International Retina Conference in Japan",
@@ -1732,6 +1778,8 @@ const sampleEvents = [
   },
   {
     "id": "oph-011",
+    "eventOfficialUrl": "https://convention.jtbcom.co.jp/131jos/index.html",
+    "societyUrl": "https://www.nichigan.or.jp/",
     "title": "第131回 日本眼科学会総会",
     "subtitle": "眼科学の見渡す限り",
     "date": "2027-04-15",
@@ -1831,10 +1879,13 @@ const sampleEvents = [
       "MIGS"
     ],
     "description": "世界緑内障コングレス(WGC)と併催される歴史的学術集会。",
-    "isConference": true
+    "isConference": true,
+    "eventOfficialUrl": "https://site2.convention.co.jp/jgs2027/"
   },
   {
     "id": "conf-int-wgc-2027",
+    "eventOfficialUrl": "https://worldglaucomacongress.org/",
+    "societyUrl": "https://wga.one/",
     "title": "World Glaucoma Congress 2027 (WGC 2027)",
     "subtitle": "World Glaucoma Association (WGA)",
     "date": "2027-04-20",
@@ -1885,6 +1936,8 @@ const sampleEvents = [
   },
   {
     "id": "oph-012",
+    "eventOfficialUrl": "https://www.arvo.org/annual-meeting",
+    "societyUrl": "https://www.arvo.org/",
     "title": "ARVO 2027 Annual Meeting",
     "subtitle": "The Association for Research in Vision and Ophthalmology",
     "date": "2027-05-02",
@@ -1985,6 +2038,8 @@ const sampleEvents = [
   },
   {
     "id": "conf-int-apacrs-2027",
+    "eventOfficialUrl": "https://apacrs2027.org/",
+    "societyUrl": "https://apacrs.org/",
     "title": "APACRS 2027 Annual Meeting",
     "subtitle": "Asia-Pacific Association of Cataract & Refractive Surgeons",
     "date": "2027-06-03",
@@ -2083,6 +2138,8 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-jsoprs-2027",
+    "eventOfficialUrl": "https://orbit-cs.net/jsoprs2027/",
+    "societyUrl": "https://www.jsoprs.jp/",
     "title": "第14回 日本眼形成再建外科学会学術集会 (JSOPRS 2027)",
     "subtitle": "機能美と解剖に立脚した眼形成再建外科学",
     "date": "2027-06-12",
@@ -2133,6 +2190,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-pediatric-2027",
+    "eventOfficialUrl": "https://jasa-japo2027.jp/",
     "title": "第83回 日本弱視斜視学会総会・第52回 日本小児眼科学会総会",
     "subtitle": "子どもの目の未来を守る：早期発見・最新治療・支援体制",
     "date": "2027-06-18",
@@ -2183,6 +2241,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-int-soe-2027",
+    "eventOfficialUrl": "https://soe2027.soevision.org/",
     "title": "SOE 2027 (European Society of Ophthalmology Congress)",
     "subtitle": "European Ophthalmology in the Global Perspective",
     "date": "2027-06-18",
@@ -2232,6 +2291,7 @@ const sampleEvents = [
   },
   {
     "id": "oph-013",
+    "eventOfficialUrl": "https://www.kwcs.jp/42jscrs/",
     "venueId": "kobe-international-conference-center",
     "title": "第42回 JSCRS学術総会 (日本白内障屈折矯正手術学会)",
     "subtitle": "屈折矯正と水晶体再建術の次世代スタンダード",
@@ -2334,6 +2394,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-int-iois-2027",
+    "eventOfficialUrl": "https://www.iois.info/page.php?edi_id=1697",
     "venueId": "fukuoka-international-congress-center",
     "title": "IOIS 2027 (International Ocular Inflammation Society Congress)",
     "subtitle": "New Horizons in Uveitis and Ocular Immunology",
@@ -2385,6 +2446,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-inflammation-2027",
+    "eventOfficialUrl": "https://www.congre.co.jp/oiw2027/",
     "title": "第60回 日本眼炎症学会",
     "subtitle": "眼炎症Week2027",
     "date": "2027-07-09",
@@ -2482,10 +2544,12 @@ const sampleEvents = [
       "緑内障血流"
     ],
     "description": "網膜・脈絡膜血流動態、OCTアンギオグラフィーによる微小血管定量評価。",
-    "isConference": true
+    "isConference": true,
+    "eventOfficialUrl": "https://convention.jtbcom.co.jp/43jsoc/"
   },
   {
     "id": "conf-jp-cl-2027",
+    "eventOfficialUrl": "https://www.congre.co.jp/jcls2027/",
     "title": "第69回 日本コンタクトレンズ学会総会",
     "subtitle": "安心安全なコンタクトレンズ診療と新機能レンズの展望",
     "date": "2027-07-24",
@@ -2536,6 +2600,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-optics-2027",
+    "eventOfficialUrl": "https://www.jsoo-ws.com/63jsoo",
     "title": "第63回 日本眼光学学会総会",
     "subtitle": "光学と視覚科学の交差点",
     "date": "2027-08-28",
@@ -2686,6 +2751,8 @@ const sampleEvents = [
   },
   {
     "id": "conf-int-euretina-2027",
+    "eventOfficialUrl": "https://euretina.org/copenhagen-27/",
+    "societyUrl": "https://euretina.org/",
     "title": "EURETINA 2027 (27th EURETINA Congress)",
     "subtitle": "European Society of Retina Specialists",
     "date": "2027-09-16",
@@ -2830,7 +2897,8 @@ const sampleEvents = [
       "国際学会"
     ],
     "description": "欧州最大級の白内障屈折手術コングレス。",
-    "isConference": true
+    "isConference": true,
+    "eventOfficialUrl": "https://www.escrs.org/escrs-annual-events/45th-congress-of-the-escrs"
   },
   {
     "id": "conf-jp-ringan-2027",
@@ -4363,7 +4431,8 @@ const sampleEvents = [
       "欧州白内障屈折学会"
     ],
     "description": "欧州白内障屈折手術学会年次大会。",
-    "isConference": true
+    "isConference": true,
+    "eventOfficialUrl": "https://www.escrs.org/escrs-annual-events/46th-congress-of-the-escrs"
   },
   {
     "id": "conf-int-aao-2028",
