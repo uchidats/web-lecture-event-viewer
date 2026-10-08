@@ -14,11 +14,12 @@ Usage:
   node scripts/run-gemini-monitor.js [options]
 
 Options:
-  --dry-run             Run in shadow mode without modifying events.js (default)
+  --dry-run             Run in simulation / shadow mode without modifying events.js (default)
+  --apply               Apply verified updates to events.js (production auto-apply mode)
   --date YYYY-MM-DD     Specify execution date (defaults to current Tokyo date)
   --force-all           Force check all events ignoring schedule interval
   --event <id>          Check a specific event ID only
-  --offline             Run using local deterministic analyzer (no API call)
+  --offline             Run using local deterministic analyzer (no external API calls)
   --rollback <id> [msg] Execute rollback for a given snapshot ID
   --status              Show recent monitoring report summary
   --help                Display this help message
@@ -56,14 +57,16 @@ Options:
 
   const forceAll = args.includes('--force-all');
   const offline = args.includes('--offline');
+  const applyMode = args.includes('--apply');
 
-  console.log('Starting Gemini 3.8 Flash Lightweight Conference Monitor (Shadow Mode)...');
+  console.log(`Starting Gemini 3.8 Flash Lightweight Conference Monitor (${applyMode ? 'Production Auto-Apply Mode' : 'Shadow / Simulation Mode'})...`);
   const result = await runGeminiMonitor({
     root,
     today: targetDate,
     forceAll,
     singleEventId,
-    offline
+    offline,
+    apply: applyMode
   });
 
   console.log('\n--- Gemini Monitor Run Summary ---');
@@ -79,6 +82,9 @@ Options:
   console.log(`  Gemini Calls:               ${result.metrics.geminiCalls}`);
   console.log(`  No Change:                  ${result.metrics.noChange}`);
   console.log(`  Would Auto-Update:          ${result.metrics.wouldAutoUpdate}`);
+  console.log(`  Auto-Applied:               ${result.metrics.autoAppliedCount}`);
+  console.log(`  Admin Acknowledged Applied: ${result.metrics.adminAppliedCount}`);
+  console.log(`  Rollbacks:                  ${result.metrics.rollbackCount}`);
   console.log(`  Needs Review:               ${result.metrics.needsReview}`);
   console.log(`  Insufficient Evidence:      ${result.metrics.insufficientEvidence}`);
   console.log(`  Admin Visible Items:        ${result.metrics.adminVisibleCount} (Max 5)`);

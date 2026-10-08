@@ -15,42 +15,51 @@ function formatJapaneseDate(dateStr) {
 }
 
 /**
- * Build subject line and text body from daily report.
+ * Build subject line and text body from daily report (Requirement 21).
  * Strictly avoids leaking API keys, internal logs, or secrets.
  *
- * @param {Object} report - Daily report object from reports/gemini-monitor/YYYY-MM-DD.json
+ * @param {Object} report - Daily report object
  */
 function composeEmail(report) {
   const dateStr = report.date || new Date().toISOString().slice(0, 10);
   const formattedDate = formatJapaneseDate(dateStr);
 
   const metrics = report.metrics || {};
-  const wouldAutoCount = Number(report.wouldAutoUpdateCount || metrics.wouldAutoUpdate || 0);
+  const autoAppliedCount = Number(report.autoAppliedCount || metrics.autoAppliedCount || report.wouldAutoUpdateCount || 0);
+  const adminAppliedCount = Number(report.adminAppliedCount || metrics.adminAppliedCount || 0);
+  const rollbackCount = Number(report.rollbackCount || metrics.rollbackCount || 0);
+
   const visibleItems = Array.isArray(report.adminVisibleItems) ? report.adminVisibleItems : [];
   const needsReviewCount = visibleItems.length;
 
-  const totalUpdates = wouldAutoCount + needsReviewCount;
+  const totalUpdates = autoAppliedCount + adminAppliedCount;
 
-  // 1. Subject line
+  // 1. Subject line (Requirement 21)
   let subject = '';
-  if (totalUpdates === 0) {
+  if (totalUpdates === 0 && rollbackCount === 0 && needsReviewCount === 0) {
     subject = '【OphthalConf】本日の更新はありません';
   } else {
-    subject = `【OphthalConf】本日の更新 ${totalUpdates}件／要確認 ${needsReviewCount}件`;
+    const parts = [];
+    if (totalUpdates > 0) parts.push(`自動更新${totalUpdates}件`);
+    if (rollbackCount > 0) parts.push(`ロールバック${rollbackCount}件`);
+    parts.push(`要確認${needsReviewCount}件`);
+    subject = `【OphthalConf】${parts.join('／')}`;
   }
 
-  // 2. Email Body
+  // 2. Email Body (Requirement 21)
   const lines = [];
   lines.push('OphthalConf 学会情報監視');
   lines.push(formattedDate);
   lines.push('');
-  lines.push(`自動更新予定：${wouldAutoCount}件`);
+  lines.push(`高信頼自動更新：${autoAppliedCount}件`);
+  lines.push(`管理者確認済み反映：${adminAppliedCount}件`);
+  lines.push(`ロールバック：${rollbackCount}件`);
   lines.push(`要確認：${needsReviewCount}件`);
   lines.push('');
 
   if (needsReviewCount > 0) {
     lines.push('■ 要確認');
-    // Display up to 5 items max
+    // Display up to 5 items max (Requirement 4, 21)
     for (const item of visibleItems.slice(0, 5)) {
       lines.push(item.eventName || item.eventId || '学会名未設定');
       if (Array.isArray(item.fieldChanges) && item.fieldChanges.length > 0) {
@@ -85,7 +94,7 @@ function sendSmtpEmail({ host = 'smtp.gmail.com', port = 465, user, pass, to, su
     }
 
     const socket = tls.connect(port, host, { rejectUnauthorized: true }, () => {
-      // connected
+      // Connected via TLS direct
     });
 
     socket.setEncoding('utf8');
@@ -101,7 +110,7 @@ function sendSmtpEmail({ host = 'smtp.gmail.com', port = 465, user, pass, to, su
     socket.on('data', (data) => {
       buffer += data;
       const lines = buffer.split('\r\n');
-      buffer = lines.pop(); // keep last incomplete chunk
+      buffer = lines.pop();
 
       for (const line of lines) {
         if (!line) continue;
@@ -118,7 +127,7 @@ function sendSmtpEmail({ host = 'smtp.gmail.com', port = 465, user, pass, to, su
         switch (step) {
           case 0: // Banner received
             step = 1;
-            sendLine(`EHLO localhost`);
+            sendLine('EHLO localhost');
             break;
           case 1: // EHLO response
             step = 2;
@@ -187,7 +196,7 @@ function sendSmtpEmail({ host = 'smtp.gmail.com', port = 465, user, pass, to, su
 
 /**
  * Main notification dispatcher for Gemini monitor run.
- * Handles secret presence gracefully.
+ * Safe fallback to dry-run when credentials missing.
  */
 async function sendDailyMonitorNotification(report, options = {}) {
   const { subject, body } = composeEmail(report);
@@ -197,7 +206,6 @@ async function sendDailyMonitorNotification(report, options = {}) {
   const targetEmail = options.to || process.env.NOTIFICATION_EMAIL || 'uchidats@gmail.com';
 
   if (!smtpUser || !smtpPass) {
-    // Graceful dry-run fallback when secrets are not configured yet
     console.log('\n--- Daily Email Notification (Dry-Run: SMTP Secrets not configured) ---');
     console.log(`To: ${targetEmail}`);
     console.log(`Subject: ${subject}`);
@@ -229,7 +237,6 @@ async function sendDailyMonitorNotification(report, options = {}) {
       ...result
     };
   } catch (error) {
-    // Redact any accidental credential leak in error messages
     const safeError = error.message.replace(/([a-zA-Z0-9_\-\.]{4,})@/g, '***@');
     console.error(`Failed to send daily summary email: ${safeError}`);
     return {

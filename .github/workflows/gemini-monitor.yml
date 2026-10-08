@@ -1,4 +1,4 @@
-name: Gemini Conference Monitor (Shadow Mode)
+name: Gemini Conference Monitor (Staged Auto-Updater)
 
 on:
   schedule:
@@ -10,6 +10,11 @@ on:
         required: false
         type: boolean
         default: false
+      enable_auto_apply:
+        description: 'Enable real production auto-apply to events.js (default false: simulation mode)'
+        required: false
+        type: boolean
+        default: false
 
 concurrency:
   group: gemini-conference-monitor
@@ -17,6 +22,7 @@ concurrency:
 
 permissions:
   contents: write
+  id-token: write # Allows Workload Identity Federation OIDC if configured
 
 jobs:
   monitor:
@@ -29,6 +35,7 @@ jobs:
       SMTP_USER: ${{ secrets.SMTP_USER }}
       SMTP_PASS: ${{ secrets.SMTP_PASS }}
       NOTIFICATION_EMAIL: ${{ secrets.NOTIFICATION_EMAIL || 'uchidats@gmail.com' }}
+      FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -39,15 +46,22 @@ jobs:
           node-version: 24
           package-manager-cache: false
 
-      - name: Validate system regressions
+      - name: Validate baseline system regressions
         run: |
           node scripts/check-conference-regressions.js
           node scratch/test_gemini_monitor_regression.js
 
-      - name: Run Gemini 3.8 Flash monitor in shadow mode
+      - name: Run Gemini 3.8 Flash monitor
         id: run_monitor
         run: |
           FLAGS="--dry-run"
+          if [ "${{ inputs.enable_auto_apply }}" = "true" ] || [ "${{ secrets.ENABLE_AUTO_APPLY }}" = "true" ]; then
+            echo "Production auto-apply requested."
+            FLAGS="--apply"
+          else
+            echo "Running in staged simulation mode (events.js unmodified)."
+          fi
+
           if [ "${{ inputs.force_all }}" = "true" ]; then
             FLAGS="$FLAGS --force-all"
           fi
@@ -57,16 +71,34 @@ jobs:
           fi
           node scripts/run-gemini-monitor.js $FLAGS
 
-      - name: Commit shadow reports and state cache
+      - name: Safety check before commit
+        if: success()
         run: |
-          git add reports/gemini-monitor/ reports/gemini-monitor-state.json reports/gemini-rollback-history.json
-          if ! git diff --cached --quiet; then
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m "chore: record daily gemini conference monitor report (shadow mode)"
+          if git diff --name-only | grep -q "events.js"; then
+            echo "Validating events.js modifications..."
+            node --check events.js
+            node scripts/check-conference-regressions.js
+          fi
+
+      - name: Commit updates and monitoring reports
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          if git diff --name-only | grep -q "events.js"; then
+            # Production auto-apply commit (Requirement 14)
+            git add events.js reports/gemini-monitor/ reports/gemini-monitor-state.json reports/gemini-rollback-history.json
+            git commit -m "chore(data): update verified conference metadata" -m "Automated verified update applied by Gemini Conference Monitor."
             git push origin HEAD:main
           else
-            echo "No monitoring state changes to commit."
+            # Staged simulation / shadow reports commit
+            git add reports/gemini-monitor/ reports/gemini-monitor-state.json reports/gemini-rollback-history.json
+            if ! git diff --cached --quiet; then
+              git commit -m "chore: record daily gemini conference monitor report (shadow mode)"
+              git push origin HEAD:main
+            else
+              echo "No monitoring state changes to commit."
+            fi
           fi
 
       - name: Upload monitoring report artifacts

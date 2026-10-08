@@ -10,7 +10,7 @@ const { localSemanticAnalyzer } = require('../scripts/gemini-monitor/gemini-anal
 const { classifyDecision, prioritizeAdminReviewItems } = require('../scripts/gemini-monitor/classifier');
 const { recordSnapshot, executeRollback, loadRollbackHistory, saveRollbackHistory } = require('../scripts/gemini-monitor/rollback-manager');
 const { runGeminiMonitor } = require('../scripts/gemini-monitor/monitor');
-const { RECOMMENDED_ACTIONS, SEVERITY } = require('../scripts/gemini-monitor/constants');
+const { RECOMMENDED_ACTIONS, SEVERITY, SOURCE_QUALITY } = require('../scripts/gemini-monitor/constants');
 
 async function testAll() {
   const root = path.resolve(__dirname, '..');
@@ -18,29 +18,29 @@ async function testAll() {
   const events = dataset.events;
   assert.equal(events.length, 94, 'Dataset must contain 94 events');
 
-  console.log('--- Test Suite 1: Schedule Tiers & Focus Fields (Requirement 5) ---');
-  // 1.1 Imminent (< 90 days)
-  const tier90 = getEventMonitoringTier({ date: '2026-11-01' }, '2026-10-09');
-  assert.equal(tier90.tierName, 'IMMINENT');
-  assert.equal(tier90.intervalDays, 1);
-  assert.ok(tier90.focusFields.includes('abstract_deadline'));
+  console.log('--- Test Suite 1: Schedule Tiers & Focus Fields (Requirement 5 & 6) ---');
+  // 1.1 < 6 months (< 180 days) -> Daily
+  const tier6m = getEventMonitoringTier({ date: '2026-11-01' }, '2026-10-09');
+  assert.equal(tier6m.tierName, 'LESS_THAN_6M');
+  assert.equal(tier6m.intervalDays, 1);
+  assert.ok(tier6m.focusFields.includes('abstract_deadline'));
 
-  // 1.2 Near (91 - 180 days)
-  const tier180 = getEventMonitoringTier({ date: '2027-01-20' }, '2026-10-09');
-  assert.equal(tier180.tierName, 'NEAR');
-  assert.equal(tier180.intervalDays, 3);
+  // 1.2 6 months to < 1 year (180 - 365 days) -> Twice weekly
+  const tier1y = getEventMonitoringTier({ date: '2027-05-15' }, '2026-10-09');
+  assert.equal(tier1y.tierName, 'FROM_6M_TO_1Y');
+  assert.equal(tier1y.intervalDays, 'twice-weekly');
+  assert.ok(tier1y.focusFields.includes('city'));
 
-  // 1.3 Medium (181 - 365 days)
-  const tier365 = getEventMonitoringTier({ date: '2027-06-15' }, '2026-10-09');
-  assert.equal(tier365.tierName, 'MEDIUM');
-  assert.equal(tier365.intervalDays, 7);
-  assert.ok(tier365.focusFields.includes('city'));
+  // 1.3 1 year to < 2 years (365 - 730 days) -> Weekly
+  const tier2y = getEventMonitoringTier({ date: '2028-03-01' }, '2026-10-09');
+  assert.equal(tier2y.tierName, 'FROM_1Y_TO_2Y');
+  assert.equal(tier2y.intervalDays, 7);
+  assert.ok(tier2y.focusFields.includes('edition'));
 
-  // 1.4 Distant (> 365 days)
-  const tierFar = getEventMonitoringTier({ date: '2028-03-01' }, '2026-10-09');
-  assert.equal(tierFar.tierName, 'DISTANT');
-  assert.equal(tierFar.intervalDays, 30);
-  assert.ok(tierFar.focusFields.includes('edition'));
+  // 1.4 >= 2 years (>= 730 days) -> Monthly
+  const tierOver2y = getEventMonitoringTier({ date: '2029-03-01' }, '2026-10-09');
+  assert.equal(tierOver2y.tierName, 'OVER_2Y');
+  assert.equal(tierOver2y.intervalDays, 30);
 
   // 1.5 Ended conferences
   const tierEnded = getEventMonitoringTier({ date: '2026-02-01', endDate: '2026-02-02' }, '2026-10-09');
@@ -139,14 +139,21 @@ async function testAll() {
     city: 'Pattaya / Thailand',
     venue: 'Pattaya Exhibition and Convention Hall (PEACH)'
   });
-  // Shift from Dec to Jun (>14 days) is a HIGH severity change -> needs_review for administrator
-  assert.equal(apacrsPreDecision.severity, SEVERITY.HIGH);
-  assert.equal(apacrsPreDecision.action, RECOMMENDED_ACTIONS.NEEDS_REVIEW);
+  // Under Requirement 1 & 2: Shift from Dec to Jun confirmed on official event HP with high confidence is safe_auto_update
+  assert.equal(apacrsPreDecision.action, RECOMMENDED_ACTIONS.SAFE_AUTO_UPDATE);
+
+  // But if from third-party source, must be needs_review
+  const apacrsThirdParty = classifyDecision(apacrsEventOld, {
+    ...localSemanticAnalyzer(apacrsEventOld, 'https://thirdparty-travel.example.com/', apacrsContextCorrect),
+    source_quality: SOURCE_QUALITY.THIRD_PARTY_OR_OTHER,
+    start_date: '2026-06-04'
+  });
+  assert.equal(apacrsThirdParty.action, RECOMMENDED_ACTIONS.NEEDS_REVIEW);
 
   // Post-fix state: already in Pattaya, 2026-06-04 -> clean match
   const apacrsAnalyzedFixed = localSemanticAnalyzer(apacrsEventCurrent, 'https://apacrs2026.org/', apacrsContextCorrect);
   assert.equal(apacrsAnalyzedFixed.mismatches.length, 0);
-  console.log('PASS: 5. APACRS (oph-010): Major schedule/city shift flagged as HIGH severity needs_review; post-fix matches cleanly');
+  console.log('PASS: 5. APACRS (oph-010): Official major schedule/city shift is safe_auto_update; third-party is needs_review; post-fix matches cleanly');
 
   // 3.6 日本臨床視覚電気生理学会: conf-jp-iscev-2027 (第73回 2027年 青森 vs 第74回 2028年 千里)
   const iscevEvent = events.find(e => e.id === 'conf-jp-iscev-2027');

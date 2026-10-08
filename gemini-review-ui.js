@@ -119,16 +119,30 @@
     async recordAction(item, status, reason = '') {
       const key = this.getItemKey(item);
       const now = new Date().toISOString();
+      const firstChange = Array.isArray(item.fieldChanges) && item.fieldChanges.length > 0 ? item.fieldChanges[0] : null;
+
       this.data.items[key] = {
         key,
         eventId: item.eventId,
         eventName: item.eventName,
-        status, // 'acknowledged' | 'rolled_back'
+        status, // 'acknowledged' | 'applied' | 'rollback_requested' | 'rolled_back'
+        field: firstChange?.field || 'all',
+        beforeValue: firstChange?.before || null,
+        afterValue: firstChange?.after || null,
+        currentValue: firstChange?.after || null,
+        fingerprint: key,
         reason,
         fieldChanges: item.fieldChanges || [],
+        evidenceUrl: item.sourceUrl,
         sourceUrl: item.sourceUrl,
+        sourceQuality: item.sourceQuality || null,
+        confidence: item.confidence || null,
+        reportId: activeReport?.date || now.slice(0, 10),
         reportDate: activeReport?.date || now.slice(0, 10),
         timestamp: now,
+        acknowledgedAt: status === 'acknowledged' ? now : undefined,
+        acknowledgedBy: status === 'acknowledged' ? (currentAdminUser?.email || ADMIN_EMAIL) : undefined,
+        rollbackRequestedAt: status === 'rollback_requested' ? now : undefined,
         reviewerEmail: currentAdminUser?.email || ADMIN_EMAIL,
         storagePrimary: 'firestore'
       };
@@ -267,7 +281,14 @@
               </thead>
               <tbody>
                 ${recentHistory.map(entry => {
-                  const statusLabel = entry.status === 'acknowledged' ? '<span class="status-badge ack">確認済み</span>' : '<span class="status-badge rollback">元に戻した</span>';
+                  let statusLabel = '<span class="status-badge ack">確認済み</span>';
+                  if (entry.status === 'applied') {
+                    statusLabel = '<span class="status-badge applied">適用済み</span>';
+                  } else if (entry.status === 'auto_applied') {
+                    statusLabel = '<span class="status-badge auto">自動更新</span>';
+                  } else if (entry.status === 'rolled_back' || entry.status === 'rollback_requested') {
+                    statusLabel = '<span class="status-badge rollback">元に戻した</span>';
+                  }
                   const changesStr = Array.isArray(entry.fieldChanges) && entry.fieldChanges.length > 0
                     ? entry.fieldChanges.map(c => `${c.field}: ${c.before || '未定'} → ${c.after}`).join(', ')
                     : entry.reason || '（詳細なし）';

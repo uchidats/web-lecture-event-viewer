@@ -18,7 +18,7 @@ async function runTests() {
   assert.equal(emailZero.subject, '【OphthalConf】本日の更新はありません');
   assert.ok(emailZero.body.includes('OphthalConf 学会情報監視'));
   assert.ok(emailZero.body.includes('2026年10月10日'));
-  assert.ok(emailZero.body.includes('自動更新予定：0件'));
+  assert.ok(emailZero.body.includes('高信頼自動更新：0件'));
   assert.ok(emailZero.body.includes('要確認：0件'));
   assert.ok(!emailZero.body.includes('■ 要確認'));
   assert.ok(emailZero.body.includes('https://medconf.jp/ophthalconf/'));
@@ -27,7 +27,7 @@ async function runTests() {
   // A.2: Updates with 1-5 items
   const reportUpdates = {
     date: '2026-10-10',
-    wouldAutoUpdateCount: 2,
+    autoAppliedCount: 2,
     adminVisibleItems: [
       {
         eventId: 'conf-jp-surgery-2027',
@@ -40,8 +40,8 @@ async function runTests() {
     ]
   };
   const emailUpdates = composeEmail(reportUpdates);
-  assert.equal(emailUpdates.subject, '【OphthalConf】本日の更新 3件／要確認 1件');
-  assert.ok(emailUpdates.body.includes('自動更新予定：2件'));
+  assert.equal(emailUpdates.subject, '【OphthalConf】自動更新2件／要確認1件');
+  assert.ok(emailUpdates.body.includes('高信頼自動更新：2件'));
   assert.ok(emailUpdates.body.includes('要確認：1件'));
   assert.ok(emailUpdates.body.includes('■ 要確認'));
   assert.ok(emailUpdates.body.includes('第50回 日本眼科手術学会学術総会'));
@@ -61,7 +61,7 @@ async function runTests() {
     }))
   };
   const emailMany = composeEmail(reportMany);
-  assert.equal(emailMany.subject, '【OphthalConf】本日の更新 8件／要確認 7件');
+  assert.equal(emailMany.subject, '【OphthalConf】自動更新1件／要確認7件');
   assert.ok(emailMany.body.includes('第1回 テスト学会'));
   assert.ok(emailMany.body.includes('第5回 テスト学会'));
   assert.ok(!emailMany.body.includes('第6回 テスト学会'), 'Must only include top 5 items in email body');

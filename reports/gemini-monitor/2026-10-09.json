@@ -1,25 +1,35 @@
 {
   "date": "2026-10-09",
-  "generatedAt": "2026-10-08T17:28:29.536Z",
-  "mode": "shadow",
-  "description": "Gemini 3.8 Flash lightweight daily conference monitor report (Shadow Mode)",
+  "generatedAt": "2026-10-08T19:04:37.985Z",
+  "mode": "shadow_simulation",
+  "isApplyMode": false,
+  "description": "Gemini 3.8 Flash Daily Conference Monitor Report (Shadow / Simulation Mode)",
   "metrics": {
     "totalEvents": 94,
-    "monitoredToday": 8,
-    "skippedNotDue": 66,
+    "monitoredToday": 0,
+    "skippedNotDue": 74,
     "skippedEnded": 11,
-    "httpFetched": 8,
+    "httpFetched": 0,
     "hashUnchangedSkipped": 0,
     "geminiCalls": 0,
     "noChange": 0,
     "wouldAutoUpdate": 0,
+    "autoAppliedCount": 0,
+    "adminAppliedCount": 0,
+    "rollbackCount": 0,
     "needsReview": 0,
     "insufficientEvidence": 0,
     "adminVisibleCount": 0,
-    "fetchErrors": 8
+    "massChangeSafeguardTriggered": false
   },
   "adminVisibleItems": [],
   "deferredReviewCount": 0,
   "wouldAutoUpdateCount": 0,
-  "wouldAutoUpdateSummary": []
+  "wouldAutoUpdateSummary": [],
+  "batchApplyResult": {
+    "success": true,
+    "appliedCount": 0,
+    "appliedEvents": [],
+    "mode": "simulation"
+  }
 }

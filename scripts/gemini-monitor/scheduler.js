@@ -1,7 +1,7 @@
 const { SCHEDULE_TIERS, FOCUS_FIELDS } = require('./constants');
 
 /**
- * Calculate difference in calendar days between two YYYY-MM-DD dates (Asia/Tokyo context).
+ * Calculate difference in calendar days between two YYYY-MM-DD dates (UTC/JST date context).
  */
 function diffDays(targetDateStr, baseDateStr) {
   if (!targetDateStr) return 999;
@@ -20,73 +20,150 @@ function addDays(dateStr, days) {
 }
 
 /**
+ * Calculate the next Tuesday (2) or Friday (5) date string for twice-weekly monitoring.
+ * (Requirement 6: 6か月以上〜1年未満：週2回 火曜・金曜)
+ */
+function getNextTwiceWeeklyDate(currentDateStr) {
+  const d = new Date(currentDateStr.slice(0, 10) + 'T00:00:00Z');
+  const dayOfWeek = d.getUTCDay(); // 0: Sun, 1: Mon, 2: Tue, 3: Wed, 4: Thu, 5: Fri, 6: Sat
+
+  let daysToAdd = 1;
+  if (dayOfWeek === 2) {
+    // Tuesday -> next is Friday (+3 days)
+    daysToAdd = 3;
+  } else if (dayOfWeek === 5) {
+    // Friday -> next is Tuesday (+4 days)
+    daysToAdd = 4;
+  } else if (dayOfWeek === 1) {
+    // Monday -> Tuesday (+1 day)
+    daysToAdd = 1;
+  } else if (dayOfWeek === 3) {
+    // Wednesday -> Friday (+2 days)
+    daysToAdd = 2;
+  } else if (dayOfWeek === 4) {
+    // Thursday -> Friday (+1 day)
+    daysToAdd = 1;
+  } else if (dayOfWeek === 6) {
+    // Saturday -> Tuesday (+3 days)
+    daysToAdd = 3;
+  } else if (dayOfWeek === 0) {
+    // Sunday -> Tuesday (+2 days)
+    daysToAdd = 2;
+  }
+
+  return addDays(currentDateStr, daysToAdd);
+}
+
+/**
+ * Check if an event is already completed/ended based on today's date.
+ * (Requirement 5: endDate < today or date < today if single day)
+ */
+function isEventEnded(event, todayStr) {
+  if (event.endDate) {
+    return event.endDate < todayStr;
+  }
+  if (event.date) {
+    return event.date < todayStr;
+  }
+  return false;
+}
+
+/**
  * Determine the tier and focus fields based on days until event.
+ * (Requirement 5 & 6)
  */
 function getEventMonitoringTier(event, todayStr) {
   const eventDate = event.date || event.endDate;
-  if (!eventDate) {
-    return {
-      tierName: 'UNKNOWN',
-      intervalDays: 30,
-      focusFields: FOCUS_FIELDS.DISTANT,
-      daysUntil: 999,
-      isEnded: false
-    };
-  }
-
-  const daysUntil = diffDays(eventDate, todayStr);
-  const isEnded = (event.endDate && event.endDate < todayStr) || (!event.endDate && event.date < todayStr);
+  const isEnded = isEventEnded(event, todayStr);
 
   if (isEnded) {
     return {
       tierName: 'ENDED',
-      intervalDays: 9999,
+      intervalDays: null,
       focusFields: [],
-      daysUntil,
-      isEnded: true
+      daysUntil: eventDate ? diffDays(eventDate, todayStr) : -999,
+      isEnded: true,
+      status: 'completed'
     };
   }
 
-  if (daysUntil <= SCHEDULE_TIERS.IMMINENT.maxDays) {
+  if (!eventDate) {
     return {
-      tierName: 'IMMINENT',
-      intervalDays: SCHEDULE_TIERS.IMMINENT.intervalDays,
-      focusFields: FOCUS_FIELDS.IMMINENT,
-      daysUntil,
-      isEnded: false
+      tierName: 'OVER_2Y',
+      intervalDays: 30,
+      focusFields: FOCUS_FIELDS.OVER_2Y,
+      daysUntil: 999,
+      isEnded: false,
+      status: 'active'
     };
   }
-  if (daysUntil <= SCHEDULE_TIERS.NEAR.maxDays) {
+
+  const daysUntil = diffDays(eventDate, todayStr);
+
+  if (daysUntil < SCHEDULE_TIERS.LESS_THAN_6M.maxDays) {
     return {
-      tierName: 'NEAR',
-      intervalDays: SCHEDULE_TIERS.NEAR.intervalDays,
-      focusFields: FOCUS_FIELDS.NEAR,
+      tierName: 'LESS_THAN_6M',
+      intervalDays: SCHEDULE_TIERS.LESS_THAN_6M.intervalDays, // 1 (daily)
+      focusFields: FOCUS_FIELDS.LESS_THAN_6M,
       daysUntil,
-      isEnded: false
+      isEnded: false,
+      status: 'active'
     };
   }
-  if (daysUntil <= SCHEDULE_TIERS.MEDIUM.maxDays) {
+
+  if (daysUntil < SCHEDULE_TIERS.FROM_6M_TO_1Y.maxDays) {
     return {
-      tierName: 'MEDIUM',
-      intervalDays: SCHEDULE_TIERS.MEDIUM.intervalDays,
-      focusFields: FOCUS_FIELDS.MEDIUM,
+      tierName: 'FROM_6M_TO_1Y',
+      intervalDays: 'twice-weekly', // Tuesday & Friday
+      focusFields: FOCUS_FIELDS.FROM_6M_TO_1Y,
       daysUntil,
-      isEnded: false
+      isEnded: false,
+      status: 'active'
     };
   }
+
+  if (daysUntil < SCHEDULE_TIERS.FROM_1Y_TO_2Y.maxDays) {
+    return {
+      tierName: 'FROM_1Y_TO_2Y',
+      intervalDays: SCHEDULE_TIERS.FROM_1Y_TO_2Y.intervalDays, // 7 (weekly)
+      focusFields: FOCUS_FIELDS.FROM_1Y_TO_2Y,
+      daysUntil,
+      isEnded: false,
+      status: 'active'
+    };
+  }
+
   return {
-    tierName: 'DISTANT',
-    intervalDays: SCHEDULE_TIERS.DISTANT.intervalDays,
-    focusFields: FOCUS_FIELDS.DISTANT,
+    tierName: 'OVER_2Y',
+    intervalDays: SCHEDULE_TIERS.OVER_2Y.intervalDays, // 30 (monthly)
+    focusFields: FOCUS_FIELDS.OVER_2Y,
     daysUntil,
-    isEnded: false
+    isEnded: false,
+    status: 'active'
   };
 }
 
 /**
+ * Calculate the next check date string based on tier.
+ */
+function calculateNextCheckDate(tier, currentDateStr) {
+  if (tier.isEnded) {
+    return null; // Completed, no nextCheckDate
+  }
+
+  if (tier.intervalDays === 'twice-weekly') {
+    return getNextTwiceWeeklyDate(currentDateStr);
+  }
+
+  const days = typeof tier.intervalDays === 'number' ? tier.intervalDays : 1;
+  return addDays(currentDateStr, days);
+}
+
+/**
  * Select events to monitor today from full dataset, considering state cache.
+ * (Requirement 5 & 6)
  *
- * @param {Array} events - Complete list of events (e.g. 94 items from events.js)
+ * @param {Array} events - Complete list of events from events.js
  * @param {string} todayStr - YYYY-MM-DD
  * @param {Object} state - State cache loaded from reports/gemini-monitor-state.json
  * @param {Object} options - Optional flags (e.g. forceAll, singleEventId)
@@ -97,7 +174,7 @@ function selectEventsForToday(events, todayStr, state = {}, options = {}) {
   const skipped = [];
 
   for (const event of events) {
-    // Only monitor conference events (skip co-sponsored seminars, satellite sessions)
+    // Only monitor conferences (skip co-sponsored seminars, satellite sessions)
     if (!event.isConference || event.parentConferenceId) {
       skipped.push({
         eventId: event.id,
@@ -107,19 +184,20 @@ function selectEventsForToday(events, todayStr, state = {}, options = {}) {
       continue;
     }
 
-    // Only monitor conferences or events with an official URL or designated ID
     if (options.singleEventId && event.id !== options.singleEventId) {
       continue;
     }
 
     const tier = getEventMonitoringTier(event, todayStr);
 
-    // If event is already ended, skip it unless specifically targeted
-    if (tier.isEnded && !options.includeEnded && !options.singleEventId) {
+    // Requirement 5: Past ended events are completely excluded from monitoring!
+    // No regular check, no Gemini call, no review item, no email, no nextCheckDate.
+    if (tier.isEnded) {
       skipped.push({
         eventId: event.id,
         title: event.title,
-        reason: 'event-already-ended',
+        reason: 'event-already-ended-completed',
+        isEnded: true,
         daysUntil: tier.daysUntil
       });
       continue;
@@ -161,6 +239,9 @@ function selectEventsForToday(events, todayStr, state = {}, options = {}) {
 module.exports = {
   diffDays,
   addDays,
+  getNextTwiceWeeklyDate,
+  isEventEnded,
   getEventMonitoringTier,
+  calculateNextCheckDate,
   selectEventsForToday
 };
