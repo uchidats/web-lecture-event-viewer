@@ -65,5 +65,20 @@
 .gemini-card-actions .btn-sm { padding: 4px 10px; font-size: 0.8rem; border-radius: 6px; cursor: pointer; }
 .gemini-shadow-details { margin-top: 14px; font-size: 0.85rem; color: #475569; }
 .gemini-shadow-details summary { cursor: pointer; font-weight: 600; }
+.gemini-history-details { margin-top: 16px; border-top: 1px dashed #cbd5e1; padding-top: 12px; font-size: 0.85rem; }
+.gemini-history-details summary { cursor: pointer; font-weight: 600; color: #475569; margin-bottom: 8px; }
+.gemini-history-table-wrap { overflow-x: auto; max-width: 100%; }
+.gemini-history-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; min-width: 460px; }
+.gemini-history-table th, .gemini-history-table td { border: 1px solid #e2e8f0; padding: 6px 8px; text-align: left; }
+.gemini-history-table th { background: #f8fafc; font-weight: 600; color: #475569; }
+.status-badge { font-size: 0.75rem; font-weight: bold; padding: 2px 6px; border-radius: 4px; display: inline-block; }
+.status-badge.ack { background: #dcfce7; color: #166534; }
+.status-badge.rollback { background: #fee2e2; color: #991b1b; }
 .legacy-review-details { margin-top: 20px; border-top: 1px solid #cbd5e1; padding-top: 10px; }
+
+@media (max-width: 480px) {
+  .gemini-card-actions { flex-direction: column; }
+  .gemini-card-actions .btn-sm { width: 100%; text-align: center; }
+  .gemini-monitor-header { flex-direction: column; align-items: flex-start; }
+}
 

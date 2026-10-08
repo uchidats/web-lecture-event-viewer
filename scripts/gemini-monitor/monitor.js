@@ -7,6 +7,7 @@ const { extractMonitoringContext } = require('./extractor');
 const { analyzeEventWithGemini } = require('./gemini-analyzer');
 const { classifyDecision, prioritizeAdminReviewItems } = require('./classifier');
 const { loadRollbackHistory, saveRollbackHistory, recordSnapshot } = require('./rollback-manager');
+const { sendDailyMonitorNotification } = require('./notifier');
 const { RECOMMENDED_ACTIONS, THRESHOLDS } = require('./constants');
 
 /**
@@ -224,10 +225,21 @@ async function runGeminiMonitor(options = {}) {
   writeJson(stateFile, state);
   saveRollbackHistory(root, rollbackHistory);
 
+  // 11. Send daily health-check email notification
+  let notification = null;
+  if (!options.skipEmail) {
+    notification = await sendDailyMonitorNotification(dailyReport, {
+      smtpUser: options.smtpUser,
+      smtpPass: options.smtpPass,
+      to: options.notificationEmail
+    });
+  }
+
   return {
     reportFilePath,
     report: dailyReport,
-    metrics
+    metrics,
+    notification
   };
 }
 

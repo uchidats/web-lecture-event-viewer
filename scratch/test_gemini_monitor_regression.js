@@ -230,6 +230,17 @@ async function testAll() {
   assert.equal(suppressedCheck.action, RECOMMENDED_ACTIONS.NO_CHANGE);
   console.log('PASS: Rollback restores state, records suppression, and prevents reapplication next day');
 
+  console.log('\n--- Test Suite 6: Independence from Legacy Review System ---');
+  const monitorFiles = ['constants.js', 'scheduler.js', 'fetcher.js', 'extractor.js', 'gemini-analyzer.js', 'classifier.js', 'rollback-manager.js', 'monitor.js'];
+  for (const file of monitorFiles) {
+    const code = fs.readFileSync(path.join(root, 'scripts/gemini-monitor', file), 'utf8');
+    assert.ok(!code.includes('auto-update-review'), `${file} must not reference legacy auto-update-review`);
+    assert.ok(!code.includes('review-data'), `${file} must not reference review-data`);
+    assert.ok(!code.includes('review-model'), `${file} must not reference review-model`);
+    assert.ok(!code.includes('OphthalReview'), `${file} must not reference OphthalReview`);
+  }
+  console.log('PASS: Complete isolation verified - scripts/gemini-monitor/ does not reference any legacy review state, model, or review data files');
+
   console.log('\n--- ALL GEMINI MONITOR REGRESSION TESTS PASSED SUCCESSFULLY! ---');
 }
 

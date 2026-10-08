@@ -133,8 +133,10 @@ function executeRollback(root, snapshotId, reason, options = {}) {
     } catch (_) {}
   }
 
-  // If this was an applied update in events.js (non-shadow mode), restore values in events.js
-  if (snapshot.status === 'applied' && !options.skipFileRestore) {
+  // During shadow mode, rollback tests the history & suppression update without modifying events.js.
+  // Full dataset restoration in events.js will be connected once production auto-apply is officially enabled.
+  const isShadowMode = options.shadowMode !== false && snapshot.status !== 'applied';
+  if (!isShadowMode && snapshot.status === 'applied' && !options.skipFileRestore) {
     const dataset = loadEvents(root);
     const event = dataset.events.find(e => e.id === snapshot.eventId);
     if (event && snapshot.beforeValues) {
@@ -148,6 +150,7 @@ function executeRollback(root, snapshotId, reason, options = {}) {
   return {
     success: true,
     snapshotId,
+    mode: isShadowMode ? 'shadow_test' : 'applied_restored',
     rolledBackAt,
     suppressionCount: snapshot.fieldChanges.length
   };

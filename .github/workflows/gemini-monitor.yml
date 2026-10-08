@@ -26,6 +26,9 @@ jobs:
     env:
       TZ: Asia/Tokyo
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      SMTP_USER: ${{ secrets.SMTP_USER }}
+      SMTP_PASS: ${{ secrets.SMTP_PASS }}
+      NOTIFICATION_EMAIL: ${{ secrets.NOTIFICATION_EMAIL || 'uchidats@gmail.com' }}
     steps:
       - uses: actions/checkout@v7
         with:
