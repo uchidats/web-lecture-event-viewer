@@ -123,6 +123,25 @@ async function main() {
     await evaluate('document.querySelector("[data-decision=approved]").click()');
     assert.equal(await evaluate('!!sampleEvents.find(e=>e.id==="conf-int-ascrs-2027").eventOfficialUrl'), false);
     assert.ok(await evaluate('!!document.getElementById("review-export-urls")'));
+    const metadataAudit=require('../reports/event-metadata-audit-2026-10-09.json').records.find(r=>r.eventId==='conf-jp-presbyopia-2027');
+    const metadataValue=Object.fromEntries(metadataAudit.differences.filter(c=>!['year','edition'].includes(c.field)&&c.confidence>=.95).map(c=>[c.field,c.official]));
+    const metadataItem={id:'metadata-case',eventId:metadataAudit.eventId,field:'eventMetadata',value:metadataValue,oldValue:metadataAudit.currentSnapshot,
+      audit:metadataAudit,reviewSnapshot:metadataAudit.currentSnapshot,requiresHumanApproval:true,priority:'高',confidence:.97,
+      reason:'metadata-audit-possible-wrong-edition',url:'https://www.rousi.jp/jps4'};
+    await evaluate(`window.fetch=async()=>({ok:true,json:async()=>({version:1,items:[${JSON.stringify(metadataItem)}]})});document.getElementById('review-reload').click();`);
+    for(let i=0;i<30&&!await evaluate('!!document.querySelector(".audit-table")');i++)await delay(100);
+    assert.equal(await evaluate('document.querySelectorAll(".audit-table tbody tr").length'),12);
+    assert.ok(await evaluate('document.getElementById("review-list").textContent.includes("2026/01/17")'));
+    assert.ok(await evaluate('document.getElementById("review-list").textContent.includes("アンメットニーズはここにある")'));
+    assert.ok(await evaluate('document.getElementById("review-list").textContent.includes("表記差")'));
+    assert.equal(await evaluate('!!document.querySelector(".review-automation")'),false);
+    for(const width of [1280,390,320]){
+      await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});
+      assert.ok(await evaluate('document.getElementById("review-dialog").scrollWidth<=document.getElementById("review-dialog").clientWidth'));
+    }
+    await evaluate('document.querySelector("[data-decision=approved]").click()');
+    assert.equal(await evaluate('sampleEvents.find(e=>e.id==="conf-jp-presbyopia-2027").date'),'2026-01-17');
+    assert.ok(await evaluate('!!document.getElementById("review-export-metadata")'));
     await evaluate('document.getElementById("review-close").click(); document.getElementById("calendar-settings-btn").click()');
     assert.equal(await evaluate('document.getElementById("calendar-settings-modal").open'), true);
     assert.equal(await evaluate('OphthalAuth.snapshot().phase'), 'unconfigured');

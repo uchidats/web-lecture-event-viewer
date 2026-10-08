@@ -64,7 +64,7 @@ vm.runInContext(`
   const before = JSON.stringify(sampleEvents);
   for (const e of sampleEvents) {
     const html = createEventCardHtml(e);
-    if (['oph-004', 'oph-010'].includes(e.id)) assert.ok(html.includes('日本時間'));
+    if (e.id === 'oph-004') assert.ok(html.includes('日本時間'));
     else assert.ok(!html.includes('class="japan-time"'), e.id);
   }
   assert.equal(JSON.stringify(sampleEvents), before);

@@ -1,0 +1,428 @@
+{
+  "basis": "event-metadata-audit-2026-10-09.json",
+  "corrected": 13,
+  "held": 1,
+  "results": [
+    {
+      "eventId": "conf-jp-perimetry-2026",
+      "title": "第15回日本視野画像学会学術集会",
+      "status": "corrected",
+      "sources": [
+        "https://n-practice.co.jp/jips2026/outline/index.html",
+        "https://n-practice.co.jp/jips2026/",
+        "https://n-practice.co.jp/jips2026/subject/index.html"
+      ],
+      "changes": [
+        {
+          "field": "title",
+          "before": "第38回 日本視野画像学会学術集会",
+          "after": "第15回日本視野画像学会学術集会"
+        },
+        {
+          "field": "subtitle",
+          "before": "視野検査と最先端画像診断のフロンティア",
+          "after": "視覚のファントム -Phantoms in Vision-"
+        },
+        {
+          "field": "venue",
+          "before": "東京慈恵会医科大学 講堂",
+          "after": "東京慈恵会医科大学 1号館 講堂"
+        },
+        {
+          "field": "eventOfficialUrl",
+          "before": null,
+          "after": "https://n-practice.co.jp/jips2026/"
+        }
+      ]
+    },
+    {
+      "eventId": "oph-010",
+      "title": "38th APACRS – 55th RCOPT Joint Annual Meeting",
+      "status": "corrected",
+      "sources": [
+        "https://apacrs2026.org/"
+      ],
+      "changes": [
+        {
+          "field": "title",
+          "before": "APACRS 2026 (Asia-Pacific Association of Cataract & Refractive Surgeons)",
+          "after": "38th APACRS – 55th RCOPT Joint Annual Meeting"
+        },
+        {
+          "field": "subtitle",
+          "before": "Precision and Artistry in Anterior Segment Surgery",
+          "after": "未確認"
+        },
+        {
+          "field": "date",
+          "before": "2026-12-17",
+          "after": "2026-06-04"
+        },
+        {
+          "field": "endDate",
+          "before": "2026-12-20",
+          "after": "2026-06-06"
+        },
+        {
+          "field": "time",
+          "before": "08:30 - 18:00 (現地時間)",
+          "after": "全日程"
+        },
+        {
+          "field": "venue",
+          "before": "Suntec Singapore Convention & Exhibition Centre",
+          "after": "Pattaya Exhibition and Convention Hall (PEACH)"
+        },
+        {
+          "field": "venueId",
+          "before": "suntec-singapore",
+          "after": null
+        },
+        {
+          "field": "abstractSubmission",
+          "before": {
+            "status": "closed",
+            "startDate": "2026-06-01",
+            "deadline": "2026-08-10 23:59",
+            "url": "https://example.com/apacrs2026/abstracts"
+          },
+          "after": {
+            "status": "unknown",
+            "startDate": null,
+            "deadline": null,
+            "url": null
+          }
+        },
+        {
+          "field": "officialUrl",
+          "before": "https://example.com/apacrs2026-singapore",
+          "after": ""
+        },
+        {
+          "field": "pdfUrl",
+          "before": "apacrs2026_singapore.pdf",
+          "after": ""
+        },
+        {
+          "field": "period",
+          "before": "2026年12月17日(木) 〜 12月20日(日)",
+          "after": "2026年6月4日(木) 〜 2026年6月6日(土)"
+        },
+        {
+          "field": "cityCountry",
+          "before": "シンガポール / シンガポール共和国",
+          "after": "Pattaya / Thailand"
+        },
+        {
+          "field": "abstractDeadline",
+          "before": "2026年8月10日(月) 締切済",
+          "after": "未確認"
+        },
+        {
+          "field": "earlyBirdDeadline",
+          "before": "2026年10月31日(土) まで受付中",
+          "after": "未確認"
+        },
+        {
+          "field": "eventOfficialUrl",
+          "before": null,
+          "after": "https://apacrs2026.org/"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-presbyopia-2027",
+      "title": "日本老視学会 第4回学術総会",
+      "status": "corrected",
+      "sources": [
+        "https://www.rousi.jp/jps4-summary",
+        "https://www.rousi.jp/jps4"
+      ],
+      "changes": [
+        {
+          "field": "title",
+          "before": "第4回 日本老視学会学術総会",
+          "after": "日本老視学会 第4回学術総会"
+        },
+        {
+          "field": "subtitle",
+          "before": "老視矯正のサイエンスと臨床実践",
+          "after": "アンメットニーズはここにある"
+        },
+        {
+          "field": "date",
+          "before": "2027-01-16",
+          "after": "2026-01-17"
+        },
+        {
+          "field": "endDate",
+          "before": "2027-01-17",
+          "after": "2026-01-18"
+        },
+        {
+          "field": "venue",
+          "before": "御茶ノ水ソラシティカンファレンスセンター",
+          "after": "品川THE GRAND HALL"
+        },
+        {
+          "field": "period",
+          "before": "2027年1月16日(土) 〜 1月17日(日)",
+          "after": "2026年1月17日(土) 〜 2026年1月18日(日)"
+        },
+        {
+          "field": "eventOfficialUrl",
+          "before": null,
+          "after": "https://www.rousi.jp/jps4"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-iscev-2027",
+      "title": "第73回 日本臨床視覚電気生理学会",
+      "status": "corrected",
+      "sources": [
+        "https://n-practice.co.jp/jscev/meeting/latest.html",
+        "https://www.congre.co.jp/73jscev/"
+      ],
+      "changes": [
+        {
+          "field": "title",
+          "before": "第75回 日本臨床視覚電気生理学会",
+          "after": "第73回 日本臨床視覚電気生理学会"
+        },
+        {
+          "field": "eventOfficialUrl",
+          "before": null,
+          "after": "https://www.congre.co.jp/73jscev/"
+        }
+      ]
+    },
+    {
+      "eventId": "oph-014",
+      "title": "第38回 日本緑内障学会",
+      "status": "corrected",
+      "sources": [
+        "https://site2.convention.co.jp/jgs2027/info/",
+        "https://site2.convention.co.jp/jgs2027/"
+      ],
+      "changes": [
+        {
+          "field": "date",
+          "before": "2027-04-20",
+          "after": "2027-04-23"
+        },
+        {
+          "field": "period",
+          "before": "2027年4月20日(火) 〜 4月23日(金)",
+          "after": "2027年4月23日(金)"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-perimetry-2027",
+      "title": "第16回日本視野画像学会学術集会",
+      "status": "corrected",
+      "sources": [
+        "https://www.ganki.jp/jips2027/",
+        "https://www.ganki.jp/jips2027/information.html"
+      ],
+      "changes": [
+        {
+          "field": "title",
+          "before": "第39回 日本視野画像学会学術集会",
+          "after": "第16回日本視野画像学会学術集会"
+        },
+        {
+          "field": "subtitle",
+          "before": "構造と機能の次世代イメージング解析",
+          "after": "Beyond Boundaries 伝統を礎に未来へ"
+        },
+        {
+          "field": "eventOfficialUrl",
+          "before": null,
+          "after": "https://www.ganki.jp/jips2027/"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-myopia-2027",
+      "title": "第9回 日本近視学会総会",
+      "status": "corrected",
+      "sources": [
+        "https://www.ganki.jp/myopia2027/",
+        "https://www.ganki.jp/myopia2027/information.html"
+      ],
+      "changes": [
+        {
+          "field": "title",
+          "before": "第8回 日本近視学会総会",
+          "after": "第9回 日本近視学会総会"
+        },
+        {
+          "field": "subtitle",
+          "before": "近視パンデミックに対峙するエビデンスと実践",
+          "after": "Together for Lifelong Myopia Care"
+        },
+        {
+          "field": "eventOfficialUrl",
+          "before": null,
+          "after": "https://www.ganki.jp/myopia2027/"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-oncology-2027",
+      "title": "第44回日本眼腫瘍学会",
+      "status": "corrected",
+      "sources": [
+        "https://www.ganki.jp/jsoo2027/information.html",
+        "https://www.jsoo.jp/society"
+      ],
+      "changes": [
+        {
+          "field": "title",
+          "before": "第14回 日本眼腫瘍学会",
+          "after": "第44回日本眼腫瘍学会"
+        },
+        {
+          "field": "eventOfficialUrl",
+          "before": null,
+          "after": "https://www.ganki.jp/jsoo2027/"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-ai-2027",
+      "title": "第3回 日本眼科AI学会総会",
+      "status": "held",
+      "reason": "2027年の公式開催情報を確認できない。2022年の過去回へ置き換えず、未確認として非表示にする案を提示。現段階では保存ID・表示ロジックを変更しない。",
+      "sources": [
+        "https://www.jsaio.jp/meeting/"
+      ],
+      "changes": []
+    },
+    {
+      "eventId": "conf-jp-presbyopia-2028",
+      "title": "日本老視学会 第5回学術総会",
+      "status": "corrected",
+      "sources": [
+        "https://www.rousi.jp/jps5-overview",
+        "https://www.rousi.jp/jps5"
+      ],
+      "changes": [
+        {
+          "field": "title",
+          "before": "第5回 日本老視学会学術総会",
+          "after": "日本老視学会 第5回学術総会"
+        },
+        {
+          "field": "subtitle",
+          "before": "老視研究と最新治療テクノロジー",
+          "after": "老視克服への新たな冒険"
+        },
+        {
+          "field": "date",
+          "before": "2028-01-15",
+          "after": "2027-01-16"
+        },
+        {
+          "field": "endDate",
+          "before": "2028-01-16",
+          "after": "2027-01-17"
+        },
+        {
+          "field": "region",
+          "before": "関西",
+          "after": "関東"
+        },
+        {
+          "field": "venue",
+          "before": "京都テルサ（京都府民総合交流プラザ）",
+          "after": "御茶ノ水ソラシティ カンファレンスセンター"
+        },
+        {
+          "field": "period",
+          "before": "2028年1月15日(土) 〜 1月16日(日)",
+          "after": "2027年1月16日(土) 〜 2027年1月17日(日)"
+        },
+        {
+          "field": "cityCountry",
+          "before": "京都市（京都府） / 日本",
+          "after": "東京都 / 日本"
+        },
+        {
+          "field": "eventOfficialUrl",
+          "before": null,
+          "after": "https://www.rousi.jp/jps5"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-iscev-2028",
+      "title": "第74回 日本臨床視覚電気生理学会（韓日合同学会）",
+      "status": "corrected",
+      "sources": [
+        "https://n-practice.co.jp/jscev/meeting/latest.html"
+      ],
+      "changes": [
+        {
+          "field": "title",
+          "before": "第76回 日本臨床視覚電気生理学会（韓日合同）",
+          "after": "第74回 日本臨床視覚電気生理学会（韓日合同学会）"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-perimetry-2028",
+      "title": "第17回日本視野画像学会学術集会",
+      "status": "corrected",
+      "sources": [
+        "https://square.umin.ac.jp/jips/meeting-seminar/meeting.html"
+      ],
+      "changes": [
+        {
+          "field": "title",
+          "before": "第40回 日本視野画像学会学術集会",
+          "after": "第17回日本視野画像学会学術集会"
+        },
+        {
+          "field": "venue",
+          "before": "東京慈恵会医科大学",
+          "after": "東京慈恵会医科大学 講堂"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-myopia-2028",
+      "title": "第10回日本近視学会総会",
+      "status": "corrected",
+      "sources": [
+        "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+        "https://www.ganki.jp/"
+      ],
+      "changes": [
+        {
+          "field": "title",
+          "before": "第9回 日本近視学会総会",
+          "after": "第10回日本近視学会総会"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-inflammation-2028",
+      "title": "第64回日本眼感染症学会・第61回日本眼炎症学会・第11回日本眼科アレルギー学会・第16回日本涙道・涙液学会総会",
+      "status": "corrected",
+      "sources": [
+        "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+        "https://www.ganki.jp/"
+      ],
+      "changes": [
+        {
+          "field": "title",
+          "before": "第65回 日本眼感染症学会・第61回 日本眼炎症学会・第60回 日本眼科アレルギー学会・第47回 日本涙道・涙液学会総会",
+          "after": "第64回日本眼感染症学会・第61回日本眼炎症学会・第11回日本眼科アレルギー学会・第16回日本涙道・涙液学会総会"
+        }
+      ]
+    }
+  ]
+}

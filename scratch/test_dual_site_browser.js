@@ -84,6 +84,29 @@ async function main() {
       throw new Error('Page not ready: ' + route);
     };
     await navigate('/');
+    // Official high-priority correction cards, rendered with the production card function.
+    const corrected=require('../reports/event-metadata-high-priority-fixes-2026-10-09.json').results.filter(r=>r.status==='corrected');
+    for(const width of [1280,390,320]) {
+      await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});
+      for(const route of ['/','/ophthalconf/']) {
+        await navigate(route);
+        await evaluate(`elements.eventList.innerHTML = ${JSON.stringify(corrected.map(r=>r.eventId))}.map(id=>createEventCardHtml(sampleEvents.find(e=>e.id===id))).join('');`);
+        const cards=await evaluate(`(() => [...document.querySelectorAll('.event-card')].map(card=>{
+          const e=sampleEvents.find(e=>e.id===card.dataset.id),link=card.querySelector('.conference-title-link');
+          return {id:e.id,title:card.querySelector('.card-title').textContent,expectedTitle:e.title,
+            venue:card.querySelector('.location-text').textContent,expectedVenue:getEventVenueName(e),
+            dateShown:card.textContent.includes(e.period),url:link?.getAttribute('href')||null,expectedUrl:e.eventOfficialUrl||null,
+            fits:card.scrollWidth<=card.clientWidth+1};
+        }))()`);
+        assert.equal(cards.length,13);
+        for(const card of cards){assert.equal(card.title,card.expectedTitle);assert.ok(card.venue.includes(card.expectedVenue),card.id+' venue');assert.ok(card.dateShown,card.id+' date');assert.equal(card.url,card.expectedUrl);assert.ok(card.fits,width+' '+route+' '+card.id);}
+        assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth+1'));
+        const screenshot=await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
+        fs.writeFileSync(path.join(root,'scratch',`high-priority-${route==='/'?'root':'ophthalconf'}-${width}.png`),Buffer.from(screenshot.data,'base64'));
+        console.log(`PASS: 13 corrected cards title/date/venue/link at ${width}px ${route}, no overflow`);
+      }
+    }
+    await navigate('/');
     await evaluate(`localStorage.setItem('ophthalconf_attending_conferences',JSON.stringify(['oph-011']));
       localStorage.setItem('ophthalconf_hidden_conferences',JSON.stringify(['oph-014']));
       localStorage.setItem('ophthalconf_conference_attendance_history',JSON.stringify({'conf-jp-jos-2026':{status:'attended',notes:'keep history',roles:['chair']}}));

@@ -129,10 +129,12 @@ async function main() {
   assert.equal(queue.items[0].occurrences, 2);
   const realEvents = loadEvents(root).events;
   const audit = require('../reports/event-url-missing-audit-2026-10-08.json');
+  const corrections=require('../reports/event-metadata-high-priority-fixes-2026-10-09.json').results;
   for (const record of audit.records) {
     const current = realEvents.find(e => e.id === record.id);
-    for (const field of ['title', 'date', 'endDate', 'venue']) assert.equal(current[field], record[field], `${record.id}: unchanged ${field}`);
-    if (record.status === 'needs-review') assert.equal(current.eventOfficialUrl, undefined, `${record.id}: held URL`);
+    const changes=corrections.find(r=>r.eventId===record.id)?.changes||[];
+    for (const field of ['title', 'date', 'endDate', 'venue']) assert.equal(current[field], changes.find(c=>c.field===field)?.after??record[field], `${record.id}: audited ${field}`);
+    if (record.status === 'needs-review') assert.equal(current.eventOfficialUrl, changes.find(c=>c.field==='eventOfficialUrl')?.after, `${record.id}: reviewed URL`);
   }
   const callsAlreadySet = [];
   assert.equal((await discoverMissingEventUrls({ events: realEvents.filter(e => e.eventOfficialUrl), config,

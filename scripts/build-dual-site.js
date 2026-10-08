@@ -5,7 +5,7 @@ const PUBLIC_FILES = ['index.html', 'style.css', 'review.css', 'venues.js', 'com
   'google-calendar-config.js', 'google-calendar.js', 'script.js', 'firebase-config.js', 'firebase-auth.js',
   'review-data.js', 'review-config.js', 'review-model.js', 'review-ui.js'];
 const PUBLIC_REPORTS = ['auto-update-review.json', 'auto-update-report.json', 'venue-corrections.json',
-  'event-url-audit-2026-10-07.json', 'event-url-missing-audit-2026-10-08.json'];
+  'event-url-audit-2026-10-07.json', 'event-url-missing-audit-2026-10-08.json', 'event-metadata-audit-2026-10-09.json'];
 
 function buildDualSite(root = path.resolve(__dirname, '..')) {
   root = path.resolve(root);

@@ -25,9 +25,9 @@ endedConfs.forEach(e => {
   console.log(`  - [${e.id}] ${e.title} (endDate: ${e.endDate || e.date})`);
 });
 
-// 終了学会が7件であることを確認
-if (endedConfs.length !== 7) {
-  console.error(`FAIL: Expected 7 ended conferences, got ${endedConfs.length}`);
+// APACRSと第4回老視学会の公式会期修正により終了学会は9件。
+if (endedConfs.length !== 9) {
+  console.error(`FAIL: Expected 9 ended conferences, got ${endedConfs.length}`);
   process.exit(1);
 }
 
@@ -127,8 +127,8 @@ console.log('PASS: All conferences shown when includeEndedConferences is true');
 const year2026EndedOn = simulateFilter({ includeEndedConferences: true, years: new Set([2026]) });
 const year2026EndedOff = simulateFilter({ includeEndedConferences: false, years: new Set([2026]) });
 console.log(`2026 with ended confs: ${year2026EndedOn.length}, without: ${year2026EndedOff.length} (diff: ${year2026EndedOn.length - year2026EndedOff.length})`);
-if (year2026EndedOn.length - year2026EndedOff.length !== 7) {
-  console.error(`FAIL: Difference should be 7 (all 7 ended conferences are in 2026), got ${year2026EndedOn.length - year2026EndedOff.length}`);
+if (year2026EndedOn.length - year2026EndedOff.length !== 9) {
+  console.error(`FAIL: Difference should be 9 (all 9 ended conferences are in 2026), got ${year2026EndedOn.length - year2026EndedOff.length}`);
   process.exit(1);
 }
 console.log('PASS: Year filter + includeEndedConferences combination works correctly');

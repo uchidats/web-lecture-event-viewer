@@ -1,7 +1,7 @@
 (function (root) {
   'use strict';
   const storageKey = 'ophthalconf.review-decisions.v1';
-  const fieldLabels = { eventOfficialUrl: '開催回のイベント公式URL', societyUrl: '学会本体URL', registration: '参加登録期間', title: '学会名', date: '開催開始日', endDate: '開催終了日', venue: '開催会場', city: '開催都市', country: '開催国', officialUrl: '公式サイトURL（旧項目）',
+  const fieldLabels = { eventMetadata: '公式情報との整合性監査（まとめて確認）', subtitle: 'テーマ／サブタイトル', sponsor: '主催学会', edition: '回次', year: '開催年', cityCountry: '開催地', eventOfficialUrl: '開催回のイベント公式URL', societyUrl: '学会本体URL', registration: '参加登録期間', title: '学会名', date: '開催開始日', endDate: '開催終了日', venue: '開催会場', city: '開催都市', country: '開催国', officialUrl: '公式サイトURL（旧項目）',
     'abstractSubmission.startDate': '演題募集開始', 'abstractSubmission.deadline': '演題締切', 'abstractSubmission.status': '演題募集状況', 'abstractSubmission.url': '演題募集URL' };
   const reasonLabels = { 'multiple-candidates': '公式サイトに複数の候補があります', 'related-field-needs-review': '関連する情報に確認が必要です',
     'discovery-single-high-confidence': '開催年・開催回・学会名が一致する公式URLを発見しました（追加前の確認）',
@@ -34,6 +34,7 @@
   const statuses = { open: '募集中', upcoming: '募集開始前', closed: '募集終了', unknown: '未確認' };
   function safeUrl(value) { try { const url = new URL(value); return url.protocol === 'https:' && !url.username && !url.password ? url.href : null; } catch { return null; } }
   function riskLevel(item) {
+    if (item.audit) return item.priority === '高' ? 'high' : item.priority === '中' ? 'medium' : 'low';
     if (item.field === 'eventOfficialUrl') return 'high';
     if (['title', 'date', 'endDate', 'venue', 'city', 'country'].includes(item.field) || item.reason === 'official-domain-changed') return 'high';
     if (['officialUrl', 'societyUrl'].includes(item.field)) {
@@ -50,6 +51,7 @@
   }
   function formatValue(field, value) {
     if (value == null || value === '') return '未入力';
+    if (field === 'eventMetadata') return Object.entries(value).filter(([k])=>['title','date','endDate','venue','subtitle','sponsor','eventOfficialUrl'].includes(k)).map(([k,v])=>`${fieldLabels[k] || k}：${v ?? '未確認'}`).join(' / ');
     if (field === 'registration' && Array.isArray(value.periods)) return value.periods.map(p => `${p?.label || '名称未確認'}：${p?.start ? p.start + ' ～ ' : ''}${p?.deadline || '締切未確認'}`).join(' / ');
     if (field === 'abstractSubmission.status') return statuses[value] || '未確認の状態';
     return String(value).replace(/^(\d{4})-(\d{2})-(\d{2})/, '$1/$2/$3');
@@ -57,11 +59,12 @@
   function normalize(data) {
     return data.items.filter(item => item.status === 'needs-review' || !item.status).map(item => {
       const signature = JSON.stringify([item.eventId, item.field, item.oldValue, item.value, item.reason, item.url, item.evidence,
-        ...(item.requiresHumanApproval ? [item.checks, item.reviewSnapshot, item.fetchFailure, item.officialEvidence] : [])]);
+        ...(item.requiresHumanApproval ? [item.checks, item.reviewSnapshot, item.fetchFailure, item.officialEvidence] : []),
+        ...(item.audit ? [item.audit.category,item.audit.comparisons] : [])]);
       return { ...item, reviewId: item.id || signature, signature, riskLevel: riskLevel(item),
         blocked: item.reason === 'mass-change-limit', actionable: !!item.field && !!safeUrl(item.url) &&
           (!['eventOfficialUrl', 'societyUrl'].includes(item.field) || !!safeUrl(item.value)) &&
-          (typeof item.value === 'string' && !!item.value || item.field === 'registration' && item.reason !== 'invalid-registration' && ['domestic', 'international'].includes(item.value?.type) &&
+          (item.field === 'eventMetadata' && !!item.audit && item.value && typeof item.value === 'object' && Object.keys(item.value).length > 0 || typeof item.value === 'string' && !!item.value || item.field === 'registration' && item.reason !== 'invalid-registration' && ['domestic', 'international'].includes(item.value?.type) &&
             Array.isArray(item.value.periods) && item.value.periods.length > 0 && item.value.periods.every(p => p && typeof p.label === 'string' && !!p.label && (p.start || p.deadline))) };
     });
   }
@@ -81,7 +84,7 @@
       }
       const data = read();
       const previous = latest(item, reviewerId);
-      const candidateFlag = item.riskLevel === 'low' && automationCandidate === true;
+      const candidateFlag = !item.audit && item.riskLevel === 'low' && automationCandidate === true;
       if (previous?.decision === decision && previous.automationCandidate === candidateFlag) return previous;
       const entry = { reviewId: item.reviewId, signature: item.signature, reviewerId, eventId: item.eventId, decision, decidedAt: now,
         field: item.field, reason: item.reason, riskLevel: item.riskLevel, oldValue: item.oldValue, value: item.value,
@@ -100,7 +103,13 @@
         .map(item => ({ item, decision: latest(item, reviewerId) })).filter(row => row.decision?.decision === 'approved')
         .map(({ item, decision }) => ({ ...decision, signature: item.signature })) };
     }
-    return { read, latest, decide, statistics, exportEventUrlApprovals };
+    function exportMetadataApprovals(items, reviewerId) {
+      if (!reviewerId) throw new Error('承認者が未確認です。');
+      return { version: 1, kind: 'event-metadata-human-approvals', decisions: items.filter(item=>item.actionable && item.field==='eventMetadata')
+        .map(item=>({item,decision:latest(item,reviewerId)})).filter(row=>row.decision?.decision==='approved')
+        .map(({item,decision})=>({...decision,signature:item.signature})) };
+    }
+    return { read, latest, decide, statistics, exportEventUrlApprovals, exportMetadataApprovals };
   }
   function isAdminUser(user) {
     return !!user?.uid && user.email === 'uchidats@gmail.com' && user.emailVerified === true;

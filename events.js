@@ -248,13 +248,13 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-perimetry-2026",
-    "title": "第38回 日本視野画像学会学術集会",
-    "subtitle": "視野検査と最先端画像診断のフロンティア",
+    "title": "第15回日本視野画像学会学術集会",
+    "subtitle": "視覚のファントム -Phantoms in Vision-",
     "date": "2026-05-16",
     "endDate": "2026-05-17",
     "time": "全日程",
     "region": "関東",
-    "venue": "東京慈恵会医科大学 講堂",
+    "venue": "東京慈恵会医科大学 1号館 講堂",
     "specialty": "その他",
     "eventType": "国内学会",
     "format": "現地",
@@ -294,7 +294,8 @@ const sampleEvents = [
       "AI画像診断"
     ],
     "description": "静的動的視野解析、OCT/OCTA画像診断、緑内障・神経眼科疾患の機能構造連関を検討。",
-    "isConference": true
+    "isConference": true,
+    "eventOfficialUrl": "https://n-practice.co.jp/jips2026/"
   },
   {
     "id": "oph-008",
@@ -1271,14 +1272,13 @@ const sampleEvents = [
   },
   {
     "id": "oph-010",
-    "title": "APACRS 2026 (Asia-Pacific Association of Cataract & Refractive Surgeons)",
-    "subtitle": "Precision and Artistry in Anterior Segment Surgery",
-    "date": "2026-12-17",
-    "endDate": "2026-12-20",
-    "time": "08:30 - 18:00 (現地時間)",
+    "title": "38th APACRS – 55th RCOPT Joint Annual Meeting",
+    "subtitle": "未確認",
+    "date": "2026-06-04",
+    "endDate": "2026-06-06",
+    "time": "全日程",
     "region": "海外",
-    "venue": "Suntec Singapore Convention & Exhibition Centre",
-    "venueId": "suntec-singapore",
+    "venue": "Pattaya Exhibition and Convention Hall (PEACH)",
     "specialty": "白内障",
     "eventType": "海外学会",
     "format": "現地",
@@ -1288,10 +1288,10 @@ const sampleEvents = [
     "conferenceCategory": "白内障屈折",
     "conferenceTier": "primary",
     "abstractSubmission": {
-      "status": "closed",
-      "startDate": "2026-06-01",
-      "deadline": "2026-08-10 23:59",
-      "url": "https://example.com/apacrs2026/abstracts"
+      "status": "unknown",
+      "startDate": null,
+      "deadline": null,
+      "url": null
     },
     "calendarStatus": {
       "google": {
@@ -1304,9 +1304,9 @@ const sampleEvents = [
       },
       "isAdded": false
     },
-    "officialUrl": "https://example.com/apacrs2026-singapore",
+    "officialUrl": "",
     "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
-    "pdfUrl": "apacrs2026_singapore.pdf",
+    "pdfUrl": "",
     "tags": [
       "アジア太平洋学会",
       "前眼部手術",
@@ -1315,20 +1315,21 @@ const sampleEvents = [
     ],
     "description": "アジア太平洋地域の白内障屈折手術学会。難症例白内障への対処法と最新レーザー手技。",
     "isConference": true,
-    "period": "2026年12月17日(木) 〜 12月20日(日)",
-    "cityCountry": "シンガポール / シンガポール共和国",
-    "abstractDeadline": "2026年8月10日(月) 締切済",
-    "earlyBirdDeadline": "2026年10月31日(土) まで受付中"
+    "period": "2026年6月4日(木) 〜 2026年6月6日(土)",
+    "cityCountry": "Pattaya / Thailand",
+    "abstractDeadline": "未確認",
+    "earlyBirdDeadline": "未確認",
+    "eventOfficialUrl": "https://apacrs2026.org/"
   },
   {
     "id": "conf-jp-presbyopia-2027",
-    "title": "第4回 日本老視学会学術総会",
-    "subtitle": "老視矯正のサイエンスと臨床実践",
-    "date": "2027-01-16",
-    "endDate": "2027-01-17",
+    "title": "日本老視学会 第4回学術総会",
+    "subtitle": "アンメットニーズはここにある",
+    "date": "2026-01-17",
+    "endDate": "2026-01-18",
     "time": "全日程",
     "region": "関東",
-    "venue": "御茶ノ水ソラシティカンファレンスセンター",
+    "venue": "品川THE GRAND HALL",
     "specialty": "白内障",
     "eventType": "国内学会",
     "format": "現地",
@@ -1337,7 +1338,7 @@ const sampleEvents = [
     "conferenceRegion": "domestic",
     "conferenceCategory": "白内障屈折",
     "conferenceTier": "subspecialty",
-    "period": "2027年1月16日(土) 〜 1月17日(日)",
+    "period": "2026年1月17日(土) 〜 2026年1月18日(日)",
     "cityCountry": "東京都 / 日本",
     "abstractDeadline": "未定",
     "earlyBirdDeadline": "未定",
@@ -1368,7 +1369,8 @@ const sampleEvents = [
       "点眼治療"
     ],
     "description": "老眼に対する水晶体再建術、点眼薬、調節機能解析の最新トピックス。",
-    "isConference": true
+    "isConference": true,
+    "eventOfficialUrl": "https://www.rousi.jp/jps4"
   },
   {
     "id": "conf-jp-surgery-2027",
@@ -1576,7 +1578,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-iscev-2027",
-    "title": "第75回 日本臨床視覚電気生理学会",
+    "title": "第73回 日本臨床視覚電気生理学会",
     "subtitle": "視覚電気生理の臨床応用と次世代機能評価",
     "date": "2027-03-12",
     "endDate": "2027-03-13",
@@ -1622,7 +1624,8 @@ const sampleEvents = [
       "遺伝性網膜疾患"
     ],
     "description": "ERG・VEPによる網膜・視覚伝導路の客観的機能検査と遺伝性網膜ジストロフィ診断。",
-    "isConference": true
+    "isConference": true,
+    "eventOfficialUrl": "https://www.congre.co.jp/73jscev/"
   },
   {
     "id": "conf-int-apao-2027",
@@ -1835,7 +1838,7 @@ const sampleEvents = [
     "venueId": "kyoto-international-conference-center",
     "title": "第38回 日本緑内障学会",
     "subtitle": "World Glaucoma Congress (WGC 2027) 併催",
-    "date": "2027-04-20",
+    "date": "2027-04-23",
     "endDate": "2027-04-23",
     "time": "全日程",
     "region": "関西",
@@ -1848,7 +1851,7 @@ const sampleEvents = [
     "conferenceRegion": "domestic",
     "conferenceCategory": "緑内障",
     "conferenceTier": "subspecialty",
-    "period": "2027年4月20日(火) 〜 4月23日(金)",
+    "period": "2027年4月23日(金)",
     "cityCountry": "京都市（京都府） / 日本",
     "abstractDeadline": "未定",
     "earlyBirdDeadline": "未定",
@@ -2089,8 +2092,8 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-perimetry-2027",
-    "title": "第39回 日本視野画像学会学術集会",
-    "subtitle": "構造と機能の次世代イメージング解析",
+    "title": "第16回日本視野画像学会学術集会",
+    "subtitle": "Beyond Boundaries 伝統を礎に未来へ",
     "date": "2027-06-05",
     "endDate": "2027-06-06",
     "time": "全日程",
@@ -2134,7 +2137,8 @@ const sampleEvents = [
       "緑内障解析"
     ],
     "description": "視野検査手法と眼底イメージングの最新融合解析。",
-    "isConference": true
+    "isConference": true,
+    "eventOfficialUrl": "https://www.ganki.jp/jips2027/"
   },
   {
     "id": "conf-jp-jsoprs-2027",
@@ -2344,8 +2348,8 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-myopia-2027",
-    "title": "第8回 日本近視学会総会",
-    "subtitle": "近視パンデミックに対峙するエビデンスと実践",
+    "title": "第9回 日本近視学会総会",
+    "subtitle": "Together for Lifelong Myopia Care",
     "date": "2027-07-03",
     "endDate": "2027-07-04",
     "time": "全日程",
@@ -2390,7 +2394,8 @@ const sampleEvents = [
       "レッドライト療法"
     ],
     "description": "小児近視進行予防、病的近視合併症対策、光環境と屈折発達。",
-    "isConference": true
+    "isConference": true,
+    "eventOfficialUrl": "https://www.ganki.jp/myopia2027/"
   },
   {
     "id": "conf-int-iois-2027",
@@ -2802,7 +2807,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-oncology-2027",
-    "title": "第14回 日本眼腫瘍学会",
+    "title": "第44回日本眼腫瘍学会",
     "subtitle": "眼部腫瘍の精密診断と集学的治療",
     "date": "2027-09-18",
     "endDate": "2027-09-19",
@@ -2848,7 +2853,8 @@ const sampleEvents = [
       "眼付属器リンパ腫"
     ],
     "description": "眼球内・眼付属器腫瘍の病理診断、重粒子線治療、機能温存外科。",
-    "isConference": true
+    "isConference": true,
+    "eventOfficialUrl": "https://www.ganki.jp/jsoo2027/"
   },
   {
     "id": "conf-int-escrs-2027",
@@ -3201,13 +3207,13 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-presbyopia-2028",
-    "title": "第5回 日本老視学会学術総会",
-    "subtitle": "老視研究と最新治療テクノロジー",
-    "date": "2028-01-15",
-    "endDate": "2028-01-16",
+    "title": "日本老視学会 第5回学術総会",
+    "subtitle": "老視克服への新たな冒険",
+    "date": "2027-01-16",
+    "endDate": "2027-01-17",
     "time": "全日程",
-    "region": "関西",
-    "venue": "京都テルサ（京都府民総合交流プラザ）",
+    "region": "関東",
+    "venue": "御茶ノ水ソラシティ カンファレンスセンター",
     "specialty": "白内障",
     "eventType": "国内学会",
     "format": "現地",
@@ -3216,8 +3222,8 @@ const sampleEvents = [
     "conferenceRegion": "domestic",
     "conferenceCategory": "白内障屈折",
     "conferenceTier": "subspecialty",
-    "period": "2028年1月15日(土) 〜 1月16日(日)",
-    "cityCountry": "京都市（京都府） / 日本",
+    "period": "2027年1月16日(土) 〜 2027年1月17日(日)",
+    "cityCountry": "東京都 / 日本",
     "abstractDeadline": "未定",
     "earlyBirdDeadline": "未定",
     "officialUrl": "",
@@ -3246,7 +3252,8 @@ const sampleEvents = [
       "老眼治療"
     ],
     "description": "老眼の基礎研究、多焦点レンズ、点眼薬の最新エビデンス。",
-    "isConference": true
+    "isConference": true,
+    "eventOfficialUrl": "https://www.rousi.jp/jps5"
   },
   {
     "id": "conf-jp-surgery-2028",
@@ -3397,7 +3404,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-iscev-2028",
-    "title": "第76回 日本臨床視覚電気生理学会（韓日合同）",
+    "title": "第74回 日本臨床視覚電気生理学会（韓日合同学会）",
     "subtitle": "日韓の英知を結ぶ電気生理学フロンティア",
     "date": "2028-02-18",
     "endDate": "2028-02-19",
@@ -3546,13 +3553,13 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-perimetry-2028",
-    "title": "第40回 日本視野画像学会学術集会",
+    "title": "第17回日本視野画像学会学術集会",
     "subtitle": "IPS 2028 (International Perimetric Society) 併催",
     "date": "2028-03-11",
     "endDate": "2028-03-12",
     "time": "全日程",
     "region": "関東",
-    "venue": "東京慈恵会医科大学",
+    "venue": "東京慈恵会医科大学 講堂",
     "specialty": "その他",
     "eventType": "国内学会",
     "format": "現地",
@@ -3841,7 +3848,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-myopia-2028",
-    "title": "第9回 日本近視学会総会",
+    "title": "第10回日本近視学会総会",
     "subtitle": "近視制御のグローバルスタンダード",
     "date": "2028-05-20",
     "endDate": "2028-05-21",
@@ -4140,7 +4147,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-inflammation-2028",
-    "title": "第65回 日本眼感染症学会・第61回 日本眼炎症学会・第60回 日本眼科アレルギー学会・第47回 日本涙道・涙液学会総会",
+    "title": "第64回日本眼感染症学会・第61回日本眼炎症学会・第11回日本眼科アレルギー学会・第16回日本涙道・涙液学会総会",
     "subtitle": "眼表面・眼内炎症制御のフロンティア",
     "date": "2028-07-07",
     "endDate": "2028-07-09",

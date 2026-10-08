@@ -6,6 +6,7 @@ const vm = require('node:vm');
 const config = require('../conference-sources');
 const audit = require('../reports/event-url-audit-2026-10-07.json');
 const additions = require('../reports/event-url-missing-audit-2026-10-08.json').records.filter(record => record.proposedEventOfficialUrl);
+const corrections = require('../reports/event-metadata-high-priority-fixes-2026-10-09.json').results.filter(r=>r.status==='corrected');
 const { loadEvents, mergeReview } = require('../scripts/auto-updater/storage');
 const { assess, applyChanges } = require('../scripts/auto-updater/policy');
 const { extractOfficialHtml } = require('../scripts/auto-updater/extract');
@@ -20,28 +21,31 @@ async function main() {
   const conferences = events.filter(e => e.isConference);
   const approved = audit.records.filter(record => record.proposedEventOfficialUrl);
   assert.equal(approved.length, 31);
-  assert.equal(conferences.filter(e => e.eventOfficialUrl).length, 36);
+  assert.equal(conferences.filter(e => e.eventOfficialUrl).length, 44);
   assert.equal(additions.length, 5);
   for (const record of additions) assert.equal(events.find(e => e.id === record.id).eventOfficialUrl, record.proposedEventOfficialUrl);
   assert.equal(conferences.filter(e => e.societyUrl).length, 13);
   for (const record of audit.records) {
     const event = events.find(e => e.id === record.id);
-    assert.equal(event.officialUrl || null, record.currentOfficialUrl, `${event.id}: legacy URL`);
-    assert.equal(event.title, record.title);
-    assert.equal(Number(event.date.slice(0, 4)), record.year);
+    const correction=corrections.find(r=>r.eventId===event.id);
+    const expected=(field,old)=>correction?.changes.find(c=>c.field===field)?.after??old;
+    assert.equal(event.officialUrl || null, expected('officialUrl',record.currentOfficialUrl)||null, `${event.id}: legacy URL`);
+    assert.equal(event.title, expected('title',record.title));
+    assert.equal(Number(event.date.slice(0, 4)), Number(String(expected('date',record.year)).slice(0,4)));
     if (record.proposedEventOfficialUrl) {
       assert.equal(event.eventOfficialUrl, record.proposedEventOfficialUrl);
       assert.equal(record.candidate.verification, 'confirmed');
       assert.ok(Object.values(record.candidate.checks).every(value => value === true));
       assert.notEqual(event.eventOfficialUrl, event.societyUrl);
     } else if (!additions.some(addition => addition.id === record.id)) {
-      assert.equal(event.eventOfficialUrl, undefined, `${event.id}: held event`);
+      assert.equal(event.eventOfficialUrl, expected('eventOfficialUrl',undefined), `${event.id}: held event`);
       assert.equal(event.societyUrl, undefined, `${event.id}: held society`);
     }
   }
   assert.equal(approved.filter(record => !record.currentOfficialUrl).length, 11);
   assert.equal(audit.records.filter(record => !record.currentOfficialUrl && !record.proposedEventOfficialUrl).length, 41);
-  for (const id of ['conf-int-aao-2027', 'conf-int-aao-2028', 'conf-int-apvrs-2028', 'oph-010']) assert.equal(events.find(e => e.id === id).eventOfficialUrl, undefined);
+  for (const id of ['conf-int-aao-2027', 'conf-int-aao-2028', 'conf-int-apvrs-2028']) assert.equal(events.find(e => e.id === id).eventOfficialUrl, undefined);
+  assert.equal(events.find(e=>e.id==='oph-010').eventOfficialUrl,'https://apacrs2026.org/');
 
   const context = vm.createContext({ assert, console, setTimeout, clearTimeout,
     document: { getElementById: () => null, addEventListener: () => {} } });
@@ -161,6 +165,6 @@ async function main() {
   assert.ok(persisted.items.some(item => item.field === 'eventOfficialUrl' && item.reason === 'multiple-candidates' && item.value === moved.value && item.oldValue === event.eventOfficialUrl));
   assert.equal(fs.readFileSync(path.join(isolated, 'events.js'), 'utf8'), original);
   assert.equal(fs.readFileSync(path.join(root, 'events.js'), 'utf8'), original);
-  console.log('PASS: 36 event URLs including 5 newly approved additions / 13 society URLs, 49 held, title-only change, no fallback, year/edition/multiple reviews and role isolation');
+  console.log('PASS: 44 event URLs including reviewed high-priority fixes / 13 society URLs, held titles unlinked, no fallback, year/edition/multiple reviews and role isolation');
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

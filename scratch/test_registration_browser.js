@@ -73,7 +73,7 @@ async function main() {
           actions: domestic.querySelectorAll('.card-actions-row [data-action],.card-actions-row .btn-official').length,
           titleLinkCorrect: domestic.querySelector('.card-title a').getAttribute('href') === sampleEvents.find(e => e.id === 'conf-jp-jrvs-2026').eventOfficialUrl,
           titleLinks: document.querySelectorAll('.card-title .conference-title-link').length,
-          heldTitlesUnlinked: ['conf-int-aao-2027','conf-int-aao-2028','conf-int-apvrs-2028','oph-010','conf-jp-jrvs-2027'].every(id => !document.querySelector('[data-id="' + id + '"] .card-title a')),
+          heldTitlesUnlinked: ['conf-int-aao-2027','conf-int-aao-2028','conf-int-apvrs-2028','conf-jp-jrvs-2027'].every(id => !document.querySelector('[data-id="' + id + '"] .card-title a')),
           titleLinksSecure: [...document.querySelectorAll('.card-title a')].every(a => a.target === '_blank' && a.rel === 'noopener noreferrer')
           ,approvedTitleLinksCorrect: ['conf-jp-diabetic-2027','oph-014','conf-jp-circulation-2027','conf-int-escrs-2027','conf-int-escrs-2028'].every(id =>
             document.querySelector('[data-id="' + id + '"] .card-title a')?.getAttribute('href') === sampleEvents.find(e => e.id === id).eventOfficialUrl)
@@ -90,7 +90,7 @@ async function main() {
       assert.equal(layout.pageOverflow, false, `${width}px page overflow`);
       assert.equal(layout.actions, 3);
       assert.ok(layout.titleLinkCorrect);
-      assert.equal(layout.titleLinks, 37); // 36 approved conferences + the overseas fixture.
+      assert.equal(layout.titleLinks, 45); // 44 approved conferences + the overseas fixture.
       assert.ok(layout.heldTitlesUnlinked && layout.titleLinksSecure);
       assert.ok(layout.approvedTitleLinksCorrect);
     }

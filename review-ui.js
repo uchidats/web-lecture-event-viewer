@@ -13,6 +13,16 @@
   const decisions = { approved: '採用済み', rejected: '変更しない', deferred: '保留中' };
   const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   function announce(text) { message.textContent = text; }
+  function auditHtml(item) {
+    if (!item.audit) return '';
+    const audit=item.audit, results={match:'一致',mismatch:'差異あり',missing:'欠落', 'notation-difference':'表記差（誤情報とは断定しない）',unverified:'未確認'};
+    return `<p>判定：${escape(audit.category)}／優先度：${escape(audit.priority)}</p><div class="audit-table-wrap" tabindex="0" aria-label="公式情報の比較"><table class="audit-table"><thead><tr><th>項目</th><th>現在値</th><th>公式情報</th><th>差分・根拠</th></tr></thead><tbody>${audit.comparisons.map(c=>`<tr><th>${escape(model.fieldLabels[c.field]||c.field)}</th><td>${escape(model.formatValue(c.field,c.current))}${c.field==='registration'&&c.current==null&&audit.currentSnapshot.earlyBirdDeadline?`<br>旧表示：${escape(audit.currentSnapshot.earlyBirdDeadline)}`:''}</td><td>${c.result==='unverified' && c.official==null ? '未確認' : escape(model.formatValue(c.field,c.official))}</td><td>${escape(results[c.result]||c.result)} ${c.confidence ? `（${Math.round(c.confidence*100)}%）` : ''} ${escape(c.note||'')}${model.safeUrl(c.url) ? ` <a href="${escape(model.safeUrl(c.url))}" target="_blank" rel="noopener noreferrer">根拠</a>` : ''}</td></tr>`).join('')}</tbody></table></div>
+      <p>未確認項目：${escape(audit.uncheckedFields.map(f=>model.fieldLabels[f]||f).join('、')||'なし')}</p>
+      ${audit.differences.some(c=>['venue','cityCountry'].includes(c.field)&&c.result==='mismatch')?'<p>会場変更の承認後は旧会場情報への紐づけを解除します。タイムゾーンが未確認の場合、カレンダー登録の再確認が必要です。</p>':''}
+      <p>公式URL${audit.officialUrlStatus==='candidate-body-unavailable'?'候補（本文未確認）':''}：${model.safeUrl(audit.officialUrl)?`<a href="${escape(model.safeUrl(audit.officialUrl))}" target="_blank" rel="noopener noreferrer">${escape(audit.officialUrl)}</a>`:'未確定'}</p>
+      ${audit.notes?.length?`<p>${escape(audit.notes.join(' / '))}</p>`:''}
+      ${audit.failures.length?`<p>取得不能：${escape(audit.failures.map(f=>`${f.url}：${f.error}`).join(' / '))}</p>`:''}`;
+  }
   function verificationHtml(item) {
     if (!item.fetchFailure) return '';
     const checks = item.checks || {}, label = value => value === true ? '一致' : value === false ? '不一致' : '未確認';
@@ -38,8 +48,9 @@
         <div class="review-values"><div><h4>現在（取得時）</h4><p>${escape(model.formatValue(item.field, item.oldValue))}</p></div><div><h4>公式サイトから検出</h4><p>${escape(model.formatValue(item.field, item.value))}</p></div></div>
         <dl><dt>根拠</dt><dd>${escape(item.evidence || '根拠テキストなし')}</dd><dt>信頼度</dt><dd>${Number.isFinite(item.confidence) ? Math.round(item.confidence * 100) + '%' : '不明'}</dd><dt>確認理由</dt><dd>${escape(model.reasonLabels[item.reason] || '自動更新条件を満たさないため、確認が必要です')}</dd><dt>情報源URL</dt><dd>${url ? `<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${escape(url)}</a>` : '有効なHTTPS情報源URLなし'}</dd>${model.safeUrl(item.candidateUrl) ? `<dt>発見した候補URL</dt><dd><a href="${escape(model.safeUrl(item.candidateUrl))}" target="_blank" rel="noopener noreferrer">${escape(item.candidateUrl)}</a></dd>` : ''}</dl>
         ${item.fetchFailure ? `<dl>${verificationHtml(item)}</dl>` : ''}
+        ${auditHtml(item)}
         <p class="review-decision">${decision ? `${decisions[decision.decision]} · ${escape(new Date(decision.decidedAt).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }))}` : '未判断'}</p>
-        ${item.riskLevel === 'low' ? `<label class="review-automation"><input type="checkbox" ${decision?.automationCandidate ? 'checked' : ''}> 今後、この種類の変更は自動承認候補にする（検討用）</label>` : ''}
+        ${item.riskLevel === 'low' && !item.audit ? `<label class="review-automation"><input type="checkbox" ${decision?.automationCandidate ? 'checked' : ''}> 今後、この種類の変更は自動承認候補にする（検討用）</label>` : ''}
         <div class="review-actions"><button type="button" class="btn btn-primary" data-decision="approved" ${!item.actionable ? 'disabled' : ''} aria-pressed="${decision?.decision === 'approved'}">採用</button><button type="button" class="btn btn-secondary" data-decision="rejected" aria-pressed="${decision?.decision === 'rejected'}">変更しない</button><button type="button" class="btn btn-secondary" data-decision="deferred" aria-pressed="${decision?.decision === 'deferred'}">保留</button>${url ? `<a class="btn btn-secondary" href="${escape(url)}" target="_blank" rel="noopener noreferrer">公式サイトを見る</a>` : ''}</div>
       </article>`;
     }).join('') || '<p class="review-empty">この表示条件の候補はありません。</p>';
@@ -72,6 +83,14 @@
   entry.addEventListener('click', () => { if (!reviewerId) return; dialog.showModal(); if (!loaded) load(); });
   doc.getElementById('review-close').addEventListener('click', () => dialog.close());
   doc.getElementById('review-reload').addEventListener('click', load);
+  doc.getElementById('review-export-metadata')?.addEventListener('click', () => {
+    if (!reviewerId || !loaded) return;
+    const approvals=store.exportMetadataApprovals(items,reviewerId);
+    if(!approvals.decisions.length){announce('承認済みの監査修正はありません。');return;}
+    const url=URL.createObjectURL(new Blob([JSON.stringify(approvals,null,2)],{type:'application/json'}));
+    const link=doc.createElement('a');link.href=url;link.download='event-metadata-human-approvals.json';link.click();URL.revokeObjectURL(url);
+    announce('承認した監査修正を出力しました。データ反映は管理者が行います。');
+  });
   doc.getElementById('review-export-urls')?.addEventListener('click', () => {
     if (!reviewerId || !loaded) return;
     try {

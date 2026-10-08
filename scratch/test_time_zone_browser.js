@@ -60,7 +60,7 @@ async function main() {
           stacked: zones.every(e=>e.querySelector('.japan-time').getBoundingClientRect().top>e.querySelector('.local-time').getBoundingClientRect().top),
           multi: document.querySelector('[data-id="dst-test"]').querySelectorAll('.japan-time').length};
       })()`);
-      assert.equal(layout.count,3); assert.equal(layout.multi,3);
+      assert.equal(layout.count,2); assert.equal(layout.multi,3);
       assert.equal(layout.noOverflow,true,width+'px time overflow'); assert.equal(layout.pageFits,true,width+'px page overflow');
       if(width<500) assert.equal(layout.stacked,true,width+'px times stacked');
       const cities = await evaluate(`['conf-int-wgc-2027', 'oph-004'].map(id => {

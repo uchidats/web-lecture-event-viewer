@@ -24,6 +24,10 @@
 .review-card dd { margin: 4px 0; white-space: pre-wrap; }
 .review-card a { color: #215ca8; }
 .review-decision { font-weight: 600; }
+.audit-table-wrap { overflow-x: auto; max-width: 100%; }
+.audit-table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: .85rem; }
+.audit-table th, .audit-table td { padding: 8px; border: 1px solid #dbe3ec; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+.audit-table th { background: #f4f7fb; }
 .review-automation { display: block; margin: 16px 0; font-size: .9rem; }
 .review-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 .review-actions .btn { min-height: 44px; }
