@@ -16,7 +16,7 @@ async function main() {
       let data = fs.readFileSync(file);
       if (file.endsWith('index.html')) data = Buffer.from(data.toString().replace(/<link[^>]*https:[^>]*>/g, '').replace(/<script[^>]*https:[^>]*><\/script>/g, ''));
       if (file.endsWith('firebase-config.js')) data = Buffer.from('const FIREBASE_CONFIG = {};');
-      if (file.endsWith('review-config.js')) data = Buffer.from(`globalThis.OphthalReviewConfig = Object.freeze({developmentMode:${developmentMode}});`);
+      if (file.endsWith('review-config.js')) data = Buffer.from(`globalThis.OphthalReviewConfig = Object.freeze({developmentMode:${developmentMode},reviewDataUrl:'scratch/fixtures/review/auto-update-review.json'});`);
       response.setHeader('Content-Type', file.endsWith('.js') ? 'text/javascript' : file.endsWith('.css') ? 'text/css' : file.endsWith('.json') ? 'application/json' : 'text/html');
       response.end(data);
     } catch { response.writeHead(404).end(); }
@@ -113,6 +113,16 @@ async function main() {
     assert.equal(await evaluate('!!window.injected'), false);
     assert.equal(await evaluate('document.querySelector("[data-decision=approved]").disabled'), true);
     assert.equal(await evaluate('document.querySelector(".review-automation")'), null);
+    // Bot candidate details and human approval export must not mutate the card data.
+    await evaluate(`window.fetch = async () => ({ok:true,json:async()=>({version:1,items:[{id:'bot-ascrs',eventId:'conf-int-ascrs-2027',field:'eventOfficialUrl',oldValue:null,value:'https://annualmeeting.ascrs.org/',candidateUrl:'https://annualmeeting.ascrs.org/',url:'https://ascrs.confex.com/ascrs/27am/cfp.cgi',reason:'bot-protected-official-candidate',confidence:.9,evidence:'ASCRS 2027 San Diego',checks:{officialSocietyDomain:true,yearMatches:true,nameMatches:true,editionMatches:true,cityMatches:true,city:'San Diego'},fetchFailure:{httpStatus:403,botProtected:true,error:'bot-protected'},officialEvidence:[{url:'https://ascrs.confex.com/ascrs/27am/cfp.cgi',evidence:'2027 ASCRS ASOA Annual Meeting, San Diego'}]}]})}); document.getElementById('review-reload').click();`);
+    for (let i = 0; i < 30; i++) { if (await evaluate('!!document.querySelector(".review-card a[href=\\"https://annualmeeting.ascrs.org/\\"]")')) break; await delay(100); }
+    assert.ok(await evaluate('document.getElementById("review-list").textContent.includes("Bot保護を検出")'));
+    assert.ok(await evaluate('document.getElementById("review-list").textContent.includes("開催地：一致")'));
+    assert.ok(await evaluate('document.getElementById("review-list").textContent.includes("HTTP 403")'));
+    assert.equal(await evaluate('!!sampleEvents.find(e=>e.id==="conf-int-ascrs-2027").eventOfficialUrl'), false);
+    await evaluate('document.querySelector("[data-decision=approved]").click()');
+    assert.equal(await evaluate('!!sampleEvents.find(e=>e.id==="conf-int-ascrs-2027").eventOfficialUrl'), false);
+    assert.ok(await evaluate('!!document.getElementById("review-export-urls")'));
     await evaluate('document.getElementById("review-close").click(); document.getElementById("calendar-settings-btn").click()');
     assert.equal(await evaluate('document.getElementById("calendar-settings-modal").open'), true);
     assert.equal(await evaluate('OphthalAuth.snapshot().phase'), 'unconfigured');

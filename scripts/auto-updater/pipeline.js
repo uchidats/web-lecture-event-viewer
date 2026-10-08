@@ -88,7 +88,7 @@ async function runPipeline({ root, config, apply = false, getPage = fetchOfficia
     state.sources[source.id] = meta;
     summary.sources.push({ eventId: source.id, ...meta, candidateCount: candidates.length });
   }
-  summary.discovery = await discoverMissingEventUrls({ events: dataset.events, config, getPage });
+  summary.discovery = await discoverMissingEventUrls({ events: dataset.events, config, getPage, checkedAt });
   summary.needsReview.push(...summary.discovery.review);
   summary.massChangeAssessment = evaluateMassChanges(summary.autoChanges, config);
   if (summary.massChangeAssessment.stopped) {

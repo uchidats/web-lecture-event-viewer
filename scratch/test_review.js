@@ -43,6 +43,9 @@ async function main() {
   assert.throws(() => model.createStore({ getItem: () => '{bad' }).read());
   assert.throws(() => model.createStore({ getItem: () => null, setItem: () => { throw new Error('quota'); } }).decide(low, 'approved', context), /quota/);
   assert.equal((await createProvider({ fetchImpl: async () => ({ ok: true, json: async () => fixture }) }).load()).items.length, 20);
+  let requestedUrl;
+  await createProvider({ fetchImpl: async url => { requestedUrl = url; return { ok: true, json: async () => fixture }; } }).load();
+  assert.equal(requestedUrl, 'reports/auto-update-review.json');
   await assert.rejects(createProvider({ fetchImpl: async () => ({ ok: false }) }).load());
   await assert.rejects(createProvider({ fetchImpl: async () => ({ ok: true, json: async () => ({ items: [] }) }) }).load());
   console.log('PASS: review fixture separation, risks, access, decisions, persistence, history, conflicts, safe URLs, storage errors and provider');

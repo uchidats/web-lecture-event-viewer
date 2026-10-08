@@ -9,6 +9,8 @@
     'discovery-fetch-failed': '公式URLの探索中に取得に失敗しました',
     'discovery-name-mismatch': '発見したページの学会名が一致しません',
     'discovery-search-limit': '探索の取得上限に達したため追加の確認が必要です',
+    'bot-protected-official-candidate': 'Bot保護／取得失敗のため本文未確認。別経路の公式根拠を確認して承認してください',
+    'discovery-url-not-found-response': '候補URLから404／410が返りました（取得失敗とは別扱い）',
     'event-url-is-society-homepage': 'イベント公式URLの候補が学会本体トップです',
     'event-url-year-mismatch': 'イベント公式URLの開催年が一致しません',
     'event-url-edition-mismatch': 'イベント公式URLの開催回が一致しません',
@@ -54,7 +56,8 @@
   }
   function normalize(data) {
     return data.items.filter(item => item.status === 'needs-review' || !item.status).map(item => {
-      const signature = JSON.stringify([item.eventId, item.field, item.oldValue, item.value, item.reason, item.url, item.evidence]);
+      const signature = JSON.stringify([item.eventId, item.field, item.oldValue, item.value, item.reason, item.url, item.evidence,
+        ...(item.requiresHumanApproval ? [item.checks, item.reviewSnapshot, item.fetchFailure, item.officialEvidence] : [])]);
       return { ...item, reviewId: item.id || signature, signature, riskLevel: riskLevel(item),
         blocked: item.reason === 'mass-change-limit', actionable: !!item.field && !!safeUrl(item.url) &&
           (!['eventOfficialUrl', 'societyUrl'].includes(item.field) || !!safeUrl(item.value)) &&
@@ -91,7 +94,13 @@
       const entries = read().history.filter(entry => entry.reviewerId === reviewerId && entry.field === item.field && entry.reason === item.reason && entry.riskLevel === item.riskLevel);
       return { approvalCount: entries.filter(entry => entry.decision === 'approved').length, hasRejection: entries.some(entry => entry.decision === 'rejected'), latest: entries.at(-1) || null };
     }
-    return { read, latest, decide, statistics };
+    function exportEventUrlApprovals(items, reviewerId) {
+      if (!reviewerId) throw new Error('承認者が未確認です。');
+      return { version: 1, kind: 'event-url-human-approvals', decisions: items.filter(item => item.actionable && item.field === 'eventOfficialUrl')
+        .map(item => ({ item, decision: latest(item, reviewerId) })).filter(row => row.decision?.decision === 'approved')
+        .map(({ item, decision }) => ({ ...decision, signature: item.signature })) };
+    }
+    return { read, latest, decide, statistics, exportEventUrlApprovals };
   }
   function isAdminUser(user) {
     return !!user?.uid && user.email === 'uchidats@gmail.com' && user.emailVerified === true;

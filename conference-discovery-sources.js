@@ -95,9 +95,19 @@ module.exports = {
     {
       "eventId": "conf-int-ascrs-2027",
       "indexUrls": [
-        "https://www.nichigan.or.jp/member/syukai/hyoji_international.html"
+        "https://ascrs.confex.com/ascrs/27am/cfp.cgi"
       ],
-      "integrityReview": "Annual Meetingホームは403で年度を検証できない。2027年演題登録ページは確認できるが、イベントホームと用途が異なるため保留。同略称の大腸肛門外科学会を除外。"
+      "officialSocietyDomains": ["ascrs.org"],
+      "cityAliases": ["サンディエゴ", "San Diego"],
+      "nameAliases": ["ASCRS ASOA Annual Meeting"],
+      "candidateUrls": ["https://annualmeeting.ascrs.org/"],
+      "verifiedEvidence": [{
+        "url": "https://ascrs.confex.com/ascrs/27am/cfp.cgi",
+        "checkedOn": "2026-10-08",
+        "candidateUrl": "https://annualmeeting.ascrs.org/",
+        "evidence": "2027 ASCRS ASOA Annual Meeting. April 2-5, 2027, San Diego, CA. Main Website: https://annualmeeting.ascrs.org/",
+        "sourceKind": "official-call-for-submissions"
+      }]
     },
     {
       "eventId": "oph-014",

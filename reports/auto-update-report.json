@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "checkedAt": "2026-10-08T02:57:26.243Z",
+  "checkedAt": "2026-10-08T03:32:29.126Z",
   "mode": "dry-run",
   "outcome": "dry-run",
   "sourceCount": 5,
@@ -327,14 +327,61 @@
     },
     {
       "eventId": "conf-int-ascrs-2027",
-      "field": null,
+      "field": "eventOfficialUrl",
+      "value": "https://annualmeeting.ascrs.org/",
       "oldValue": null,
-      "value": null,
-      "confidence": 0,
+      "candidateUrl": "https://annualmeeting.ascrs.org/",
+      "confidence": 0.9,
       "method": "official-index-discovery",
-      "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
-      "evidence": "Annual Meetingホームは403で年度を検証できない。2027年演題登録ページは確認できるが、イベントホームと用途が異なるため保留。同略称の大腸肛門外科学会を除外。",
-      "reason": "discovery-card-integrity-needs-review",
+      "url": "https://ascrs.confex.com/ascrs/27am/cfp.cgi",
+      "evidence": "2027 ASCRS ASOA Annual Meeting. April 2-5, 2027, San Diego, CA. Main Website: https://annualmeeting.ascrs.org/",
+      "reason": "bot-protected-official-candidate",
+      "candidateReason": "bot-protected-official-candidate",
+      "checks": {
+        "nameMatches": true,
+        "yearMatches": true,
+        "editionMatches": true,
+        "years": [
+          2027
+        ],
+        "editions": [],
+        "city": "サンディエゴ",
+        "cityMatches": true,
+        "officialSocietyDomain": true,
+        "targetBodyVerified": false
+      },
+      "fetchFailure": {
+        "error": "bot-protected",
+        "httpStatus": 403,
+        "botProtected": true,
+        "state": "bot-protected"
+      },
+      "officialEvidence": [
+        {
+          "url": "https://ascrs.confex.com/ascrs/27am/cfp.cgi",
+          "evidence": "2027 ASCRS ASOA Annual Meeting. April 2-5, 2027, San Diego, CA. Main Website: https://annualmeeting.ascrs.org/",
+          "sourceKind": "verified-material-snapshot",
+          "checks": {
+            "nameMatches": true,
+            "yearMatches": true,
+            "editionMatches": true,
+            "years": [
+              2027
+            ],
+            "editions": [],
+            "city": "サンディエゴ",
+            "cityMatches": true
+          }
+        }
+      ],
+      "requiresHumanApproval": true,
+      "reviewSnapshot": {
+        "title": "ASCRS 2027 Annual Meeting",
+        "date": "2027-04-02",
+        "endDate": "2027-04-05",
+        "venue": "San Diego Convention Center, San Diego, CA",
+        "cityCountry": "サンディエゴ（カリフォルニア州） / 米国"
+      },
       "searchQueries": [
         "ASCRS  Annual Meeting 2027  公式",
         "ASCRS  Annual Meeting 学術集会案内 Annual Meeting Congress"
@@ -363,6 +410,14 @@
         "urlYears": [
           2027
         ]
+      },
+      "requiresHumanApproval": true,
+      "reviewSnapshot": {
+        "title": "第28回 日本ロービジョン学会学術総会",
+        "date": "2027-05-22",
+        "endDate": "2027-05-23",
+        "venue": "大阪国際会議場（グランキューブ大阪）",
+        "cityCountry": "大阪市（大阪府） / 日本"
       },
       "searchQueries": [
         "日本ロービジョン学会学術総会 2027 第28回 公式",
@@ -444,7 +499,7 @@
       "url": "https://asnos.org/future-meetings/",
       "confidence": 0,
       "reason": "discovery-fetch-failed",
-      "error": "http-403",
+      "error": "bot-protected",
       "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
     },
     {
@@ -545,7 +600,7 @@
       "url": "https://www.arvo.org/annual-meeting/about/future-meetings",
       "confidence": 0,
       "reason": "discovery-fetch-failed",
-      "error": "http-403",
+      "error": "bot-protected",
       "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
     },
     {
@@ -653,7 +708,7 @@
       "officialUrl": "https://convention.jtbcom.co.jp/131jos/index.html",
       "eventOfficialUrl": "https://convention.jtbcom.co.jp/131jos/index.html",
       "societyUrl": "https://www.nichigan.or.jp/",
-      "lastChecked": "2026-10-08T02:57:26.243Z",
+      "lastChecked": "2026-10-08T03:32:29.126Z",
       "lastChanged": null,
       "confidence": 0.96,
       "fingerprint": "74dc1ae2dc3fc8b2b39cfe58a34edd42fef99dd407ed0c2f03afec0fb0cb527a",
@@ -677,7 +732,7 @@
       "officialUrl": "https://convention.jtbcom.co.jp/80ringan/index.html",
       "eventOfficialUrl": "https://convention.jtbcom.co.jp/80ringan/index.html",
       "societyUrl": "https://www.nichigan.or.jp/",
-      "lastChecked": "2026-10-08T02:57:26.243Z",
+      "lastChecked": "2026-10-08T03:32:29.126Z",
       "lastChanged": null,
       "confidence": 0.8,
       "fingerprint": "e6531b65b7e43c52df33b412f694859cf24d2d9703156a2d73dbb71efcdafdb2",
@@ -701,7 +756,7 @@
       "officialUrl": "https://50.jsos.jp/",
       "eventOfficialUrl": "https://50.jsos.jp/",
       "societyUrl": "https://jsos.jp/",
-      "lastChecked": "2026-10-08T02:57:26.243Z",
+      "lastChecked": "2026-10-08T03:32:29.126Z",
       "lastChanged": null,
       "confidence": 0.96,
       "fingerprint": "52249e8f380b2c9a2bf5f51e8c9f2733253d4debbe4dc5a2cde5de211603f98c",
@@ -725,7 +780,7 @@
       "officialUrl": "https://www.congre.co.jp/jgs2026/",
       "eventOfficialUrl": "https://www.congre.co.jp/jgs2026/",
       "societyUrl": "https://www.ryokunaisho.jp/",
-      "lastChecked": "2026-10-08T02:57:26.243Z",
+      "lastChecked": "2026-10-08T03:32:29.126Z",
       "lastChanged": null,
       "confidence": 0.96,
       "fingerprint": "2ae8f2f957cc2897be797b080107efa4ff0ac99388e5c776304806aff1828c29",
@@ -749,7 +804,7 @@
       "officialUrl": "https://convention.jtbcom.co.jp/65moumaku/index.html",
       "eventOfficialUrl": "https://convention.jtbcom.co.jp/65moumaku/index.html",
       "societyUrl": "https://www.jrvs.jp/",
-      "lastChecked": "2026-10-08T02:57:26.243Z",
+      "lastChecked": "2026-10-08T03:32:29.126Z",
       "lastChanged": null,
       "confidence": 0.96,
       "fingerprint": "597ba6a9ce6b308a3e374c912b9a332b939182380c44f82ad8c59c5fe27fb968",
@@ -913,14 +968,61 @@
       },
       {
         "eventId": "conf-int-ascrs-2027",
-        "field": null,
+        "field": "eventOfficialUrl",
+        "value": "https://annualmeeting.ascrs.org/",
         "oldValue": null,
-        "value": null,
-        "confidence": 0,
+        "candidateUrl": "https://annualmeeting.ascrs.org/",
+        "confidence": 0.9,
         "method": "official-index-discovery",
-        "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
-        "evidence": "Annual Meetingホームは403で年度を検証できない。2027年演題登録ページは確認できるが、イベントホームと用途が異なるため保留。同略称の大腸肛門外科学会を除外。",
-        "reason": "discovery-card-integrity-needs-review",
+        "url": "https://ascrs.confex.com/ascrs/27am/cfp.cgi",
+        "evidence": "2027 ASCRS ASOA Annual Meeting. April 2-5, 2027, San Diego, CA. Main Website: https://annualmeeting.ascrs.org/",
+        "reason": "bot-protected-official-candidate",
+        "candidateReason": "bot-protected-official-candidate",
+        "checks": {
+          "nameMatches": true,
+          "yearMatches": true,
+          "editionMatches": true,
+          "years": [
+            2027
+          ],
+          "editions": [],
+          "city": "サンディエゴ",
+          "cityMatches": true,
+          "officialSocietyDomain": true,
+          "targetBodyVerified": false
+        },
+        "fetchFailure": {
+          "error": "bot-protected",
+          "httpStatus": 403,
+          "botProtected": true,
+          "state": "bot-protected"
+        },
+        "officialEvidence": [
+          {
+            "url": "https://ascrs.confex.com/ascrs/27am/cfp.cgi",
+            "evidence": "2027 ASCRS ASOA Annual Meeting. April 2-5, 2027, San Diego, CA. Main Website: https://annualmeeting.ascrs.org/",
+            "sourceKind": "verified-material-snapshot",
+            "checks": {
+              "nameMatches": true,
+              "yearMatches": true,
+              "editionMatches": true,
+              "years": [
+                2027
+              ],
+              "editions": [],
+              "city": "サンディエゴ",
+              "cityMatches": true
+            }
+          }
+        ],
+        "requiresHumanApproval": true,
+        "reviewSnapshot": {
+          "title": "ASCRS 2027 Annual Meeting",
+          "date": "2027-04-02",
+          "endDate": "2027-04-05",
+          "venue": "San Diego Convention Center, San Diego, CA",
+          "cityCountry": "サンディエゴ（カリフォルニア州） / 米国"
+        },
         "searchQueries": [
           "ASCRS  Annual Meeting 2027  公式",
           "ASCRS  Annual Meeting 学術集会案内 Annual Meeting Congress"
@@ -949,6 +1051,14 @@
           "urlYears": [
             2027
           ]
+        },
+        "requiresHumanApproval": true,
+        "reviewSnapshot": {
+          "title": "第28回 日本ロービジョン学会学術総会",
+          "date": "2027-05-22",
+          "endDate": "2027-05-23",
+          "venue": "大阪国際会議場（グランキューブ大阪）",
+          "cityCountry": "大阪市（大阪府） / 日本"
         },
         "searchQueries": [
           "日本ロービジョン学会学術総会 2027 第28回 公式",
@@ -1030,7 +1140,7 @@
         "url": "https://asnos.org/future-meetings/",
         "confidence": 0,
         "reason": "discovery-fetch-failed",
-        "error": "http-403",
+        "error": "bot-protected",
         "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
       },
       {
@@ -1131,7 +1241,7 @@
         "url": "https://www.arvo.org/annual-meeting/about/future-meetings",
         "confidence": 0,
         "reason": "discovery-fetch-failed",
-        "error": "http-403",
+        "error": "bot-protected",
         "evidence": "公式学会一覧の取得失敗。URL不存在とは判定しません。"
       },
       {
@@ -1391,11 +1501,66 @@
         ],
         "searchMethod": "official-index-links",
         "indexUrls": [
-          "https://www.nichigan.or.jp/member/syukai/hyoji_international.html"
+          "https://ascrs.confex.com/ascrs/27am/cfp.cgi"
         ],
-        "requests": [],
-        "candidates": [],
-        "reason": "discovery-card-integrity-needs-review"
+        "requests": [
+          {
+            "url": "https://ascrs.confex.com/ascrs/27am/cfp.cgi",
+            "httpStatus": 200
+          },
+          {
+            "url": "https://annualmeeting.ascrs.org/",
+            "httpStatus": 403
+          }
+        ],
+        "candidates": [
+          {
+            "url": "https://annualmeeting.ascrs.org/",
+            "indexUrl": "https://ascrs.confex.com/ascrs/27am/cfp.cgi",
+            "evidence": "2027 ASCRS ASOA Annual Meeting. April 2-5, 2027, San Diego, CA. Main Website: https://annualmeeting.ascrs.org/",
+            "reason": "bot-protected-official-candidate",
+            "checks": {
+              "nameMatches": true,
+              "yearMatches": true,
+              "editionMatches": true,
+              "years": [
+                2027
+              ],
+              "editions": [],
+              "city": "サンディエゴ",
+              "cityMatches": true,
+              "officialSocietyDomain": true,
+              "targetBodyVerified": false
+            },
+            "error": "bot-protected",
+            "fetchFailure": {
+              "error": "bot-protected",
+              "httpStatus": 403,
+              "botProtected": true,
+              "state": "bot-protected"
+            },
+            "officialEvidence": [
+              {
+                "url": "https://ascrs.confex.com/ascrs/27am/cfp.cgi",
+                "evidence": "2027 ASCRS ASOA Annual Meeting. April 2-5, 2027, San Diego, CA. Main Website: https://annualmeeting.ascrs.org/",
+                "sourceKind": "verified-material-snapshot",
+                "checks": {
+                  "nameMatches": true,
+                  "yearMatches": true,
+                  "editionMatches": true,
+                  "years": [
+                    2027
+                  ],
+                  "editions": [],
+                  "city": "サンディエゴ",
+                  "cityMatches": true
+                }
+              }
+            ]
+          }
+        ],
+        "reason": "bot-protected-official-candidate",
+        "indexLimitReached": false
       },
       {
         "eventId": "conf-jp-lowvision-2027",

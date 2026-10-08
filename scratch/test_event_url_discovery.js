@@ -138,7 +138,7 @@ async function main() {
   assert.equal((await discoverMissingEventUrls({ events: realEvents.filter(e => e.eventOfficialUrl), config,
     getPage: async () => callsAlreadySet.push('fetch') })).records.length, 0);
   assert.equal(callsAlreadySet.length, 0);
-  assert.equal(registry.discovery.entries.filter(e => e.integrityReview).length, 20);
+  assert.equal(registry.discovery.entries.filter(e => e.integrityReview).length, 19); // ASCRS now uses corroborated fetch-failure review.
 
   const isolated = fs.mkdtempSync(path.join(os.tmpdir(), 'event-discovery-pipeline-'));
   fs.copyFileSync(path.join(root, 'events.js'), path.join(isolated, 'events.js'));

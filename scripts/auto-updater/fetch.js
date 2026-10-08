@@ -30,7 +30,11 @@ async function fetchOfficialPage(page, source, limits, fetchImpl = fetch) {
       url = new URL(response.headers.get('location'), url).href;
       continue;
     }
-    if (!response.ok) throw new Error(`http-${response.status}`);
+    if (!response.ok && ![403, 429, 503].includes(response.status)) {
+      const error = new Error(`http-${response.status}`);
+      Object.assign(error, { httpStatus: response.status, fetchState: response.status === 404 || response.status === 410 ? 'not-found-response' : 'http-error' });
+      throw error;
+    }
     const type = response.headers.get('content-type') || '';
     if (!/text\/html|application\/xhtml\+xml/i.test(type)) throw new Error('non-html-response');
     const chunks = [];
@@ -44,6 +48,14 @@ async function fetchOfficialPage(page, source, limits, fetchImpl = fetch) {
     const charset = type.match(/charset=["']?([^\s;"']+)/i)?.[1] ||
       buffer.toString('ascii').match(/charset=["']?([a-z0-9_-]+)/i)?.[1] || 'utf-8';
     const html = new TextDecoder(charset).decode(buffer);
+    const botProtected = response.headers.get('cf-mitigated') === 'challenge' ||
+      /<title[^>]*>\s*(?:Just a moment|Attention Required)|cf-chl-|challenge-platform|Verify you are human|Checking your browser/i.test(html);
+    if (botProtected || !response.ok) {
+      const error = new Error(botProtected ? 'bot-protected' : `http-${response.status}`);
+      Object.assign(error, { httpStatus: response.status, botProtected,
+        fetchState: botProtected ? 'bot-protected' : response.status === 403 ? 'access-denied' : 'http-error' });
+      throw error;
+    }
     if (!/<(?:html|body|main|table|dl)\b/i.test(html)) throw new Error('invalid-html');
     return { ...page, url, html, httpStatus: response.status, fingerprint: crypto.createHash('sha256').update(buffer).digest('hex') };
   }

@@ -62,7 +62,23 @@ function links(html, base, expected, limit) {
   return [...new Map(result.map(r => [key(r.url), r])).values()].slice(0, limit);
 }
 
-async function discoverMissingEventUrls({ events, config, getPage = fetchOfficialPage }) {
+function alternativeEvidence(evidence, expected, entry, event) {
+  let matchedText = evidence;
+  for (const alias of entry?.nameAliases || []) matchedText = matchedText.replaceAll(alias, expected.name);
+  const checks = checkIdentity(matchedText, expected);
+  const city = event.cityCountry?.split(/[/／]/)[0].replace(/[（(].*?[）)]/g, '').trim() || null;
+  checks.city = city;
+  const cityNames = city && entry?.cityAliases?.some(alias => normalize(alias) === normalize(city)) ? entry.cityAliases : [city];
+  checks.cityMatches = city ? cityNames.some(name => normalize(evidence).includes(normalize(name))) : null;
+  return checks;
+}
+function officialDomain(url, entry, event) {
+  const roots = [...(entry?.officialSocietyDomains || [])];
+  if (event.societyUrl) roots.push(new URL(event.societyUrl).hostname.replace(/^www\./, ''));
+  const host = new URL(url).hostname;
+  return roots.some(root => host === root || host.endsWith('.' + root));
+}
+async function discoverMissingEventUrls({ events, config, getPage = fetchOfficialPage, checkedAt = new Date().toISOString() }) {
   const settings = config.discovery;
   const review = [], records = [], cache = new Map();
   if (!settings?.enabled) return { review, records, enabled: false };
@@ -79,7 +95,10 @@ async function discoverMissingEventUrls({ events, config, getPage = fetchOfficia
         return { document, requests };
       } catch (error) {
         if (!requests.length) requests.push({ url, httpStatus: error.httpStatus ?? null, error: error.message });
-        return { error: error.message, requests };
+        return { error: error.message, requests, failure: { error: error.message,
+          httpStatus: error.httpStatus ?? requests.at(-1)?.httpStatus ?? null,
+          botProtected: error.botProtected === true,
+          state: error.fetchState || (/http-(404|410)/.test(error.message) ? 'not-found-response' : /http-403/.test(error.message) ? 'access-denied' : 'fetch-failed') } };
       }
     })());
     return cache.get(cacheKey);
@@ -102,6 +121,19 @@ async function discoverMissingEventUrls({ events, config, getPage = fetchOfficia
     }
     if (!indexUrls.length) { record.reason = 'discovery-no-index-source'; continue; }
     const leads = new Map(), indexQueue = [...indexUrls], visitedIndexes = new Set();
+    const alternatives = new Map();
+    const remember = (candidateUrl, evidence, url, sourceKind) => {
+      if (!publicUrl(candidateUrl)) return;
+      const checks = alternativeEvidence(evidence, expected, entry, event);
+      const values = alternatives.get(key(candidateUrl)) || [];
+      values.push({ url, evidence, sourceKind, checks }); alternatives.set(key(candidateUrl), values);
+      leads.set(key(candidateUrl), { url: candidateUrl, indexUrl: url, context: evidence });
+    };
+    for (const saved of entry?.verifiedEvidence || []) {
+      const age = (Date.parse(checkedAt) - Date.parse(saved.checkedOn)) / 86400000;
+      if (age >= 0 && age <= 30 && indexUrls.includes(saved.url) && entry.candidateUrls?.includes(saved.candidateUrl))
+        remember(saved.candidateUrl, saved.evidence, saved.url, 'verified-material-snapshot');
+    }
     for (let i = 0; i < indexQueue.length && visitedIndexes.size < (settings.maxIndexPagesPerEvent || 3); i++) {
       const raw = indexQueue[i];
       const url = publicUrl(raw);
@@ -116,6 +148,14 @@ async function discoverMissingEventUrls({ events, config, getPage = fetchOfficia
       }
       for (const lead of links(result.document.html, result.document.url, expected, settings.maxLinksPerIndex)) {
         if (key(lead.url) !== key(url)) leads.set(key(lead.url), { ...lead, indexUrl: url });
+        if (key(lead.url) !== key(url)) remember(lead.url, lead.context, url, 'official-list-link');
+      }
+      // A registered official document may link to the meeting home before its dated heading.
+      for (const candidateUrl of entry?.candidateUrls || []) {
+        const linked = [...result.document.html.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)].some(m => {
+          try { return key(new URL(m[1].replace(/&amp;/g, '&'), result.document.url).href) === key(candidateUrl); } catch { return false; }
+        });
+        if (linked) remember(candidateUrl, pageEvidence(result.document.html), result.document.url, 'official-document-link');
       }
       // Follow the society's meeting-index navigation, within the same host only.
       for (const m of cleanHtml(result.document.html).matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
@@ -137,7 +177,24 @@ async function discoverMissingEventUrls({ events, config, getPage = fetchOfficia
         pageCount++;
         const result = await fetchPage(lead.url, 'discovery-event', [...eventHosts]);
         record.requests.push(...result.requests);
-        if (result.error) { candidate.reason = 'discovery-fetch-failed'; candidate.error = result.error; }
+        if (result.error) {
+          candidate.reason = result.failure.state === 'not-found-response' ? 'discovery-url-not-found-response' : 'discovery-fetch-failed';
+          candidate.error = result.error;
+          candidate.fetchFailure = result.failure;
+          candidate.officialEvidence = alternatives.get(key(lead.url)) || [];
+          const evidence = candidate.officialEvidence.find(e => e.checks.nameMatches && e.checks.yearMatches && e.checks.editionMatches);
+          const conflict = candidate.officialEvidence.find(e => e.sourceKind !== 'verified-material-snapshot' &&
+            (e.checks.years.some(y => y !== expected.year) || e.checks.editions.length && !e.checks.editionMatches || !e.checks.nameMatches));
+          const urlYears = [...new URL(lead.url).pathname.matchAll(/(?<!\d)(20\d{2})(?!\d)/g)].map(m => Number(m[1]));
+          if (result.failure.state !== 'not-found-response' && result.failure.error !== 'untrusted-domain' &&
+              officialDomain(lead.url, entry, event) && evidence && !conflict && !urlYears.some(y => y !== expected.year)) {
+            candidate.reason = 'bot-protected-official-candidate';
+            candidate.checks = { ...evidence.checks, officialSocietyDomain: true, targetBodyVerified: false };
+            candidate.evidence = evidence.evidence;
+          }
+          if (conflict) { candidate.checks = conflict.checks; candidate.reason = conflict.checks.years.some(y => y !== expected.year) ?
+            'event-url-year-mismatch' : !conflict.checks.nameMatches ? 'discovery-name-mismatch' : 'event-url-edition-mismatch'; }
+        }
         else {
           candidate.url = result.document.url;
           candidate.evidence = pageEvidence(result.document.html);
@@ -180,12 +237,15 @@ async function discoverMissingEventUrls({ events, config, getPage = fetchOfficia
     for (const candidate of candidates) {
       const reason = multiple ? 'multiple-candidates' : record.indexLimitReached ? 'discovery-search-limit' : candidate.reason;
       // Mismatches/failed fetches are inspection-only. Never offer a URL-only approval.
-      const valid = !multiple && reason === 'discovery-single-high-confidence';
+      const valid = !multiple && (reason === 'discovery-single-high-confidence' ||
+        reason === 'bot-protected-official-candidate' && candidate.checks.cityMatches !== false);
       review.push({ eventId: event.id, field: valid ? 'eventOfficialUrl' : null,
         value: valid ? candidate.url : null, oldValue: null, candidateUrl: candidate.url,
-        confidence: valid ? 0.98 : 0, method: 'official-index-discovery', url: candidate.indexUrl,
+        confidence: valid ? reason === 'bot-protected-official-candidate' ? 0.9 : 0.98 : 0, method: 'official-index-discovery', url: candidate.indexUrl,
         evidence: candidate.evidence.slice(0, 1000), reason, candidateReason: candidate.reason,
-        checks: candidate.checks, searchQueries: record.searchQueries });
+        checks: candidate.checks, fetchFailure: candidate.fetchFailure, officialEvidence: candidate.officialEvidence,
+        requiresHumanApproval: true, reviewSnapshot: Object.fromEntries(['title', 'date', 'endDate', 'venue', 'cityCountry'].map(k => [k, event[k] ?? null])),
+        searchQueries: record.searchQueries });
     }
     record.reason = multiple ? 'multiple-candidates' : record.indexLimitReached ? 'discovery-search-limit' : candidates[0]?.reason ||
       (record.requests.some(r => r.error || r.httpStatus >= 400) ? 'discovery-fetch-failed' : 'discovery-dedicated-url-not-found');

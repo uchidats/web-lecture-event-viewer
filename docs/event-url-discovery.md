@@ -28,13 +28,38 @@
 | 年／開催回の確証不足 | event-url-edition-unverified | URL候補を確認のみ可能 |
 | 取得失敗 | discovery-fetch-failed | HTTP結果／エラーを確認。不存在とは断定しない |
 | 探索の上限に到達 | discovery-search-limit | 未取得候補を残し、単一高信頼には昇格させない |
-| 既知の監査保留20件 | discovery-card-integrity-needs-review | カードの年・開催回・日程等の確認を先行。URL候補値は出さない |
+| 既知のカード整合性保留19件 | discovery-card-integrity-needs-review | カードの年・開催回・日程等の確認を先行。URL候補値は出さない。ASCRS 2027の取得失敗は下記の別経路照合へ移行 |
 | 専用URLを発見できず | discovery-dedicated-url-not-found | 新しいURL候補をキューに追加しない。通常テキストのまま |
 | 情報源未登録 | discovery-no-index-source | 未確認理由だけをレポートに記録 |
 
 管理画面は候補URLを安全な外部リンクとして表示する。field=nullの項目は「採用」が無効で、変更しない／保留／情報源確認が可能。既存のレビュー判断はブラウザ内保存のままで、管理画面で採用を押してもevents.jsを変更しない。
 
-監査20件の `integrityReview` は自動的に解除しない。カードの正式名称・開催回・開催年・日程を一次情報と照合して解決してから、そのメモを解除して探索を再開する。過去のレビュー項目は履歴として残し、解決理由を記録する。
+カード整合性に矛盾がある19件の `integrityReview` は自動的に解除しない。カードの正式名称・開催回・開催年・日程を一次情報と照合して解決してから、そのメモを解除して探索を再開する。ASCRS 2027はカードの矛盾ではなく本文取得失敗のため、別経路照合を許可する。過去のレビュー項目は履歴として残し、解決理由を記録する。
+
+## Bot保護・本文取得失敗と人間承認
+
+HTTP 200でもCloudflareのchallengeや「Just a moment」「Verify you are human」等を検出した本文は開催情報として使わない。HTTP 403だけではBot保護とは断定せず、アクセス拒否／Bot保護の可能性として表示する。HTTP応答のない通信失敗も別に記録する。404／410は `discovery-url-not-found-response` として区別し、Bot候補に昇格させない（候補URLと根拠は記録に残す）。保護の回避・CAPTCHA解決は行わない。
+
+本文を取得できなくても、登録済みの公式学会ドメインの配下で、別経路の一次情報が対象URLへ明示リンクし、学会名・開催年・開催回が一致すると `bot-protected-official-candidate` を管理レビューに送る。登録した学会名／開催地の別表記を用いて照合する。開催地の不一致・競合する年度の一次情報・複数候補はURLのみ承認不可。数字の回数がないAnnual Meetingは当該年を開催回として確認する。
+
+ASCRS 2027の根拠は [公式演題登録ページ](https://ascrs.confex.com/ascrs/27am/cfp.cgi) の2027 ASCRS ASOA Annual Meeting、4月2–5日、San Diego、Main Websiteリンク。対象は `https://annualmeeting.ascrs.org/`、公式学会ドメインはascrs.org。本体名とASOA併記を登録した別表記で照合し、同略称の別学会やASCRS 2028へ流用しない。確認済み公式資料のスナップショットは出典・確認日・リンク先を登録し、30日以内だけ補助根拠に使う。URL内の年だけで判定せず、新しい一次情報に不一致があれば古いスナップショットで上書きしない。
+
+管理画面では候補URL、取得失敗の種類・HTTPステータス、別経路の根拠リンク、公式学会ドメイン・年・学会名・開催回・開催地の一致／不一致／未確認を表示する。本文未確認であるためconfidenceは0.90で、常に高リスクの人間承認候補。通常の自動更新・applyや定期実行からURLを反映しない。管理画面の既定の読込先はテストfixtureではなく `reports/auto-update-review.json`。
+
+人間が反映する手順：
+
+1. 管理レビューで根拠と候補サイトを確認し「採用」を選ぶ（判断をブラウザに保存）。
+2. 「承認したURLを出力」で `event-url-human-approvals.json` を保存する。
+3. 管理者が明示的に下記のdry-runで対象差分を確認し、`--apply`を付けて反映する。
+
+```sh
+node scripts/apply-reviewed-event-urls.js --decisions <承認JSONのパス>
+node scripts/apply-reviewed-event-urls.js --decisions <承認JSONのパス> --apply
+```
+
+承認が空・未承認・保留・却下・候補署名不一致・カード情報変更・競合承認の場合は反映を拒否する。ここでの署名は候補内容の照合用で、電子署名ではない。このコマンドの実行権限を持つ管理者が、人間の承認JSONを扱う運用とする。更新前にバックアップし、反映したレビューに承認者・承認時刻を保存する。このコマンドは自動更新／Actionsから呼ばない。今回ASCRSのURL反映はしていない。
+
+検証は `scratch/test_bot_protected_event_urls.js`。Bot HTMLの403／200、普通の403、通信失敗、404、公式ドメイン境界、別経路の年・名称・開催地・リンク・古い根拠、未承認の反映拒否、明示的な承認後だけ隔離コピーに反映することを確認する。
 
 ## 再現ログ
 
