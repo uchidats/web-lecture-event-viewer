@@ -69,7 +69,7 @@ RULES:
 2. Check for edition mismatches (e.g. 8th vs 9th) and year mismatches (e.g. 2026 vs 2027 vs 2028).
 3. Be alert to cross-year links or navigation bars referencing past or future editions on the same website.
 4. Next-meeting announcements found within a previous year's official website or society site can be verified as 'society_next_announcement'.
-5. DO NOT GUESS OR INVENT DATA. If a field is not explicitly proven by the provided webpage excerpt, set its value to null.
+5. DO NOT GUESS OR INVENT DATA. If a metadata field is not explicitly proven by the provided webpage excerpt, omit that optional field. Missing evidence is not evidence to clear an existing value. Never output the string "null".
 6. For recommended_action:
    - 'no_change': Information matches current event values with no significant updates.
    - 'safe_auto_update': High-confidence (>=0.95), exact edition and year match from an official page, with verified changes (e.g. dates confirmed, venue confirmed, URL added).

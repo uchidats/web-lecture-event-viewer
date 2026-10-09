@@ -79,7 +79,8 @@ const checks = [
   ['scratch/test_gemini_monitor_regression.js'],
   ['scratch/test_gemini_notifications_and_acknowledgements.js'],
   ['scratch/test_gemini_staged_auto_updater.js'],
-  ['scratch/test_google_url_discovery.js']
+  ['scratch/test_google_url_discovery.js'],
+  ['scratch/test_gemini_discovery_grounding.js']
 ];
 function runChecks(root) {
   const results = [];

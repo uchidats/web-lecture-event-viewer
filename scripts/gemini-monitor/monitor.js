@@ -125,8 +125,13 @@ async function runGeminiMonitor(options = {}) {
           searchProvider: options.searchProvider,
           now: todayStr,
           forceSearch: isTargeted,
-          singleEventId: options.singleEventId
+          singleEventId: options.singleEventId,
+          onRequest: entry => console.log(`[Google URL Discovery:${event.id}] ${JSON.stringify(entry)}`)
         });
+        state.sources[event.id] = {
+          ...state.sources[event.id],
+          lastUrlDiscoveryDiagnostics: discoveryResult.searchDiagnostics || []
+        };
 
         if (discoveryResult.status === 'adopted') {
           metrics.urlDiscovered = (metrics.urlDiscovered || 0) + 1;

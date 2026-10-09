@@ -37,6 +37,28 @@ const { compact } = require('../auto-updater/extract');
 
 const normalize = str => compact(str || '').normalize('NFKC').toLowerCase();
 
+function sanitizeDiagnostic(value, options = {}) {
+  const secrets = [options.apiKey, options.googleApiKey, ...Object.entries(process.env)
+    .filter(([name]) => /(?:KEY|SECRET|TOKEN|PASS(?:WORD)?|CREDENTIAL)/i.test(name))
+    .map(([, secret]) => secret)].filter(secret => typeof secret === 'string' && secret.length > 0);
+  if (typeof value === 'string') {
+    for (const secret of secrets) {
+      for (const representation of new Set([secret, encodeURIComponent(secret), JSON.stringify(secret).slice(1, -1)])) {
+        value = value.split(representation).join('REDACTED');
+      }
+    }
+    return value.replace(/((?:key|api[_-]?key|token|secret|password|access_token)=)[^&"\s]+/gi, '$1REDACTED')
+      .replace(/(https?:\/\/)[^\s/@]+:[^\s/@]+@/gi, '$1REDACTED@');
+  }
+  if (Array.isArray(value)) return value.map(item => sanitizeDiagnostic(item, options));
+  if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, sanitizeDiagnostic(item, options)]));
+  return value;
+}
+
+function isHttpUrl(value) {
+  try { return ['http:', 'https:'].includes(new URL(value).protocol); } catch { return false; }
+}
+
 const MAJOR_CONFERENCE_PATTERNS = [
   /日本眼科学会/i,
   /日本臨床眼科学会|臨眼/i,
@@ -489,8 +511,9 @@ async function verifyCandidateWithGemini(event, candidate, rank, options = {}) {
     if (!textOutput) throw new Error('Empty Gemini response');
     const parsed = JSON.parse(textOutput);
     return normalizeVerificationOutput(parsed);
-  } catch {
+  } catch (err) {
     // Graceful deterministic fallback
+    options.onRequest?.(sanitizeDiagnostic({ candidateUrl: candidate.url, verifierFallback: true, error: err.message }, options));
     return verifyCandidateOffline(event, candidate);
   }
 }
@@ -499,34 +522,35 @@ async function verifyCandidateWithGemini(event, candidate, rank, options = {}) {
  * Extract links from Gemini Google Search Grounding response.
  */
 function extractLinksFromGrounding(data) {
-  const chunks = data?.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
+  const responseCandidate = data?.candidates?.[0];
+  const chunks = responseCandidate?.groundingMetadata?.groundingChunks || [];
+  const textOutput = (responseCandidate?.content?.parts || []).filter(p => !p.thought).map(p => p.text || '').join('\n');
   const results = [];
   for (const chunk of chunks) {
-    if (chunk.web?.uri && !results.some(r => r.url === chunk.web.uri)) {
+    if (isHttpUrl(chunk.web?.uri) && !results.some(r => r.url === chunk.web.uri)) {
       results.push({
         rank: results.length + 1,
         url: chunk.web.uri,
         title: chunk.web.title || '',
-        snippet: ''
+        snippet: (responseCandidate?.groundingMetadata?.groundingSupports || [])
+          .filter(support => support.groundingChunkIndices?.includes(chunks.indexOf(chunk)))
+          .map(support => support.segment?.text || '').join('\n').slice(0, 2000)
       });
-      if (results.length >= 3) break;
     }
   }
 
-  // If groundingChunks was not populated directly, extract URLs mentioned in the text
-  if (results.length === 0) {
-    const textOutput = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    const linkMatches = [...textOutput.matchAll(/https?:\/\/[^\s)\]]+/g)];
+  // Grounding citations can be Google redirect URLs; retain explicit source URLs too.
+  {
+    const linkMatches = [...textOutput.matchAll(/https?:\/\/[^\s)\]<>"']+/g)];
     for (const m of linkMatches) {
       const cleanUrl = m[0].replace(/[.,;:]$/, '');
-      if (!results.some(r => r.url === cleanUrl)) {
+      if (isHttpUrl(cleanUrl) && !isDomainThirdParty(cleanUrl) && !results.some(r => r.url === cleanUrl)) {
         results.push({
           rank: results.length + 1,
           url: cleanUrl,
           title: '',
-          snippet: ''
+          snippet: textOutput.slice(textOutput.lastIndexOf('\n', m.index) + 1, textOutput.indexOf('\n', m.index) < 0 ? textOutput.length : textOutput.indexOf('\n', m.index)).slice(0, 2000)
         });
-        if (results.length >= 3) break;
       }
     }
   }
@@ -573,18 +597,42 @@ async function searchGoogle(query, options = {}) {
         body: JSON.stringify({
           contents: [{
             role: 'user',
-            parts: [{ text: `Search Google for: "${query}". Return the top organic search result links.` }]
+            parts: [{ text: `Use Google Search to find the dedicated official conference website for: ${query}. Search these terms without treating the entire query as an exact quoted phrase. Return up to three relevant official source URLs, their titles, and evidence of the conference year and numbered edition. Include the actual destination URLs, not Google citation redirect links. Do not invent URLs.` }]
           }],
           tools: [{ googleSearch: {} }]
         })
       });
 
+      if (!res.ok) throw new Error(`Google Search Grounding HTTP ${res.status}`);
       if (res.ok) {
         const data = await res.json();
         const results = extractLinksFromGrounding(data);
-        if (results.length > 0) return results;
+        const rawUrls = results.map(r => r.url);
+        const resolved = [];
+        for (const candidate of results) {
+          if (new URL(candidate.url).hostname === 'vertexaisearch.cloud.google.com') {
+            try {
+              const redirectResponse = await fetch(candidate.url, { signal: AbortSignal.timeout(15000) });
+              if (redirectResponse.body) await redirectResponse.body.cancel();
+              if (!isHttpUrl(redirectResponse.url) || new URL(redirectResponse.url).hostname === 'vertexaisearch.cloud.google.com') throw new Error('Unresolved grounding redirect');
+              candidate.url = redirectResponse.url;
+            } catch {
+              options.onRequest?.(sanitizeDiagnostic({ query, candidateUrl: candidate.url, error: 'Grounding redirect resolution failed' }, options));
+              continue;
+            }
+          }
+          const existing = resolved.find(r => r.url === candidate.url);
+          if (existing) {
+            if (!existing.snippet) existing.snippet = candidate.snippet;
+          } else resolved.push({ ...candidate, rank: resolved.length + 1 });
+        }
+        options.onRequest?.(sanitizeDiagnostic({ query, webSearchQueries: data?.candidates?.[0]?.groundingMetadata?.webSearchQueries || [], groundingUrls: rawUrls, candidates: resolved, finishReason: data?.candidates?.[0]?.finishReason }, options));
+        return resolved.slice(0, 3);
       }
-    } catch {}
+    } catch (err) {
+      // Keep API keys and request URLs out of diagnostic errors.
+      throw new Error(sanitizeDiagnostic(err.message, options));
+    }
   }
 
   return [];
@@ -628,14 +676,20 @@ async function discoverOfficialUrlWithGoogle(event, options = {}) {
   }
 
   const evaluatedCandidates = [];
+  const searchDiagnostics = [];
+  const searchOptions = { ...options, onRequest: entry => {
+    const safeEntry = sanitizeDiagnostic(entry, options);
+    searchDiagnostics.push(safeEntry);
+    options.onRequest?.(safeEntry);
+  } };
 
   for (const query of queries) {
     if (evaluatedCandidates.length >= 3) break;
     let searchResults = [];
     try {
-      searchResults = await searchGoogle(query, options);
+      searchResults = await searchGoogle(query, searchOptions);
     } catch (err) {
-      if (options.onRequest) options.onRequest({ query, error: err.message });
+      searchOptions.onRequest({ query, error: err.message });
       continue;
     }
 
@@ -659,7 +713,7 @@ async function discoverOfficialUrlWithGoogle(event, options = {}) {
         }
       }
 
-      const verification = await verifyCandidateWithGemini(event, candidate, candidate.rank, options);
+      const verification = await verifyCandidateWithGemini(event, candidate, candidate.rank, searchOptions);
       evaluatedCandidates.push({ candidate, verification });
 
       const meetsAllCriteria =
@@ -669,6 +723,7 @@ async function discoverOfficialUrlWithGoogle(event, options = {}) {
         verification.is_official_domain &&
         !verification.is_third_party &&
         verification.confidence >= 0.85;
+      searchOptions.onRequest({ query, candidateUrl: candidate.url, verification, accepted: Boolean(meetsAllCriteria) });
 
       if (meetsAllCriteria) {
         // High confidence match found! Auto-adopt as eventOfficialUrl.
@@ -683,7 +738,8 @@ async function discoverOfficialUrlWithGoogle(event, options = {}) {
           isBotProtected: Boolean(verification.is_bot_protected || candidate.isBotProtected || candidate.pageFetchError),
           verification,
           reason: verification.reason,
-          evaluatedCount: evaluatedCandidates.length
+          evaluatedCount: evaluatedCandidates.length,
+          searchDiagnostics
         };
       }
       // If rank #1 is inappropriate, the loop advances to rank #2, rank #3
@@ -698,7 +754,8 @@ async function discoverOfficialUrlWithGoogle(event, options = {}) {
     detail: 'Google検索上位候補（最大3件）を検証しましたが、公式大会ページの要件を満たす高信頼候補はありませんでした。',
     adoptedUrl: null,
     evaluatedCount: evaluatedCandidates.length,
-    evaluatedCandidates
+    evaluatedCandidates,
+    searchDiagnostics
   };
 }
 
@@ -707,6 +764,8 @@ module.exports = {
   getDiscoveryWindowStatus,
   getEventHorizonStatus,
   buildSearchQueries,
+  extractLinksFromGrounding,
+  sanitizeDiagnostic,
   searchGoogle,
   verifyCandidateWithGemini,
   verifyCandidateOffline,

@@ -11,6 +11,15 @@ const { diffDays } = require('./scheduler');
  * (Requirements 1, 2, 3, 17)
  */
 function classifyDecision(currentEvent, geminiResult, options = {}) {
+  // STRING schemas may return the literal "null" for unproven metadata.
+  // Missing evidence must never become a deletion proposal.
+  geminiResult = { ...geminiResult };
+  for (const field of ['official_url', 'start_date', 'end_date', 'venue', 'city', 'abstract_deadline', 'registration_deadline', 'official_title']) {
+    const value = geminiResult[field];
+    if (value == null || (typeof value === 'string' && /^(?:null|undefined|unknown|n\/?a|none|not available|未定|不明)?$/i.test(value.trim()))) {
+      geminiResult[field] = null;
+    }
+  }
   const suppressions = options.suppressions || [];
   const learningMeta = options.sourceLearningMeta || {};
   const todayStr = options.todayStr || new Date().toISOString().slice(0, 10);
