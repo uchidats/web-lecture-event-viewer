@@ -869,6 +869,19 @@ button, input, select, textarea {
   flex-shrink: 0;
 }
 
+.date-badge.has-year {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.date-badge .date-year {
+  font-size: 0.70rem;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
 .date-badge .month-day {
   font-size: 1.02rem;
   font-weight: 700;
@@ -2504,6 +2517,11 @@ button, input, select, textarea {
 
   .date-badge .month-day {
     font-size: 0.95rem;
+  }
+
+  .date-badge.has-year {
+    padding-top: 3px;
+    padding-bottom: 3px;
   }
 
   .date-badge .day-week {

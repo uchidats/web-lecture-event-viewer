@@ -1853,6 +1853,8 @@ function renderActiveFilterChips() {
  */
 function formatEventDateBadge(event) {
   const startDate = new Date(event.date);
+  const startYear = startDate.getFullYear();
+  const yearText = Number.isFinite(startYear) && startYear !== Number(getTodayString().slice(0, 4)) ? `${startYear}年` : "";
   const startM = startDate.getMonth() + 1;
   const startD = startDate.getDate();
   const startW = WEEKDAYS[startDate.getDay()];
@@ -1860,6 +1862,7 @@ function formatEventDateBadge(event) {
   // 終了日が未指定、または開始日と同じ（単日イベント）
   if (!event.endDate || event.endDate === event.date) {
     return {
+      yearText,
       dateText: `${startM}/${startD}`,
       weekdayText: `(${startW})`
     };
@@ -1884,6 +1887,7 @@ function formatEventDateBadge(event) {
   const weekdayText = `(${startW})–(${endW})`;
 
   return {
+    yearText,
     dateText,
     weekdayText
   };
@@ -2190,7 +2194,8 @@ function createEventCardHtml(event) {
       <!-- 上段: 日程・地域・ステータスバッジ -->
       <div class="card-top-row">
         <div class="date-time-block">
-          <div class="date-badge">
+          <div class="date-badge${dateBadgeInfo.yearText ? ' has-year' : ''}">
+            ${dateBadgeInfo.yearText ? `<span class="date-year">${escapeHtml(dateBadgeInfo.yearText)}</span>` : ''}
             <span class="month-day">${escapeHtml(dateBadgeInfo.dateText)}</span>
             <span class="day-week">${escapeHtml(dateBadgeInfo.weekdayText)}</span>
           </div>
