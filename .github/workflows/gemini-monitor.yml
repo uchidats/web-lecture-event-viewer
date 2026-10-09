@@ -5,6 +5,11 @@ on:
     - cron: '15 21 * * *' # 06:15 JST daily
   workflow_dispatch:
     inputs:
+      single_event_id:
+        description: 'Single event ID to monitor (leave empty for regular scheduled check)'
+        required: false
+        type: string
+        default: ''
       force_all:
         description: 'Force check all events ignoring schedule interval'
         required: false
@@ -60,6 +65,11 @@ jobs:
             FLAGS="--apply"
           else
             echo "Running in staged simulation mode (events.js unmodified)."
+          fi
+
+          if [ -n "${{ inputs.single_event_id }}" ]; then
+            echo "Single event targeted: ${{ inputs.single_event_id }}"
+            FLAGS="$FLAGS --single-event ${{ inputs.single_event_id }}"
           fi
 
           if [ "${{ inputs.force_all }}" = "true" ]; then

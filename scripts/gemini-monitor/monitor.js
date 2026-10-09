@@ -111,7 +111,8 @@ async function runGeminiMonitor(options = {}) {
     // 3a. If eventOfficialUrl is not registered, execute Google discovery if within mandatory window
     if (!event.eventOfficialUrl) {
       const windowStatus = getDiscoveryWindowStatus(event, todayStr);
-      if (windowStatus.inMandatoryWindow) {
+      const isTargeted = Boolean(options.singleEventId && event.id === options.singleEventId);
+      if (windowStatus.inMandatoryWindow || isTargeted) {
         metrics.urlDiscoveryChecks = (metrics.urlDiscoveryChecks || 0) + 1;
         const discoveryResult = await discoverOfficialUrlWithGoogle(event, {
           apiKey: options.apiKey,
@@ -120,7 +121,9 @@ async function runGeminiMonitor(options = {}) {
           getPage: options.getPage,
           offline: options.offline,
           searchProvider: options.searchProvider,
-          now: todayStr
+          now: todayStr,
+          forceSearch: isTargeted,
+          singleEventId: options.singleEventId
         });
 
         if (discoveryResult.status === 'adopted') {

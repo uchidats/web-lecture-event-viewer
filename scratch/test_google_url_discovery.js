@@ -314,10 +314,31 @@ async function main() {
   assert.equal(isDomainOfficial('https://square.umin.ac.jp/ganki/', lowvisionEvent), true);
   assert.equal(isDomainOfficial('https://ascrs.org/', ascrsEvent), true);
   assert.equal(isDomainOfficial('https://fujiretina.com/', fujiretinaEvent), true);
-  console.log('PASS: Domain classifier checks passed\n');
+  // ==========================================
+  // Test Case 11: Single Event Targeted Discovery
+  // ==========================================
+  console.log('--- Test 11: Single Event Targeted Discovery ---');
+  const mockProviderTargeted = async () => [
+    {
+      rank: 1,
+      url: 'https://www.ganki.jp/lowvision2027/information.html',
+      title: '第28回日本ロービジョン学会学術総会 開催概要',
+      snippet: '第28回日本ロービジョン学会学術総会 会期：2027年5月22日〜23日 会場：大阪国際会議場'
+    }
+  ];
+  // Even when diffDays is 225 > 180, singleEventId allows targeted search
+  const resTargeted = await discoverOfficialUrlWithGoogle(lowvisionEvent, {
+    now: refDate,
+    offline: true,
+    singleEventId: 'conf-jp-lowvision-2027',
+    searchProvider: mockProviderTargeted
+  });
+  assert.equal(resTargeted.status, 'adopted');
+  assert.equal(resTargeted.adoptedUrl, 'https://www.ganki.jp/lowvision2027/information.html');
+  console.log('PASS: Single targeted event allowed discovery without requiring forceAll\n');
 
   console.log('================================================================');
-  console.log('ALL 10 GOOGLE OFFICIAL URL DISCOVERY REGRESSION TESTS PASSED!');
+  console.log('ALL GOOGLE OFFICIAL URL DISCOVERY REGRESSION TESTS PASSED!');
   console.log('================================================================');
 }
 

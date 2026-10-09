@@ -206,8 +206,8 @@ function selectEventsForToday(events, todayStr, state = {}, options = {}) {
     const cached = sources[event.id];
     const nextCheckDate = cached?.nextCheckDate;
     const isDue = !nextCheckDate || nextCheckDate <= todayStr;
-
-    if (options.forceAll || isDue) {
+    const isTargeted = Boolean(options.singleEventId && event.id === options.singleEventId);
+    if (options.forceAll || isTargeted || isDue) {
       selected.push({
         event,
         eventId: event.id,

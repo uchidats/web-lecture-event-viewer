@@ -557,7 +557,9 @@ async function discoverOfficialUrlWithGoogle(event, options = {}) {
   }
 
   // 2. Beyond mandatory window: normal state, do not force search or flag needs_review
-  if (!windowStatus.inMandatoryWindow) {
+  // (unless specifically targeted via options.forceSearch or options.singleEventId === event.id)
+  const isTargeted = Boolean(options.forceSearch || (options.singleEventId && options.singleEventId === event.id));
+  if (!windowStatus.inMandatoryWindow && !isTargeted) {
     return {
       status: 'normal-not-yet-created',
       windowStatus,

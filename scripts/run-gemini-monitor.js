@@ -50,7 +50,7 @@ Options:
   }
 
   let singleEventId = null;
-  const eventIdx = args.indexOf('--event');
+  const eventIdx = args.findIndex(arg => arg === '--event' || arg === '--single-event' || arg === '--single-event-id');
   if (eventIdx !== -1 && args[eventIdx + 1]) {
     singleEventId = args[eventIdx + 1];
   }
