@@ -69,7 +69,8 @@ const checks = [
     'scripts/gemini-monitor/constants.js', 'scripts/gemini-monitor/scheduler.js', 'scripts/gemini-monitor/fetcher.js',
     'scripts/gemini-monitor/extractor.js', 'scripts/gemini-monitor/gemini-analyzer.js', 'scripts/gemini-monitor/classifier.js',
     'scripts/gemini-monitor/rollback-manager.js', 'scripts/gemini-monitor/notifier.js', 'scripts/gemini-monitor/firestore-client.js',
-    'scripts/gemini-monitor/applier.js', 'scripts/gemini-monitor/monitor.js', 'scripts/run-gemini-monitor.js'].map(file => ['--check', file]),
+    'scripts/gemini-monitor/applier.js', 'scripts/gemini-monitor/monitor.js', 'scripts/run-gemini-monitor.js',
+    'scripts/gemini-monitor/google-url-discoverer.js'].map(file => ['--check', file]),
   ['scratch/test_ended_conferences.js'], ['scratch/test_conference_history.js'],
   ['scratch/test_venue_master.js'], ['scratch/test_comprehensive_regression.js'],
   ['scratch/test_abstract_submission.js'], ['scratch/test_auto_updater.js'],
@@ -77,7 +78,8 @@ const checks = [
   ['scratch/test_venue_update_policy.js'], ['scratch/test_registration.js'], ['scratch/test_filter_state.js'], ['scratch/test_event_urls.js'], ['scratch/test_event_url_discovery.js'], ['scratch/test_bot_protected_event_urls.js'],
   ['scratch/test_gemini_monitor_regression.js'],
   ['scratch/test_gemini_notifications_and_acknowledgements.js'],
-  ['scratch/test_gemini_staged_auto_updater.js']
+  ['scratch/test_gemini_staged_auto_updater.js'],
+  ['scratch/test_google_url_discovery.js']
 ];
 function runChecks(root) {
   const results = [];

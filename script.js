@@ -140,6 +140,11 @@ function getSpecialtyDisplayLabel(value) {
   return value === "網膜・硝子体" ? "網膜硝子体" : value;
 }
 
+// 学会分類表示を「国際学会」に統一し、既存のデータ・フィルタ内部値は維持する。
+function getEventTypeDisplayLabel(value) {
+  return value === "海外学会" ? "国際学会" : value;
+}
+
 /**
  * 初期化処理
  */
@@ -186,7 +191,9 @@ function loadFilterState() {
       scheduleStatus: ['free', 'partial_conflict', 'conflict', 'registered'] };
     for (const key of FILTER_SET_KEYS) {
       if (!Array.isArray(saved.filters[key])) continue;
-      const values = saved.filters[key].filter(value => typeof value === 'string' && options[key].includes(value));
+      const values = saved.filters[key]
+        .map(value => (key === 'eventType' && value === '国際学会') ? '海外学会' : value)
+        .filter(value => typeof value === 'string' && options[key].includes(value));
       if (!saved.filters[key].length || values.length) state.filters[key] = new Set(values);
     }
     for (const key of FILTER_BOOLEAN_KEYS) if (typeof saved.filters[key] === 'boolean') state.filters[key] = saved.filters[key];
@@ -648,7 +655,7 @@ function renderConferenceHistoryModal() {
       </div>
       <div class="history-summary-divider"></div>
       <div class="history-summary-stat">
-        <span class="summary-stat-label">海外学会</span>
+        <span class="summary-stat-label">国際学会</span>
         <span class="summary-stat-value">${grandInternational} <small>学会</small></span>
       </div>
     </div>
@@ -708,7 +715,7 @@ function renderConferenceHistoryModal() {
         <div class="history-fy-stat-chips">
           <span class="history-stat-chip total">参加計 <strong>${group.totalCount}</strong>学会</span>
           <span class="history-stat-chip domestic">国内 <strong>${group.domesticCount}</strong></span>
-          <span class="history-stat-chip international">海外 <strong>${group.internationalCount}</strong></span>
+          <span class="history-stat-chip international">国際 <strong>${group.internationalCount}</strong></span>
         </div>
       </div>
 
@@ -718,7 +725,7 @@ function renderConferenceHistoryModal() {
             <div class="history-conf-info">
               <div class="history-conf-badges">
                 <span class="conf-category-badge region ${conf.conferenceRegion === 'international' ? 'international' : 'domestic'}">
-                  ${conf.conferenceRegion === 'international' ? '海外学会' : '国内学会'}
+                  ${conf.conferenceRegion === 'international' ? '国際学会' : '国内学会'}
                 </span>
                 ${conf.conferenceCategory ? `<span class="conf-category-badge category">${escapeHtml(conf.conferenceCategory)}</span>` : ''}
               </div>
@@ -1207,11 +1214,14 @@ function renderFilterOptions() {
     container.innerHTML = items.map(val => {
       // 該当カテゴリに属するイベント件数を計算
       const count = state.events.filter(e => e[key] === val).length;
+      const displayLabel = key === 'specialty'
+        ? getSpecialtyDisplayLabel(val)
+        : (key === 'eventType' ? getEventTypeDisplayLabel(val) : val);
       return `
         <label class="chip-label">
           <input type="checkbox" name="${key}" value="${val}">
           <span class="chip-btn">
-            ${escapeHtml(key === 'specialty' ? getSpecialtyDisplayLabel(val) : val)}
+            ${escapeHtml(displayLabel)}
             <span class="chip-count">(${count})</span>
           </span>
         </label>
@@ -2059,7 +2069,7 @@ function createEventCardHtml(event) {
   const isAttended = historyStatus === "attended";
   const isNotAttended = historyStatus === "not_attended";
 
-  // 学会（国内学会・海外学会）特有の表示ブロック
+  // 学会（国内学会・国際学会）特有の表示ブロック
   let conferenceBlockHtml = "";
   if (event.isConference) {
     conferenceBlockHtml = `
@@ -2141,7 +2151,7 @@ function createEventCardHtml(event) {
         <div class="conf-item conf-item-full">
           <span class="conf-label">学会分類:</span>
           <span class="conf-val conf-classification-val">
-            <span class="conf-category-badge region">${event.conferenceRegion === 'international' ? '海外学会' : '国内学会'}</span>
+            <span class="conf-category-badge region">${event.conferenceRegion === 'international' ? '国際学会' : '国内学会'}</span>
             ${event.conferenceCategory ? `<span class="conf-category-badge category">${escapeHtml(event.conferenceCategory)}</span>` : ''}
           </span>
         </div>
@@ -2227,7 +2237,7 @@ function createEventCardHtml(event) {
         ${event.isConference && event.conferenceRegion !== 'international' && event.eventType !== '海外学会' ? '' : `<p class="card-desc">${escapeHtml(event.description)}</p>`}
       </div>
 
-      <!-- 学会特有メタ情報（国内学会・海外学会のみ） -->
+      <!-- 学会特有メタ情報（国内学会・国際学会のみ） -->
       ${conferenceBlockHtml}
 
       <!-- メタ情報: 診療領域・共催・取得単位 -->
@@ -2238,7 +2248,7 @@ function createEventCardHtml(event) {
         </div>
         <div class="card-meta-item">
           <span class="card-meta-label">種別:</span>
-          <span>${escapeHtml(event.eventType)}</span>
+          <span>${escapeHtml(getEventTypeDisplayLabel(event.eventType))}</span>
         </div>
         <div class="card-meta-item">
           <span class="card-meta-label">主催/共催:</span>

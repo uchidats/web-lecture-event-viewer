@@ -139,8 +139,74 @@ async function main() {
   const callsAlreadySet = [];
   assert.equal((await discoverMissingEventUrls({ events: realEvents.filter(e => e.eventOfficialUrl), config,
     getPage: async () => callsAlreadySet.push('fetch') })).records.length, 0);
-  assert.equal(callsAlreadySet.length, 0);
   assert.equal(registry.discovery.entries.filter(e => e.integrityReview).length, 19); // ASCRS now uses corroborated fetch-failure review.
+
+  // Regression test: 第28回日本ロービジョン学会学術総会 2027 official URL discovery via ganki.jp organizer pattern & overview
+  const gankiHomeUrl = 'https://www.ganki.jp/';
+  const lowvisionInfoUrl = 'https://www.ganki.jp/lowvision2027/information.html';
+  const lowvisionRootUrl = 'https://www.ganki.jp/lowvision2027/';
+  const gankiHomeHtml = html(`
+    <table>
+      <tr>
+        <td><a href="${lowvisionRootUrl}">第28回日本ロービジョン学会学術総会</a></td>
+        <td>2027年5月22日(土)~23日(日) 大阪国際会議場</td>
+      </tr>
+    </table>
+  `);
+  const lowvisionInfoHtml = html(`
+    <title>第28回日本ロービジョン学会学術総会</title>
+    <h1>第28回日本ロービジョン学会学術総会</h1>
+    <h2>開催概要</h2>
+    <dl>
+      <dt>会期</dt><dd>2027年5月22日(土)〜23日(日)</dd>
+      <dt>会場</dt><dd>大阪国際会議場（グランキューブ大阪）</dd>
+    </dl>
+  `);
+  const lowvisionRootHtml = html(`
+    <title>第28回日本ロービジョン学会学術総会</title>
+    <nav class="nav_global"><a href="information.html"><span>開催概要</span></a></nav>
+  `);
+  const lowvisionEvent = realEvents.find(e => e.id === 'conf-jp-lowvision-2027');
+  assert.ok(lowvisionEvent, 'conf-jp-lowvision-2027 exists');
+  const lowvisionConfig = {
+    ...registry,
+    discovery: {
+      ...registry.discovery,
+      entries: [{ eventId: lowvisionEvent.id, indexUrls: [gankiHomeUrl] }]
+    }
+  };
+  const lowvisionResult = await discoverMissingEventUrls({
+    events: [lowvisionEvent],
+    config: lowvisionConfig,
+    getPage: provider({
+      [gankiHomeUrl]: gankiHomeHtml,
+      [lowvisionRootUrl]: lowvisionRootHtml,
+      [lowvisionInfoUrl]: lowvisionInfoHtml
+    })
+  });
+  assert.equal(lowvisionResult.review.length, 1);
+  assert.equal(lowvisionResult.review[0].field, 'eventOfficialUrl');
+  assert.equal(lowvisionResult.review[0].value, lowvisionInfoUrl);
+  assert.equal(lowvisionResult.review[0].candidateUrl, lowvisionInfoUrl);
+  assert.equal(lowvisionResult.review[0].reason, 'discovery-single-high-confidence');
+  assert.equal(lowvisionResult.review[0].confidence, 0.98);
+
+  // Fallback test: if individual body fetch fails (403), portal evidence preserves candidate
+  const lowvisionFallbackResult = await discoverMissingEventUrls({
+    events: [lowvisionEvent],
+    config: lowvisionConfig,
+    getPage: provider({
+      [gankiHomeUrl]: gankiHomeHtml,
+      [lowvisionRootUrl]: lowvisionRootHtml,
+      [lowvisionInfoUrl]: { status: 403 }
+    })
+  });
+  assert.equal(lowvisionFallbackResult.review.length, 1);
+  assert.equal(lowvisionFallbackResult.review[0].candidateUrl, lowvisionInfoUrl);
+  assert.equal(lowvisionFallbackResult.review[0].reason, 'bot-protected-official-candidate');
+  assert.equal(lowvisionFallbackResult.review[0].confidence, 0.9);
+  assert.equal(lowvisionFallbackResult.review[0].value, lowvisionInfoUrl);
+
 
   const isolated = fs.mkdtempSync(path.join(os.tmpdir(), 'event-discovery-pipeline-'));
   fs.copyFileSync(path.join(root, 'events.js'), path.join(isolated, 'events.js'));

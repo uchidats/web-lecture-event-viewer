@@ -10,9 +10,16 @@ function identity(event) {
   // Annual meetings without numbered editions use their annual year as edition identity.
   return { year, editions, name, annual: !editions.length && /Annual Meeting|FujiRetina/i.test(event.title) };
 }
-function cleanHtml(html) {
+function cleanHtmlForEvidence(html) {
   return html.replace(/<!--[\s\S]*?-->/g, '').replace(/<(script|style|nav|footer)\b[^>]*>[\s\S]*?<\/\1>/gi, '')
     .replace(/<(s|del)\b[^>]*>[\s\S]*?<\/\1>/gi, '');
+}
+function cleanHtmlForLinks(html) {
+  return html.replace(/<!--[\s\S]*?-->/g, '').replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, '')
+    .replace(/<(s|del)\b[^>]*>[\s\S]*?<\/\1>/gi, '');
+}
+function cleanHtml(html) {
+  return cleanHtmlForEvidence(html);
 }
 function publicUrl(value) {
   try {
@@ -32,7 +39,7 @@ function checkIdentity(evidence, expected) {
   return { nameMatches, yearMatches, editionMatches, years, editions };
 }
 function pageEvidence(html) {
-  const clean = cleanHtml(html);
+  const clean = cleanHtmlForEvidence(html);
   const title = text(clean.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1] || '');
   const headings = [...clean.matchAll(/<h[12]\b[^>]*>([\s\S]*?)<\/h[12]>/gi)].map(m => text(m[1]));
   // Ignore news dates, copyright and earlier meetings: use headings and labeled meeting dates.
@@ -42,7 +49,7 @@ function pageEvidence(html) {
   return [title, ...headings, ...dates, ...imageDates].join(' ');
 }
 function links(html, base, expected, limit) {
-  const clean = cleanHtml(html), result = [];
+  const clean = cleanHtmlForLinks(html), result = [];
   for (const m of clean.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
     let url; try { url = publicUrl(new URL(m[1].replace(/&amp;/g, '&'), base).href); } catch { continue; }
     if (!url || /\.(pdf|png|jpe?g|gif|zip)(?:$|\?)/i.test(url)) continue;
@@ -68,15 +75,71 @@ function alternativeEvidence(evidence, expected, entry, event) {
   const checks = checkIdentity(matchedText, expected);
   const city = event.cityCountry?.split(/[/／]/)[0].replace(/[（(].*?[）)]/g, '').trim() || null;
   checks.city = city;
-  const cityNames = city && entry?.cityAliases?.some(alias => normalize(alias) === normalize(city)) ? entry.cityAliases : [city];
+  const baseCity = city && city.length > 2 ? city.replace(/[都道府県市町村]$/, '') : city;
+  const cityNames = [city, baseCity, ...(entry?.cityAliases || [])].filter(Boolean);
   checks.cityMatches = city ? cityNames.some(name => normalize(evidence).includes(normalize(name))) : null;
   return checks;
 }
 function officialDomain(url, entry, event) {
   const roots = [...(entry?.officialSocietyDomains || [])];
-  if (event.societyUrl) roots.push(new URL(event.societyUrl).hostname.replace(/^www\./, ''));
-  const host = new URL(url).hostname;
+  if (event.societyUrl) try { roots.push(new URL(event.societyUrl).hostname.replace(/^www\./, '')); } catch {}
+  for (const idx of entry?.indexUrls || []) try { roots.push(new URL(idx).hostname.replace(/^www\./, '')); } catch {}
+  const host = new URL(url).hostname.replace(/^www\./, '');
   return roots.some(root => host === root || host.endsWith('.' + root));
+}
+
+const ORGANIZER_PATTERNS = [
+  {
+    domain: 'www.ganki.jp',
+    societySlugs: [
+      { slug: 'lowvision', keywords: ['ロービジョン', 'jslrr'] },
+      { slug: 'jips', keywords: ['視野画像', 'jips', 'perimetry'] },
+      { slug: 'myopia', keywords: ['近視', 'myopia'] },
+      { slug: 'jsoo', keywords: ['眼腫瘍', 'jsoo', 'oncology'] },
+      { slug: 'jsop', keywords: ['眼薬理', 'jsop', 'pharmacology'] },
+      { slug: 'cornea', keywords: ['角膜カンファ', '角膜'] }
+    ]
+  }
+];
+
+function generateOrganizerCandidates(event, expected, knownUrls = []) {
+  const generated = [];
+  const year = expected.year;
+  if (!year) return generated;
+  for (const org of ORGANIZER_PATTERNS) {
+    const matchedSlugs = new Set();
+    const titleNorm = normalize(event.title);
+    const catNorm = normalize(event.conferenceCategory || '');
+    const tagsNorm = (event.tags || []).map(t => normalize(t)).join(' ');
+    for (const item of org.societySlugs) {
+      if (item.keywords.some(k => titleNorm.includes(normalize(k)) || catNorm.includes(normalize(k)) || tagsNorm.includes(normalize(k)))) {
+        matchedSlugs.add(item.slug);
+      }
+    }
+    for (const u of knownUrls) {
+      try {
+        const parsed = new URL(u);
+        if (parsed.hostname === org.domain) {
+          const m = parsed.pathname.match(/^\/([a-z0-9_-]+)(?:20\d{2})?\/?$/i);
+          if (m) {
+            const cleanSlug = m[1].replace(/20\d{2}$/, '');
+            matchedSlugs.add(cleanSlug);
+          }
+        }
+      } catch {}
+    }
+    for (const slug of matchedSlugs) {
+      generated.push({
+        url: `https://${org.domain}/${slug}${year}/information.html`,
+        pattern: 'organizer-pattern-information'
+      });
+      generated.push({
+        url: `https://${org.domain}/${slug}${year}/`,
+        pattern: 'organizer-pattern-root'
+      });
+    }
+  }
+  return generated;
 }
 async function discoverMissingEventUrls({ events, config, getPage = fetchOfficialPage, checkedAt = new Date().toISOString() }) {
   const settings = config.discovery;
@@ -158,16 +221,38 @@ async function discoverMissingEventUrls({ events, config, getPage = fetchOfficia
         if (linked) remember(candidateUrl, pageEvidence(result.document.html), result.document.url, 'official-document-link');
       }
       // Follow the society's meeting-index navigation, within the same host only.
-      for (const m of cleanHtml(result.document.html).matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
+      for (const m of cleanHtmlForLinks(result.document.html).matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
         if (!/学術集会|総会案内|学術総会|Annual Meetings?|Congresses|Future Meetings/i.test(text(m[2]))) continue;
         let next; try { next = publicUrl(new URL(m[1].replace(/&amp;/g, '&'), result.document.url).href); } catch { continue; }
         if (next && new URL(next).hostname === new URL(url).hostname && !visitedIndexes.has(key(next)) &&
             !indexQueue.includes(next)) indexQueue.push(next);
       }
     }
+
+    // Generate organizer pattern candidates (e.g. ganki.jp)
+    const discoveredUrls = [...leads.values()].map(l => l.url);
+    const hasOrganizerIndex = indexUrls.some(u => ORGANIZER_PATTERNS.some(p => u.includes(p.domain)));
+    if (hasOrganizerIndex) {
+      const generated = generateOrganizerCandidates(event, expected, discoveredUrls);
+      for (const gen of generated) {
+        const matchingLead = [...leads.values()].find(l => {
+          try { return new URL(l.url).hostname === new URL(gen.url).hostname; } catch { return false; }
+        });
+        const parentContext = matchingLead ? matchingLead.context : `公式運営ドメインパターン: ${expected.name} ${expected.year}`;
+        remember(gen.url, parentContext, matchingLead?.indexUrl || indexUrls[0], 'organizer-pattern');
+      }
+    }
+
     record.indexLimitReached = indexQueue.some(url => !visitedIndexes.has(key(url)));
     let pageCount = 0;
-    for (const lead of leads.values()) {
+    // Prefer information.html candidates first
+    const sortedLeads = [...leads.values()].sort((a, b) => {
+      const aInfo = /\/information\.html$/i.test(a.url);
+      const bInfo = /\/information\.html$/i.test(b.url);
+      return (bInfo ? 1 : 0) - (aInfo ? 1 : 0);
+    });
+
+    for (const lead of sortedLeads) {
       const candidate = { url: lead.url, indexUrl: lead.indexUrl, evidence: lead.context, reason: null, checks: null };
       record.candidates.push(candidate);
       if (pageCount >= settings.maxPagesPerEvent) { candidate.reason = 'discovery-search-limit'; continue; }
@@ -201,9 +286,9 @@ async function discoverMissingEventUrls({ events, config, getPage = fetchOfficia
           candidate.checks = checkIdentity(candidate.evidence, expected);
           // A homepage with image-only dates can be corroborated by its own overview.
           if (candidate.checks.nameMatches && !candidate.checks.yearMatches && !candidate.checks.years.length) {
-            for (const link of cleanHtml(result.document.html).matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
+            for (const link of cleanHtmlForLinks(result.document.html).matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
               if (pageCount >= settings.maxPagesPerEvent) break;
-              if (!/開催概要|学会概要|Overview|General Information|About.*Meeting/i.test(text(link[2]))) continue;
+              if (!/開催概要|学会概要|Overview|General Information|About.*Meeting|information\.html/i.test(text(link[2]) + ' ' + link[1])) continue;
               let overview; try { overview = publicUrl(new URL(link[1].replace(/&amp;/g, '&'), candidate.url).href); } catch { continue; }
               if (!overview || new URL(overview).hostname !== new URL(candidate.url).hostname) continue;
               pageCount++;
@@ -232,10 +317,28 @@ async function discoverMissingEventUrls({ events, config, getPage = fetchOfficia
         }
       }
     }
-    const candidates = [...new Map(record.candidates.map(c => [key(c.url), c])).values()];
-    const multiple = candidates.length > 1;
-    for (const candidate of candidates) {
-      const reason = multiple ? 'multiple-candidates' : record.indexLimitReached ? 'discovery-search-limit' : candidate.reason;
+    // Deduplicate / coalesce candidates belonging to the same subsite
+    let candidateList = [...new Map(record.candidates.map(c => [key(c.url), c])).values()];
+    const verifiedInformationCandidates = candidateList.filter(c =>
+      (c.reason === 'discovery-single-high-confidence' || c.reason === 'bot-protected-official-candidate') && /\/information\.html$/i.test(c.url)
+    );
+    if (verifiedInformationCandidates.length === 1) {
+      const winner = verifiedInformationCandidates[0];
+      const winnerBaseDir = new URL(winner.url).pathname.replace(/\/information\.html$/i, '');
+      candidateList = candidateList.filter(c => {
+        if (key(c.url) === key(winner.url)) return true;
+        const cPath = new URL(c.url).pathname.replace(/\/$/, '');
+        if (new URL(c.url).hostname === new URL(winner.url).hostname && cPath === winnerBaseDir) return false;
+        return true;
+      });
+    }
+
+    const multiple = candidateList.length > 1;
+    for (const candidate of candidateList) {
+      const isWinner = !multiple && (candidate.reason === 'discovery-single-high-confidence' ||
+        (candidate.reason === 'bot-protected-official-candidate' && candidate.checks?.cityMatches !== false));
+      const reason = multiple ? 'multiple-candidates' :
+        (!isWinner && record.indexLimitReached) ? 'discovery-search-limit' : candidate.reason;
       // Mismatches/failed fetches are inspection-only. Never offer a URL-only approval.
       const valid = !multiple && (reason === 'discovery-single-high-confidence' ||
         reason === 'bot-protected-official-candidate' && candidate.checks.cityMatches !== false);
@@ -247,7 +350,11 @@ async function discoverMissingEventUrls({ events, config, getPage = fetchOfficia
         requiresHumanApproval: true, reviewSnapshot: Object.fromEntries(['title', 'date', 'endDate', 'venue', 'cityCountry'].map(k => [k, event[k] ?? null])),
         searchQueries: record.searchQueries });
     }
-    record.reason = multiple ? 'multiple-candidates' : record.indexLimitReached ? 'discovery-search-limit' : candidates[0]?.reason ||
+    const singleWinner = !multiple && candidateList[0] &&
+      (candidateList[0].reason === 'discovery-single-high-confidence' || candidateList[0].reason === 'bot-protected-official-candidate');
+    record.reason = multiple ? 'multiple-candidates' :
+      singleWinner ? candidateList[0].reason :
+      record.indexLimitReached ? 'discovery-search-limit' : candidateList[0]?.reason ||
       (record.requests.some(r => r.error || r.httpStatus >= 400) ? 'discovery-fetch-failed' : 'discovery-dedicated-url-not-found');
   }
   return { enabled: true, review, records };

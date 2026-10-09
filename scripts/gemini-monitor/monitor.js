@@ -10,7 +10,8 @@ const { loadRollbackHistory, saveRollbackHistory, recordSnapshot, executeRollbac
 const { sendDailyMonitorNotification } = require('./notifier');
 const { getPendingActionsFromFirestore, saveRemoteState } = require('./firestore-client');
 const { applyBatchUpdates, checkMassChangeSafeguard } = require('./applier');
-const { RECOMMENDED_ACTIONS, THRESHOLDS, IDEMPOTENCY_STATUS } = require('./constants');
+const { RECOMMENDED_ACTIONS, THRESHOLDS, IDEMPOTENCY_STATUS, SEVERITY, SOURCE_QUALITY } = require('./constants');
+const { discoverOfficialUrlWithGoogle, getDiscoveryWindowStatus } = require('./google-url-discoverer');
 
 /**
  * Main Gemini Monitor execution pipeline.
@@ -106,6 +107,89 @@ async function runGeminiMonitor(options = {}) {
     const event = item.event;
     const tier = getEventMonitoringTier(event, todayStr);
     const nextCheck = calculateNextCheckDate(tier, todayStr);
+
+    // 3a. If eventOfficialUrl is not registered, execute Google discovery if within mandatory window
+    if (!event.eventOfficialUrl) {
+      const windowStatus = getDiscoveryWindowStatus(event, todayStr);
+      if (windowStatus.inMandatoryWindow) {
+        metrics.urlDiscoveryChecks = (metrics.urlDiscoveryChecks || 0) + 1;
+        const discoveryResult = await discoverOfficialUrlWithGoogle(event, {
+          apiKey: options.apiKey,
+          googleApiKey: options.googleApiKey,
+          googleCx: options.googleCx,
+          getPage: options.getPage,
+          offline: options.offline,
+          searchProvider: options.searchProvider,
+          now: todayStr
+        });
+
+        if (discoveryResult.status === 'adopted') {
+          metrics.urlDiscovered = (metrics.urlDiscovered || 0) + 1;
+          metrics.wouldAutoUpdate++;
+          const adoptedItem = {
+            eventId: event.id,
+            eventName: event.title,
+            action: RECOMMENDED_ACTIONS.SAFE_AUTO_UPDATE,
+            severity: SEVERITY.LOW,
+            confidence: discoveryResult.confidence,
+            sourceQuality: SOURCE_QUALITY.OFFICIAL_EVENT_PAGE,
+            sourceUrl: discoveryResult.adoptedUrl,
+            reason: discoveryResult.reason,
+            structuredReason: {
+              type: 'official_url_discovery',
+              rank: discoveryResult.rank,
+              isBotProtected: discoveryResult.isBotProtected
+            },
+            fieldChanges: [{ field: 'eventOfficialUrl', before: '', after: discoveryResult.adoptedUrl }],
+            priorityScore: 75,
+            daysUntil: windowStatus.diffDays,
+            timestamp: now.toISOString()
+          };
+          autoApplyPool.push(adoptedItem);
+
+          recordSnapshot(rollbackHistory, {
+            eventId: event.id,
+            eventName: event.title,
+            beforeValues: { eventOfficialUrl: '' },
+            afterValues: { eventOfficialUrl: discoveryResult.adoptedUrl },
+            fieldChanges: adoptedItem.fieldChanges,
+            evidence: {
+              url: discoveryResult.adoptedUrl,
+              sourceQuality: SOURCE_QUALITY.OFFICIAL_EVENT_PAGE,
+              confidence: discoveryResult.confidence,
+              reason: discoveryResult.reason
+            },
+            isShadow: !isApplyMode,
+            status: isApplyMode ? IDEMPOTENCY_STATUS.APPLIED : IDEMPOTENCY_STATUS.DETECTED
+          });
+
+          event.eventOfficialUrl = discoveryResult.adoptedUrl;
+        } else if (discoveryResult.status === 'not-found') {
+          state.sources[event.id] = {
+            ...state.sources[event.id],
+            urlDiscoveryStatus: 'official_url_not_found',
+            lastUrlDiscoveryDate: todayStr
+          };
+          if (windowStatus.isMajor && windowStatus.diffDays <= 180) {
+            metrics.needsReview++;
+            reviewPool.push({
+              eventId: event.id,
+              eventName: event.title,
+              action: RECOMMENDED_ACTIONS.NEEDS_REVIEW,
+              severity: SEVERITY.MEDIUM,
+              confidence: 0.5,
+              sourceQuality: SOURCE_QUALITY.THIRD_PARTY_OR_OTHER,
+              sourceUrl: event.societyUrl || '',
+              reason: `【要確認】主要学会（開催まで${windowStatus.diffDays}日）ですがGoogle検索上位3件で公式大会URLが未発見でした。`,
+              fieldChanges: [],
+              priorityScore: 80,
+              daysUntil: windowStatus.diffDays,
+              timestamp: now.toISOString()
+            });
+          }
+        }
+      }
+    }
 
     const targetUrl = event.eventOfficialUrl || event.officialUrl || event.sourceUrl;
 
