@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastRun": "2026-10-09T08:10:19.101Z",
+  "lastRun": "2026-10-09T08:28:46.781Z",
   "sources": {
     "oph-001": {
       "url": "https://convention.jtbcom.co.jp/80ringan/index.html",
@@ -169,8 +169,8 @@
       "lastChecked": "2026-10-09",
       "lastHttpStatus": 200,
       "normalizedHash": "ca975806074f8e78e91740db2b45bb0c153632428fdf84a8f61e2e17ecfcb0fd",
-      "lastGeminiDecision": "needs_review",
-      "lastGeminiConfidence": 0.75,
+      "lastGeminiDecision": "safe_auto_update",
+      "lastGeminiConfidence": 0.95,
       "nextCheckDate": "2026-10-13",
       "urlDiscoveryStatus": "official_url_not_found",
       "lastUrlDiscoveryDate": "2026-10-09",
@@ -178,76 +178,57 @@
         {
           "query": "第28回 日本ロービジョン学会学術総会 2027",
           "webSearchQueries": [
-            "日本ロービジョン学会学術総会 第28回",
-            "第28回 日本ロービジョン学会学術総会 2027",
-            "\"www.ganki.jp/lowvision2027\"",
-            "site:ganki.jp \"第28回日本ロービジョン学会学術総会\""
+            "第28回 日本ロービジョン学会学術総会",
+            "日本ロービジョン学会学術総会 2027",
+            "\"第28回日本ロービジョン学会学術総会\" \"ganki.jp\" OR \"lowvision2027\""
           ],
           "groundingUrls": [
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFykIERnHtHVv5DUnAQrE_B-NRUWt4HRzb25de-MEcVtKxZCyXMU7tMoDHkvDRvHkCXC-89rcnR-vxFjIx6FpMwsAyKjQuXel7sLZaSlwEBrKSxy1axgVvh",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFGX4JvLPvuA1vQ8TvZe4K9AuvFuPsLC3rh1RWND4P9Vz0FgF4zLRlHtwc-aNGRZjrL4WlMZL0-9sP211bLSHEc0rhRqunaLcoX5pQ8YXnRlySlfX_Cmm7cWyDilokyJ0WB",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHsuF7zFqZmw64OX8rHPZ-GojVPEBQCofqPlJNxjxIL8SsypXnte-aA0yIvveRhIqSunEy-ymkZeMoAzqbslk4eNigIGe0JKF8Xe1p5uONgqs8xwhTfeBlrimRVlLj61Dq9ZEgVZE4JXQ==",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGcPZ4-u8M26MfTjhVO8FtTXqwZvEuxJ3MoXjYX0kRkDpwZ8tGdb9vIDCXuir5iFgkUgAQ_ZvE1crwHlBtlOhsct1wkkJXplGlbZQc=",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHTKbId1seq7X0KFr0L1uKTcCoLPw472OYCM0lJ8lZK3SPdwD0O2e0TyCKyc39cYy_z2pzfoJ8tnMqarnN-UkwZuKSjelFQbWpbYP41",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGr8E4t7-YYLoLcgAsTYZXv1eSkWZo2Suaj8TJqxaPNP8xCQaD-qKwBzDnh9dWfML5EshuOtT7u7l-p8dL9PwbMXtG34r7OQqbH9hLdTaEF9bQSvOvt2Wy5iYA=",
-            "https://www.ganki.jp/lowvision2027/`",
-            "https://www.ganki.jp/`",
-            "https://www.jslrr.org/`"
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE4p-TsWDXr4dzp1h78_vQ0X0_glAMyA6kBGPSp10J3sNOhqZQDXfRqTLcMCr5tAdu3dqQ0f_k6jRlLwLTGRobtW62p7-wlEEbClVD_FY0-01K6DFQz_Ia7",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGelvkp2-kZYh9Yt7QZCg1Gq-Z7b2hyUt59dLwfXNsoLndhE8QnwaE8VQNHhKbZ8oYBrow4_DxJhEcvUSJ5q__UfOdUB9_4PVb5EJ-n927o5ED11eKpxleYlR9q5yrjtG9STbSMPPLegw==",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEh-p5yq4I9ROGq3I19j92FrCd9WUWQcMLSiv0YuxXCDObJQ0cDkYwzm3NA3Z-8V6mR65RxNt7tgK5HEFpUHlFKDPjKl3zxhfDHtaPgOZRy2GTorKsGBY1j-1SHCIpRVGAUxdN1Stg=",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGO3gbbLr45xlNZoHXUf1Z9T4q0TUrQhnJR5lyx8HtrqL6zcGY3wbuLPWxryCw_SinuIXcz9xAYeFbccc8CKZHxais8UWD2bf3J6wM=",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGDFhbYMzH0ZiA03jvvB9TDlDTAyS-MzwqJaxig0bb8fM_vuy1171vMC3NoaMafBxaaMeaRMw7NN6GZgcoPj31L17uhuKpBt2oYMEU=",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGmV6Pwjk1WsmTDStKGZa0gnJZdLnBELf6zs6ahqRn6GeQewuL8CxJZdAt9QGI6FpaV3E7rTPCApGbtMlmdFNTz8cvLSKok1eKrXtSA8A3Q810biOkt3u4law==",
+            "https://www.ganki.jp/lowvision2027/",
+            "https://www.ganki.jp/",
+            "https://www.jslrr.org/"
           ],
           "candidates": [
             {
               "rank": 1,
               "url": "https://www.ganki.jp/lowvision2027/",
               "title": "ganki.jp",
-              "snippet": "Dedicated Official Conference Website\n* **URL:** `https://www.ganki.jp/lowvision2027/`"
+              "snippet": "Dedicated Official Conference Website\n* **URL:** https://www.ganki.jp/lowvision2027/\nDedicated Official Conference Website\n* **URL:** https://www.ganki.jp/lowvision2027/\n* **Title:** 第28回日本ロービジョン学会学術総会"
             },
             {
               "rank": 2,
-              "url": "https://www.ganki.jp/lowvision2027/link.html",
+              "url": "https://www.ganki.jp/lowvision2027/information.html",
               "title": "ganki.jp",
-              "snippet": "Dedicated Official Conference Website\n* **URL:** `https://www.ganki.jp/lowvision2027/`\nDedicated Official Conference Website\n* **URL:** `https://www.ganki.jp/lowvision2027/`\n* **Title:** 第28回日本ロービジョン学会学術総会\nDedicated Official Conference Website\n* **URL:** `https://www.ganki.jp/lowvision2027/`\n* **Title:** 第28回日本ロービジョン学会学術総会\n* **Evidence:**\n  * **Numbered Edition:** Explicitly titled **第28回**日本ロービジョン学会学術総会"
+              "snippet": "Dedicated Official Conference Website\n* **URL:** https://www.ganki.jp/lowvision2027/\n* **Title:** 第28回日本ロービジョン学会学術総会\n* **Evidence of Conference Year & Numbered Edition:**\n  * **Edition:** 第28回日本ロービジョン学会学術総会\nDedicated Official Conference Website\n* **URL:** https://www.ganki.jp/lowvision2027/\n* **Title:** 第28回日本ロービジョン学会学術総会\n* **Evidence of Conference Year & Numbered Edition:**\n  * **Edition:** 第28回日本ロービジョン学会学術総会\n  * **Year / Dates:** 2027年5月22日（土）〜23日（日）\nDedicated Official Conference Website\n* **URL:** https://www.ganki.jp/lowvision2027/\n* **Title:** 第28回日本ロービジョン学会学術総会\n* **Evidence of Conference Year & Numbered Edition:**\n  * **Edition:** 第28回日本ロービジョン学会学術総会\n  * **Year / Dates:** 2027年5月22日（土）〜23日（日）\n  * **Theme:** 未来を視る ー ワクワクする明日へ\nDedicated Official Conference Website\n* **URL:** https://www.ganki.jp/lowvision2027/\n* **Title:** 第28回日本ロービジョン学会学術総会\n* **Evidence of Conference Year & Numbered Edition:**\n  * **Edition:** 第28回日本ロービジョン学会学術総会\n  * **Year / Dates:** 2027年5月22日（土）〜23日（日）\n  * **Theme:** 未来を視る ー ワクワクする明日へ\n  * **Congress President:** 阿曽沼 早苗 (中之島アイセンター／大阪大学)"
             },
             {
               "rank": 3,
-              "url": "https://www.ganki.jp/lowvision2027/information.html",
-              "title": "ganki.jp",
-              "snippet": "* **Conference Year:** Stated under the congress outline as **2027年**5月22日（土）〜23日（日） (Theme: 「未来を視る ー ワクワクする明日へ」; Venue: 大阪国際会議場)"
+              "url": "https://www.joia.or.jp/domestic-conference/83584/",
+              "title": "joia.or.jp",
+              "snippet": "Dedicated Official Conference Website\n* **URL:** https://www.ganki.jp/lowvision2027/\n* **Title:** 第28回日本ロービジョン学会学術総会\n* **Evidence of Conference Year & Numbered Edition:**\n  * **Edition:** 第28回日本ロービジョン学会学術総会\n  * **Year / Dates:** 2027年5月22日（土）〜23日（日）\n  * **Theme:** 未来を視る ー ワクワクする明日へ\n  * **Congress President:** 阿曽沼 早苗 (中之島アイセンター／大阪大学)\n  * **Venue:** 大阪国際会議場"
             },
             {
               "rank": 4,
               "url": "https://www.ganki.jp/",
               "title": "ganki.jp",
-              "snippet": "Official Operations Secretariat Conference Roster (日本眼科紀要会)\n* **URL:** `https://www.ganki.jp/`\nOfficial Operations Secretariat Conference Roster (日本眼科紀要会)\n* **URL:** `https://www.ganki.jp/`\n* **Title:** 一般社団法人日本眼科紀要会｜学術集会運営と学会事務局サポート\nOfficial Operations Secretariat Conference Roster (日本眼科紀要会)\n* **URL:** `https://www.ganki.jp/`\n* **Title:** 一般社団法人日本眼科紀要会｜学術集会運営と学会事務局サポート\n* **Evidence:**\n  * **Numbered Edition:** Listed under managed academic congresses as **第28回**日本ロービジョン学会学術総会\n* **Conference Year:** Shows the scheduled dates as **2027年**5月22日(土)～23日(日)"
+              "snippet": "Congress Secretariat & Operations Website (日本眼科紀要会)\n* **URL:** https://www.ganki.jp/\nCongress Secretariat & Operations Website (日本眼科紀要会)\n* **URL:** https://www.ganki.jp/\n* **Title:** 一般社団法人日本眼科紀要会｜学術集会運営と学会事務局サポート\nCongress Secretariat & Operations Website (日本眼科紀要会)\n* **URL:** https://www.ganki.jp/\n* **Title:** 一般社団法人日本眼科紀要会｜学術集会運営と学会事務局サポート\n* **Evidence of Conference Year & Numbered Edition:**\n  * In the official list of managed academic meetings:\n    * **Edition & Name:** 第28回日本ロービジョン学会学術総会\nCongress Secretariat & Operations Website (日本眼科紀要会)\n* **URL:** https://www.ganki.jp/\n* **Title:** 一般社団法人日本眼科紀要会｜学術集会運営と学会事務局サポート\n* **Evidence of Conference Year & Numbered Edition:**\n  * In the official list of managed academic meetings:\n    * **Edition & Name:** 第28回日本ロービジョン学会学術総会\n    * **Year / Dates:** 2027年5月22日(土)～23日(日)\nCongress Secretariat & Operations Website (日本眼科紀要会)\n* **URL:** https://www.ganki.jp/\n* **Title:** 一般社団法人日本眼科紀要会｜学術集会運営と学会事務局サポート\n* **Evidence of Conference Year & Numbered Edition:**\n  * In the official list of managed academic meetings:\n    * **Edition & Name:** 第28回日本ロービジョン学会学術総会\n    * **Year / Dates:** 2027年5月22日(土)～23日(日)\n    * **Venue:** 大阪国際会議場"
             },
             {
               "rank": 5,
               "url": "https://www.jslrr.org/",
               "title": "jslrr.org",
-              "snippet": "Parent Academic Society Official Website\n* **URL:** `https://www.jslrr.org/`\nParent Academic Society Official Website\n* **URL:** `https://www.jslrr.org/`\n* **Title:** 日本ロービジョン学会 | Japan Society for Low-vision Research and Rehabilitation\nParent Academic Society Official Website\n* **URL:** `https://www.jslrr.org/`\n* **Title:** 日本ロービジョン学会 | Japan Society for Low-vision Research and Rehabilitation\n* **Evidence:**\n  * The official parent academic society organizing the annual conference series (日本ロービジョン学会学術総会)"
+              "snippet": "Parent Academic Society Official Website\n* **URL:** https://www.jslrr.org/\nParent Academic Society Official Website\n* **URL:** https://www.jslrr.org/\n* **Title:** 日本ロービジョン学会 | Japan Society for Low-vision Research and Rehabilitation\nParent Academic Society Official Website\n* **URL:** https://www.jslrr.org/\n* **Title:** 日本ロービジョン学会 | Japan Society for Low-vision Research and Rehabilitation\n* **Evidence of Conference Year & Numbered Edition:**\n  * The parent organization responsible for the annual academic meetings (日本ロービジョン学会学術総会)"
             },
             {
               "rank": 6,
               "url": "https://www.jslrr.org/about/meetings",
               "title": "jslrr.org",
-              "snippet": "Parent Academic Society Official Website\n* **URL:** `https://www.jslrr.org/`\n* **Title:** 日本ロービジョン学会 | Japan Society for Low-vision Research and Rehabilitation\n* **Evidence:**\n  * The official parent academic society organizing the annual conference series (日本ロービジョン学会学術総会)"
-            },
-            {
-              "rank": 7,
-              "url": "https://www.ganki.jp/lowvision2027/`",
-              "title": "",
-              "snippet": "* **URL:** `https://www.ganki.jp/lowvision2027/`"
-            },
-            {
-              "rank": 8,
-              "url": "https://www.ganki.jp/`",
-              "title": "",
-              "snippet": "* **URL:** `https://www.ganki.jp/`"
-            },
-            {
-              "rank": 9,
-              "url": "https://www.jslrr.org/`",
-              "title": "",
-              "snippet": "* **URL:** `https://www.jslrr.org/`"
+              "snippet": "Parent Academic Society Official Website\n* **URL:** https://www.jslrr.org/\n* **Title:** 日本ロービジョン学会 | Japan Society for Low-vision Research and Rehabilitation\n* **Evidence of Conference Year & Numbered Edition:**\n  * The parent organization responsible for the annual academic meetings (日本ロービジョン学会学術総会)\nParent Academic Society Official Website\n* **URL:** https://www.jslrr.org/\n* **Title:** 日本ロービジョン学会 | Japan Society for Low-vision Research and Rehabilitation\n* **Evidence of Conference Year & Numbered Edition:**\n  * The parent organization responsible for the annual academic meetings (日本ロービジョン学会学術総会), maintaining records and listings of past editions (such as the 25th in 2024, 26th in 2025, 27th in 2026 leading to the 28th edition in 2027)"
             }
           ],
           "finishReason": "STOP"
@@ -267,7 +248,7 @@
             "isThirdParty": false,
             "is_third_party": false,
             "confidence": 0.95,
-            "reason": "The URL path '/lowvision2027/' on the professional ophthalmology conference organizer domain (ganki.jp) corresponds directly to the 28th Annual Meeting of the Japanese Low Vision Society in 2027.",
+            "reason": "The URL hosted on ganki.jp (a standard ophthalmology conference secretariat domain in Japan) specifically matches the 28th edition and year 2027 of the Japanese Low Vision Society annual meeting.",
             "recommended_action": "adopt_official_url"
           },
           "accepted": true
