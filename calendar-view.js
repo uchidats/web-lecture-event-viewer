@@ -9,6 +9,9 @@
   function initialMode(view, smallScreen) {
     return ['list', 'calendar', 'compact'].includes(view) ? view : smallScreen ? 'compact' : 'calendar';
   }
+  function formatCompactDate(date, isHoliday = false) {
+    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日（${'日月火水木金土'[date.getDay()]}${isHoliday ? '・祝' : ''}）`;
+  }
   function toCalendarEvent(event) {
     // Date-only strings preserve official local conference dates in every timezone.
     // The same adapter can later supply timed seminar instances separately.
@@ -114,13 +117,7 @@
       const label = document.createElement('small');
       label.className = 'calendar-holiday-name';
       label.textContent = name;
-      const container = info.el.querySelector(selector) || info.el;
-      const weekday = container.querySelector('.fc-list-day-side-text');
-      if (weekday) {
-        // Decorate the existing anchor without moving FullCalendar-owned nodes.
-        weekday.classList.add('calendar-day-context');
-        weekday.prepend(label);
-      } else container.append(label);
+      (info.el.querySelector(selector) || info.el).append(label);
     }
     function ensureCalendar() {
       if (calendar) return true;
@@ -140,15 +137,38 @@
         headerToolbar: { left: 'prev,today,next', center: 'title', right: '' },
         buttonIcons: false, buttonText: { today: '今月', prev: '前月', next: '翌月' },
         titleFormat: { year: 'numeric', month: 'long' },
+        views: {
+          listMonth: {
+            listDaySideFormat: false,
+            dayHeaderContent: info => {
+              const name = holidayName(info.date);
+              const date = document.createElement('span');
+              date.className = 'compact-date';
+              if (name) date.classList.add('compact-date-holiday');
+              else if (info.date.getDay() === 0) date.classList.add('compact-date-sunday');
+              else if (info.date.getDay() === 6) date.classList.add('compact-date-saturday');
+              date.textContent = formatCompactDate(info.date, Boolean(name));
+              if (info.textId) date.id = info.textId;
+              const nodes = [date];
+              if (name) {
+                const holiday = document.createElement('small');
+                holiday.className = 'calendar-holiday-name';
+                holiday.textContent = name;
+                nodes.push(holiday);
+              }
+              return { domNodes: nodes };
+            },
+            dayHeaderDidMount: info => {
+              if (holidayName(info.date)) info.el.classList.add('calendar-holiday');
+            }
+          }
+        },
         noEventsText: 'この月には条件に合うイベントがありません',
         editable: false, dayMaxEvents: 3, displayEventTime: false,
         events: (_info, success) => success(filtered.map(toCalendarEvent)),
         eventClick: info => { info.jsEvent.preventDefault(); openDetail(info.event.id); },
         eventDidMount: info => { info.el.title = info.event.title; info.el.dataset.eventId = info.event.id; },
         dayCellDidMount: info => mountHoliday(info, '.fc-daygrid-day-top'),
-        dayHeaderDidMount: info => {
-          if (info.el.querySelector('.fc-list-day-cushion')) mountHoliday(info, '.fc-list-day-cushion');
-        },
         datesSet: info => {
           const month = `${info.view.currentStart.getFullYear()}-${String(info.view.currentStart.getMonth() + 1).padStart(2, '0')}`;
           const holidayList = document.getElementById('calendar-month-holidays');
@@ -218,7 +238,7 @@
       getMode: () => mode
     };
   }
-  const api = { toCalendarEvent, nextDate, initialMode };
+  const api = { toCalendarEvent, nextDate, initialMode, formatCompactDate };
   let view;
   api.init = dependencies => { view = createView(root.document, root, dependencies); };
   api.sync = events => view?.sync(events);

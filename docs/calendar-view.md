@@ -13,7 +13,13 @@ Calendar mode uses `dayGridMonth`; compact mode uses `listMonth` at every width.
 Without an explicit URL view, screens up to 600px start in compact mode and larger
 screens start in calendar mode. This choice is made once and reflected in the URL;
 resizing never changes the mode. All three modes share the same filters.
-Compact holiday headings put the holiday name before the weekday.
+Compact headings combine the date and weekday, such as `2027年7月3日（土）`.
+Holiday names follow this combined heading, with subdued red styling; only the
+holiday name wraps to another line when space is limited.
+Published holidays add `・祝` inside the weekday parentheses (including `日・祝`).
+Compact date/weekday text uses subdued blue on Saturdays and subdued red on
+Sundays and published Japanese holidays. Holidays take priority over Saturdays;
+weekday text and holiday names remain visible, and backgrounds are unchanged.
 Both calendar modes use the same
 adapter and event source. Conferences retain date-only local start/end dates;
 the adapter adds one UTC calendar day to the inclusive end for FullCalendar's

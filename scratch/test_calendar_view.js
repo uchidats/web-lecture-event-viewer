@@ -1,6 +1,11 @@
 const assert = require('node:assert/strict');
 const path = require('node:path');
-const { toCalendarEvent, nextDate, initialMode } = require('../calendar-view');
+const { toCalendarEvent, nextDate, initialMode, formatCompactDate } = require('../calendar-view');
+assert.equal(formatCompactDate(new Date(2027, 6, 3)), '2027年7月3日（土）');
+assert.equal(formatCompactDate(new Date(2027, 6, 4)), '2027年7月4日（日）');
+assert.equal(formatCompactDate(new Date(2026, 9, 12)), '2026年10月12日（月）');
+assert.equal(formatCompactDate(new Date(2026, 9, 12), true), '2026年10月12日（月・祝）');
+assert.equal(formatCompactDate(new Date(2027, 2, 21), true), '2027年3月21日（日・祝）');
 for (const mobile of [true, false]) {
   for (const view of ['list', 'calendar', 'compact']) assert.equal(initialMode(view, mobile), view);
   assert.equal(initialMode(null, mobile), mobile ? 'compact' : 'calendar');

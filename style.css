@@ -944,9 +944,11 @@ button, input, select, textarea {
 #event-calendar .fc-list-event { background: transparent; color: var(--text-main); }
 #event-calendar .fc-list-event-dot { border-color: var(--primary); }
 #event-calendar .fc-list-day-cushion { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
-#event-calendar .fc-list-day-side-text, .calendar-day-context { margin-left: auto; }
-.calendar-day-context { display: inline-flex; align-items: center; gap: 4px; max-width: 100%; }
-.calendar-day-context { white-space: nowrap; }
+#event-calendar .compact-date { white-space: nowrap; }
+#calendar-panel[data-view="compact"] .compact-date-saturday { color: #477a9e; }
+#calendar-panel[data-view="compact"] .compact-date-sunday,
+#calendar-panel[data-view="compact"] .compact-date-holiday { color: #b45353; }
+#calendar-panel[data-view="compact"] .fc-list-day-cushion { gap: 4px 8px; }
 #calendar-event-dialog { width: min(760px, calc(100% - 24px)); max-width: calc(100% - 24px); }
 #calendar-event-dialog .dialog-content { min-width: 0; }
 #calendar-event-detail .event-card { margin: 0; }
