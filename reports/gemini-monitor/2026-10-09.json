@@ -1,6 +1,6 @@
 {
   "date": "2026-10-09",
-  "generatedAt": "2026-10-09T05:06:02.803Z",
+  "generatedAt": "2026-10-09T08:10:19.101Z",
   "mode": "shadow_simulation",
   "isApplyMode": false,
   "description": "Gemini 3.8 Flash Daily Conference Monitor Report (Shadow / Simulation Mode)",
@@ -10,12 +10,12 @@
     "skippedNotDue": 0,
     "skippedEnded": 0,
     "urlDiscoveryChecks": 1,
-    "urlDiscovered": 0,
+    "urlDiscovered": 1,
     "httpFetched": 1,
     "hashUnchangedSkipped": 0,
     "geminiCalls": 1,
     "noChange": 0,
-    "wouldAutoUpdate": 0,
+    "wouldAutoUpdate": 1,
     "autoAppliedCount": 0,
     "adminAppliedCount": 0,
     "rollbackCount": 0,
@@ -30,77 +30,60 @@
       "eventName": "第28回 日本ロービジョン学会学術総会",
       "action": "needs_review",
       "severity": "medium",
-      "confidence": 0.2,
-      "sourceQuality": "parent_body_official",
-      "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "reason": "The page excerpt only contains generic calendar headings and detected years without specific mention or metadata for the 28th Annual Meeting of the Japanese Low Vision Society.",
+      "confidence": 0.75,
+      "sourceQuality": "official_event_page",
+      "sourceUrl": "https://www.ganki.jp/lowvision2027/",
+      "reason": "The page confirms the 28th Annual Meeting of the Japanese Low Vision Society (第28回日本ロービジョン学会学術総会), matching the edition and title. However, the page detected year 2026 whereas the database record is for 2027, requiring human review to confirm the correct year and full schedule.",
       "structuredReason": {
-        "code": "third_party_or_weak_source",
-        "detail": "Source is third-party or lacks verified official evidence."
+        "code": "mismatch_detected",
+        "detail": "Mismatches detected: year"
       },
       "fieldChanges": [
         {
-          "field": "eventOfficialUrl",
-          "before": null,
-          "after": "null",
-          "severity": "low"
-        },
-        {
-          "field": "date",
-          "before": "2027-05-22",
-          "after": "null",
-          "severity": "medium"
-        },
-        {
-          "field": "endDate",
-          "before": "2027-05-23",
-          "after": "null",
-          "severity": "medium"
-        },
-        {
-          "field": "venue",
-          "before": "大阪国際会議場（グランキューブ大阪）",
-          "after": "null",
-          "severity": "medium"
-        },
-        {
-          "field": "cityCountry",
-          "before": "大阪市（大阪府） / 日本",
-          "after": "null",
-          "severity": "medium"
-        },
-        {
-          "field": "abstractSubmission.deadline",
-          "before": null,
-          "after": "null",
-          "severity": "medium"
-        },
-        {
-          "field": "registration.deadline",
-          "before": null,
-          "after": "null",
-          "severity": "medium"
-        },
-        {
           "field": "title",
           "before": "第28回 日本ロービジョン学会学術総会",
-          "after": "null",
+          "after": "第28回日本ロービジョン学会学術総会",
           "severity": "low"
         }
       ],
-      "priorityScore": 280,
+      "priorityScore": 225,
       "daysUntil": 225,
-      "timestamp": "2026-10-09T05:06:02.803Z",
+      "timestamp": "2026-10-09T08:10:19.101Z",
       "rollbackKey": "rb-conf-jp-lowvision-2027"
     }
   ],
   "deferredReviewCount": 0,
-  "wouldAutoUpdateCount": 0,
-  "wouldAutoUpdateSummary": [],
+  "wouldAutoUpdateCount": 1,
+  "wouldAutoUpdateSummary": [
+    {
+      "eventId": "conf-jp-lowvision-2027",
+      "eventName": "第28回 日本ロービジョン学会学術総会",
+      "changes": [
+        "eventOfficialUrl:  -> https://www.ganki.jp/lowvision2027/"
+      ],
+      "confidence": 0.95
+    }
+  ],
   "batchApplyResult": {
     "success": true,
-    "appliedCount": 0,
-    "appliedEvents": [],
+    "appliedCount": 1,
+    "appliedEvents": [
+      {
+        "eventId": "conf-jp-lowvision-2027",
+        "eventName": "第28回 日本ロービジョン学会学術総会",
+        "appliedFields": [
+          "eventOfficialUrl"
+        ],
+        "fieldChanges": [
+          {
+            "field": "eventOfficialUrl",
+            "before": "",
+            "after": "https://www.ganki.jp/lowvision2027/"
+          }
+        ],
+        "source": "gemini_high_confidence"
+      }
+    ],
     "mode": "simulation"
   }
 }
