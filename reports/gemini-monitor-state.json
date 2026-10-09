@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastRun": "2026-10-09T04:30:28.583Z",
+  "lastRun": "2026-10-09T04:45:32.848Z",
   "sources": {
     "oph-001": {
       "url": "https://convention.jtbcom.co.jp/80ringan/index.html",
@@ -171,7 +171,9 @@
       "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
       "lastGeminiDecision": "needs_review",
       "lastGeminiConfidence": 0.96,
-      "nextCheckDate": "2026-10-16"
+      "nextCheckDate": "2026-10-13",
+      "urlDiscoveryStatus": "official_url_not_found",
+      "lastUrlDiscoveryDate": "2026-10-09"
     },
     "conf-int-apacrs-2027": {
       "url": "https://apacrs2027.org/",
