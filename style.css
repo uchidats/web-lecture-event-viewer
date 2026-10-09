@@ -876,6 +876,7 @@ button, input, select, textarea {
 .calendar-note { margin: 0 0 12px; font-size: 0.8rem; color: var(--text-muted); }
 #calendar-holiday-note { margin: 12px 0 0; }
 #event-calendar { --fc-border-color: #e2e8f0; --fc-button-bg-color: #0284c7; --fc-button-border-color: #0284c7; --fc-today-bg-color: #f0f9ff; }
+#event-calendar { touch-action: pan-y pinch-zoom; }
 #event-calendar .fc-toolbar-title { font-size: 1.25rem; }
 #event-calendar .fc-button { font-size: 0.8rem; }
 #event-calendar .fc-event { cursor: pointer; font-size: 0.75rem; }
@@ -889,21 +890,27 @@ button, input, select, textarea {
 #event-calendar .fc-daygrid-day-top { flex-wrap: wrap; align-items: center; }
 .calendar-holiday-name { font-size: 0.65rem; font-weight: 400; color: #a54e4e; padding: 0 3px; overflow-wrap: anywhere; }
 .calendar-month-holidays { display: none; }
+#calendar-panel[data-view="compact"] .calendar-month-holidays { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 10px; font-size: 0.72rem; color: #a54e4e; }
+#calendar-month-holidays[hidden] { display: none !important; }
+#event-calendar .fc-list-event-title { white-space: normal; overflow-wrap: anywhere; }
+#event-calendar .fc-list-event-time { display: none; }
+#event-calendar .fc-list-event { background: transparent; color: var(--text-main); }
+#event-calendar .fc-list-event-dot { border-color: var(--primary); }
+#event-calendar .fc-list-day-cushion { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+#event-calendar .fc-list-day-side-text, .calendar-day-context { margin-left: auto; }
+.calendar-day-context { display: inline-flex; align-items: center; gap: 4px; max-width: 100%; }
+.calendar-day-context { white-space: nowrap; }
 #calendar-event-dialog { width: min(760px, calc(100% - 24px)); max-width: calc(100% - 24px); }
 #calendar-event-dialog .dialog-content { min-width: 0; }
 #calendar-event-detail .event-card { margin: 0; }
 @media (max-width: 600px) {
+  .event-view-switch { display: flex; }
+  .event-view-switch button { flex: 1; padding: 8px 6px; font-size: 0.82rem; white-space: nowrap; }
   #calendar-panel { padding: 10px; }
-  .calendar-month-holidays { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 10px; font-size: 0.72rem; color: #a54e4e; }
   #calendar-month-holidays[hidden] { display: none; }
   #event-calendar .fc-header-toolbar { flex-wrap: wrap; gap: 10px; }
   #event-calendar .fc-toolbar-title { font-size: 1.05rem; }
   #event-calendar .fc-list-event-title { white-space: normal; overflow-wrap: anywhere; font-size: 0.87rem; }
-  #event-calendar .fc-list-event-time { display: none; }
-  #event-calendar .fc-list-event { background: transparent; color: var(--text-main); }
-  #event-calendar .fc-list-event-dot { border-color: var(--primary); }
-  #event-calendar .fc-list-day-cushion { display: flex; flex-wrap: wrap; gap: 4px; }
-  #event-calendar .fc-list-day-side-text { margin-left: auto; }
   #calendar-event-detail { padding: 10px; }
   #calendar-event-dialog .dialog-header { padding: 12px; }
 }

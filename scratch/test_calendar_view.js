@@ -1,6 +1,10 @@
 const assert = require('node:assert/strict');
 const path = require('node:path');
-const { toCalendarEvent, nextDate } = require('../calendar-view');
+const { toCalendarEvent, nextDate, initialMode } = require('../calendar-view');
+for (const mobile of [true, false]) {
+  for (const view of ['list', 'calendar', 'compact']) assert.equal(initialMode(view, mobile), view);
+  assert.equal(initialMode(null, mobile), mobile ? 'compact' : 'calendar');
+}
 const holidays = require('../japan-holidays');
 const { loadEvents } = require('../scripts/auto-updater/storage');
 assert.equal(nextDate('2027-03-21'), '2027-03-22');

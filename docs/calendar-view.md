@@ -6,15 +6,25 @@ No build framework, Premium plugin, external calendar feed or Google embed is us
 
 `renderEvents()` passes its existing `getFilteredEvents()` result to
 `OphthalCalendarView.sync()`. The view never reimplements filters or writes to
-localStorage. `view=list|calendar` and optional `month=YYYY-MM` use the URL;
+localStorage. `view=list|calendar|compact` and optional `month=YYYY-MM` use the URL;
 other query parameters and the hash are preserved, including on browser back/forward.
 
-PC uses `dayGridMonth`; screens up to 600px use `listMonth`. Both use the same
+Calendar mode uses `dayGridMonth`; compact mode uses `listMonth` at every width.
+Without an explicit URL view, screens up to 600px start in compact mode and larger
+screens start in calendar mode. This choice is made once and reflected in the URL;
+resizing never changes the mode. All three modes share the same filters.
+Compact holiday headings put the holiday name before the weekday.
+Both calendar modes use the same
 adapter and event source. Conferences retain date-only local start/end dates;
 the adapter adds one UTC calendar day to the inclusive end for FullCalendar's
 exclusive-end convention. Seminars are date entries in this first version;
 their times (including existing Japan/local-time display) remain in the detail card.
 Timed instances can later be added in the same adapter without shifting conference dates.
+
+The `今月` button uses FullCalendar's existing `today` action. Touch-only horizontal
+swipes move one month on release (left: next, right: previous). A 60px minimum,
+1.5× horizontal/vertical ratio and early vertical cancellation preserve scrolling;
+mouse gestures do not navigate. Month changes use the same URL synchronization.
 
 Selecting an event opens the existing card renderer in a dialog, with the same
 attendance, PDF and calendar-add handlers. Filter/attendance changes refresh both

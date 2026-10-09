@@ -6,6 +6,9 @@
     day.setUTCDate(day.getUTCDate() + 1);
     return day.toISOString().slice(0, 10);
   }
+  function initialMode(view, smallScreen) {
+    return ['list', 'calendar', 'compact'].includes(view) ? view : smallScreen ? 'compact' : 'calendar';
+  }
   function toCalendarEvent(event) {
     // Date-only strings preserve official local conference dates in every timezone.
     // The same adapter can later supply timed seminar instances separately.
@@ -23,13 +26,53 @@
     const sort = document.querySelector('.sort-selector-wrapper');
     const listButton = document.getElementById('view-list');
     const calendarButton = document.getElementById('view-calendar');
+    const compactButton = document.getElementById('view-compact');
     const dialog = document.getElementById('calendar-event-dialog');
     const detail = document.getElementById('calendar-event-detail');
     const holidays = window.OPHTHAL_JAPAN_HOLIDAYS || {};
     const holidayYears = [...new Set(Object.keys(holidays).map(date => date.slice(0, 4)))].sort();
     const smallScreen = window.matchMedia('(max-width: 600px)');
-    let mode = 'list', calendar = null, filtered = [], selectedId = null;
-    let yearSelection = '', initialized = false;
+    const calendarElement = document.getElementById('event-calendar');
+    let swipe = null, suppressClickUntil = 0;
+    calendarElement.addEventListener('pointerdown', event => {
+      // A new deliberate tap/click must never be swallowed after a swipe.
+      suppressClickUntil = 0;
+      if (event.pointerType !== 'touch' || !event.isPrimary || mode === 'list') {
+        swipe = null;
+        return;
+      }
+      swipe = { id: event.pointerId, x: event.clientX, y: event.clientY };
+    }, { passive: true });
+    calendarElement.addEventListener('pointermove', event => {
+      if (!swipe || swipe.id !== event.pointerId) return;
+      const dx = Math.abs(event.clientX - swipe.x), dy = Math.abs(event.clientY - swipe.y);
+      // Lock out vertical gestures early; the browser keeps native scrolling.
+      if (dy > 12 && dy > dx) swipe = null;
+    }, { passive: true });
+    calendarElement.addEventListener('pointercancel', () => { swipe = null; }, { passive: true });
+    calendarElement.addEventListener('pointerleave', event => {
+      if (swipe?.id === event.pointerId) swipe = null;
+    }, { passive: true });
+    calendarElement.addEventListener('pointerup', event => {
+      const gesture = swipe;
+      swipe = null;
+      if (!gesture || gesture.id !== event.pointerId || !calendar || mode === 'list') return;
+      const dx = event.clientX - gesture.x, dy = Math.abs(event.clientY - gesture.y);
+      if (Math.abs(dx) < 60 || Math.abs(dx) < dy * 1.5) return;
+      suppressClickUntil = window.performance.now() + 400;
+      // Navigate once at release, using datesSet's existing URL synchronization.
+      if (dx < 0) calendar.next(); else calendar.prev();
+    }, { passive: true });
+    calendarElement.addEventListener('click', event => {
+      if (event.detail !== 0 && window.performance.now() < suppressClickUntil) {
+        suppressClickUntil = 0;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+    }, true);
+    let mode = initialMode(new URL(window.location.href).searchParams.get('view'), smallScreen.matches), calendar = null, filtered = [], selectedId = null;
+    let firstSync = true;
+    let yearSelection = '', initialized = false, switchingMode = false;
     const fromUrl = () => new URL(window.location.href);
     const urlMonth = () => {
       const month = fromUrl().searchParams.get('month');
@@ -71,7 +114,13 @@
       const label = document.createElement('small');
       label.className = 'calendar-holiday-name';
       label.textContent = name;
-      (info.el.querySelector(selector) || info.el).append(label);
+      const container = info.el.querySelector(selector) || info.el;
+      const weekday = container.querySelector('.fc-list-day-side-text');
+      if (weekday) {
+        // Decorate the existing anchor without moving FullCalendar-owned nodes.
+        weekday.classList.add('calendar-day-context');
+        weekday.prepend(label);
+      } else container.append(label);
     }
     function ensureCalendar() {
       if (calendar) return true;
@@ -79,16 +128,17 @@
         panel.hidden = true; list.hidden = false;
         mode = 'list';
         listButton.setAttribute('aria-pressed', 'true'); calendarButton.setAttribute('aria-pressed', 'false');
+        compactButton.setAttribute('aria-pressed', 'false');
         if (sort) sort.hidden = false;
         return false;
       }
       const selectedYears = dependencies.getSelectedYears();
       const initialDate = urlMonth() || (selectedYears.length === 1 ? filtered.find(e => e.date.startsWith(selectedYears[0]))?.date || `${selectedYears[0]}-01-01` : dependencies.getToday());
       calendar = new window.FullCalendar.Calendar(document.getElementById('event-calendar'), {
-        locale: 'ja', firstDay: 0, initialView: smallScreen.matches ? 'listMonth' : 'dayGridMonth',
+        locale: 'ja', firstDay: 0, initialView: mode === 'compact' ? 'listMonth' : 'dayGridMonth',
         initialDate, now: dependencies.getToday(), height: 'auto', fixedWeekCount: false,
         headerToolbar: { left: 'prev,today,next', center: 'title', right: '' },
-        buttonIcons: false, buttonText: { today: '今日', prev: '前月', next: '翌月' },
+        buttonIcons: false, buttonText: { today: '今月', prev: '前月', next: '翌月' },
         titleFormat: { year: 'numeric', month: 'long' },
         noEventsText: 'この月には条件に合うイベントがありません',
         editable: false, dayMaxEvents: 3, displayEventTime: false,
@@ -113,7 +163,7 @@
           document.getElementById('calendar-holiday-note').textContent = holidayYears.includes(year)
             ? `祝日：内閣府の確定データ（${holidayYears[0]}〜${holidayYears.at(-1)}年）`
             : `${year}年の祝日データは未収録です。`;
-          if (initialized && mode === 'calendar') updateUrl();
+          if (initialized && mode !== 'list' && !switchingMode) updateUrl();
         }
       });
       calendar.render();
@@ -121,26 +171,30 @@
       return true;
     }
     function setMode(nextMode, push = true) {
-      mode = nextMode === 'calendar' ? 'calendar' : 'list';
-      panel.hidden = mode !== 'calendar'; list.hidden = mode === 'calendar';
-      if (sort) sort.hidden = mode === 'calendar';
+      switchingMode = true;
+      mode = initialMode(nextMode, smallScreen.matches);
+      panel.hidden = mode === 'list'; list.hidden = mode !== 'list';
+      panel.dataset.view = mode;
+      if (sort) sort.hidden = mode !== 'list';
       listButton.setAttribute('aria-pressed', String(mode === 'list'));
       calendarButton.setAttribute('aria-pressed', String(mode === 'calendar'));
-      if (mode === 'calendar' && ensureCalendar()) {
+      compactButton.setAttribute('aria-pressed', String(mode === 'compact'));
+      if (mode !== 'list' && ensureCalendar()) {
         const targetMonth = urlMonth();
+        const viewType = mode === 'compact' ? 'listMonth' : 'dayGridMonth';
+        if (calendar.view.type !== viewType) calendar.changeView(viewType);
         if (!push && targetMonth) calendar.gotoDate(targetMonth);
         calendar.updateSize();
       }
+      switchingMode = false;
       if (push) updateUrl(true);
     }
     listButton.addEventListener('click', () => setMode('list'));
     calendarButton.addEventListener('click', () => setMode('calendar'));
+    compactButton.addEventListener('click', () => setMode('compact'));
     document.getElementById('calendar-event-close').addEventListener('click', () => dialog.close());
     dialog.addEventListener('close', () => { detail.innerHTML = ''; selectedId = null; });
     window.addEventListener('popstate', () => setMode(fromUrl().searchParams.get('view'), false));
-    smallScreen.addEventListener('change', () => {
-      if (calendar) calendar.changeView(smallScreen.matches ? 'listMonth' : 'dayGridMonth');
-    });
     return {
       sync(events) {
         filtered = events;
@@ -154,13 +208,17 @@
         }
         yearSelection = selection;
         refreshDetail();
-        if (!initialized && fromUrl().searchParams.get('view') === 'calendar') setMode('calendar', false);
+        if (firstSync) {
+          firstSync = false;
+          setMode(mode, false);
+          updateUrl();
+        }
       },
       getCalendar: () => calendar,
       getMode: () => mode
     };
   }
-  const api = { toCalendarEvent, nextDate };
+  const api = { toCalendarEvent, nextDate, initialMode };
   let view;
   api.init = dependencies => { view = createView(root.document, root, dependencies); };
   api.sync = events => view?.sync(events);

@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const os = require('node:os');
 const http = require('node:http');
-const { spawn } = require('node:child_process');
+const { spawn, spawnSync } = require('node:child_process');
 const { once } = require('node:events');
 const { buildDualSite } = require('../scripts/build-dual-site');
 const root = path.resolve(__dirname, '..'), delay = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -67,7 +67,7 @@ async function main() {
       pending.delete(result.id); clearTimeout(task.timer); result.error ? task.reject(result.error) : task.resolve(result.result);
     });
     const call = (method, params = {}) => new Promise((resolve, reject) => {
-      const id = ++sequence, timer = setTimeout(() => reject(new Error(method + ' timeout')), 15000);
+      const id = ++sequence, timer = setTimeout(() => reject(new Error(method + ' timeout: ' + JSON.stringify(params))), 30000);
       pending.set(id, { resolve, reject, timer }); socket.send(JSON.stringify({ id, method, params }));
     });
     const evaluate = async expression => {
@@ -94,12 +94,48 @@ async function main() {
     `);
     const calendarIds = () => evaluate('OphthalCalendarView.getCalendar().getEvents().map(e=>e.id).sort()');
     const filteredIds = () => evaluate('getFilteredEvents().map(e=>e.id).sort()');
-    for (const width of [1280, 390, 320]) {
-      await call('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 500 });
+    const gesture = async (dx, dy, mouse = false) => {
+      await evaluate('document.querySelector(".fc-view-harness").scrollIntoView({block:"center"})');
+      const point = await evaluate(`(() => {const r=document.querySelector('.fc-view-harness').getBoundingClientRect();const header=document.querySelector('header').getBoundingClientRect();return {x:r.left+r.width*${dx < 0 ? 0.8 : 0.2},y:Math.max(header.bottom+160,Math.min(innerHeight-160,r.top+70))};})()`);
+      if (mouse) {
+        await call('Input.dispatchMouseEvent',{type:'mousePressed',x:point.x,y:point.y,button:'left',clickCount:1});
+        await call('Input.dispatchMouseEvent',{type:'mouseMoved',x:point.x+dx,y:point.y+dy,button:'left',buttons:1});
+        await call('Input.dispatchMouseEvent',{type:'mouseReleased',x:point.x+dx,y:point.y+dy,button:'left',clickCount:1});
+      } else {
+        await call('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{id:1,x:point.x,y:point.y}]});
+        for (const fraction of [0.25,0.5,0.75,1]) {
+          await call('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{id:1,x:point.x+dx*fraction,y:point.y+dy*fraction}]});
+          await delay(30);
+        }
+        await call('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+      }
+      await delay(100);
+    };
+    for (const width of [Number(process.env.CALENDAR_TEST_WIDTH)]) {
+      await call('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width <= 768 });
+      await call('Emulation.setTouchEmulationEnabled', { enabled: width <= 768, maxTouchPoints: 5 });
       for (const route of ['/', '/ophthalconf/']) {
-        await navigate(route + '?view=calendar&month=2027-03&keep=yes#calendar-test');
+        await navigate(route + '?month=2027-03');
+        assert.equal(await evaluate('OphthalCalendarView.getMode()'), width <= 600 ? 'compact' : 'calendar', 'Width default only applies without explicit URL');
+        await navigate(route + '?view=list&month=2027-03');
+        assert.equal(await evaluate('OphthalCalendarView.getMode()'), 'list');
+        assert.equal(await evaluate('elements.eventList.hidden'), false);
         await reset();
-        assert.equal(await evaluate('OphthalCalendarView.getCalendar().view.type'), width > 600 ? 'dayGridMonth' : 'listMonth');
+        for (const nextMode of ['calendar', 'compact', 'list']) {
+          await evaluate(`document.getElementById('view-${nextMode}').click()`);
+          assert.equal(await evaluate('OphthalCalendarView.getMode()'), nextMode);
+          assert.equal(await evaluate('new URL(location.href).searchParams.get("view")'), nextMode);
+          assert.equal(await evaluate('document.querySelectorAll(".event-view-switch [aria-pressed=true]").length'), 1);
+          await evaluate('state.filters.keyword="retina"; renderEvents()');
+          assert.deepEqual(await calendarIds(), await filteredIds(), nextMode + ' uses shared filters');
+          if (nextMode === 'list') assert.deepEqual(await evaluate('[...elements.eventList.querySelectorAll(".event-card")].map(e=>e.dataset.id).sort()'), await filteredIds());
+          await reset();
+        }
+        for (const displayMode of ['calendar', 'compact']) {
+        console.log(`CHECK: ${width}px ${route} ${displayMode}`);
+        await navigate(route + `?view=${displayMode}&month=2027-03&keep=yes#calendar-test`);
+        await reset();
+        assert.equal(await evaluate('OphthalCalendarView.getCalendar().view.type'), displayMode === 'calendar' ? 'dayGridMonth' : 'listMonth');
         assert.equal(await evaluate('elements.eventList.hidden'), true);
         assert.ok(await evaluate('getComputedStyle(elements.eventList).display === "none"'));
         assert.deepEqual(await calendarIds(), await filteredIds());
@@ -107,16 +143,52 @@ async function main() {
         assert.ok(await evaluate('document.querySelector("#calendar-panel").textContent.includes("春分の日")'));
         assert.equal(await evaluate('document.querySelector(".fc-prev-button").textContent'), '前月');
         assert.equal(await evaluate('document.querySelector(".fc-next-button").textContent'), '翌月');
+        assert.equal(await evaluate('document.querySelector(".fc-today-button").textContent'), '今月');
         // March fixture spans Thu 18 to Sun 21: exactly four days and two weekly
         // segments in dayGrid, not four independent single-day copies.
         await evaluate(`state.events.push({...sampleEvents.find(e=>e.isConference), id:'calendar-four-day', title:'Calendar four-day fixture', date:'2027-03-18', endDate:'2027-03-21'}); renderEvents();`);
         const range = await evaluate(`(() => {const e=OphthalCalendarView.getCalendar().getEventById('calendar-four-day'); return {start:e.startStr,end:e.endStr,allDay:e.allDay};})()`);
         assert.deepEqual(range, { start: '2027-03-18', end: '2027-03-22', allDay: true });
-        if (width <= 600) assert.ok(await evaluate('!!document.querySelector(".fc-list-day.calendar-holiday .calendar-holiday-name")'), 'List date headings mark holidays too');
-        if (width > 600) {
+        if (displayMode === 'compact') {
+          assert.ok(await evaluate('!!document.querySelector(".fc-list-day.calendar-holiday .calendar-holiday-name")'), 'List date headings mark holidays too');
+          await evaluate(`state.events.push({...sampleEvents.find(e=>e.isConference),id:'holiday-position',date:'2026-10-12',endDate:'2026-10-12'});renderEvents();OphthalCalendarView.getCalendar().gotoDate('2026-10-01')`);
+          assert.ok(await evaluate(`(() => {const group=document.querySelector('.fc-list-day.calendar-holiday .calendar-day-context'),label=group.querySelector('.calendar-holiday-name');const range=document.createRange();range.setStartAfter(label);range.setEndAfter(group.lastChild);return label.textContent==='スポーツの日'&&group.firstChild===label&&group.lastChild.textContent==='月曜日'&&label.getBoundingClientRect().right<=range.getBoundingClientRect().left+1&&group.scrollWidth<=group.clientWidth+1;})()`), 'Holiday precedes weekday and fits');
+          if (process.env.CALENDAR_SCREENSHOTS === '1') {
+            const holidayScreenshot = await call('Page.captureScreenshot', {format:'png',captureBeyondViewport:false});
+            fs.writeFileSync(path.join(profile, `holiday-${route==='/'?'root':'subpath'}-${width}.png`),Buffer.from(holidayScreenshot.data,'base64'));
+          }
+          await evaluate('OphthalCalendarView.getCalendar().gotoDate("2027-03-01")');
+        }
+        if (displayMode === 'calendar') {
           assert.equal(await evaluate('document.querySelectorAll(".fc-col-header-cell").length'), 7);
           assert.ok(await evaluate('document.querySelector(".fc-col-header-cell").textContent.includes("日")'));
           assert.equal(await evaluate('document.querySelectorAll(\'.fc-event[data-event-id="calendar-four-day"]\').length'), 2, 'Four days render as two connected weekly segments');
+        }
+        if (width <= 768 && route === '/') {
+          await gesture(-140, 8);
+          assert.equal(await evaluate('OphthalCalendarView.getCalendar().getDate().getMonth()'), 3, 'Left swipe moves exactly one month');
+          assert.equal(await evaluate('new URL(location.href).searchParams.get("month")'), '2027-04');
+          assert.equal(await evaluate('document.getElementById("calendar-event-dialog").open'), false, 'Swipe does not activate an event');
+          await gesture(140, 8);
+          assert.equal(await evaluate('OphthalCalendarView.getCalendar().getDate().getMonth()'), 2, 'Right swipe moves exactly one month');
+          assert.equal(await evaluate('new URL(location.href).searchParams.get("month")'), '2027-03');
+          await gesture(-25, 0);
+          assert.equal(await evaluate('OphthalCalendarView.getCalendar().getDate().getMonth()'), 2, 'Short motion does not navigate');
+          await gesture(-70, -110);
+          assert.equal(await evaluate('OphthalCalendarView.getCalendar().getDate().getMonth()'), 2, 'Vertical scroll does not navigate');
+          await evaluate('document.getElementById("calendar-event-dialog").open && document.getElementById("calendar-event-dialog").close()');
+          await delay(500);
+          await evaluate('document.querySelector(\'.fc-event[data-event-id="calendar-four-day"]\').scrollIntoView({block:"center"})');
+          await delay(100);
+          const tap = await evaluate(`(() => {const row=document.querySelector('.fc-event[data-event-id="calendar-four-day"]');const r=(row.querySelector('.fc-list-event-title')||row).getBoundingClientRect();return {id:2,x:r.left+r.width/2,y:r.top+r.height/2};})()`);
+          await call('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[tap]});
+          await call('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+          await delay(100);
+          assert.equal(await evaluate('document.getElementById("calendar-event-dialog").open'), true, 'A deliberate event touch tap still opens details');
+          await evaluate('document.getElementById("calendar-event-close").click()');
+        } else if (width > 768) {
+          await gesture(-140, 8, true);
+          assert.equal(await evaluate('OphthalCalendarView.getCalendar().getDate().getMonth()'), 2, 'PC mouse drag does not navigate');
         }
         // Filter changes go through the real input listeners, not a new calendar filter.
         await evaluate('document.querySelector(\'input[name="year"][value="2026"]\').click()');
@@ -160,8 +232,10 @@ async function main() {
         await evaluate('OphthalCalendarView.getCalendar().gotoDate("2027-03-01")');
         assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth + 1'), width + route + ' page overflow');
         assert.ok(await evaluate('document.getElementById("event-calendar").scrollWidth <= document.getElementById("event-calendar").clientWidth + 1'), width + route + ' calendar overflow');
-        const screenshot = await call('Page.captureScreenshot', { format:'png',captureBeyondViewport:false });
-        fs.writeFileSync(path.join(profile, `calendar-${route==='/'?'root':'subpath'}-${width}.png`), Buffer.from(screenshot.data,'base64'));
+        if (process.env.CALENDAR_SCREENSHOTS === '1') {
+          const screenshot = await call('Page.captureScreenshot', { format:'png',captureBeyondViewport:false });
+          fs.writeFileSync(path.join(profile, `calendar-${route==='/'?'root':'subpath'}-${width}.png`), Buffer.from(screenshot.data,'base64'));
+        }
         const storage = await evaluate('JSON.stringify(Object.fromEntries(Object.keys(localStorage).map(k=>[k,localStorage.getItem(k)])))');
         await evaluate('document.getElementById("view-list").click()');
         assert.equal(await evaluate('elements.eventList.hidden'), false);
@@ -169,27 +243,51 @@ async function main() {
         assert.equal(await evaluate('new URL(location.href).searchParams.get("view")'), 'list');
         await evaluate('document.getElementById("view-calendar").click()');
         assert.equal(await evaluate('new URL(location.href).searchParams.get("view")'), 'calendar');
+        await evaluate('document.getElementById("view-compact").click()');
+        assert.equal(await evaluate('new URL(location.href).searchParams.get("view")'), 'compact');
+        await evaluate(`document.getElementById('view-${displayMode}').click()`);
         assert.equal(await evaluate('JSON.stringify(Object.fromEntries(Object.keys(localStorage).map(k=>[k,localStorage.getItem(k)])))'), storage);
         assert.equal(await evaluate('new URL(location.href).searchParams.get("keep")'), 'yes');
         assert.equal(await evaluate('location.hash'), '#calendar-test');
         await call('Page.reload');
         for(let i=0;i<100 && !await evaluate('!!window.OphthalCalendarView?.getCalendar()');i++) await delay(100);
-        assert.equal(await evaluate('OphthalCalendarView.getMode()'), 'calendar');
+        assert.equal(await evaluate('OphthalCalendarView.getMode()'), displayMode);
         assert.equal(await evaluate('OphthalCalendarView.getCalendar().view.currentStart.getMonth()'), 2);
-        console.log(`PASS: ${width}px ${route} calendar/list, 2026/2027, filters, local dates, holidays, month navigation, details/attendance, URL reload and localStorage`);
+        console.log(`PASS: ${width}px ${route} ${displayMode}, 3-mode filters, holidays, navigation/swipes/taps, URL reload and localStorage`);
+        }
       }
     }
-    // Responsive changes on the same page also change the FC view.
+    // Resizing must retain the explicit mode even across the mobile breakpoint.
     await call('Emulation.setDeviceMetricsOverride',{width:1280,height:900,deviceScaleFactor:1,mobile:false});
     await delay(300);
-    assert.equal(await evaluate('OphthalCalendarView.getCalendar().view.type'), 'dayGridMonth');
-    await evaluate('document.getElementById("view-list").click(); document.getElementById("view-calendar").click(); history.back()');
+    assert.equal(await evaluate('OphthalCalendarView.getCalendar().view.type'), 'listMonth');
+    assert.equal(await evaluate('OphthalCalendarView.getMode()'), 'compact');
+    await evaluate('document.getElementById("view-calendar").click()');
+    await call('Emulation.setDeviceMetricsOverride',{width:320,height:900,deviceScaleFactor:1,mobile:true});
     await delay(300);
-    assert.equal(await evaluate('OphthalCalendarView.getMode()'), 'list');
-    await evaluate('history.forward()'); await delay(300);
+    assert.equal(await evaluate('OphthalCalendarView.getCalendar().view.type'), 'dayGridMonth');
     assert.equal(await evaluate('OphthalCalendarView.getMode()'), 'calendar');
-    console.log('PASS: resize and browser back/forward; screenshots: ' + profile);
+    await evaluate('document.getElementById("view-compact").click();document.getElementById("view-list").click(); history.back()');
+    await delay(300);
+    assert.equal(await evaluate('OphthalCalendarView.getMode()'), 'compact');
+    await evaluate('history.back()'); await delay(300);
+    assert.equal(await evaluate('OphthalCalendarView.getMode()'), 'calendar');
+    await evaluate('history.forward()'); await delay(300);
+    assert.equal(await evaluate('OphthalCalendarView.getMode()'), 'compact');
+    await evaluate('history.forward()'); await delay(300);
+    assert.equal(await evaluate('OphthalCalendarView.getMode()'), 'list');
+    console.log('PASS: resize and browser back/forward; artifacts directory: ' + profile);
     await call('Browser.close');
   } finally { socket?.close(); if (browser.exitCode === null) browser.kill(); await new Promise(resolve => server.close(resolve)); }
 }
-main().catch(error => { console.error(error); process.exitCode = 1; });
+if (!process.env.CALENDAR_TEST_WIDTH) {
+  // Fresh browser per device width avoids carrying native touch-emulation state
+  // across desktop/tablet/mobile contexts in headless Chromium on Windows.
+  for (const width of [1280, 768, 390, 320]) {
+    const result = spawnSync(process.execPath, [__filename], {
+      env: { ...process.env, CALENDAR_TEST_WIDTH: String(width) },
+      stdio: 'inherit', windowsHide: true
+    });
+    if (result.status !== 0) { process.exitCode = 1; break; }
+  }
+} else main().catch(error => { console.error(error); process.exitCode = 1; });

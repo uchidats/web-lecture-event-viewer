@@ -76,7 +76,7 @@ async function main() {
       return result.result.value;
     };
     const navigate = async route => {
-      await call('Page.navigate', { url: origin + route });
+      await call('Page.navigate', { url: origin + route + (['/', '/ophthalconf/'].includes(route) ? '?view=list' : '') });
       for (let i = 0; i < 100; i++) {
         if (await evaluate('document.readyState === "complete" && window.OphthalAuth?.snapshot().phase === "ready" && !!document.querySelector(".event-card")')) return;
         await delay(100);
@@ -156,7 +156,7 @@ async function main() {
       }
     }
     await navigate('/ophthalconf?adminReview=1#retained');
-    assert.equal(await evaluate('location.pathname + location.search + location.hash'), '/ophthalconf/?adminReview=1#retained');
+    assert.deepEqual(await evaluate('({path:location.pathname,review:new URL(location.href).searchParams.get("adminReview"),hash:location.hash})'), {path:'/ophthalconf/',review:'1',hash:'#retained'});
     assert.ok(requests.includes('/reports/auto-update-review.json') && requests.includes('/ophthalconf/reports/auto-update-review.json'));
     console.log('PASS: root and /ophthalconf/ at 1280/390/320px, all relative assets/review JSON, same-origin localStorage restored both directions, mocked Firebase login persisted, mocked Google Calendar reconnect/API, review dialog and slash/query/hash normalization');
     await call('Browser.close');

@@ -42,7 +42,7 @@ async function main() {
       return result.result.value;
     };
     await call('Page.enable');
-    await call('Page.navigate', { url: pathToFileURL(path.join(root, 'index.html')).href });
+    await call('Page.navigate', { url: pathToFileURL(path.join(root, 'index.html')).href + '?view=list' });
     for (let i = 0; i < 100; i++) {
       if (await evaluate('document.readyState === "complete" && typeof createEventCardHtml === "function"')) break;
       await delay(100);
