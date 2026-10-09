@@ -1,6 +1,6 @@
 {
   "date": "2026-10-09",
-  "generatedAt": "2026-10-09T04:45:32.848Z",
+  "generatedAt": "2026-10-09T05:06:02.803Z",
   "mode": "shadow_simulation",
   "isApplyMode": false,
   "description": "Gemini 3.8 Flash Daily Conference Monitor Report (Shadow / Simulation Mode)",
@@ -9,21 +9,91 @@
     "monitoredToday": 1,
     "skippedNotDue": 0,
     "skippedEnded": 0,
+    "urlDiscoveryChecks": 1,
+    "urlDiscovered": 0,
     "httpFetched": 1,
-    "hashUnchangedSkipped": 1,
-    "geminiCalls": 0,
-    "noChange": 1,
+    "hashUnchangedSkipped": 0,
+    "geminiCalls": 1,
+    "noChange": 0,
     "wouldAutoUpdate": 0,
     "autoAppliedCount": 0,
     "adminAppliedCount": 0,
     "rollbackCount": 0,
-    "needsReview": 0,
+    "needsReview": 1,
     "insufficientEvidence": 0,
-    "adminVisibleCount": 0,
-    "massChangeSafeguardTriggered": false,
-    "urlDiscoveryChecks": 1
+    "adminVisibleCount": 1,
+    "massChangeSafeguardTriggered": false
   },
-  "adminVisibleItems": [],
+  "adminVisibleItems": [
+    {
+      "eventId": "conf-jp-lowvision-2027",
+      "eventName": "第28回 日本ロービジョン学会学術総会",
+      "action": "needs_review",
+      "severity": "medium",
+      "confidence": 0.2,
+      "sourceQuality": "parent_body_official",
+      "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "reason": "The page excerpt only contains generic calendar headings and detected years without specific mention or metadata for the 28th Annual Meeting of the Japanese Low Vision Society.",
+      "structuredReason": {
+        "code": "third_party_or_weak_source",
+        "detail": "Source is third-party or lacks verified official evidence."
+      },
+      "fieldChanges": [
+        {
+          "field": "eventOfficialUrl",
+          "before": null,
+          "after": "null",
+          "severity": "low"
+        },
+        {
+          "field": "date",
+          "before": "2027-05-22",
+          "after": "null",
+          "severity": "medium"
+        },
+        {
+          "field": "endDate",
+          "before": "2027-05-23",
+          "after": "null",
+          "severity": "medium"
+        },
+        {
+          "field": "venue",
+          "before": "大阪国際会議場（グランキューブ大阪）",
+          "after": "null",
+          "severity": "medium"
+        },
+        {
+          "field": "cityCountry",
+          "before": "大阪市（大阪府） / 日本",
+          "after": "null",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "null",
+          "severity": "medium"
+        },
+        {
+          "field": "registration.deadline",
+          "before": null,
+          "after": "null",
+          "severity": "medium"
+        },
+        {
+          "field": "title",
+          "before": "第28回 日本ロービジョン学会学術総会",
+          "after": "null",
+          "severity": "low"
+        }
+      ],
+      "priorityScore": 280,
+      "daysUntil": 225,
+      "timestamp": "2026-10-09T05:06:02.803Z",
+      "rollbackKey": "rb-conf-jp-lowvision-2027"
+    }
+  ],
   "deferredReviewCount": 0,
   "wouldAutoUpdateCount": 0,
   "wouldAutoUpdateSummary": [],

@@ -1,0 +1,62 @@
+{
+  "date": "2027-01-10",
+  "generatedAt": "2026-10-09T05:06:01.263Z",
+  "mode": "shadow_simulation",
+  "isApplyMode": false,
+  "description": "Gemini 3.8 Flash Daily Conference Monitor Report (Shadow / Simulation Mode)",
+  "metrics": {
+    "totalEvents": 94,
+    "monitoredToday": 1,
+    "skippedNotDue": 0,
+    "skippedEnded": 0,
+    "urlDiscoveryChecks": 1,
+    "urlDiscovered": 1,
+    "httpFetched": 1,
+    "hashUnchangedSkipped": 0,
+    "geminiCalls": 1,
+    "noChange": 1,
+    "wouldAutoUpdate": 1,
+    "autoAppliedCount": 0,
+    "adminAppliedCount": 0,
+    "rollbackCount": 0,
+    "needsReview": 0,
+    "insufficientEvidence": 0,
+    "adminVisibleCount": 0,
+    "massChangeSafeguardTriggered": false
+  },
+  "adminVisibleItems": [],
+  "deferredReviewCount": 0,
+  "wouldAutoUpdateCount": 1,
+  "wouldAutoUpdateSummary": [
+    {
+      "eventId": "conf-jp-lowvision-2027",
+      "eventName": "第28回 日本ロービジョン学会学術総会",
+      "changes": [
+        "eventOfficialUrl:  -> https://www.ganki.jp/lowvision2027/information.html"
+      ],
+      "confidence": 0.95
+    }
+  ],
+  "batchApplyResult": {
+    "success": true,
+    "appliedCount": 1,
+    "appliedEvents": [
+      {
+        "eventId": "conf-jp-lowvision-2027",
+        "eventName": "第28回 日本ロービジョン学会学術総会",
+        "appliedFields": [
+          "eventOfficialUrl"
+        ],
+        "fieldChanges": [
+          {
+            "field": "eventOfficialUrl",
+            "before": "",
+            "after": "https://www.ganki.jp/lowvision2027/information.html"
+          }
+        ],
+        "source": "gemini_high_confidence"
+      }
+    ],
+    "mode": "simulation"
+  }
+}

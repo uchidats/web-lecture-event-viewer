@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastRun": "2026-10-09T04:45:32.848Z",
+  "lastRun": "2026-10-09T05:06:02.803Z",
   "sources": {
     "oph-001": {
       "url": "https://convention.jtbcom.co.jp/80ringan/index.html",
@@ -170,7 +170,7 @@
       "lastHttpStatus": 200,
       "normalizedHash": "956442007ed217194ad096d4df14744402309522429637a53343475724831a72",
       "lastGeminiDecision": "needs_review",
-      "lastGeminiConfidence": 0.96,
+      "lastGeminiConfidence": 0.2,
       "nextCheckDate": "2026-10-13",
       "urlDiscoveryStatus": "official_url_not_found",
       "lastUrlDiscoveryDate": "2026-10-09"
