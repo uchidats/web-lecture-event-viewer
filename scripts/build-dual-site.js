@@ -3,7 +3,9 @@ const fs = require('node:fs');
 const path = require('node:path');
 const PUBLIC_FILES = ['index.html', 'style.css', 'review.css', 'venues.js', 'companies.js', 'events.js',
   'google-calendar-config.js', 'google-calendar.js', 'script.js', 'firebase-config.js', 'firebase-auth.js',
-  'review-data.js', 'review-config.js', 'review-model.js', 'review-ui.js', 'gemini-review-ui.js'];
+  'review-data.js', 'review-config.js', 'review-model.js', 'review-ui.js', 'gemini-review-ui.js',
+  'calendar-view.js', 'japan-holidays.js', 'vendor/fullcalendar-6.1.21/index.global.min.js',
+  'vendor/fullcalendar-6.1.21/ja.global.min.js', 'vendor/fullcalendar-6.1.21/LICENSE.md'];
 const PUBLIC_REPORTS = ['auto-update-review.json', 'auto-update-report.json', 'venue-corrections.json',
   'event-url-audit-2026-10-07.json', 'event-url-missing-audit-2026-10-08.json', 'event-metadata-audit-2026-10-09.json',
   'gemini-monitor-state.json', 'gemini-rollback-history.json'];

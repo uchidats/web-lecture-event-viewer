@@ -849,6 +849,65 @@ button, input, select, textarea {
   gap: 12px;
 }
 
+/* The calendar and list share filters and existing card actions. */
+#event-list[hidden], #calendar-panel[hidden], .sort-selector-wrapper[hidden] { display: none; }
+.event-view-switch {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: #f8fafc;
+}
+.event-view-switch button {
+  border: 0;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  background: transparent;
+  cursor: pointer;
+}
+.event-view-switch button[aria-pressed="true"] { color: #fff; background: var(--primary); }
+.event-view-switch button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+#calendar-panel { min-width: 0; padding: 14px; background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-md); }
+.calendar-note { margin: 0 0 12px; font-size: 0.8rem; color: var(--text-muted); }
+#calendar-holiday-note { margin: 12px 0 0; }
+#event-calendar { --fc-border-color: #e2e8f0; --fc-button-bg-color: #0284c7; --fc-button-border-color: #0284c7; --fc-today-bg-color: #f0f9ff; }
+#event-calendar .fc-toolbar-title { font-size: 1.25rem; }
+#event-calendar .fc-button { font-size: 0.8rem; }
+#event-calendar .fc-event { cursor: pointer; font-size: 0.75rem; }
+#event-calendar .calendar-domestic { background-color: #0284c7; border-color: #0284c7; }
+#event-calendar .calendar-international { background-color: #5865b5; border-color: #5865b5; }
+#event-calendar .fc-day-sun .fc-col-header-cell-cushion,
+#event-calendar .fc-day-sun .fc-daygrid-day-number,
+#event-calendar .calendar-holiday .fc-daygrid-day-number { color: #b45353; }
+#event-calendar .fc-day-sat .fc-daygrid-day-number { color: #0284c7; }
+#event-calendar .calendar-holiday .fc-daygrid-day-number { color: #b45353; }
+#event-calendar .fc-daygrid-day-top { flex-wrap: wrap; align-items: center; }
+.calendar-holiday-name { font-size: 0.65rem; font-weight: 400; color: #a54e4e; padding: 0 3px; overflow-wrap: anywhere; }
+.calendar-month-holidays { display: none; }
+#calendar-event-dialog { width: min(760px, calc(100% - 24px)); max-width: calc(100% - 24px); }
+#calendar-event-dialog .dialog-content { min-width: 0; }
+#calendar-event-detail .event-card { margin: 0; }
+@media (max-width: 600px) {
+  #calendar-panel { padding: 10px; }
+  .calendar-month-holidays { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 10px; font-size: 0.72rem; color: #a54e4e; }
+  #calendar-month-holidays[hidden] { display: none; }
+  #event-calendar .fc-header-toolbar { flex-wrap: wrap; gap: 10px; }
+  #event-calendar .fc-toolbar-title { font-size: 1.05rem; }
+  #event-calendar .fc-list-event-title { white-space: normal; overflow-wrap: anywhere; font-size: 0.87rem; }
+  #event-calendar .fc-list-event-time { display: none; }
+  #event-calendar .fc-list-event { background: transparent; color: var(--text-main); }
+  #event-calendar .fc-list-event-dot { border-color: var(--primary); }
+  #event-calendar .fc-list-day-cushion { display: flex; flex-wrap: wrap; gap: 4px; }
+  #event-calendar .fc-list-day-side-text { margin-left: auto; }
+  #calendar-event-detail { padding: 10px; }
+  #calendar-event-dialog .dialog-header { padding: 12px; }
+}
+
 .date-time-block {
   display: flex;
   align-items: center;

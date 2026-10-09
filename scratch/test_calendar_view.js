@@ -1,0 +1,31 @@
+const assert = require('node:assert/strict');
+const path = require('node:path');
+const { toCalendarEvent, nextDate } = require('../calendar-view');
+const holidays = require('../japan-holidays');
+const { loadEvents } = require('../scripts/auto-updater/storage');
+assert.equal(nextDate('2027-03-21'), '2027-03-22');
+assert.equal(nextDate('2026-12-31'), '2027-01-01');
+assert.equal(nextDate('2028-02-28'), '2028-02-29');
+assert.equal(nextDate('2028-02-29'), '2028-03-01');
+const fixture = { id: 'four-day', title: '学会', date: '2027-03-18', endDate: '2027-03-21', isConference: true, timeZone: 'America/Los_Angeles' };
+const converted = toCalendarEvent(fixture);
+assert.equal(converted.start, '2027-03-18');
+assert.equal(converted.end, '2027-03-22');
+assert.equal(converted.allDay, true);
+assert.equal(converted.url, undefined, 'Events must open OphthalConf details, not navigate externally');
+assert.equal((Date.parse(converted.end) - Date.parse(converted.start)) / 86400000, 4);
+assert.equal(fixture.endDate, '2027-03-21');
+assert.equal(toCalendarEvent({ ...fixture, endDate: undefined }).end, '2027-03-19');
+const { events } = loadEvents(path.resolve(__dirname, '..'));
+for (const event of events) {
+  const result = toCalendarEvent(event);
+  assert.equal(result.start, event.date);
+  assert.equal(result.end, nextDate(event.endDate || event.date));
+  assert.equal(result.extendedProps.originalEvent, event);
+}
+assert.equal(holidays['2026-09-22'], '休日');
+assert.equal(holidays['2027-03-21'], '春分の日');
+assert.equal(holidays['2027-03-22'], '休日');
+assert.equal(holidays['2027-01-11'], '成人の日');
+assert.equal(holidays['2028-03-20'], undefined, 'Unpublished holidays are not estimated');
+console.log('PASS: all 94 event ranges, four-day inclusive dates, single days, leap/year boundaries, unchanged international dates and published holidays');

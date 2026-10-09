@@ -161,6 +161,12 @@ function initApp() {
   updateHiddenConferencesBadge();
   updateHistoryBadgeCount();
   setupEventListeners();
+  if (typeof OphthalCalendarView !== "undefined") OphthalCalendarView.init({
+    renderCard: createEventCardHtml,
+    bindActions: attachCardActionListeners,
+    getToday: getTodayString,
+    getSelectedYears: () => [...state.filters.year]
+  });
   if (typeof GoogleCalendar !== "undefined") GoogleCalendar.setupUI(() => {updateRegisteredBadge(); renderEvents();});
   renderEvents();
 }
@@ -1735,6 +1741,7 @@ function getFilteredEvents(ignoreCalendar = false) {
 function renderEvents() {
   if (typeof GoogleCalendar !== "undefined" && ["google", "both"].includes(state.calendarSettings.calendarProvider)) GoogleCalendar.ensure(getFilteredEvents(true));
   const filtered = getFilteredEvents();
+  if (typeof OphthalCalendarView !== "undefined") OphthalCalendarView.sync(filtered);
 
   // 件数表示
   elements.eventCount.textContent = filtered.length;
@@ -2315,8 +2322,8 @@ function createEventCardHtml(event) {
 /**
  * カード内ボタンクリック時のイベントリスナー登録
  */
-function attachCardActionListeners() {
-  elements.eventList.querySelectorAll(".event-card").forEach(card => {
+function attachCardActionListeners(container = elements.eventList) {
+  container.querySelectorAll(".event-card").forEach(card => {
     const eventId = card.getAttribute("data-id");
     const event = state.events.find(e => e.id === eventId);
     if (!event) return;

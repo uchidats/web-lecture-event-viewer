@@ -281,7 +281,18 @@
       </div>
 
       <!-- アクティブフィルタータグ一覧 -->
+      <div class="event-view-switch" role="group" aria-label="イベントの表示方法">
+        <button id="view-list" type="button" aria-pressed="true">一覧表示</button>
+        <button id="view-calendar" type="button" aria-pressed="false">カレンダー表示</button>
+      </div>
       <div id="active-filter-chips" class="active-chips-bar"></div>
+
+      <section id="calendar-panel" aria-label="イベントカレンダー" hidden>
+        <p class="calendar-note">学会の会期は現地の開催日です。イベントを選ぶと詳細や講演の時刻を確認できます。</p>
+        <div id="event-calendar"></div>
+        <div id="calendar-month-holidays" class="calendar-month-holidays" aria-label="当月の祝日"></div>
+        <p id="calendar-holiday-note" class="calendar-note"></p>
+      </section>
 
       <!-- イベントカードグリッド -->
       <div id="event-list" class="event-cards-grid">
@@ -555,6 +566,15 @@
   </dialog>
 
   <!-- トースト通知 -->
+  <dialog id="calendar-event-dialog" class="custom-dialog" aria-labelledby="calendar-event-heading">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h2 id="calendar-event-heading">イベント詳細</h2>
+        <button id="calendar-event-close" type="button" class="btn btn-secondary">閉じる</button>
+      </div>
+      <div id="calendar-event-detail" class="dialog-body"></div>
+    </div>
+  </dialog>
   <div id="toast-notification" class="toast"></div>
 
   <!-- スクリプト読み込み -->
@@ -587,6 +607,10 @@
   <script src="google-calendar-config.js"></script>
   <script src="google-calendar.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="vendor/fullcalendar-6.1.21/index.global.min.js"></script>
+  <script src="vendor/fullcalendar-6.1.21/ja.global.min.js"></script>
+  <script src="japan-holidays.js"></script>
+  <script src="calendar-view.js"></script>
   <script src="script.js"></script>
   <script src="firebase-config.js"></script>
   <script src="firebase-auth.js"></script>
