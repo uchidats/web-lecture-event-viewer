@@ -1,6 +1,6 @@
 {
   "date": "2026-10-09",
-  "generatedAt": "2026-10-09T08:10:19.101Z",
+  "generatedAt": "2026-10-09T08:28:46.781Z",
   "mode": "shadow_simulation",
   "isApplyMode": false,
   "description": "Gemini 3.8 Flash Daily Conference Monitor Report (Shadow / Simulation Mode)",
@@ -15,45 +15,18 @@
     "hashUnchangedSkipped": 0,
     "geminiCalls": 1,
     "noChange": 0,
-    "wouldAutoUpdate": 1,
+    "wouldAutoUpdate": 2,
     "autoAppliedCount": 0,
     "adminAppliedCount": 0,
     "rollbackCount": 0,
-    "needsReview": 1,
+    "needsReview": 0,
     "insufficientEvidence": 0,
-    "adminVisibleCount": 1,
+    "adminVisibleCount": 0,
     "massChangeSafeguardTriggered": false
   },
-  "adminVisibleItems": [
-    {
-      "eventId": "conf-jp-lowvision-2027",
-      "eventName": "第28回 日本ロービジョン学会学術総会",
-      "action": "needs_review",
-      "severity": "medium",
-      "confidence": 0.75,
-      "sourceQuality": "official_event_page",
-      "sourceUrl": "https://www.ganki.jp/lowvision2027/",
-      "reason": "The page confirms the 28th Annual Meeting of the Japanese Low Vision Society (第28回日本ロービジョン学会学術総会), matching the edition and title. However, the page detected year 2026 whereas the database record is for 2027, requiring human review to confirm the correct year and full schedule.",
-      "structuredReason": {
-        "code": "mismatch_detected",
-        "detail": "Mismatches detected: year"
-      },
-      "fieldChanges": [
-        {
-          "field": "title",
-          "before": "第28回 日本ロービジョン学会学術総会",
-          "after": "第28回日本ロービジョン学会学術総会",
-          "severity": "low"
-        }
-      ],
-      "priorityScore": 225,
-      "daysUntil": 225,
-      "timestamp": "2026-10-09T08:10:19.101Z",
-      "rollbackKey": "rb-conf-jp-lowvision-2027"
-    }
-  ],
+  "adminVisibleItems": [],
   "deferredReviewCount": 0,
-  "wouldAutoUpdateCount": 1,
+  "wouldAutoUpdateCount": 2,
   "wouldAutoUpdateSummary": [
     {
       "eventId": "conf-jp-lowvision-2027",
@@ -62,11 +35,19 @@
         "eventOfficialUrl:  -> https://www.ganki.jp/lowvision2027/"
       ],
       "confidence": 0.95
+    },
+    {
+      "eventId": "conf-jp-lowvision-2027",
+      "eventName": "第28回 日本ロービジョン学会学術総会",
+      "changes": [
+        "title: 第28回 日本ロービジョン学会学術総会 -> 第28回日本ロービジョン学会学術総会"
+      ],
+      "confidence": 0.95
     }
   ],
   "batchApplyResult": {
     "success": true,
-    "appliedCount": 1,
+    "appliedCount": 2,
     "appliedEvents": [
       {
         "eventId": "conf-jp-lowvision-2027",
@@ -79,6 +60,22 @@
             "field": "eventOfficialUrl",
             "before": "",
             "after": "https://www.ganki.jp/lowvision2027/"
+          }
+        ],
+        "source": "gemini_high_confidence"
+      },
+      {
+        "eventId": "conf-jp-lowvision-2027",
+        "eventName": "第28回日本ロービジョン学会学術総会",
+        "appliedFields": [
+          "title"
+        ],
+        "fieldChanges": [
+          {
+            "field": "title",
+            "before": "第28回 日本ロービジョン学会学術総会",
+            "after": "第28回日本ロービジョン学会学術総会",
+            "severity": "low"
           }
         ],
         "source": "gemini_high_confidence"
