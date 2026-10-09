@@ -1,4 +1,5 @@
 const { GEMINI_MODEL, GEMINI_API_URL, SOURCE_QUALITY, RECOMMENDED_ACTIONS, SEVERITY } = require('./constants');
+const { getConferenceIdentityEvidence } = require('./extractor');
 
 /**
  * JSON Schema for structured output from Gemini 3.8 Flash.
@@ -67,13 +68,13 @@ Your job is to compare current event metadata against extracted information from
 RULES:
 1. Determine if the webpage corresponds to the EXACT SAME conference edition and year as the current event.
 2. Check for edition mismatches (e.g. 8th vs 9th) and year mismatches (e.g. 2026 vs 2027 vs 2028).
-3. Be alert to cross-year links or navigation bars referencing past or future editions on the same website.
+3. Conference-year evidence priority: explicit dates tied to the target conference, its title/headings/name and numbered edition, its URL path, then a high-confidence same-URL discovery verification. Body-wide years are auxiliary information only. News publication dates, update dates, copyright years and past-conference links are NEVER year-mismatch evidence. Report year_mismatch only when the target conference's actual schedule explicitly shows a different year. A conflicting schedule overrides URL discovery verification; do not invent schedule evidence.
 4. Next-meeting announcements found within a previous year's official website or society site can be verified as 'society_next_announcement'.
 5. DO NOT GUESS OR INVENT DATA. If a metadata field is not explicitly proven by the provided webpage excerpt, omit that optional field. Missing evidence is not evidence to clear an existing value. Never output the string "null".
 6. For recommended_action:
    - 'no_change': Information matches current event values with no significant updates.
    - 'safe_auto_update': High-confidence (>=0.95), exact edition and year match from an official page, with verified changes (e.g. dates confirmed, venue confirmed, URL added).
-   - 'needs_review': Mismatch in edition/year/city/dates, lower confidence, multiple conflicting years, or evidence requires human review.
+   - 'needs_review': Mismatch in edition/year/city/dates, lower confidence, or evidence requires human review. Multiple auxiliary body years alone do not establish a mismatch.
    - 'insufficient_evidence': The page lacks clear information to confirm or update the conference.
 7. Output strict JSON matching the schema.`;
 
@@ -81,6 +82,8 @@ RULES:
  * Build prompt text.
  */
 function buildPrompt(currentEvent, sourceUrl, context) {
+  const evidence = getConferenceIdentityEvidence(currentEvent, sourceUrl, context);
+  const verifiedIdentity = getTrustedUrlVerification(sourceUrl, context);
   return `Current Event in Database:
 - ID: ${currentEvent.id}
 - Title: ${currentEvent.title}
@@ -97,7 +100,34 @@ ${sourceUrl}
 Extracted Information from Target Source Page:
 ${context.summaryPromptText}
 
+Target Conference Identity Evidence:
+${JSON.stringify(evidence)}
+High-confidence verification adopted for this exact URL in this run:
+${verifiedIdentity ? JSON.stringify(verifiedIdentity) : 'None'}
+If verified identity is present, preserve its year/edition assessment unless direct target-conference evidence contradicts it. Never infer a year mismatch from auxiliary body years.
+
 Perform semantic evaluation. Answer with the structured JSON schema.`;
+}
+
+function getTrustedUrlVerification(sourceUrl, context) {
+  const verification = context.adoptedUrlVerification;
+  return verification?.url === sourceUrl && verification.yearMatches === true && verification.editionMatches === true && verification.confidence >= 0.9
+    ? verification : null;
+}
+
+function reconcileYearEvidence(result, currentEvent, sourceUrl, context) {
+  const evidence = getConferenceIdentityEvidence(currentEvent, sourceUrl, context);
+  const mismatches = Array.isArray(result.mismatches) ? result.mismatches : [];
+  const yearMismatch = value => /year[_\s-]*mismatch/i.test(value);
+  if (evidence.hasScheduleYearConflict) {
+    return { ...result, mismatches: [...mismatches.filter(m => !yearMismatch(m)), `year_mismatch: expected ${currentEvent.date?.slice(0, 4)}, schedule shows ${evidence.scheduleYears.join(',')}`], recommended_action: RECOMMENDED_ACTIONS.NEEDS_REVIEW };
+  }
+  if (mismatches.some(yearMismatch)) {
+    // Remove only unsupported year mismatches. Keep confidence, source quality,
+    // same-event assessment and all other review causes unchanged.
+    return { ...result, mismatches: mismatches.filter(m => !yearMismatch(m)), reason: `No target-conference schedule establishes a year mismatch${getTrustedUrlVerification(sourceUrl, context) ? '; same-run URL verification confirms year and edition' : ''}. Other semantic assessments remain unchanged.` };
+  }
+  return result;
 }
 
 /**
@@ -153,9 +183,8 @@ function localSemanticAnalyzer(currentEvent, sourceUrl, context) {
   const currentEditions = [...new Set([...String(currentEvent.title).matchAll(/第\s*(\d+)\s*(?:回|(?=日本))|(\d+)(?:st|nd|rd|th)\b/gi)].map(m => Number(m[1] || m[2])))].sort((a,b)=>a-b);
   const currentEdition = currentEditions[0] || null;
 
-  const textSummary = context.summaryPromptText || '';
-  const detectedYears = context.detectedYears || [];
-  const detectedEditions = context.detectedEditions || [];
+  const identityEvidence = getConferenceIdentityEvidence(currentEvent, sourceUrl, context);
+  const detectedEditions = identityEvidence.identityEditions.length ? identityEvidence.identityEditions : context.pageTitle === undefined ? context.detectedEditions || [] : [];
 
   // Determine source quality
   let sourceQuality = SOURCE_QUALITY.THIRD_PARTY_OR_OTHER;
@@ -166,8 +195,7 @@ function localSemanticAnalyzer(currentEvent, sourceUrl, context) {
   }
 
   // Check year alignment
-  const hasMatchingYear = eventYear && (detectedYears.includes(eventYear) || textSummary.includes(String(eventYear)));
-  const hasConflictingYear = eventYear && detectedYears.some(y => Math.abs(y - eventYear) >= 1 && y >= 2022 && y <= 2030);
+  const hasConflictingYear = identityEvidence.hasScheduleYearConflict;
 
   // Check edition alignment
   const hasMatchingEdition = currentEdition && detectedEditions.includes(currentEdition);
@@ -175,7 +203,7 @@ function localSemanticAnalyzer(currentEvent, sourceUrl, context) {
 
   const mismatches = [];
   if (hasConflictingEdition && !hasMatchingEdition) mismatches.push(`edition_mismatch: expected ${currentEdition}, found ${detectedEditions.join(',')}`);
-  if (hasConflictingYear && !hasMatchingYear) mismatches.push(`year_mismatch: expected ${eventYear}, found ${detectedYears.join(',')}`);
+  if (hasConflictingYear) mismatches.push(`year_mismatch: expected ${eventYear}, schedule shows ${identityEvidence.scheduleYears.join(',')}`);
 
   let severity = SEVERITY.NONE;
   let recommendedAction = RECOMMENDED_ACTIONS.NO_CHANGE;
@@ -189,12 +217,6 @@ function localSemanticAnalyzer(currentEvent, sourceUrl, context) {
     recommendedAction = RECOMMENDED_ACTIONS.NEEDS_REVIEW;
     confidence = 0.88;
     reason = `Potential cross-year or edition mismatch detected: ${mismatches.join('; ')}`;
-  } else if (!hasMatchingYear && detectedYears.length > 0) {
-    severity = SEVERITY.HIGH;
-    recommendedAction = RECOMMENDED_ACTIONS.NEEDS_REVIEW;
-    confidence = 0.85;
-    mismatches.push('year_mismatch');
-    reason = 'Event year not confirmed in official text.';
   } else if (context.datesText || context.venueText) {
     recommendedAction = RECOMMENDED_ACTIONS.SAFE_AUTO_UPDATE;
     confidence = 0.97;
@@ -228,22 +250,23 @@ async function analyzeEventWithGemini(currentEvent, sourceUrl, context, options 
   const apiKey = options.apiKey || process.env.GEMINI_API_KEY;
 
   if (options.mockAnalyzer) {
-    return options.mockAnalyzer(currentEvent, sourceUrl, context);
+    return reconcileYearEvidence(await options.mockAnalyzer(currentEvent, sourceUrl, context), currentEvent, sourceUrl, context);
   }
 
   if (!apiKey || options.offline) {
     // Deterministic offline semantic analyzer ensuring reproducible tests and dry-run without credentials
-    return localSemanticAnalyzer(currentEvent, sourceUrl, context);
+    return reconcileYearEvidence(localSemanticAnalyzer(currentEvent, sourceUrl, context), currentEvent, sourceUrl, context);
   }
 
   const prompt = buildPrompt(currentEvent, sourceUrl, context);
-  return await callGeminiApi(prompt, apiKey);
+  return reconcileYearEvidence(await callGeminiApi(prompt, apiKey), currentEvent, sourceUrl, context);
 }
 
 module.exports = {
   GEMINI_RESPONSE_SCHEMA,
   SYSTEM_INSTRUCTION,
   buildPrompt,
+  getTrustedUrlVerification,
   callGeminiApi,
   localSemanticAnalyzer,
   analyzeEventWithGemini

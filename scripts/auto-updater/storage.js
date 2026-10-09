@@ -80,7 +80,8 @@ const checks = [
   ['scratch/test_gemini_notifications_and_acknowledgements.js'],
   ['scratch/test_gemini_staged_auto_updater.js'],
   ['scratch/test_google_url_discovery.js'],
-  ['scratch/test_gemini_discovery_grounding.js']
+  ['scratch/test_gemini_discovery_grounding.js'],
+  ['scratch/test_gemini_year_evidence.js']
 ];
 function runChecks(root) {
   const results = [];

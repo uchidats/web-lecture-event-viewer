@@ -107,6 +107,7 @@ async function runGeminiMonitor(options = {}) {
   // 3. Process each selected event
   for (const item of selected) {
     const event = item.event;
+    let adoptedUrlVerification = null;
     const tier = getEventMonitoringTier(event, todayStr);
     const nextCheck = calculateNextCheckDate(tier, todayStr);
 
@@ -174,6 +175,7 @@ async function runGeminiMonitor(options = {}) {
           });
 
           event.eventOfficialUrl = discoveryResult.adoptedUrl;
+          adoptedUrlVerification = { url: discoveryResult.adoptedUrl, ...discoveryResult.verification };
         } else if (discoveryResult.status === 'not-found') {
           state.sources[event.id] = {
             ...state.sources[event.id],
@@ -251,6 +253,7 @@ async function runGeminiMonitor(options = {}) {
 
     // 6. Content changed -> extract compact structured facts (Requirement 8)
     const context = extractMonitoringContext(fetchResult.rawHtml, event);
+    context.adoptedUrlVerification = adoptedUrlVerification;
 
     // 7. Call Gemini 3.8 Flash for semantic validation (Requirement 10)
     metrics.geminiCalls++;

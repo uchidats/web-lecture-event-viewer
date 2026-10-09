@@ -171,6 +171,8 @@ async function testAll() {
   const aiEvent = events.find(e => e.id === 'conf-jp-ai-2027');
   assert.ok(aiEvent, 'conf-jp-ai-2027 must exist');
   const aiContextPast = {
+    pageTitle: '第3回日本眼科AI学会総会',
+    datesText: '2022年11月26日',
     summaryPromptText: '第3回日本眼科AI学会総会 2022年11月26日 京都ブライトンホテル',
     detectedYears: [2022],
     detectedEditions: [3]

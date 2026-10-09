@@ -76,6 +76,10 @@ function extractMonitoringContext(html, currentEvent = {}) {
 
   // 4. Fallback search for abstract / registration / next meeting in text paragraphs if overview is empty
   const plainText = text(cleanHtml);
+  if (!datesText) {
+    const scheduleMatches = plainText.match(/(?:会期|開催日(?:程)?|開催期間|Conference Dates?)\s*[:：]?[^\n]{0,200}/gi);
+    if (scheduleMatches) datesText = scheduleMatches.slice(0, 2).join(' | ');
+  }
   if (!abstractText) {
     const abstractMatches = plainText.match(/(?:演題(?:募集|登録|締切)|Call for Abstracts)[^\n]{0,250}/gi);
     if (abstractMatches) abstractText = abstractMatches.slice(0, 3).join(' | ');
@@ -108,8 +112,8 @@ function extractMonitoringContext(html, currentEvent = {}) {
   if (abstractText) lines.push(`[Abstract Submission]: ${abstractText.trim()}`);
   if (registrationText) lines.push(`[Registration]: ${registrationText.trim()}`);
   if (nextMeetingNotice) lines.push(`[Next Meeting Notice]: ${nextMeetingNotice.trim()}`);
-  if (detectedYears.length) lines.push(`[Years Detected in Page]: ${detectedYears.join(', ')}`);
-  if (detectedEditions.length) lines.push(`[Editions Detected in Page]: ${detectedEditions.join(', ')}`);
+  if (detectedYears.length) lines.push(`[Auxiliary Years in Body (not conference-year evidence)]: ${detectedYears.join(', ')}`);
+  if (detectedEditions.length) lines.push(`[Auxiliary Editions in Body]: ${detectedEditions.join(', ')}`);
 
   return {
     pageTitle,
@@ -126,6 +130,34 @@ function extractMonitoringContext(html, currentEvent = {}) {
   };
 }
 
+// Only facts tied to the target conference can establish its identity.
+function getConferenceIdentityEvidence(currentEvent, sourceUrl, context) {
+  const years = value => [...new Set([...String(value || '').normalize('NFKC').matchAll(/(?:^|[^0-9])(20\d{2})(?!\d)/g)].map(m => Number(m[1])))];
+  const editions = value => [...new Set([...String(value || '').normalize('NFKC').matchAll(/第\s*(\d+)\s*回|(\d+)(?:st|nd|rd|th)\b/gi)].map(m => Number(m[1] || m[2])))];
+  const title = String(currentEvent.title || '');
+  const name = title.replace(/第\s*\d+\s*回|\b20\d{2}\b|\([^)]*\)|（[^）]*）/g, '').replace(/\s+/g, '');
+  const tiedToEvent = value => name && String(value || '').replace(/\s+/g, '').includes(name);
+  const namedPairs = (context.overviewPairs || []).filter(p => /^(学会名|大会名|会議名|名称|会名|Title|Meeting)$/i.test(p.label)).map(p => p.value);
+  const identityTexts = [context.pageTitle, ...(context.headings || []), ...namedPairs].filter(tiedToEvent);
+  // Generic calendars may contain dates for many conferences. Require the target
+  // identity on the page before treating overview schedule fields as evidence.
+  const isGenericListing = /一覧|カレンダー|学会情報|calendar|listing/i.test(context.pageTitle || '');
+  const dedicatedIdentity = (tiedToEvent(context.pageTitle) || (!isGenericListing && (context.headings || []).some(tiedToEvent))) && namedPairs.every(tiedToEvent);
+  const scheduleText = dedicatedIdentity ? context.datesText || '' : '';
+  let pathname = '';
+  try { pathname = new URL(sourceUrl).pathname; } catch {}
+  const scheduleYears = years([...scheduleText.normalize('NFKC').matchAll(/20\d{2}\s*[-/年]\s*\d{1,2}\s*[-/月]\s*\d{1,2}/g)].map(m => m[0]).join('\n'));
+  return {
+    scheduleText,
+    scheduleYears,
+    identityYears: years(identityTexts.join('\n')),
+    identityEditions: editions(identityTexts.join('\n')),
+    urlYears: years(pathname),
+    hasScheduleYearConflict: scheduleYears.some(year => year !== Number(currentEvent.date?.slice(0, 4)))
+  };
+}
+
 module.exports = {
-  extractMonitoringContext
+  extractMonitoringContext,
+  getConferenceIdentityEvidence
 };
