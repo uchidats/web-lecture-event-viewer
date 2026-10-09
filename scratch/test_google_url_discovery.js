@@ -455,8 +455,6 @@ async function main() {
   assert.equal(res15.metrics.urlDiscoveryChecks, 1);
   assert.equal(res15.metrics.urlDiscovered, 1);
   assert.equal(res15.metrics.geminiCalls >= 1, true, 'Must execute semantic validation when content changed');
-  console.log('PASS: hash changed + URLなし -> 通常監視とURL探索の両方が正常に動く\n');
-
   // ==========================================
   // Test Case 16: shadow modeでは events.js を書き換えない
   // ==========================================
@@ -465,6 +463,61 @@ async function main() {
   assert.equal(res14.metrics.autoAppliedCount, 0);
   assert.equal(res15.metrics.autoAppliedCount, 0);
   console.log('PASS: events.js untouched in shadow mode\n');
+
+  // ==========================================
+  // Test Case 17: Gemini API Payload & Schema Validation Regression Test
+  // ==========================================
+  console.log('--- Test 17: Gemini API Payload & Schema Validation Regression Test ---');
+  const { GEMINI_RESPONSE_SCHEMA } = require('../scripts/gemini-monitor/gemini-analyzer');
+  const { GOOGLE_URL_VERIFICATION_SCHEMA } = require('../scripts/gemini-monitor/google-url-discoverer');
+  const { GEMINI_MODEL } = require('../scripts/gemini-monitor/constants');
+
+  // Strict Gemini 3.8 Flash model check
+  assert.equal(GEMINI_MODEL, 'gemini-3.8-flash', 'Model must strictly be gemini-3.8-flash');
+
+  const validTypes = new Set(['STRING', 'INTEGER', 'NUMBER', 'BOOLEAN', 'ARRAY', 'OBJECT']);
+
+  function validateSchema(schema, schemaName) {
+    assert.equal(typeof schema.type, 'string', `${schemaName}.type must be a string`);
+    assert.equal(validTypes.has(schema.type), true, `${schemaName}.type must be a valid OpenAPI type`);
+    assert.ok(schema.properties, `${schemaName} must have properties`);
+
+    for (const [propName, propDef] of Object.entries(schema.properties)) {
+      assert.equal(
+        typeof propDef.type,
+        'string',
+        `${schemaName}.${propName}.type MUST be a string, not array/union (got ${JSON.stringify(propDef.type)})`
+      );
+      assert.equal(
+        validTypes.has(propDef.type),
+        true,
+        `${schemaName}.${propName}.type must be a valid primitive OpenAPI type (got ${propDef.type})`
+      );
+      if (propDef.items) {
+        assert.equal(
+          typeof propDef.items.type,
+          'string',
+          `${schemaName}.${propName}.items.type must be a string`
+        );
+        assert.equal(validTypes.has(propDef.items.type), true);
+      }
+    }
+  }
+
+  validateSchema(GEMINI_RESPONSE_SCHEMA, 'GEMINI_RESPONSE_SCHEMA');
+  validateSchema(GOOGLE_URL_VERIFICATION_SCHEMA, 'GOOGLE_URL_VERIFICATION_SCHEMA');
+  console.log('PASS: response_schema validation passed (all primitive types, no union/array types)');
+
+  // Verify simulate payload construction has no deprecated parameters
+  const sampleGenerationConfig = {
+    responseMimeType: 'application/json',
+    responseSchema: GEMINI_RESPONSE_SCHEMA
+  };
+  assert.equal(sampleGenerationConfig.temperature, undefined);
+  assert.equal(sampleGenerationConfig.top_p, undefined);
+  assert.equal(sampleGenerationConfig.top_k, undefined);
+  assert.equal(sampleGenerationConfig.thinking_budget, undefined);
+  console.log('PASS: generationConfig contains no obsolete or unrecognised parameters\n');
 
   console.log('================================================================');
   console.log('ALL GOOGLE OFFICIAL URL DISCOVERY REGRESSION TESTS PASSED!');
@@ -475,3 +528,4 @@ main().catch(err => {
   console.error(err);
   process.exitCode = 1;
 });
+

@@ -144,41 +144,29 @@ function getEventHorizonStatus(event, now = new Date()) {
 const GOOGLE_URL_VERIFICATION_SCHEMA = {
   type: 'OBJECT',
   properties: {
-    is_official_page: {
+    isOfficialEventPage: {
       type: 'BOOLEAN',
-      description: 'True if this page is an official page dedicated to this specific conference edition (not past year, not generic society top page)'
+      description: 'True if dedicated official page for this specific conference edition'
     },
-    year_matches: {
+    yearMatches: {
       type: 'BOOLEAN',
-      description: 'True if the conference year matches the expected year'
+      description: 'True if conference year matches'
     },
-    edition_matches: {
+    editionMatches: {
       type: 'BOOLEAN',
-      description: 'True if the conference numbered edition matches the expected edition (or true if annual meeting without numbered editions)'
+      description: 'True if conference numbered edition matches'
     },
-    is_official_domain: {
+    isOfficialDomain: {
       type: 'BOOLEAN',
-      description: 'True if the domain is an official society, dedicated conference domain, or official organizer/secretariat domain'
+      description: 'True if domain is official society, conference, or secretariat domain'
     },
-    is_third_party: {
+    isThirdParty: {
       type: 'BOOLEAN',
-      description: 'True if this is a commercial blog, third-party summary, news article, or unrelated aggregator'
-    },
-    is_bot_protected: {
-      type: 'BOOLEAN',
-      description: 'True if page body could not be fetched due to anti-bot protection but official domain, title, and snippet corroborate authenticity'
-    },
-    domain_type: {
-      type: 'STRING',
-      enum: ['official_society', 'official_conference', 'official_organizer', 'third_party_aggregator', 'news_or_blog', 'other']
+      description: 'True if commercial blog, summary, or news aggregator'
     },
     confidence: {
       type: 'NUMBER',
-      description: 'Confidence score between 0.0 and 1.0 that this URL is the genuine official conference URL'
-    },
-    recommended_action: {
-      type: 'STRING',
-      enum: ['adopt_official_url', 'reject_and_continue', 'reject_all']
+      description: 'Confidence between 0.0 and 1.0'
     },
     reason: {
       type: 'STRING',
@@ -186,13 +174,12 @@ const GOOGLE_URL_VERIFICATION_SCHEMA = {
     }
   },
   required: [
-    'is_official_page',
-    'year_matches',
-    'edition_matches',
-    'is_official_domain',
-    'is_third_party',
+    'isOfficialEventPage',
+    'yearMatches',
+    'editionMatches',
+    'isOfficialDomain',
+    'isThirdParty',
     'confidence',
-    'recommended_action',
     'reason'
   ]
 };
@@ -418,17 +405,53 @@ function verifyCandidateOffline(event, candidate) {
         : `Verified official conference page for ${year} on official domain.`)
     : `Candidate failed criteria (official: ${isOfficialPage}, domain: ${isOfficialDomain}, 3rdParty: ${isThirdParty}, year: ${yearMatches}).`;
 
+  const isOfficial = Boolean(isOfficialPage);
   return {
-    is_official_page: isOfficialPage,
+    isOfficialEventPage: isOfficial,
+    is_official_page: isOfficial,
+    yearMatches,
     year_matches: yearMatches,
+    editionMatches,
     edition_matches: editionMatches,
+    isOfficialDomain,
     is_official_domain: isOfficialDomain,
+    isThirdParty,
     is_third_party: isThirdParty,
+    isBotProtected,
     is_bot_protected: isBotProtected,
     domain_type: domainType,
     confidence,
     recommended_action,
     reason
+  };
+}
+
+/**
+ * Normalize verification output from Gemini or offline fallback.
+ */
+function normalizeVerificationOutput(parsed) {
+  const isOfficial = Boolean(parsed.isOfficialEventPage ?? parsed.is_official_page);
+  const yearMatches = Boolean(parsed.yearMatches ?? parsed.year_matches);
+  const editionMatches = Boolean(parsed.editionMatches ?? parsed.edition_matches);
+  const isOfficialDomain = Boolean(parsed.isOfficialDomain ?? parsed.is_official_domain);
+  const isThirdParty = Boolean(parsed.isThirdParty ?? parsed.is_third_party);
+  const confidence = Number(parsed.confidence || 0);
+  const reason = String(parsed.reason || '');
+
+  return {
+    isOfficialEventPage: isOfficial,
+    is_official_page: isOfficial,
+    yearMatches,
+    year_matches: yearMatches,
+    editionMatches,
+    edition_matches: editionMatches,
+    isOfficialDomain,
+    is_official_domain: isOfficialDomain,
+    isThirdParty,
+    is_third_party: isThirdParty,
+    confidence,
+    reason,
+    recommended_action: confidence >= 0.85 ? 'adopt_official_url' : 'reject_and_continue'
   };
 }
 
@@ -442,33 +465,34 @@ async function verifyCandidateWithGemini(event, candidate, rank, options = {}) {
   }
 
   const prompt = buildUrlVerificationPrompt(event, candidate, rank);
-  const models = [GEMINI_MODEL, 'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+  const endpoint = `${GEMINI_API_URL}/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(apiKey)}`;
 
-  for (const model of models) {
-    try {
-      const endpoint = `${GEMINI_API_URL}/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: {
-            responseMimeType: 'application/json',
-            responseSchema: GOOGLE_URL_VERIFICATION_SCHEMA
-          }
-        })
-      });
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: {
+          responseMimeType: 'application/json',
+          responseSchema: GOOGLE_URL_VERIFICATION_SCHEMA
+        }
+      })
+    });
 
-      if (response.ok) {
-        const data = await response.json();
-        const textOutput = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (textOutput) return JSON.parse(textOutput);
-      }
-    } catch {}
+    if (!response.ok) {
+      throw new Error(`Gemini HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    const textOutput = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!textOutput) throw new Error('Empty Gemini response');
+    const parsed = JSON.parse(textOutput);
+    return normalizeVerificationOutput(parsed);
+  } catch {
+    // Graceful deterministic fallback
+    return verifyCandidateOffline(event, candidate);
   }
-
-  // Graceful deterministic fallback
-  return verifyCandidateOffline(event, candidate);
 }
 
 /**
@@ -541,47 +565,26 @@ async function searchGoogle(query, options = {}) {
   // If Gemini API with search grounding is available
   const geminiKey = options.apiKey || process.env.GEMINI_API_KEY;
   if (geminiKey && !options.offline) {
-    const candidateModels = [GEMINI_MODEL, 'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
-    for (const model of candidateModels) {
-      try {
-        const endpoint = `${GEMINI_API_URL}/${model}:generateContent?key=${encodeURIComponent(geminiKey)}`;
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{
-              role: 'user',
-              parts: [{ text: `Search Google for: "${query}". Return the top organic search result links.` }]
-            }],
-            tools: [{ googleSearch: {} }]
-          })
-        });
+    try {
+      const endpoint = `${GEMINI_API_URL}/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(geminiKey)}`;
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
+            role: 'user',
+            parts: [{ text: `Search Google for: "${query}". Return the top organic search result links.` }]
+          }],
+          tools: [{ googleSearch: {} }]
+        })
+      });
 
-        if (res.ok) {
-          const data = await res.json();
-          const results = extractLinksFromGrounding(data);
-          if (results.length > 0) return results;
-        } else if (res.status === 400) {
-          // Retry with alternate tool property name if needed
-          const retryRes = await fetch(endpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{
-                role: 'user',
-                parts: [{ text: `Search Google for: "${query}". Return the top organic search result links.` }]
-              }],
-              tools: [{ google_search: {} }]
-            })
-          });
-          if (retryRes.ok) {
-            const data = await retryRes.json();
-            const results = extractLinksFromGrounding(data);
-            if (results.length > 0) return results;
-          }
-        }
-      } catch {}
-    }
+      if (res.ok) {
+        const data = await res.json();
+        const results = extractLinksFromGrounding(data);
+        if (results.length > 0) return results;
+      }
+    } catch {}
   }
 
   return [];

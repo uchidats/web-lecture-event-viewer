@@ -19,15 +19,15 @@ const GEMINI_RESPONSE_SCHEMA = {
         SOURCE_QUALITY.THIRD_PARTY_OR_OTHER
       ]
     },
-    official_title: { type: ['STRING', 'NULL'] },
-    edition: { type: ['INTEGER', 'NULL'] },
-    start_date: { type: ['STRING', 'NULL'] },
-    end_date: { type: ['STRING', 'NULL'] },
-    city: { type: ['STRING', 'NULL'] },
-    venue: { type: ['STRING', 'NULL'] },
-    abstract_deadline: { type: ['STRING', 'NULL'] },
-    registration_deadline: { type: ['STRING', 'NULL'] },
-    official_url: { type: ['STRING', 'NULL'] },
+    official_title: { type: 'STRING' },
+    edition: { type: 'INTEGER' },
+    start_date: { type: 'STRING' },
+    end_date: { type: 'STRING' },
+    city: { type: 'STRING' },
+    venue: { type: 'STRING' },
+    abstract_deadline: { type: 'STRING' },
+    registration_deadline: { type: 'STRING' },
+    official_url: { type: 'STRING' },
     mismatches: {
       type: 'ARRAY',
       items: { type: 'STRING' }
