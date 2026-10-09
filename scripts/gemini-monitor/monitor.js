@@ -85,6 +85,8 @@ async function runGeminiMonitor(options = {}) {
     monitoredToday: selected.length,
     skippedNotDue: skipped.filter(s => s.reason === 'not-due-yet').length,
     skippedEnded: skipped.filter(s => s.isEnded).length,
+    urlDiscoveryChecks: 0,
+    urlDiscovered: 0,
     httpFetched: 0,
     hashUnchangedSkipped: 0,
     geminiCalls: 0,
@@ -230,7 +232,9 @@ async function runGeminiMonitor(options = {}) {
     // 5. Hash unchanged check -> skip Gemini! (Requirement 9)
     if (fetchResult.unchanged && item.lastHash) {
       metrics.hashUnchangedSkipped++;
-      metrics.noChange++;
+      if (!autoApplyPool.some(a => a.eventId === event.id)) {
+        metrics.noChange++;
+      }
       state.sources[event.id] = {
         ...state.sources[event.id],
         lastChecked: todayStr,

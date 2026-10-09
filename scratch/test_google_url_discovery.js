@@ -9,7 +9,9 @@ const {
   isDomainOfficial,
   isDomainThirdParty
 } = require('../scripts/gemini-monitor/google-url-discoverer');
+const fs = require('node:fs');
 const { loadEvents } = require('../scripts/auto-updater/storage');
+const { runGeminiMonitor } = require('../scripts/gemini-monitor/monitor');
 
 async function main() {
   console.log('Starting Google Official URL Discovery Comprehensive Regression Suite...\n');
@@ -336,6 +338,133 @@ async function main() {
   assert.equal(resTargeted.status, 'adopted');
   assert.equal(resTargeted.adoptedUrl, 'https://www.ganki.jp/lowvision2027/information.html');
   console.log('PASS: Single targeted event allowed discovery without requiring forceAll\n');
+
+  // ==========================================
+  // Test Case 12: hash unchanged + URLあり -> URL探索しない
+  // ==========================================
+  console.log('--- Test 12: hash unchanged + URLあり -> URL探索しない ---');
+  let searchCallCount12 = 0;
+  const mockSearch12 = async () => { searchCallCount12++; return []; };
+  const getPageUnchanged12 = async () => ({
+    status: 200,
+    html: '<html><body>Official conference page unchanged content</body></html>'
+  });
+
+  const res12 = await runGeminiMonitor({
+    today: '2026-10-09',
+    singleEventId: 'conf-jp-surgery-2026', // has eventOfficialUrl
+    apply: false,
+    offline: true,
+    getPage: getPageUnchanged12,
+    searchProvider: mockSearch12
+  });
+
+  assert.equal(searchCallCount12, 0, 'Must NOT execute Google search when eventOfficialUrl is already registered');
+  assert.equal(res12.metrics.urlDiscoveryChecks, 0);
+  console.log('PASS: hash unchanged + URLあり -> URL探索しない\n');
+
+  // ==========================================
+  // Test Case 13: hash unchanged + URLなし + 探索期間内 -> URL探索する
+  // ==========================================
+  console.log('--- Test 13: hash unchanged + URLなし + 探索期間内 -> URL探索する ---');
+  let searchCallCount13 = 0;
+  const mockSearch13 = async () => {
+    searchCallCount13++;
+    return [{
+      rank: 1,
+      url: 'https://www.ganki.jp/lowvision2027/information.html',
+      title: '第28回日本ロービジョン学会学術総会 開催概要',
+      snippet: '会期：2027年5月22日〜23日 会場：大阪国際会議場'
+    }];
+  };
+
+  const res13 = await runGeminiMonitor({
+    today: '2027-01-10', // within 180 days of lowvision 2027
+    singleEventId: 'conf-jp-lowvision-2027',
+    apply: false,
+    offline: true,
+    searchProvider: mockSearch13
+  });
+
+  assert.equal(searchCallCount13 >= 1, true, 'Must execute Google search when URL missing and within window');
+  assert.equal(res13.metrics.urlDiscoveryChecks, 1);
+  assert.equal(res13.metrics.urlDiscovered, 1);
+  assert.equal(res13.metrics.wouldAutoUpdate >= 1, true);
+  console.log('PASS: hash unchanged + URLなし + 探索期間内 -> URL探索する\n');
+
+  // ==========================================
+  // Test Case 14: hash unchanged + URLなし + single_event_id指定 -> URL探索する
+  // ==========================================
+  console.log('--- Test 14: hash unchanged + URLなし + single_event_id指定 -> URL探索する ---');
+  let searchCallCount14 = 0;
+  const mockSearch14 = async () => {
+    searchCallCount14++;
+    return [{
+      rank: 1,
+      url: 'https://www.ganki.jp/lowvision2027/information.html',
+      title: '第28回日本ロービジョン学会学術総会 開催概要',
+      snippet: '会期：2027年5月22日〜23日 会場：大阪国際会議場'
+    }];
+  };
+
+  // Run on 2026-10-09 (225 days away > 180 days), but targeted with singleEventId
+  const res14 = await runGeminiMonitor({
+    today: '2026-10-09',
+    singleEventId: 'conf-jp-lowvision-2027',
+    apply: false,
+    offline: true,
+    searchProvider: mockSearch14
+  });
+
+  assert.equal(searchCallCount14 >= 1, true, 'Must execute Google search when targeted via single_event_id');
+  assert.equal(res14.metrics.urlDiscoveryChecks, 1);
+  assert.equal(res14.metrics.urlDiscovered, 1);
+  assert.equal(res14.metrics.wouldAutoUpdate >= 1, true);
+  console.log('PASS: hash unchanged + URLなし + single_event_id指定 -> URL探索する\n');
+
+  // ==========================================
+  // Test Case 15: hash changed + URLなし -> 通常監視とURL探索の両方が正常に動く
+  // ==========================================
+  console.log('--- Test 15: hash changed + URLなし -> 通常監視とURL探索の両方が正常に動く ---');
+  let searchCallCount15 = 0;
+  const mockSearch15 = async () => {
+    searchCallCount15++;
+    return [{
+      rank: 1,
+      url: 'https://www.ganki.jp/lowvision2027/information.html',
+      title: '第28回日本ロービジョン学会学術総会 開催概要',
+      snippet: '会期：2027年5月22日〜23日 会場：大阪国際会議場'
+    }];
+  };
+
+  const getPageChanged15 = async () => ({
+    status: 200,
+    html: '<html><body>New announcements published for the conference!</body></html>'
+  });
+
+  const res15 = await runGeminiMonitor({
+    today: '2027-01-10',
+    singleEventId: 'conf-jp-lowvision-2027',
+    apply: false,
+    offline: true,
+    getPage: getPageChanged15,
+    searchProvider: mockSearch15
+  });
+
+  assert.equal(searchCallCount15 >= 1, true);
+  assert.equal(res15.metrics.urlDiscoveryChecks, 1);
+  assert.equal(res15.metrics.urlDiscovered, 1);
+  assert.equal(res15.metrics.geminiCalls >= 1, true, 'Must execute semantic validation when content changed');
+  console.log('PASS: hash changed + URLなし -> 通常監視とURL探索の両方が正常に動く\n');
+
+  // ==========================================
+  // Test Case 16: shadow modeでは events.js を書き換えない
+  // ==========================================
+  console.log('--- Test 16: shadow mode does not modify events.js ---');
+  const eventsContent = fs.readFileSync('events.js', 'utf8');
+  assert.equal(res14.metrics.autoAppliedCount, 0);
+  assert.equal(res15.metrics.autoAppliedCount, 0);
+  console.log('PASS: events.js untouched in shadow mode\n');
 
   console.log('================================================================');
   console.log('ALL GOOGLE OFFICIAL URL DISCOVERY REGRESSION TESTS PASSED!');

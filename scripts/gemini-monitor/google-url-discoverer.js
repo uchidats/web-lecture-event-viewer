@@ -442,33 +442,71 @@ async function verifyCandidateWithGemini(event, candidate, rank, options = {}) {
   }
 
   const prompt = buildUrlVerificationPrompt(event, candidate, rank);
-  const endpoint = `${GEMINI_API_URL}/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(apiKey)}`;
+  const models = [GEMINI_MODEL, 'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
 
-  try {
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: {
-          responseMimeType: 'application/json',
-          responseSchema: GOOGLE_URL_VERIFICATION_SCHEMA
-        }
-      })
-    });
+  for (const model of models) {
+    try {
+      const endpoint = `${GEMINI_API_URL}/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: {
+            responseMimeType: 'application/json',
+            responseSchema: GOOGLE_URL_VERIFICATION_SCHEMA
+          }
+        })
+      });
 
-    if (!response.ok) {
-      throw new Error(`Gemini HTTP ${response.status}`);
-    }
-
-    const data = await response.json();
-    const textOutput = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!textOutput) throw new Error('Empty Gemini response');
-    return JSON.parse(textOutput);
-  } catch {
-    // Graceful deterministic fallback
-    return verifyCandidateOffline(event, candidate);
+      if (response.ok) {
+        const data = await response.json();
+        const textOutput = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (textOutput) return JSON.parse(textOutput);
+      }
+    } catch {}
   }
+
+  // Graceful deterministic fallback
+  return verifyCandidateOffline(event, candidate);
+}
+
+/**
+ * Extract links from Gemini Google Search Grounding response.
+ */
+function extractLinksFromGrounding(data) {
+  const chunks = data?.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
+  const results = [];
+  for (const chunk of chunks) {
+    if (chunk.web?.uri && !results.some(r => r.url === chunk.web.uri)) {
+      results.push({
+        rank: results.length + 1,
+        url: chunk.web.uri,
+        title: chunk.web.title || '',
+        snippet: ''
+      });
+      if (results.length >= 3) break;
+    }
+  }
+
+  // If groundingChunks was not populated directly, extract URLs mentioned in the text
+  if (results.length === 0) {
+    const textOutput = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const linkMatches = [...textOutput.matchAll(/https?:\/\/[^\s)\]]+/g)];
+    for (const m of linkMatches) {
+      const cleanUrl = m[0].replace(/[.,;:]$/, '');
+      if (!results.some(r => r.url === cleanUrl)) {
+        results.push({
+          rank: results.length + 1,
+          url: cleanUrl,
+          title: '',
+          snippet: ''
+        });
+        if (results.length >= 3) break;
+      }
+    }
+  }
+  return results;
 }
 
 /**
@@ -503,37 +541,47 @@ async function searchGoogle(query, options = {}) {
   // If Gemini API with search grounding is available
   const geminiKey = options.apiKey || process.env.GEMINI_API_KEY;
   if (geminiKey && !options.offline) {
-    try {
-      const endpoint = `${GEMINI_API_URL}/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(geminiKey)}`;
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{
-            role: 'user',
-            parts: [{ text: `Search Google for: "${query}". List the top 3 organic search result links.` }]
-          }],
-          tools: [{ google_search: {} }]
-        })
-      });
-      if (res.ok) {
-        const data = await res.json();
-        const chunks = data?.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
-        const results = [];
-        for (const chunk of chunks) {
-          if (chunk.web?.uri && !results.some(r => r.url === chunk.web.uri)) {
-            results.push({
-              rank: results.length + 1,
-              url: chunk.web.uri,
-              title: chunk.web.title || '',
-              snippet: ''
-            });
-            if (results.length >= 3) break;
+    const candidateModels = [GEMINI_MODEL, 'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+    for (const model of candidateModels) {
+      try {
+        const endpoint = `${GEMINI_API_URL}/${model}:generateContent?key=${encodeURIComponent(geminiKey)}`;
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              role: 'user',
+              parts: [{ text: `Search Google for: "${query}". Return the top organic search result links.` }]
+            }],
+            tools: [{ googleSearch: {} }]
+          })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          const results = extractLinksFromGrounding(data);
+          if (results.length > 0) return results;
+        } else if (res.status === 400) {
+          // Retry with alternate tool property name if needed
+          const retryRes = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{
+                role: 'user',
+                parts: [{ text: `Search Google for: "${query}". Return the top organic search result links.` }]
+              }],
+              tools: [{ google_search: {} }]
+            })
+          });
+          if (retryRes.ok) {
+            const data = await retryRes.json();
+            const results = extractLinksFromGrounding(data);
+            if (results.length > 0) return results;
           }
         }
-        if (results.length > 0) return results;
-      }
-    } catch {}
+      } catch {}
+    }
   }
 
   return [];

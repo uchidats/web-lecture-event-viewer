@@ -77,6 +77,8 @@ Options:
   console.log(`  Monitored Today:            ${result.metrics.monitoredToday}`);
   console.log(`  Skipped (Not Due):          ${result.metrics.skippedNotDue}`);
   console.log(`  Skipped (Ended):            ${result.metrics.skippedEnded}`);
+  console.log(`  URL Discovery Checks:       ${result.metrics.urlDiscoveryChecks || 0}`);
+  console.log(`  URLs Discovered:            ${result.metrics.urlDiscovered || 0}`);
   console.log(`  HTTP Fetched:               ${result.metrics.httpFetched}`);
   console.log(`  Hash Unchanged (Skipped):   ${result.metrics.hashUnchangedSkipped}`);
   console.log(`  Gemini Calls:               ${result.metrics.geminiCalls}`);
