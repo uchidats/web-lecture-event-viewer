@@ -961,6 +961,35 @@ button, input, select, textarea {
   #calendar-event-dialog .dialog-header { padding: 12px; }
 }
 
+@media (max-width: 600px) {
+  /* The spacer preserves flow; browser anchoring must not follow hidden header controls. */
+  body { overflow-anchor: none; }
+  .app-header.is-compact { height: 52px; min-height: 52px; padding: 0; }
+  .app-header.is-compact .header-container {
+    height: 100%; min-height: 0; padding: 0 12px;
+    flex-direction: row; align-items: center; gap: 8px;
+  }
+  .app-header.is-compact .brand { gap: 0; min-width: 0; }
+  .app-header.is-compact .brand-title { font-size: 1.1rem; line-height: 1.2; }
+  .app-header.is-compact .brand-logo,
+  .app-header.is-compact .brand-subtitle,
+  .app-header.is-compact .beta-badge,
+  .app-header.is-compact .header-actions > :not(#mobile-filter-btn) { display: none !important; }
+  .app-header.is-compact .header-actions { display: flex; width: auto; }
+  .app-header.is-compact .header-actions #mobile-filter-btn {
+    width: auto; min-height: 36px; padding: 6px 10px; font-size: 0.8rem;
+  }
+  #event-calendar .fc-header-toolbar {
+    position: sticky; top: var(--mobile-sticky-header-height, 52px); z-index: 35;
+    background: #fff; min-height: 48px; padding: 6px 0;
+    display: grid; grid-template-columns: auto 1fr; gap: 6px; flex-wrap: nowrap;
+    box-shadow: 0 2px 0 #e2e8f0;
+  }
+  #event-calendar .fc-header-toolbar .fc-toolbar-chunk:last-child { display: none; }
+  #event-calendar .fc-header-toolbar .fc-toolbar-title { font-size: 1rem; text-align: center; white-space: nowrap; }
+  #event-calendar .fc-header-toolbar .fc-button { font-size: 0.72rem; min-height: 36px; padding: 4px 6px; }
+}
+
 .date-time-block {
   display: flex;
   align-items: center;

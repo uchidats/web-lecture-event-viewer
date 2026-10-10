@@ -2579,3 +2579,38 @@ function escapeHtml(str) {
 }
 
 document.addEventListener("DOMContentLoaded", initApp);
+
+// Keep the document height stable while the handheld sticky header collapses.
+document.addEventListener('DOMContentLoaded', () => {
+  const header = document.querySelector('.app-header');
+  const button = document.getElementById('mobile-filter-btn');
+  const label = button.querySelector('span');
+  const fullLabel = label.textContent;
+  const handheld = window.matchMedia('(max-width: 600px)');
+  const spacer = document.createElement('div');
+  spacer.setAttribute('aria-hidden', 'true');
+  header.after(spacer);
+  let expandedHeight = header.getBoundingClientRect().height;
+  let queued = false;
+  function update() {
+    queued = false;
+    const compact = handheld.matches && window.scrollY > 96;
+    if (!header.classList.contains('is-compact')) expandedHeight = header.getBoundingClientRect().height;
+    // Reserve the space before shrinking, so the browser cannot clamp scrollY
+    // against a temporarily shorter document near its bottom.
+    if (compact) spacer.style.height = Math.max(0, expandedHeight - 52) + 'px';
+    header.classList.toggle('is-compact', compact);
+    label.textContent = compact ? '絞り込み' : fullLabel;
+    const height = header.getBoundingClientRect().height;
+    spacer.style.height = compact ? Math.max(0, expandedHeight - height) + 'px' : '0px';
+    document.documentElement.style.setProperty('--mobile-sticky-header-height', height + 'px');
+  }
+  function schedule() {
+    if (!queued) { queued = true; requestAnimationFrame(update); }
+  }
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  handheld.addEventListener('change', schedule);
+  new ResizeObserver(schedule).observe(header);
+  update();
+});

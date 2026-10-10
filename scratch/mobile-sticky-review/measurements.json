@@ -1,0 +1,98 @@
+[
+  {
+    "width": 320,
+    "view": "calendar",
+    "before": {
+      "scrollY": 0,
+      "header": 277.1875,
+      "headerTop": 0,
+      "toolbar": 48,
+      "toolbarTop": 553.96875,
+      "title": "2027年7月",
+      "overflow": false,
+      "compact": false
+    },
+    "after": {
+      "scrollY": 502,
+      "header": 52,
+      "headerTop": 0,
+      "toolbar": 48,
+      "toolbarTop": 52,
+      "title": "2027年7月",
+      "overflow": false,
+      "compact": true
+    }
+  },
+  {
+    "width": 320,
+    "view": "compact",
+    "before": {
+      "scrollY": 0,
+      "header": 277.1875,
+      "headerTop": 0,
+      "toolbar": 48,
+      "toolbarTop": 553.96875,
+      "title": "2027年7月",
+      "overflow": false,
+      "compact": false
+    },
+    "after": {
+      "scrollY": 502,
+      "header": 52,
+      "headerTop": 0,
+      "toolbar": 48,
+      "toolbarTop": 52,
+      "title": "2027年7月",
+      "overflow": false,
+      "compact": true
+    }
+  },
+  {
+    "width": 390,
+    "view": "calendar",
+    "before": {
+      "scrollY": 0,
+      "header": 277.1875,
+      "headerTop": 0,
+      "toolbar": 48,
+      "toolbarTop": 553.96875,
+      "title": "2027年7月",
+      "overflow": false,
+      "compact": false
+    },
+    "after": {
+      "scrollY": 502,
+      "header": 52,
+      "headerTop": 0,
+      "toolbar": 48,
+      "toolbarTop": 52,
+      "title": "2027年7月",
+      "overflow": false,
+      "compact": true
+    }
+  },
+  {
+    "width": 390,
+    "view": "compact",
+    "before": {
+      "scrollY": 0,
+      "header": 277.1875,
+      "headerTop": 0,
+      "toolbar": 48,
+      "toolbarTop": 553.96875,
+      "title": "2027年7月",
+      "overflow": false,
+      "compact": false
+    },
+    "after": {
+      "scrollY": 502,
+      "header": 52,
+      "headerTop": 0,
+      "toolbar": 48,
+      "toolbarTop": 52,
+      "title": "2027年7月",
+      "overflow": false,
+      "compact": true
+    }
+  }
+]
