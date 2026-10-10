@@ -33,7 +33,6 @@
     const dialog = document.getElementById('calendar-event-dialog');
     const detail = document.getElementById('calendar-event-detail');
     const holidays = window.OPHTHAL_JAPAN_HOLIDAYS || {};
-    const holidayYears = [...new Set(Object.keys(holidays).map(date => date.slice(0, 4)))].sort();
     const smallScreen = window.matchMedia('(max-width: 600px)');
     const calendarElement = document.getElementById('event-calendar');
     let swipe = null, suppressClickUntil = 0;
@@ -169,20 +168,7 @@
         eventClick: info => { info.jsEvent.preventDefault(); openDetail(info.event.id); },
         eventDidMount: info => { info.el.title = info.event.title; info.el.dataset.eventId = info.event.id; },
         dayCellDidMount: info => mountHoliday(info, '.fc-daygrid-day-top'),
-        datesSet: info => {
-          const month = `${info.view.currentStart.getFullYear()}-${String(info.view.currentStart.getMonth() + 1).padStart(2, '0')}`;
-          const holidayList = document.getElementById('calendar-month-holidays');
-          holidayList.replaceChildren();
-          for (const [date, name] of Object.entries(holidays).filter(([date]) => date.startsWith(month))) {
-            const label = document.createElement('span');
-            label.textContent = `${Number(date.slice(5, 7))}/${Number(date.slice(8, 10))} ${name}`;
-            holidayList.append(label);
-          }
-          holidayList.hidden = !holidayList.children.length;
-          const year = String(info.view.currentStart.getFullYear());
-          document.getElementById('calendar-holiday-note').textContent = holidayYears.includes(year)
-            ? `祝日：内閣府の確定データ（${holidayYears[0]}〜${holidayYears.at(-1)}年）`
-            : `${year}年の祝日データは未収録です。`;
+        datesSet: () => {
           if (initialized && mode !== 'list' && !switchingMode) updateUrl();
         }
       });

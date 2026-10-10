@@ -29,7 +29,7 @@ const bootstrap = `
 `;
 async function main() {
   const { output } = buildDualSite(), requests = [];
-  const headingOldFiles=new Map(['calendar-view.js','style.css'].map(name=>[name,Buffer.from(spawnSync('git',['show','7b239f6:'+name],{cwd:root,encoding:'utf8'}).stdout)]));
+  const headingOldFiles=new Map(['index.html','calendar-view.js','style.css'].map(name=>[name,Buffer.from(spawnSync('git',['show','7b239f6:'+name],{cwd:root,encoding:'utf8'}).stdout)]));
   const server = http.createServer((req, res) => {
     const url = new URL(req.url, 'http://test'); requests.push(url.pathname);
     let file = path.resolve(output, '.' + url.pathname);
@@ -40,7 +40,7 @@ async function main() {
       file = path.join(file, 'index.html');
     }
     let data = fs.readFileSync(file);
-    if(req.headers.referer && new URL(req.headers.referer).searchParams.has('headingBaseline') && headingOldFiles.has(path.basename(file))) data=headingOldFiles.get(path.basename(file));
+    if((url.searchParams.has('headingBaseline') || req.headers.referer && new URL(req.headers.referer).searchParams.has('headingBaseline')) && headingOldFiles.has(path.basename(file))) data=headingOldFiles.get(path.basename(file));
     if (file.endsWith('index.html')) data = Buffer.from(data.toString().replace(/<link[^>]*https:[^>]*>/g, '')
       .replace(/<script[^>]*src="https:[^>]*><\/script>/g, '').replace('<head>', '<head><script>' + bootstrap + '</script>'));
     if (file.endsWith('firebase-auth.js')) data = Buffer.from(data.toString().replace(
@@ -97,6 +97,7 @@ async function main() {
           await evaluate(`state.filters.includeEndedConferences=true;for(const key of FILTER_SET_KEYS)state.filters[key].clear();state.filters.keyword='';state.filters.registeredOnly=false;state.hiddenConferences.clear();const template=sampleEvents.find(e=>e.isConference);state.events=${JSON.stringify(dates)}.map((date,index)=>({...template,id:'heading-'+index,title:'表示確認用イベント',date,endDate:date}));renderEvents();`);
           variants[baseline?'before':'after']=await evaluate(`(() => [...document.querySelectorAll('.fc-list-day')].map(row=>{const c=row.querySelector('.fc-list-day-cushion'),d=c.querySelector('.compact-date');return {date:row.dataset.date,text:c.textContent,height:c.getBoundingClientRect().height,overflow:c.scrollWidth>c.clientWidth+1,combined:d?.textContent||null,dateFits:d?d.scrollWidth<=d.clientWidth+1:true,hasSide:!!c.querySelector('.fc-list-day-side-text'),color:getComputedStyle(d||c.querySelector('.fc-list-day-text')).color,background:getComputedStyle(c).backgroundColor,holiday:c.querySelector('.calendar-holiday-name')?.textContent||null,holidayColor:c.querySelector('.calendar-holiday-name')?getComputedStyle(c.querySelector('.calendar-holiday-name')).color:null};}))()`);
           if(!baseline) {
+            assert.ok(await evaluate('!document.getElementById("calendar-month-holidays")&&!document.getElementById("calendar-holiday-note")'),'Only per-date holiday labels remain');
             const expected=month==='2027-07'?['2027年7月2日（金）','2027年7月3日（土）','2027年7月4日（日）']:month==='2026-10'?['2026年10月12日（月・祝）']:['2027年3月19日（金）','2027年3月20日（土）','2027年3月21日（日・祝）','2027年3月22日（月・祝）'];
             assert.deepEqual(variants.after.map(r=>r.combined),expected);
             assert.ok(variants.after.every(r=>!r.overflow&&r.dateFits&&!r.hasSide));

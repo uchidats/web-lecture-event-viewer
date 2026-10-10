@@ -40,10 +40,18 @@ views and the open detail card, or close it if the event becomes hidden.
 and statutory holidays (including substitute holidays), fetched on 2026-10-10:
 https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv
 
-Dates outside this snapshot are not guessed; the calendar states when a year's
-holiday data is not available. To update, download the official Shift-JIS CSV,
+Dates outside this snapshot are not guessed and have no holiday annotations.
+There is no automatic updater; future years are not added automatically.
+Holiday names appear in day headings/cells only, without a monthly holiday list
+or source-attribution footer. To update, download the official Shift-JIS CSV,
 convert published dates to `YYYY-MM-DD`, update the map and snapshot comment,
 and run calendar tests. No external holiday API is called at runtime.
+
+Future proposal (not implemented): a separate GitHub Actions workflow periodically
+downloads the Cabinet Office official CSV, converts Shift-JIS to UTF-8 and validates
+dates, then generates `japan-holidays.js` from published entries. Create a PR only
+when the generated data differs; on download or validation failure, keep existing
+data unchanged. Do not estimate unpublished holidays or future years.
 
 Checks: `node scratch/test_calendar_view.js`, browser checks with
 `node scratch/test_calendar_view_browser.js`, and the existing dual-site/regression tests.

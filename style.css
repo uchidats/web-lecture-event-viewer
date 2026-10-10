@@ -921,7 +921,6 @@ button, input, select, textarea {
 .event-view-switch button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 #calendar-panel { min-width: 0; padding: 14px; background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-md); }
 .calendar-note { margin: 0 0 12px; font-size: 0.8rem; color: var(--text-muted); }
-#calendar-holiday-note { margin: 12px 0 0; }
 #event-calendar { --fc-border-color: #e2e8f0; --fc-button-bg-color: #0284c7; --fc-button-border-color: #0284c7; --fc-today-bg-color: #f0f9ff; }
 #event-calendar { touch-action: pan-y pinch-zoom; }
 #event-calendar .fc-toolbar-title { font-size: 1.25rem; }
@@ -936,9 +935,6 @@ button, input, select, textarea {
 #event-calendar .calendar-holiday .fc-daygrid-day-number { color: #b45353; }
 #event-calendar .fc-daygrid-day-top { flex-wrap: wrap; align-items: center; }
 .calendar-holiday-name { font-size: 0.65rem; font-weight: 400; color: #a54e4e; padding: 0 3px; overflow-wrap: anywhere; }
-.calendar-month-holidays { display: none; }
-#calendar-panel[data-view="compact"] .calendar-month-holidays { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 10px; font-size: 0.72rem; color: #a54e4e; }
-#calendar-month-holidays[hidden] { display: none !important; }
 #event-calendar .fc-list-event-title { white-space: normal; overflow-wrap: anywhere; }
 #event-calendar .fc-list-event-time { display: none; }
 #event-calendar .fc-list-event { background: transparent; color: var(--text-main); }
@@ -956,7 +952,6 @@ button, input, select, textarea {
   .event-view-switch { display: flex; }
   .event-view-switch button { flex: 1; padding: 8px 6px; font-size: 0.82rem; white-space: nowrap; }
   #calendar-panel { padding: 10px; }
-  #calendar-month-holidays[hidden] { display: none; }
   #event-calendar .fc-header-toolbar { flex-wrap: wrap; gap: 10px; }
   #event-calendar .fc-toolbar-title { font-size: 1.05rem; }
   #event-calendar .fc-list-event-title { white-space: normal; overflow-wrap: anywhere; font-size: 0.87rem; }
