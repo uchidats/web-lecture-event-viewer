@@ -16,7 +16,7 @@ async function testAll() {
   const root = path.resolve(__dirname, '..');
   const dataset = loadEvents(root);
   const events = dataset.events;
-  assert.equal(events.length, 94, 'Dataset must contain 94 events');
+  assert.equal(events.length, 95, 'Dataset must contain 95 events');
 
   console.log('--- Test Suite 1: Schedule Tiers & Focus Fields (Requirement 5 & 6) ---');
   // 1.1 < 6 months (< 180 days) -> Daily

@@ -97,7 +97,7 @@ async function main() {
       await evaluate('document.fonts.ready.then(() => true)');
       await delay(350);
       const after = await measure();
-      assert.equal(after.width, width); assert.equal(after.cards, 100);
+      assert.equal(after.width, width); assert.equal(after.cards, 101);
       assert.equal(after.maps, before.maps); assert.ok(after.badges > 0); assert.equal(after.badges, before.badges);
       assert.equal(after.pageOverflow, false, `${width}px page overflow`);
       assert.equal(after.overflow, 0, `${width}px card/value overflow`);
@@ -113,7 +113,7 @@ async function main() {
       results.push({ width, cards: after.cards, overflow: after.overflow, horizontalRows: after.stacked === 0,
         firstCardBefore: before.heights[0], firstCardAfter: after.heights[0] });
     }
-    console.log('PASS: real browser 320-1280px (8 widths); 94 events + 6 long sponsor/credit/deadline fixtures; horizontal detail rows, no overflow, compact cards, Maps and deadline badges preserved');
+    console.log('PASS: real browser 320-1280px (8 widths); 95 events + 6 long sponsor/credit/deadline fixtures; horizontal detail rows, no overflow, compact cards, Maps and deadline badges preserved');
     console.log(JSON.stringify(results));
     await call('Browser.close');
   } finally { if (socket) socket.close(); if (browser.exitCode === null) browser.kill(); }

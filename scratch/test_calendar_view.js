@@ -37,4 +37,4 @@ assert.equal(holidays['2027-03-21'], '春分の日');
 assert.equal(holidays['2027-03-22'], '休日');
 assert.equal(holidays['2027-01-11'], '成人の日');
 assert.equal(holidays['2028-03-20'], undefined, 'Unpublished holidays are not estimated');
-console.log('PASS: all 94 event ranges, four-day inclusive dates, single days, leap/year boundaries, unchanged international dates and published holidays');
+console.log('PASS: all 95 event ranges, four-day inclusive dates, single days, leap/year boundaries, unchanged international dates and published holidays');

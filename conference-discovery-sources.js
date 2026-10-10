@@ -52,13 +52,6 @@ module.exports = {
       "integrityReview": "公式は2026年第15回。カードの第38回と不一致。開催年・会場は対応するが、名称レビューが先。"
     },
     {
-      "eventId": "oph-003",
-      "indexUrls": [
-        "https://www.jasa-web.jp/event/programs"
-      ],
-      "integrityReview": "2026年は第82回弱視斜視（6月5–6日）と第51回小児眼科の別開催という前回記録。今回も第35回合同・10月30日に対応する公式ページを確認できない。レコード自体をレビュー。"
-    },
-    {
       "eventId": "oph-010",
       "indexUrls": [
         "https://www.apacrs.org/"

@@ -69,4 +69,4 @@ vm.runInContext(`
   }
   assert.equal(JSON.stringify(sampleEvents), before);
 `, context);
-console.log('PASS: US/EU summer/winter, Singapore, day rollover, per-day DST and endpoint changes, ambiguous/nonexistent times, invalid/unknown zones, domestic fallback, all 94 cards/data preserved');
+console.log('PASS: US/EU summer/winter, Singapore, day rollover, per-day DST and endpoint changes, ambiguous/nonexistent times, invalid/unknown zones, domestic fallback, all 95 cards/data preserved');

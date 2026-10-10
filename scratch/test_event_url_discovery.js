@@ -132,6 +132,7 @@ async function main() {
   const corrections=require('../reports/event-metadata-high-priority-fixes-2026-10-09.json').results;
   for (const record of audit.records) {
     const current = realEvents.find(e => e.id === record.id);
+    if(record.id==='oph-003'){assert.equal(current,undefined,'Erroneous demo joint meeting removed after official audit');continue;}
     const changes=corrections.find(r=>r.eventId===record.id)?.changes||[];
     for (const field of ['title', 'date', 'endDate', 'venue']) assert.equal(current[field], changes.find(c=>c.field===field)?.after??record[field], `${record.id}: audited ${field}`);
     if (record.status === 'needs-review') assert.equal(current.eventOfficialUrl, changes.find(c=>c.field==='eventOfficialUrl')?.after, `${record.id}: reviewed URL`);
@@ -139,7 +140,7 @@ async function main() {
   const callsAlreadySet = [];
   assert.equal((await discoverMissingEventUrls({ events: realEvents.filter(e => e.eventOfficialUrl), config,
     getPage: async () => callsAlreadySet.push('fetch') })).records.length, 0);
-  assert.equal(registry.discovery.entries.filter(e => e.integrityReview).length, 19); // ASCRS now uses corroborated fetch-failure review.
+  assert.equal(registry.discovery.entries.filter(e => e.integrityReview).length, 18); // Deleted oph-003 no longer needs an integrity hold.
 
   // Regression test: 第28回日本ロービジョン学会学術総会 2027 official URL discovery via ganki.jp organizer pattern & overview
   const gankiHomeUrl = 'https://www.ganki.jp/';

@@ -136,10 +136,10 @@ vm.runInContext(`
   for (const key of ['region', 'year', 'specialty', 'company']) state.filters[key].clear();
   state.sortBy = 'date-asc'; assert.equal(sortedIds(), dateOrder);
   state.events = originalEvents;
-  assert.equal(sampleEvents.length, 94);
-  assert.equal(new Set(sampleEvents.map(e => e.id)).size, 94);
+  assert.equal(sampleEvents.length, 95);
+  assert.equal(new Set(sampleEvents.map(e => e.id)).size, 95);
   for (const event of sampleEvents) assert.ok(createEventCardHtml(event).includes('data-id="' + event.id + '"'));
-  console.log('PASS: statuses, date boundaries, links, combined filters, unchanged order, all 94 cards');
+  console.log('PASS: statuses, date boundaries, links, combined filters, unchanged order, all 95 cards');
 `, context);
 const css = read('style.css');
 assert.ok(css.includes('@media (max-width: 480px)'));

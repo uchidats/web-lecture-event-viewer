@@ -30,7 +30,7 @@ async function main() {
   assert.equal(result.outcome, 'applied', JSON.stringify({ stopReason: result.stopReason, tests: result.tests }));
   assert.ok(result.tests.passed);
   assert.ok(result.tests.results.every(t => t.passed));
-  assert.equal(loadEvents(isolated).events.length, 94);
+  assert.equal(loadEvents(isolated).events.length, 95);
   assert.equal(fs.readFileSync(path.join(isolated, result.backup, 'events.js'), 'utf8'), isolatedBaseline);
   assert.equal(fs.readFileSync(path.join(root, 'events.js'), 'utf8'), original);
   console.log(`PASS: isolated real apply (${result.autoChanges.length} fields) + all ${result.tests.results.length} syntax/regression gates; original main dataset unchanged`);

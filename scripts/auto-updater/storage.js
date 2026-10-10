@@ -4,6 +4,7 @@ const crypto = require('node:crypto');
 const { spawnSync } = require('node:child_process');
 const { normalizeDate } = require('./extract');
 const { validRegistration } = require('./registration');
+const { auditConferenceIdentities } = require('../conference-identity');
 
 function loadEvents(root) {
   const file = path.join(root, 'events.js');
@@ -31,6 +32,8 @@ function validateEvents(events, baseline) {
     if (e.date && e.endDate && e.endDate < e.date) throw new Error('Invalid event date order');
   }
   for (const e of events) if (e.parentConferenceId && !events.some(p => p.id === e.parentConferenceId && p.isConference)) throw new Error('Invalid parentConferenceId');
+  const identityIssues = auditConferenceIdentities(events);
+  if (identityIssues.length) throw new Error(`Conference identity conflict: ${JSON.stringify(identityIssues)}`);
   if (baseline && (events.length !== baseline.length || events.some((e, i) => e.id !== baseline[i].id))) throw new Error('Records/IDs/order must not change');
 }
 
@@ -82,7 +85,9 @@ const checks = [
   ['scratch/test_google_url_discovery.js'],
   ['scratch/test_gemini_discovery_grounding.js'],
   ['scratch/test_gemini_year_evidence.js'],
-  ['scratch/test_calendar_view.js']
+  ['scratch/test_calendar_view.js'],
+  ['scratch/test_pediatric_2026_identity.js'],
+  ['scratch/test_monitor_zero_update_delivery.js']
 ];
 function runChecks(root) {
   const results = [];

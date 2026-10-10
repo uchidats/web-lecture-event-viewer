@@ -21,12 +21,13 @@ async function main() {
   const conferences = events.filter(e => e.isConference);
   const approved = audit.records.filter(record => record.proposedEventOfficialUrl);
   assert.equal(approved.length, 31);
-  assert.equal(conferences.filter(e => e.eventOfficialUrl).length, 44);
+  assert.equal(conferences.filter(e => e.eventOfficialUrl).length, 46);
   assert.equal(additions.length, 5);
   for (const record of additions) assert.equal(events.find(e => e.id === record.id).eventOfficialUrl, record.proposedEventOfficialUrl);
-  assert.equal(conferences.filter(e => e.societyUrl).length, 13);
+  assert.equal(conferences.filter(e => e.societyUrl).length, 15);
   for (const record of audit.records) {
     const event = events.find(e => e.id === record.id);
+    if(record.id==='oph-003'){assert.equal(event,undefined,'Erroneous historical demo record removed');continue;}
     const correction=corrections.find(r=>r.eventId===event.id);
     const expected=(field,old)=>correction?.changes.find(c=>c.field===field)?.after??old;
     assert.equal(event.officialUrl || null, expected('officialUrl',record.currentOfficialUrl)||null, `${event.id}: legacy URL`);
@@ -165,6 +166,6 @@ async function main() {
   assert.ok(persisted.items.some(item => item.field === 'eventOfficialUrl' && item.reason === 'multiple-candidates' && item.value === moved.value && item.oldValue === event.eventOfficialUrl));
   assert.equal(fs.readFileSync(path.join(isolated, 'events.js'), 'utf8'), original);
   assert.equal(fs.readFileSync(path.join(root, 'events.js'), 'utf8'), original);
-  console.log('PASS: 44 event URLs including reviewed high-priority fixes / 13 society URLs, held titles unlinked, no fallback, year/edition/multiple reviews and role isolation');
+  console.log('PASS: 46 event URLs including official 2026 additions / 15 society URLs, held titles unlinked, no fallback, year/edition/multiple reviews and role isolation');
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

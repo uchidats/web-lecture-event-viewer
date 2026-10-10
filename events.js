@@ -695,66 +695,97 @@ const sampleEvents = [
     "isConference": true
   },
   {
-    "id": "oph-003",
-    "title": "第35回 日本小児眼科学会・日本弱視斜視学会 合同学会",
-    "subtitle": "視覚発達の臨界期を見据えた早期診断と最新の視能矯正アプローチ",
-    "date": "2026-10-30",
-    "endDate": "2026-11-02",
-    "time": "09:00 - 17:30 (全日程)",
-    "region": "関東",
-    "venue": "パシフィコ横浜 会議センター（神奈川県横浜市）",
+    "id": "conf-jp-pediatric-2026",
+    "title": "第51回 日本小児眼科学会総会",
+    "subtitle": "ミライのミエルのために",
+    "date": "2026-07-24",
+    "endDate": "2026-07-25",
+    "time": "全日程",
+    "region": "九州・沖縄",
+    "venue": "熊本城ホール",
     "specialty": "小児・斜視弱視",
     "eventType": "国内学会",
-    "format": "ハイブリッド",
-    "sponsor": "日本小児眼科学会 / 日本弱視斜視学会",
-    "credits": "日本眼科学会生涯教育 6単位",
-    "creditUnits": 6,
+    "format": "現地",
+    "sponsor": "日本小児眼科学会",
+    "credits": "",
     "conferenceRegion": "domestic",
     "conferenceCategory": "小児斜視",
     "conferenceTier": "subspecialty",
-    "period": "2026年10月30日(金) 〜 11月2日(月)",
-    "cityCountry": "横浜市（神奈川県） / 日本",
-    "abstractDeadline": "締切済",
-    "earlyBirdDeadline": "2026年9月15日(火) 締切済",
-    "officialUrl": "https://example.com/jasp-jsas-2026",
-    "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+    "period": "2026年7月24日(金) 〜 7月25日(土)",
+    "cityCountry": "熊本市（熊本県） / 日本",
+    "abstractDeadline": "",
+    "earlyBirdDeadline": "",
+    "officialUrl": "",
+    "eventOfficialUrl": "https://www.congre.co.jp/japo2026/",
+    "societyUrl": "https://www.japo-web.jp/",
+    "sourceUrl": "https://www.congre.co.jp/japo2026/html/outline/",
     "note": "",
     "abstractSubmission": {
       "status": "closed",
-      "startDate": "2026-05-01",
-      "deadline": "2026-06-30 17:00",
-      "url": "https://example.com/jasp-jsas-2026/abstract"
+      "startDate": null,
+      "deadline": null,
+      "url": null
     },
     "calendarStatus": {
       "google": {
-        "status": "busy",
-        "conflicts": [
-          {
-            "start": "14:00",
-            "end": "17:00",
-            "title": "休日当番医"
-          }
-        ]
+        "status": "free",
+        "conflicts": []
       },
       "icloud": {
-        "status": "partial",
-        "conflicts": [
-          {
-            "start": "16:00",
-            "end": "18:00",
-            "title": "家族送迎"
-          }
-        ]
+        "status": "free",
+        "conflicts": []
       },
       "isAdded": false
     },
-    "tags": [
-      "合同学会",
-      "弱視斜視",
-      "視能矯正",
-      "月またぎ会期"
-    ],
-    "description": "2学会合同で開催される年次学術集会。乳幼児屈折異常スクリーニングと斜視手術を網羅。",
+    "tags": [],
+    "description": "第2回アジア太平洋小児網膜学会（APPREA）会議と同時開催。日本弱視斜視学会総会との合同開催ではありません。",
+    "isConference": true
+  },
+  {
+    "id": "conf-jp-strabismus-2026",
+    "title": "第82回 日本弱視斜視学会総会",
+    "subtitle": "KEEP GROWING, TOGETHER",
+    "date": "2026-06-05",
+    "endDate": "2026-06-06",
+    "time": "全日程",
+    "region": "中部",
+    "venue": "Niterra日本特殊陶業市民会館 フォレストホール",
+    "specialty": "小児・斜視弱視",
+    "eventType": "国内学会",
+    "format": "現地",
+    "sponsor": "日本弱視斜視学会",
+    "credits": "",
+    "conferenceRegion": "domestic",
+    "conferenceCategory": "小児斜視",
+    "conferenceTier": "subspecialty",
+    "period": "2026年6月5日(金) 〜 6月6日(土)",
+    "cityCountry": "名古屋市（愛知県） / 日本",
+    "abstractDeadline": "",
+    "earlyBirdDeadline": "",
+    "officialUrl": "",
+    "eventOfficialUrl": "https://convention.jtbcom.co.jp/jasa2026/",
+    "societyUrl": "https://www.jasa-web.jp/",
+    "sourceUrl": "https://convention.jtbcom.co.jp/jasa2026/summary/index.html",
+    "note": "",
+    "abstractSubmission": {
+      "status": "closed",
+      "startDate": null,
+      "deadline": null,
+      "url": null
+    },
+    "calendarStatus": {
+      "google": {
+        "status": "free",
+        "conflicts": []
+      },
+      "icloud": {
+        "status": "free",
+        "conflicts": []
+      },
+      "isAdded": false
+    },
+    "tags": [],
+    "description": "第82回日本弱視斜視学会総会。2026年は日本小児眼科学会総会とは別日程・別会場で開催。",
     "isConference": true
   },
   {
