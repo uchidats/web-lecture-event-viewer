@@ -931,6 +931,7 @@ button, input, select, textarea {
 #event-calendar .fc-day-sun .fc-col-header-cell-cushion,
 #event-calendar .fc-day-sun .fc-daygrid-day-number,
 #event-calendar .calendar-holiday .fc-daygrid-day-number { color: #b45353; }
+#event-calendar .fc-day-sat .fc-col-header-cell-cushion,
 #event-calendar .fc-day-sat .fc-daygrid-day-number { color: #0284c7; }
 #event-calendar .calendar-holiday .fc-daygrid-day-number { color: #b45353; }
 #event-calendar .fc-daygrid-day-top { flex-wrap: wrap; align-items: center; }
@@ -954,6 +955,7 @@ button, input, select, textarea {
   #calendar-panel { padding: 10px; }
   #event-calendar .fc-header-toolbar { flex-wrap: wrap; gap: 10px; }
   #event-calendar .fc-toolbar-title { font-size: 1.05rem; }
+  #event-calendar .fc-daygrid-day .calendar-holiday-name { display: none; }
   #event-calendar .fc-list-event-title { white-space: normal; overflow-wrap: anywhere; font-size: 0.87rem; }
   #calendar-event-detail { padding: 10px; }
   #calendar-event-dialog .dialog-header { padding: 12px; }

@@ -162,8 +162,8 @@ async function main() {
         }
         if (displayMode === 'calendar') {
           assert.equal(await evaluate('document.querySelectorAll(".fc-col-header-cell").length'), 7);
-          assert.ok(await evaluate('document.querySelector(".fc-col-header-cell").textContent.includes("日")'));
-          assert.equal(await evaluate('document.querySelectorAll(\'.fc-event[data-event-id="calendar-four-day"]\').length'), 2, 'Four days render as two connected weekly segments');
+          assert.ok(await evaluate('document.querySelector(".fc-col-header-cell").textContent.includes("月")'), 'First column is Monday');
+          assert.equal(await evaluate('document.querySelectorAll(\'.fc-event[data-event-id="calendar-four-day"]\').length'), 1, 'Thursday-Sunday renders as a continuous weekend segment in Monday-first grid');
         }
         if (width <= 768 && route === '/') {
           await gesture(-140, 8);

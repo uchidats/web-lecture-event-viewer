@@ -113,10 +113,36 @@
       const name = holidayName(info.date);
       if (!name) return;
       info.el.classList.add('calendar-holiday');
-      const label = document.createElement('small');
-      label.className = 'calendar-holiday-name';
-      label.textContent = name;
-      (info.el.querySelector(selector) || info.el).append(label);
+      const container = info.el.querySelector(selector) || info.el;
+      if (!container.querySelector('.calendar-holiday-name')) {
+        const label = document.createElement('small');
+        label.className = 'calendar-holiday-name';
+        label.textContent = name;
+        container.append(label);
+      }
+    }
+    function syncGridHolidays() {
+      if (mode !== 'calendar') return;
+      calendarElement.querySelectorAll('.fc-daygrid-day').forEach(cell => {
+        const dateStr = cell.getAttribute('data-date');
+        const name = dateStr ? holidays[dateStr] : null;
+        const top = cell.querySelector('.fc-daygrid-day-top') || cell;
+        const existing = top.querySelector('.calendar-holiday-name');
+        if (name) {
+          cell.classList.add('calendar-holiday');
+          if (existing) {
+            if (existing.textContent !== name) existing.textContent = name;
+          } else {
+            const label = document.createElement('small');
+            label.className = 'calendar-holiday-name';
+            label.textContent = name;
+            top.append(label);
+          }
+        } else {
+          cell.classList.remove('calendar-holiday');
+          if (existing) existing.remove();
+        }
+      });
     }
     function ensureCalendar() {
       if (calendar) return true;
@@ -131,7 +157,7 @@
       const selectedYears = dependencies.getSelectedYears();
       const initialDate = urlMonth() || (selectedYears.length === 1 ? filtered.find(e => e.date.startsWith(selectedYears[0]))?.date || `${selectedYears[0]}-01-01` : dependencies.getToday());
       calendar = new window.FullCalendar.Calendar(document.getElementById('event-calendar'), {
-        locale: 'ja', firstDay: 0, initialView: mode === 'compact' ? 'listMonth' : 'dayGridMonth',
+        locale: 'ja', firstDay: 1, initialView: mode === 'compact' ? 'listMonth' : 'dayGridMonth',
         initialDate, now: dependencies.getToday(), height: 'auto', fixedWeekCount: false,
         headerToolbar: { left: 'prev,today,next', center: 'title', right: '' },
         buttonIcons: false, buttonText: { today: '今月', prev: '前月', next: '翌月' },
@@ -167,8 +193,10 @@
         events: (_info, success) => success(filtered.map(toCalendarEvent)),
         eventClick: info => { info.jsEvent.preventDefault(); openDetail(info.event.id); },
         eventDidMount: info => { info.el.title = info.event.title; info.el.dataset.eventId = info.event.id; },
+        dayCellClassNames: info => (holidayName(info.date) ? ['calendar-holiday'] : []),
         dayCellDidMount: info => mountHoliday(info, '.fc-daygrid-day-top'),
         datesSet: () => {
+          syncGridHolidays();
           if (initialized && mode !== 'list' && !switchingMode) updateUrl();
         }
       });
