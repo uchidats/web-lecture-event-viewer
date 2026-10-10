@@ -1,0 +1,450 @@
+[
+  {
+    "width": 320,
+    "view": "calendar",
+    "normal": {
+      "overflow": false,
+      "toolbar": {
+        "x": 23,
+        "y": 52,
+        "width": 274
+      },
+      "buttons": [
+        {
+          "name": "prev",
+          "x": 23,
+          "y": 58,
+          "width": 37.046875,
+          "height": 36,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "前月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "today",
+          "x": 59.046875,
+          "y": 58,
+          "width": 37.046875,
+          "height": 36,
+          "background": "rgb(2, 132, 199)",
+          "color": "rgb(255, 255, 255)",
+          "border": "rgb(2, 132, 199)",
+          "text": "今月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "next",
+          "x": 95.09375,
+          "y": 58,
+          "width": 37.046875,
+          "height": 36,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "翌月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        }
+      ]
+    }
+  },
+  {
+    "width": 320,
+    "view": "compact",
+    "normal": {
+      "overflow": false,
+      "toolbar": {
+        "x": 23,
+        "y": 52,
+        "width": 274
+      },
+      "buttons": [
+        {
+          "name": "prev",
+          "x": 23,
+          "y": 58,
+          "width": 37.046875,
+          "height": 36,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "前月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "today",
+          "x": 59.046875,
+          "y": 58,
+          "width": 37.046875,
+          "height": 36,
+          "background": "rgb(2, 132, 199)",
+          "color": "rgb(255, 255, 255)",
+          "border": "rgb(2, 132, 199)",
+          "text": "今月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "next",
+          "x": 95.09375,
+          "y": 58,
+          "width": 37.046875,
+          "height": 36,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "翌月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "view": "calendar",
+    "normal": {
+      "overflow": false,
+      "toolbar": {
+        "x": 23,
+        "y": 191.96875,
+        "width": 344
+      },
+      "buttons": [
+        {
+          "name": "prev",
+          "x": 23,
+          "y": 197.96875,
+          "width": 37.046875,
+          "height": 36,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "前月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "today",
+          "x": 59.046875,
+          "y": 197.96875,
+          "width": 37.046875,
+          "height": 36,
+          "background": "rgb(2, 132, 199)",
+          "color": "rgb(255, 255, 255)",
+          "border": "rgb(2, 132, 199)",
+          "text": "今月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "next",
+          "x": 95.09375,
+          "y": 197.96875,
+          "width": 37.046875,
+          "height": 36,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "翌月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "view": "compact",
+    "normal": {
+      "overflow": false,
+      "toolbar": {
+        "x": 23,
+        "y": 52,
+        "width": 344
+      },
+      "buttons": [
+        {
+          "name": "prev",
+          "x": 23,
+          "y": 58,
+          "width": 37.046875,
+          "height": 36,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "前月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "today",
+          "x": 59.046875,
+          "y": 58,
+          "width": 37.046875,
+          "height": 36,
+          "background": "rgb(2, 132, 199)",
+          "color": "rgb(255, 255, 255)",
+          "border": "rgb(2, 132, 199)",
+          "text": "今月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "next",
+          "x": 95.09375,
+          "y": 58,
+          "width": 37.046875,
+          "height": 36,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "翌月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        }
+      ]
+    }
+  },
+  {
+    "width": 768,
+    "view": "calendar",
+    "normal": {
+      "overflow": false,
+      "toolbar": {
+        "x": 27,
+        "y": 419.234375,
+        "width": 699
+      },
+      "buttons": [
+        {
+          "name": "prev",
+          "x": 27,
+          "y": 419.234375,
+          "width": 44.234375,
+          "height": 31.40625,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "前月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "today",
+          "x": 70.234375,
+          "y": 419.234375,
+          "width": 44.234375,
+          "height": 31.40625,
+          "background": "rgb(2, 132, 199)",
+          "color": "rgb(255, 255, 255)",
+          "border": "rgb(2, 132, 199)",
+          "text": "今月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "next",
+          "x": 113.46875,
+          "y": 419.234375,
+          "width": 44.234375,
+          "height": 31.40625,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "翌月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        }
+      ]
+    }
+  },
+  {
+    "width": 768,
+    "view": "compact",
+    "normal": {
+      "overflow": false,
+      "toolbar": {
+        "x": 27,
+        "y": 419.234375,
+        "width": 699
+      },
+      "buttons": [
+        {
+          "name": "prev",
+          "x": 27,
+          "y": 419.234375,
+          "width": 44.234375,
+          "height": 31.40625,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "前月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "today",
+          "x": 70.234375,
+          "y": 419.234375,
+          "width": 44.234375,
+          "height": 31.40625,
+          "background": "rgb(2, 132, 199)",
+          "color": "rgb(255, 255, 255)",
+          "border": "rgb(2, 132, 199)",
+          "text": "今月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "next",
+          "x": 113.46875,
+          "y": 419.234375,
+          "width": 44.234375,
+          "height": 31.40625,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "翌月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        }
+      ]
+    }
+  },
+  {
+    "width": 1280,
+    "view": "calendar",
+    "normal": {
+      "overflow": false,
+      "toolbar": {
+        "x": 387,
+        "y": 369.125,
+        "width": 839
+      },
+      "buttons": [
+        {
+          "name": "prev",
+          "x": 387,
+          "y": 369.125,
+          "width": 44.234375,
+          "height": 31.40625,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "前月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "today",
+          "x": 430.234375,
+          "y": 369.125,
+          "width": 44.234375,
+          "height": 31.40625,
+          "background": "rgb(2, 132, 199)",
+          "color": "rgb(255, 255, 255)",
+          "border": "rgb(2, 132, 199)",
+          "text": "今月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "next",
+          "x": 473.46875,
+          "y": 369.125,
+          "width": 44.234375,
+          "height": 31.40625,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "翌月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        }
+      ]
+    }
+  },
+  {
+    "width": 1280,
+    "view": "compact",
+    "normal": {
+      "overflow": false,
+      "toolbar": {
+        "x": 387,
+        "y": 369.125,
+        "width": 839
+      },
+      "buttons": [
+        {
+          "name": "prev",
+          "x": 387,
+          "y": 369.125,
+          "width": 44.234375,
+          "height": 31.40625,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "前月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "today",
+          "x": 430.234375,
+          "y": 369.125,
+          "width": 44.234375,
+          "height": 31.40625,
+          "background": "rgb(2, 132, 199)",
+          "color": "rgb(255, 255, 255)",
+          "border": "rgb(2, 132, 199)",
+          "text": "今月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        },
+        {
+          "name": "next",
+          "x": 473.46875,
+          "y": 369.125,
+          "width": 44.234375,
+          "height": 31.40625,
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(2, 132, 199)",
+          "border": "rgb(2, 132, 199)",
+          "text": "翌月",
+          "outline": "none",
+          "opacity": "1",
+          "overflow": false
+        }
+      ]
+    }
+  }
+]

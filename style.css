@@ -925,6 +925,31 @@ button, input, select, textarea {
 #event-calendar { touch-action: pan-y pinch-zoom; }
 #event-calendar .fc-toolbar-title { font-size: 1.25rem; }
 #event-calendar .fc-button { font-size: 0.8rem; }
+/* Keep the connected month controls distinct in both calendar presentations. */
+#event-calendar .fc-prev-button,
+#event-calendar .fc-next-button {
+  background: #fff;
+  color: #0284c7;
+  border-color: #0284c7;
+}
+#event-calendar .fc-today-button {
+  background: #0284c7;
+  color: #fff;
+  border-color: #0284c7;
+}
+#event-calendar .fc-today-button:disabled { opacity: 1; cursor: default; }
+#event-calendar .fc-prev-button:hover,
+#event-calendar .fc-next-button:hover { background: #f0f9ff; color: #0369a1; border-color: #0284c7; }
+#event-calendar .fc-prev-button:active,
+#event-calendar .fc-next-button:active { background: #e0f2fe; color: #075985; border-color: #0284c7; }
+#event-calendar .fc-today-button:not(:disabled):hover { background: #0369a1; border-color: #0284c7; }
+#event-calendar .fc-today-button:not(:disabled):active { background: #075985; border-color: #0284c7; }
+#event-calendar .fc-header-toolbar .fc-button:focus { box-shadow: none; }
+#event-calendar .fc-header-toolbar .fc-button:focus-visible {
+  outline: 2px solid #075985;
+  outline-offset: 2px;
+  z-index: 2;
+}
 #event-calendar .fc-event { cursor: pointer; font-size: 0.75rem; }
 #event-calendar .calendar-domestic { background-color: #0284c7; border-color: #0284c7; }
 #event-calendar .calendar-international { background-color: #5865b5; border-color: #5865b5; }
