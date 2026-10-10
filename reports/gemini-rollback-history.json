@@ -1,7 +1,120 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:30:07.686Z",
+  "updatedAt": "2026-10-10T00:49:38.927Z",
   "snapshots": [
+    {
+      "id": "rb-conf-jp-lowvision-2027-2026-10-10T00-49-34-672Z",
+      "eventId": "conf-jp-lowvision-2027",
+      "eventName": "第28回 日本ロービジョン学会学術総会",
+      "timestamp": "2026-10-10T00:49:34.672Z",
+      "status": "detected",
+      "beforeValues": {
+        "eventOfficialUrl": ""
+      },
+      "afterValues": {
+        "eventOfficialUrl": "https://www.ganki.jp/lowvision2027/information.html"
+      },
+      "fieldChanges": [
+        {
+          "field": "eventOfficialUrl",
+          "before": "",
+          "after": "https://www.ganki.jp/lowvision2027/information.html"
+        }
+      ],
+      "evidence": {
+        "url": "https://www.ganki.jp/lowvision2027/information.html",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.95,
+        "reason": "Verified official conference page for 2027 on official domain."
+      }
+    },
+    {
+      "id": "rb-conf-jp-lowvision-2027-2026-10-10T00-49-33-359Z",
+      "eventId": "conf-jp-lowvision-2027",
+      "eventName": "第28回 日本ロービジョン学会学術総会",
+      "timestamp": "2026-10-10T00:49:33.359Z",
+      "status": "detected",
+      "beforeValues": {
+        "eventOfficialUrl": ""
+      },
+      "afterValues": {
+        "eventOfficialUrl": "https://www.ganki.jp/lowvision2027/information.html"
+      },
+      "fieldChanges": [
+        {
+          "field": "eventOfficialUrl",
+          "before": "",
+          "after": "https://www.ganki.jp/lowvision2027/information.html"
+        }
+      ],
+      "evidence": {
+        "url": "https://www.ganki.jp/lowvision2027/information.html",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.95,
+        "reason": "Verified official conference page for 2027 on official domain."
+      }
+    },
+    {
+      "id": "rb-conf-jp-lowvision-2027-2026-10-10T00-49-32-171Z",
+      "eventId": "conf-jp-lowvision-2027",
+      "eventName": "第28回 日本ロービジョン学会学術総会",
+      "timestamp": "2026-10-10T00:49:32.171Z",
+      "status": "detected",
+      "beforeValues": {
+        "venue": "大阪国際会議場（グランキューブ大阪）",
+        "title": "第28回 日本ロービジョン学会学術総会"
+      },
+      "afterValues": {
+        "venue": "大阪国際会議場",
+        "title": "第28回日本ロービジョン学会学術総会"
+      },
+      "fieldChanges": [
+        {
+          "field": "venue",
+          "before": "大阪国際会議場（グランキューブ大阪）",
+          "after": "大阪国際会議場",
+          "severity": "medium"
+        },
+        {
+          "field": "title",
+          "before": "第28回 日本ロービジョン学会学術総会",
+          "after": "第28回日本ロービジョン学会学術総会",
+          "severity": "low"
+        }
+      ],
+      "evidence": {
+        "url": "https://www.ganki.jp/lowvision2027/information.html",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.97,
+        "reason": "Official event page explicitly matches year and contains confirmed schedule/venue."
+      }
+    },
+    {
+      "id": "rb-conf-jp-lowvision-2027-2026-10-10T00-49-31-564Z",
+      "eventId": "conf-jp-lowvision-2027",
+      "eventName": "第28回 日本ロービジョン学会学術総会",
+      "timestamp": "2026-10-10T00:49:31.564Z",
+      "status": "detected",
+      "beforeValues": {
+        "eventOfficialUrl": ""
+      },
+      "afterValues": {
+        "eventOfficialUrl": "https://www.ganki.jp/lowvision2027/information.html"
+      },
+      "fieldChanges": [
+        {
+          "field": "eventOfficialUrl",
+          "before": "",
+          "after": "https://www.ganki.jp/lowvision2027/information.html"
+        }
+      ],
+      "evidence": {
+        "url": "https://www.ganki.jp/lowvision2027/information.html",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.95,
+        "reason": "Verified official conference page for 2027 on official domain."
+      }
+    },
     {
       "id": "rb-conf-jp-lowvision-2027-2026-10-09T08-30-07-680Z",
       "eventId": "conf-jp-lowvision-2027",

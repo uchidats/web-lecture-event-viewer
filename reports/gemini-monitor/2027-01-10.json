@@ -1,11 +1,11 @@
 {
   "date": "2027-01-10",
-  "generatedAt": "2026-10-09T08:28:44.857Z",
+  "generatedAt": "2026-10-10T00:49:34.665Z",
   "mode": "shadow_simulation",
   "isApplyMode": false,
   "description": "Gemini 3.8 Flash Daily Conference Monitor Report (Shadow / Simulation Mode)",
   "metrics": {
-    "totalEvents": 94,
+    "totalEvents": 95,
     "monitoredToday": 1,
     "skippedNotDue": 0,
     "skippedEnded": 0,
