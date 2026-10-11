@@ -21,6 +21,7 @@ const { discoverOfficialUrlWithGoogle, getDiscoveryWindowStatus } = require('./g
  * @param {string} [options.root] - Repository root directory
  * @param {string} [options.today] - Override execution date YYYY-MM-DD
  * @param {boolean} [options.apply=false] - If true, applies high-confidence changes and acknowledged items to events.js
+ * @param {boolean} [options.notify=false] - Only explicit true permits notification, independently of offline/apply
  * @param {boolean} [options.dryRun=true] - Defaults to true for staged simulation
  * @param {Function} [options.getPage] - Custom HTTP fetcher (for testing)
  * @param {Function} [options.mockAnalyzer] - Custom mock semantic analyzer (for testing)
@@ -442,8 +443,10 @@ async function runGeminiMonitor(options = {}) {
 
   // 13. Send daily morning email notification (Requirement 21)
   let notification = null;
-  if (!options.skipEmail) {
+  if (options.notify === true && !options.skipEmail) {
     notification = await sendDailyMonitorNotification(dailyReport, {
+      notify: true,
+      sendEmail: options.sendEmail,
       smtpUser: options.smtpUser,
       smtpPass: options.smtpPass,
       to: options.notificationEmail

@@ -73,7 +73,7 @@ const checks = [
     'scripts/gemini-monitor/extractor.js', 'scripts/gemini-monitor/gemini-analyzer.js', 'scripts/gemini-monitor/classifier.js',
     'scripts/gemini-monitor/rollback-manager.js', 'scripts/gemini-monitor/notifier.js', 'scripts/gemini-monitor/firestore-client.js',
     'scripts/gemini-monitor/applier.js', 'scripts/gemini-monitor/monitor.js', 'scripts/run-gemini-monitor.js',
-    'scripts/gemini-monitor/google-url-discoverer.js'].map(file => ['--check', file]),
+    'scripts/gemini-monitor/google-url-discoverer.js', 'scripts/send-gemini-monitor-notification.js'].map(file => ['--check', file]),
   ['scratch/test_ended_conferences.js'], ['scratch/test_conference_history.js'],
   ['scratch/test_venue_master.js'], ['scratch/test_comprehensive_regression.js'],
   ['scratch/test_abstract_submission.js'], ['scratch/test_auto_updater.js'],
@@ -87,7 +87,8 @@ const checks = [
   ['scratch/test_gemini_year_evidence.js'],
   ['scratch/test_calendar_view.js'],
   ['scratch/test_pediatric_2026_identity.js'],
-  ['scratch/test_monitor_zero_update_delivery.js']
+  ['scratch/test_monitor_zero_update_delivery.js'],
+  ['scratch/test_gemini_notification_policy.js']
 ];
 function runChecks(root) {
   const results = [];

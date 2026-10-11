@@ -72,7 +72,7 @@ async function main() {
   const oldApply = process.env.ENABLE_AUTO_APPLY;
   try {
     process.env.ENABLE_AUTO_APPLY = 'false';
-    const result = await runGeminiMonitor({ root: shadowRoot, today: '2026-10-09', singleEventId: event.id, offline: true, skipEmail: true,
+    const result = await runGeminiMonitor({ notify: false, root: shadowRoot, today: '2026-10-09', singleEventId: event.id, offline: true, skipEmail: true,
       searchProvider: async () => [{ rank: 1, url, title: '第28回 日本ロービジョン学会学術総会 2027' }],
       getPage: async () => ({ status: 200, html: '<html><h1>第28回 日本ロービジョン学会学術総会 2027</h1></html>' }) });
     assert.equal(result.report.mode, 'shadow_simulation');

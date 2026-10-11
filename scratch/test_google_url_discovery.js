@@ -10,6 +10,9 @@ const {
   isDomainThirdParty
 } = require('../scripts/gemini-monitor/google-url-discoverer');
 const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const { sha256, normalizeContentForHash } = require('../scripts/gemini-monitor/fetcher');
 const { loadEvents } = require('../scripts/auto-updater/storage');
 const { runGeminiMonitor } = require('../scripts/gemini-monitor/monitor');
 
@@ -17,6 +20,12 @@ async function main() {
   console.log('Starting Google Official URL Discovery Comprehensive Regression Suite...\n');
 
   const { events } = loadEvents('.');
+  const monitorRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'google-discovery-monitor-test-'));
+  fs.copyFileSync('events.js', path.join(monitorRoot, 'events.js'));
+  fs.mkdirSync(path.join(monitorRoot, 'reports'));
+  fs.writeFileSync(path.join(monitorRoot, 'reports/gemini-monitor-state.json'), JSON.stringify({ sources: {
+    'conf-jp-surgery-2026': { normalizedHash: sha256(normalizeContentForHash('<html><body>Official conference page unchanged content</body></html>')) }
+  } }));
   const lowvisionEvent = events.find(e => e.id === 'conf-jp-lowvision-2027');
   const fujiretinaEvent = events.find(e => e.id === 'conf-int-fujiretina-2028');
   const ascrsEvent = events.find(e => e.id === 'conf-int-ascrs-2027');
@@ -350,7 +359,7 @@ async function main() {
     html: '<html><body>Official conference page unchanged content</body></html>'
   });
 
-  const res12 = await runGeminiMonitor({
+  const res12 = await runGeminiMonitor({ notify: false, root: monitorRoot,
     today: '2026-10-09',
     singleEventId: 'conf-jp-surgery-2026', // has eventOfficialUrl
     apply: false,
@@ -378,7 +387,8 @@ async function main() {
     }];
   };
 
-  const res13 = await runGeminiMonitor({
+  const res13 = await runGeminiMonitor({ notify: false, root: monitorRoot,
+    getPage: getPageUnchanged12,
     today: '2027-01-10', // within 180 days of lowvision 2027
     singleEventId: 'conf-jp-lowvision-2027',
     apply: false,
@@ -408,7 +418,8 @@ async function main() {
   };
 
   // Run on 2026-10-09 (225 days away > 180 days), but targeted with singleEventId
-  const res14 = await runGeminiMonitor({
+  const res14 = await runGeminiMonitor({ notify: false, root: monitorRoot,
+    getPage: getPageUnchanged12,
     today: '2026-10-09',
     singleEventId: 'conf-jp-lowvision-2027',
     apply: false,
@@ -442,7 +453,7 @@ async function main() {
     html: '<html><body>New announcements published for the conference!</body></html>'
   });
 
-  const res15 = await runGeminiMonitor({
+  const res15 = await runGeminiMonitor({ notify: false, root: monitorRoot,
     today: '2027-01-10',
     singleEventId: 'conf-jp-lowvision-2027',
     apply: false,

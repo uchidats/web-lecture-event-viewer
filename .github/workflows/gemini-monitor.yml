@@ -20,6 +20,11 @@ on:
         required: false
         type: boolean
         default: false
+      send_notification:
+        description: 'Send one summary email after this run (disabled for single_event_id)'
+        required: false
+        type: boolean
+        default: false
 
 concurrency:
   group: gemini-conference-monitor
@@ -37,9 +42,6 @@ jobs:
     env:
       TZ: Asia/Tokyo
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      SMTP_USER: ${{ secrets.SMTP_USER }}
-      SMTP_PASS: ${{ secrets.SMTP_PASS }}
-      NOTIFICATION_EMAIL: ${{ secrets.NOTIFICATION_EMAIL || 'uchidats@gmail.com' }}
       FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
     steps:
       - uses: actions/checkout@v7
@@ -79,7 +81,7 @@ jobs:
             echo "GEMINI_API_KEY secret not found or empty; running with offline deterministic validator"
             FLAGS="$FLAGS --offline"
           fi
-          node scripts/run-gemini-monitor.js $FLAGS
+          node scripts/run-gemini-monitor.js $FLAGS --report-output "$RUNNER_TEMP/gemini-monitor-${{ github.run_id }}-${{ github.run_attempt }}.json"
 
       - name: Safety check before commit
         if: success()
@@ -122,3 +124,15 @@ jobs:
             reports/gemini-rollback-history.json
           retention-days: 30
           if-no-files-found: warn
+
+      - name: Send one final monitoring summary
+        if: ${{ always() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.send_notification == true && inputs.single_event_id == '')) }}
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          NOTIFICATION_EMAIL: ${{ secrets.NOTIFICATION_EMAIL || 'uchidats@gmail.com' }}
+          SEND_NOTIFICATION: ${{ inputs.send_notification }}
+          SINGLE_EVENT_ID: ${{ inputs.single_event_id }}
+          MONITOR_REPORT_PATH: ${{ runner.temp }}/gemini-monitor-${{ github.run_id }}-${{ github.run_attempt }}.json
+          WORKFLOW_STATUS: ${{ job.status }}
+        run: node scripts/send-gemini-monitor-notification.js

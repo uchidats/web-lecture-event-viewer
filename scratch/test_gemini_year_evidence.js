@@ -78,7 +78,7 @@ async function main() {
   try {
     process.env.ENABLE_AUTO_APPLY = 'false';
     let handedOff = false;
-    const run = await runGeminiMonitor({ root, today: '2026-10-09', singleEventId: event.id, offline: true, skipEmail: true,
+    const run = await runGeminiMonitor({ notify: false, root, today: '2026-10-09', singleEventId: event.id, offline: true, skipEmail: true,
       searchProvider: async () => [{ rank: 1, url, title: '第28回日本ロービジョン学会学術総会 2027' }],
       getPage: async () => ({ html: html(null, '<p>2026-09-19 ホームページ開設</p>') }),
       mockAnalyzer: async (_event, targetUrl, context) => {

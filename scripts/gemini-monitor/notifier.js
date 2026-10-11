@@ -45,11 +45,16 @@ function composeEmail(report) {
     parts.push(`要確認${needsReviewCount}件`);
     subject = `【OphthalConf】${parts.join('／')}`;
   }
+  if (report.monitorIncomplete) subject = '【OphthalConf】監視処理が完了していません';
+  else if (report.workflowStatus && report.workflowStatus !== 'success') subject = `【OphthalConf】実行結果 ${report.workflowStatus}／${subject.replace('【OphthalConf】', '')}`;
 
   // 2. Email Body (Requirement 21)
   const lines = [];
   lines.push('OphthalConf 学会情報監視');
   lines.push(formattedDate);
+  if (report.workflowStatus) lines.push(`実行結果：${report.workflowStatus}`);
+  if (report.monitorIncomplete) lines.push('監視処理が完了していません。更新結果は未集計です。');
+  if (report.runUrl) lines.push(`実行記録：${report.runUrl}`);
   lines.push('');
   lines.push(`高信頼自動更新：${autoAppliedCount}件`);
   lines.push(`管理者確認済み反映：${adminAppliedCount}件`);
@@ -199,6 +204,7 @@ function sendSmtpEmail({ host = 'smtp.gmail.com', port = 465, user, pass, to, su
  * Safe fallback to dry-run when credentials missing.
  */
 async function sendDailyMonitorNotification(report, options = {}) {
+  if (options.notify !== true) return { sent: false, reason: 'notification_disabled' };
   const { subject, body } = composeEmail(report);
 
   const smtpUser = options.smtpUser || process.env.SMTP_USER;
@@ -222,7 +228,7 @@ async function sendDailyMonitorNotification(report, options = {}) {
   }
 
   try {
-    const result = await sendSmtpEmail({
+    const result = await (options.sendEmail || sendSmtpEmail)({
       user: smtpUser,
       pass: smtpPass,
       to: targetEmail,

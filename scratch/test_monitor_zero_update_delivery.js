@@ -11,18 +11,16 @@ async function main() {
   try {
     delete process.env.SMTP_USER;delete process.env.SMTP_PASS;process.env.ENABLE_AUTO_APPLY='false';
     delete process.env.CLOUD_ACCESS_TOKEN;delete process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-    const result = await runGeminiMonitor({root,today:'2040-01-01',offline:true});
+    const result = await runGeminiMonitor({root,today:'2040-01-01',offline:true,notify:false});
     assert.equal(result.metrics.monitoredToday,0);
     assert.equal(result.metrics.wouldAutoUpdate,0);
-    assert.ok(result.notification,'Even zero selected events must reach the notification dispatcher');
-    assert.equal(result.notification.subject,'【OphthalConf】本日の更新はありません');
-    assert.equal(result.notification.reason,'smtp_credentials_missing_dry_run');
+    assert.equal(result.notification,null,'Regression execution must not dispatch email');
     assert.deepEqual(fs.readFileSync(path.join(root,'events.js')),original);
   } finally {
     for(const [name,value] of Object.entries({SMTP_USER:old.user,SMTP_PASS:old.pass,ENABLE_AUTO_APPLY:old.apply,CLOUD_ACCESS_TOKEN:old.cloudToken,FIREBASE_SERVICE_ACCOUNT_KEY:old.serviceAccount})) {
       if(value===undefined)delete process.env[name];else process.env[name]=value;
     }
   }
-  console.log('PASS: zero-update/zero-selected shadow monitor still dispatches health-check notification; no real email sent');
+  console.log('PASS: zero-update regression monitor does not dispatch email');
 }
 main().catch(error=>{console.error(error);process.exitCode=1;});

@@ -20,6 +20,8 @@ Options:
   --force-all           Force check all events ignoring schedule interval
   --event <id>          Check a specific event ID only
   --offline             Run using local deterministic analyzer (no external API calls)
+  --notify              Explicitly enable notification (default off; independent of offline/apply)
+  --report-output PATH  Write this execution's report for a later notification step
   --rollback <id> [msg] Execute rollback for a given snapshot ID
   --status              Show recent monitoring report summary
   --help                Display this help message
@@ -66,8 +68,15 @@ Options:
     forceAll,
     singleEventId,
     offline,
-    apply: applyMode
+    apply: applyMode,
+    notify: args.includes('--notify')
   });
+  const outputIndex = args.indexOf('--report-output');
+  if (outputIndex !== -1) {
+    const fs = require('node:fs');
+    if (!args[outputIndex + 1]) throw new Error('--report-output requires a path');
+    fs.writeFileSync(args[outputIndex + 1], JSON.stringify(result.report, null, 2) + '\n');
+  }
 
   console.log('\n--- Gemini Monitor Run Summary ---');
   console.log(`Report File: ${result.reportFilePath}`);
