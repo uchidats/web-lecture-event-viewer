@@ -149,11 +149,11 @@ async function main() {
         // segments in dayGrid, not four independent single-day copies.
         await evaluate(`state.events.push({...sampleEvents.find(e=>e.isConference), id:'calendar-four-day', title:'Calendar four-day fixture', date:'2027-03-18', endDate:'2027-03-21'}); renderEvents();`);
         const range = await evaluate(`(() => {const e=OphthalCalendarView.getCalendar().getEventById('calendar-four-day'); return {start:e.startStr,end:e.endStr,allDay:e.allDay};})()`);
-        assert.deepEqual(range, { start: '2027-03-18', end: '2027-03-22', allDay: true });
+        assert.deepEqual(range, displayMode === 'calendar' ? { start: '2027-03-18', end: '2027-03-22', allDay: true } : { start: '2027-03-18', end: '2027-03-19', allDay: true });
         if (displayMode === 'compact') {
           assert.ok(await evaluate('!!document.querySelector(".fc-list-day.calendar-holiday .calendar-holiday-name")'), 'List date headings mark holidays too');
-          await evaluate(`state.events.push({...sampleEvents.find(e=>e.isConference),id:'holiday-position',date:'2026-10-12',endDate:'2026-10-12'});renderEvents();OphthalCalendarView.getCalendar().gotoDate('2026-10-01')`);
-          assert.ok(await evaluate(`(() => {const group=document.querySelector('.fc-list-day.calendar-holiday .fc-list-day-cushion'),date=group.querySelector('.compact-date'),label=group.querySelector('.calendar-holiday-name');return date.textContent==='2026年10月12日（月・祝）'&&label.textContent==='スポーツの日'&&date.nextElementSibling===label&&group.scrollWidth<=group.clientWidth+1&&!group.querySelector('.fc-list-day-side-text');})()`), 'Combined date/weekday precedes holiday and fits');
+          await evaluate(`state.events.push({...sampleEvents.find(e=>e.isConference),id:'holiday-position',date:'2027-11-23',endDate:'2027-11-23'});renderEvents();OphthalCalendarView.getCalendar().gotoDate('2027-11-01')`);
+          assert.ok(await evaluate(`(() => {const group=document.querySelector('.fc-list-day[data-date="2027-11-23"].calendar-holiday .fc-list-day-cushion'),date=group?.querySelector('.compact-date'),label=group?.querySelector('.calendar-holiday-name');return date?.textContent==='2027年11月23日（火・祝）'&&label?.textContent==='勤労感謝の日'&&date?.nextElementSibling===label&&group?.scrollWidth<=group?.clientWidth+1&&!group?.querySelector('.fc-list-day-side-text');})()`), 'Combined date/weekday precedes holiday and fits');
           if (process.env.CALENDAR_SCREENSHOTS === '1') {
             const holidayScreenshot = await call('Page.captureScreenshot', {format:'png',captureBeyondViewport:false});
             fs.writeFileSync(path.join(profile, `holiday-${route==='/'?'root':'subpath'}-${width}.png`),Buffer.from(holidayScreenshot.data,'base64'));
@@ -209,7 +209,7 @@ async function main() {
         await evaluate('OphthalCalendarView.getCalendar().gotoDate("2026-10-01")');
         const international = await evaluate(`(() => {const e=state.events.find(e=>e.id==='oph-004'), c=OphthalCalendarView.getCalendar().getEventById(e.id);return {date:e.date,end:e.endDate,start:c.startStr,calendarEnd:c.endStr};})()`);
         assert.equal(international.start, international.date);
-        assert.equal(international.calendarEnd, require('../calendar-view').nextDate(international.end));
+        assert.equal(international.calendarEnd, require('../calendar-view').nextDate(displayMode === 'calendar' ? international.end : international.date));
         await evaluate('document.querySelector(".fc-next-button").click()');
         assert.equal(await evaluate('OphthalCalendarView.getCalendar().getDate().getMonth()'), 10);
         await evaluate('document.querySelector(".fc-prev-button").click()');

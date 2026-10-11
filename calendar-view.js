@@ -9,6 +9,58 @@
   function initialMode(view, smallScreen) {
     return ['list', 'calendar', 'compact'].includes(view) ? view : smallScreen ? 'compact' : 'calendar';
   }
+  function padZero(n) {
+    return String(n).padStart(2, '0');
+  }
+  function toDateString(date) {
+    return `${date.getFullYear()}-${padZero(date.getMonth() + 1)}-${padZero(date.getDate())}`;
+  }
+  function parseDateParts(dateStr, holidaySource) {
+    const [y, m, d] = dateStr.split('-').map(Number);
+    const date = new Date(y, m - 1, d);
+    const holidayName = holidaySource?.[dateStr] || '';
+    const isHoliday = Boolean(holidayName);
+    const weekday = date.getDay();
+    let colorClass = '';
+    if (isHoliday) colorClass = 'compact-date-holiday';
+    else if (weekday === 0) colorClass = 'compact-date-sunday';
+    else if (weekday === 6) colorClass = 'compact-date-saturday';
+    return { date, year: y, month: m, day: d, weekday, isHoliday, holidayName, colorClass };
+  }
+  function formatCompactHeading(startDate, endDate, holidaySource = (root.OPHTHAL_JAPAN_HOLIDAYS || {})) {
+    const sStr = typeof startDate === 'string' ? startDate : toDateString(startDate);
+    const start = parseDateParts(sStr, holidaySource);
+    const eStr = endDate ? (typeof endDate === 'string' ? endDate : toDateString(endDate)) : null;
+    const isRange = Boolean(eStr && eStr !== sStr);
+    const end = isRange ? parseDateParts(eStr, holidaySource) : null;
+    const startLabel = `${start.year}年${start.month}月${start.day}日（${'日月火水木金土'[start.weekday]}${start.isHoliday ? '・祝' : ''}）`;
+    if (!isRange) {
+      return {
+        isRange: false,
+        start,
+        end: null,
+        startLabel,
+        fullText: startLabel,
+        holidays: start.isHoliday ? [{ name: start.holidayName, position: 'start' }] : []
+      };
+    }
+    const endYearPart = end.year !== start.year ? `${end.year}年` : '';
+    const endLabel = `${endYearPart}${end.month}月${end.day}日（${'日月火水木金土'[end.weekday]}${end.isHoliday ? '・祝' : ''}）`;
+    const holidayList = [];
+    if (start.isHoliday) holidayList.push({ name: start.holidayName, position: 'start' });
+    if (end.isHoliday && (!start.isHoliday || start.holidayName !== end.holidayName)) {
+      holidayList.push({ name: end.holidayName, position: 'end' });
+    }
+    return {
+      isRange: true,
+      start,
+      end,
+      startLabel,
+      endLabel,
+      fullText: `${startLabel}〜${endLabel}`,
+      holidays: holidayList
+    };
+  }
   function formatCompactDate(date, isHoliday = false) {
     return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日（${'日月火水木金土'[date.getDay()]}${isHoliday ? '・祝' : ''}）`;
   }
@@ -21,6 +73,16 @@
       interactive: true,
       classNames: [event.conferenceRegion === 'international' ? 'calendar-international' : 'calendar-domestic'],
       extendedProps: { originalEvent: event }
+    };
+  }
+  function toCompactCalendarEvent(event) {
+    // In compact/list view, consolidate multi-day conferences onto their start date.
+    return {
+      id: event.id, title: event.title, start: event.date,
+      end: nextDate(event.date), allDay: true,
+      interactive: true,
+      classNames: [event.conferenceRegion === 'international' ? 'calendar-international' : 'calendar-domestic'],
+      extendedProps: { originalEvent: event, isCompactSingleDay: true }
     };
   }
   function createView(document, window, dependencies) {
@@ -166,31 +228,60 @@
           listMonth: {
             listDaySideFormat: false,
             dayHeaderContent: info => {
-              const name = holidayName(info.date);
-              const date = document.createElement('span');
-              date.className = 'compact-date';
-              if (name) date.classList.add('compact-date-holiday');
-              else if (info.date.getDay() === 0) date.classList.add('compact-date-sunday');
-              else if (info.date.getDay() === 6) date.classList.add('compact-date-saturday');
-              date.textContent = formatCompactDate(info.date, Boolean(name));
-              if (info.textId) date.id = info.textId;
-              const nodes = [date];
-              if (name) {
+              const dayStr = toDateString(info.date);
+              const dayEvents = filtered.filter(e => e.date === dayStr);
+              const multiDayEvent = dayEvents.find(e => e.endDate && e.endDate !== e.date);
+              const headingInfo = formatCompactHeading(info.date, multiDayEvent ? multiDayEvent.endDate : null, holidays);
+              const nodes = [];
+              if (headingInfo.isRange) {
+                const startSpan = document.createElement('span');
+                startSpan.className = 'compact-date compact-date-start';
+                if (headingInfo.start.colorClass) startSpan.classList.add(headingInfo.start.colorClass);
+                startSpan.textContent = headingInfo.startLabel;
+                if (info.textId) startSpan.id = info.textId;
+                nodes.push(startSpan);
+
+                const sepSpan = document.createElement('span');
+                sepSpan.className = 'compact-date-separator';
+                sepSpan.textContent = '〜';
+                nodes.push(sepSpan);
+
+                const endSpan = document.createElement('span');
+                endSpan.className = 'compact-date compact-date-end';
+                if (headingInfo.end.colorClass) endSpan.classList.add(headingInfo.end.colorClass);
+                endSpan.textContent = headingInfo.endLabel;
+                nodes.push(endSpan);
+              } else {
+                const dateSpan = document.createElement('span');
+                dateSpan.className = 'compact-date';
+                if (headingInfo.start.colorClass) dateSpan.classList.add(headingInfo.start.colorClass);
+                dateSpan.textContent = headingInfo.startLabel;
+                if (info.textId) dateSpan.id = info.textId;
+                nodes.push(dateSpan);
+              }
+              for (const h of headingInfo.holidays) {
                 const holiday = document.createElement('small');
                 holiday.className = 'calendar-holiday-name';
-                holiday.textContent = name;
+                holiday.textContent = h.name;
                 nodes.push(holiday);
               }
               return { domNodes: nodes };
             },
             dayHeaderDidMount: info => {
-              if (holidayName(info.date)) info.el.classList.add('calendar-holiday');
+              const dayStr = toDateString(info.date);
+              const dayEvents = filtered.filter(e => e.date === dayStr);
+              const multiDayEvent = dayEvents.find(e => e.endDate && e.endDate !== e.date);
+              const headingInfo = formatCompactHeading(info.date, multiDayEvent ? multiDayEvent.endDate : null, holidays);
+              if (headingInfo.holidays.length > 0) info.el.classList.add('calendar-holiday');
             }
           }
         },
         noEventsText: 'この月には条件に合うイベントがありません',
         editable: false, dayMaxEvents: 3, displayEventTime: false,
-        events: (_info, success) => success(filtered.map(toCalendarEvent)),
+        events: (_info, success) => {
+          const isCompact = mode === 'compact';
+          success(filtered.map(isCompact ? toCompactCalendarEvent : toCalendarEvent));
+        },
         eventClick: info => { info.jsEvent.preventDefault(); openDetail(info.event.id); },
         eventDidMount: info => { info.el.title = info.event.title; info.el.dataset.eventId = info.event.id; },
         dayCellClassNames: info => (holidayName(info.date) ? ['calendar-holiday'] : []),
@@ -206,6 +297,7 @@
     }
     function setMode(nextMode, push = true) {
       switchingMode = true;
+      const prevMode = mode;
       mode = initialMode(nextMode, smallScreen.matches);
       panel.hidden = mode === 'list'; list.hidden = mode !== 'list';
       panel.dataset.view = mode;
@@ -216,7 +308,13 @@
       if (mode !== 'list' && ensureCalendar()) {
         const targetMonth = urlMonth();
         const viewType = mode === 'compact' ? 'listMonth' : 'dayGridMonth';
-        if (calendar.view.type !== viewType) calendar.changeView(viewType);
+        const viewChanged = calendar.view.type !== viewType;
+        if (viewChanged) {
+          calendar.changeView(viewType);
+        }
+        if (prevMode !== mode) {
+          calendar.refetchEvents();
+        }
         if (!push && targetMonth) calendar.gotoDate(targetMonth);
         calendar.updateSize();
       }
@@ -252,7 +350,7 @@
       getMode: () => mode
     };
   }
-  const api = { toCalendarEvent, nextDate, initialMode, formatCompactDate };
+  const api = { toCalendarEvent, toCompactCalendarEvent, nextDate, initialMode, formatCompactDate, formatCompactHeading };
   let view;
   api.init = dependencies => { view = createView(root.document, root, dependencies); };
   api.sync = events => view?.sync(events);
