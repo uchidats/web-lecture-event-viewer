@@ -1,0 +1,10 @@
+.analytics-notice { position: fixed; z-index: 2000; bottom: 1rem; left: 1rem; right: 1rem; margin: auto; max-width: 42rem; padding: 1.2rem; background: #fff; border: 1px solid #94a3b8; border-radius: 12px; box-shadow: 0 4px 24px #0f172a30; max-height: calc(100dvh - 2rem); overflow: auto; color: #334155; }
+.analytics-notice[hidden] { display: none; }
+.analytics-notice h2 { margin: 0 0 .6rem; font-size: 1.1rem; }
+.analytics-notice p { font-size: .9rem; line-height: 1.7; margin: .5rem 0; }
+.analytics-actions { display: flex; gap: .8rem; margin-top: .8rem; }
+.analytics-actions button { min-height: 44px; flex: 1; }
+.analytics-settings { background: none; color: #334155; border: 1px solid #94a3b8; border-radius: 6px; min-height: 44px; padding: .4rem .8rem; cursor: pointer; font: inherit; }
+.analytics-settings[hidden] { display: none; }
+.analytics-choice { display: block; margin-top: .5rem; font-size: .85rem; }
+@media (max-width: 480px) { .analytics-notice { bottom: .5rem; left: .5rem; right: .5rem; padding: 1rem; } }

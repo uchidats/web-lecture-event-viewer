@@ -9,6 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="review.css">
+  <link rel="stylesheet" href="analytics.css">
+  <script src="analytics.js" defer></script>
 </head>
 <body>
   <!-- ヘッダー -->
@@ -317,7 +319,23 @@
   <!-- Beta-only notice: independent of application functionality. -->
   <footer class="beta-notice">
     <p>本サイトはβ版です。機能および掲載情報は順次確認・更新しています。参加登録、演題締切、開催日程等の重要情報については、必ず各学会の公式サイトでもご確認ください。</p>
+    <button id="analytics-settings" type="button" class="analytics-settings" hidden>アクセス解析の設定</button>
+    <span id="analytics-choice" class="analytics-choice" role="status"></span>
+    <details id="analytics-privacy">
+      <summary>プライバシーとアクセス解析</summary>
+      <p>許可した場合だけ、Google Analyticsでページ閲覧と表示切替・絞り込み・リンク・PDF・カレンダー追加・参加状態変更の操作を計測します。氏名・メールアドレス・Googleアカウント情報・検索語・学会ID・参加記録の一覧は送信しません。Google AnalyticsはCookie識別子やブラウザー・端末情報等を処理します。広告目的の情報収集は許可しません。</p>
+      <p>選択はこのブラウザーに180日保存され、設定からいつでも変更できます。許可しなくても利用できます。ログイン・Google Calendar連携はアクセス解析とは別の機能です。<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Googleのプライバシーポリシー</a></p>
+    </details>
   </footer>
+  <aside id="analytics-notice" class="analytics-notice" aria-labelledby="analytics-heading" hidden>
+    <h2 id="analytics-heading">アクセス解析へのご協力</h2>
+    <p>許可した場合だけ、Google Analyticsで利用状況を計測します。氏名・メールアドレス・Googleアカウント情報・検索語・学会IDは送信しません。許可しなくても利用できます。<a href="#analytics-privacy">詳しい説明</a></p>
+    <div class="analytics-actions">
+      <button id="analytics-decline" type="button" class="btn btn-secondary">許可しない</button>
+      <button id="analytics-accept" type="button" class="btn btn-primary">許可する</button>
+    </div>
+    <p id="analytics-message" role="status"></p>
+  </aside>
 
   <!-- 案内PDFプレビュー用モーダルダイアログ -->
   <dialog id="pdf-modal" class="custom-dialog">

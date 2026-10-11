@@ -65,7 +65,7 @@ function mergeReview(previous, entries, checkedAt) {
 }
 
 const checks = [
-  ...['events.js', 'script.js', 'companies.js', 'venues.js', 'conference-sources.js', 'scripts/update-conferences.js',
+  ...['events.js', 'script.js', 'analytics.js', 'companies.js', 'venues.js', 'conference-sources.js', 'scripts/update-conferences.js',
     'scripts/auto-updater/fetch.js', 'scripts/auto-updater/extract.js', 'scripts/auto-updater/policy.js',
     'scripts/auto-updater/storage.js', 'scripts/auto-updater/pipeline.js', 'scripts/auto-updater/mass-change.js', 'scripts/auto-updater/registration.js', 'scripts/auto-updater/event-urls.js',
     'conference-discovery-sources.js', 'scripts/auto-updater/discovery.js', 'scripts/apply-reviewed-event-urls.js',
@@ -88,7 +88,7 @@ const checks = [
   ['scratch/test_calendar_view.js'],
   ['scratch/test_pediatric_2026_identity.js'],
   ['scratch/test_monitor_zero_update_delivery.js'],
-  ['scratch/test_gemini_notification_policy.js']
+  ['scratch/test_gemini_notification_policy.js'], ['scratch/test_analytics.js']
 ];
 function runChecks(root) {
   const results = [];
