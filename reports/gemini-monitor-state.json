@@ -1,15 +1,15 @@
 {
   "version": 1,
-  "lastRun": "2026-10-10T00:49:36.209Z",
+  "lastRun": "2026-10-11T00:14:22.801Z",
   "sources": {
     "oph-001": {
       "url": "https://convention.jtbcom.co.jp/80ringan/index.html",
-      "lastChecked": "2026-10-10",
+      "lastChecked": "2026-10-11",
       "lastHttpStatus": 200,
       "normalizedHash": "889021702fb49ca3c099d8d061c1da27b9fdb0730672a2af45b638514d960c96",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.96,
-      "nextCheckDate": "2026-10-11"
+      "nextCheckDate": "2026-10-12"
     },
     "oph-001-s1": {
       "url": "https://convention.jtbcom.co.jp/80ringan/index.html",
@@ -40,39 +40,39 @@
     },
     "conf-jp-pharmacology-2026": {
       "url": "https://square.umin.ac.jp/jsop46/",
-      "lastChecked": "2026-10-10",
+      "lastChecked": "2026-10-11",
       "lastHttpStatus": 200,
       "normalizedHash": "a16676c57900155012027c5fa00c0d1fcdc0099e60ae3b660c9d403ffd3fab0b",
       "lastGeminiDecision": "needs_review",
       "lastGeminiConfidence": 0.96,
-      "nextCheckDate": "2026-10-11"
+      "nextCheckDate": "2026-10-12"
     },
     "conf-jp-neuro-2026": {
       "url": "https://n-practice.co.jp/64thJNOS/",
-      "lastChecked": "2026-10-10",
+      "lastChecked": "2026-10-11",
       "lastHttpStatus": 200,
       "normalizedHash": "9cb7d2e20376d819342333ca962c50f8d3c1712fb581fb39420dd9d6d6b30dfc",
       "lastGeminiDecision": "needs_review",
       "lastGeminiConfidence": 0.96,
-      "nextCheckDate": "2026-10-11"
+      "nextCheckDate": "2026-10-12"
     },
     "conf-jp-jrvs-2026": {
       "url": "https://convention.jtbcom.co.jp/65moumaku/index.html",
-      "lastChecked": "2026-10-10",
+      "lastChecked": "2026-10-11",
       "lastHttpStatus": 200,
       "normalizedHash": "4b42e722f548f497862a47fa7f7da64dac9bf04100b49f4014652f3c7a4f5772",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.96,
-      "nextCheckDate": "2026-10-11"
+      "nextCheckDate": "2026-10-12"
     },
     "conf-int-arc-2026": {
       "url": "https://convention.jtbcom.co.jp/arc2026/",
-      "lastChecked": "2026-10-10",
+      "lastChecked": "2026-10-11",
       "lastHttpStatus": 200,
       "normalizedHash": "2e18fdaee35019b269e7ebac320ad3f71f19fafde3ba7b864aeea135ffb824b8",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.96,
-      "nextCheckDate": "2026-10-11"
+      "nextCheckDate": "2026-10-12"
     },
     "conf-jp-surgery-2027": {
       "url": "https://50.jsos.jp/",
@@ -647,10 +647,10 @@
       "hasOfficialUrl": false
     },
     "oph-004": {
-      "lastChecked": "2026-10-10",
+      "lastChecked": "2026-10-11",
       "lastHttpStatus": 0,
       "lastError": "untrusted-domain",
-      "nextCheckDate": "2026-10-11"
+      "nextCheckDate": "2026-10-12"
     },
     "conf-int-ascrs-2027": {
       "lastChecked": "2026-10-09",

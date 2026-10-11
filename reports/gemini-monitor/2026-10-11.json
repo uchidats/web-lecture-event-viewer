@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-11",
+  "generatedAt": "2026-10-11T00:14:22.801Z",
+  "mode": "production_apply",
+  "isApplyMode": true,
+  "description": "Gemini 3.8 Flash Daily Conference Monitor Report (Production Auto-Apply Enabled)",
+  "metrics": {
+    "totalEvents": 95,
+    "monitoredToday": 6,
+    "skippedNotDue": 67,
+    "skippedEnded": 13,
+    "urlDiscoveryChecks": 0,
+    "urlDiscovered": 0,
+    "httpFetched": 6,
+    "hashUnchangedSkipped": 5,
+    "geminiCalls": 0,
+    "noChange": 5,
+    "wouldAutoUpdate": 0,
+    "autoAppliedCount": 0,
+    "adminAppliedCount": 0,
+    "rollbackCount": 0,
+    "needsReview": 0,
+    "insufficientEvidence": 0,
+    "adminVisibleCount": 0,
+    "massChangeSafeguardTriggered": false,
+    "fetchErrors": 1
+  },
+  "adminVisibleItems": [],
+  "deferredReviewCount": 0,
+  "wouldAutoUpdateCount": 0,
+  "wouldAutoUpdateSummary": [],
+  "batchApplyResult": {
+    "success": true,
+    "appliedCount": 0,
+    "appliedEvents": [],
+    "mode": "production"
+  }
+}
