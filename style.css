@@ -1789,13 +1789,16 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
   flex-wrap: wrap;
 }
 
-.conf-category-badge {
+.conf-category-badge,
+.abstract-status-tag.closed,
+.abstract-submit-link {
   display: inline-flex;
   align-items: center;
   padding: 2px 8px;
   border-radius: var(--radius-sm);
   font-size: 0.72rem;
   font-weight: 600;
+  line-height: 1.5;
 }
 
 .conf-category-badge.region {
