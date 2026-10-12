@@ -76,7 +76,8 @@ for (const event of events) {
   assert.equal(card.includes('<p class="card-desc">'), !event.isConference || overseasConference, event.id);
   assert.ok(card.includes(`<p class="card-subtitle">${run(`escapeHtml(${JSON.stringify(event.subtitle)})`)}</p>`), event.id);
   if (!event.isConference || overseasConference) {
-    assert.ok(card.includes(`<p class="card-desc">${run(`escapeHtml(${JSON.stringify(event.description)})`)}</p>`), event.id);
+    const description = overseasConference && event.description.endsWith('。') ? event.description.slice(0, -1) : event.description;
+    assert.ok(card.includes(`<p class="card-desc">${run(`escapeHtml(${JSON.stringify(description)})`)}</p>`), event.id);
   }
 }
 assert.equal(run('JSON.stringify(sampleEvents)'), originalData, 'Card display must not modify stored credits');

@@ -2063,6 +2063,12 @@ function getEventCreditLabel(event) {
   return `${scheme ? scheme + " " : ""}${units}単位`;
 }
 
+function getEventDescriptionDisplayText(event) {
+  const description = event.description || '';
+  const international = event.isConference && (event.conferenceRegion === 'international' || event.eventType === '海外学会');
+  return international && description.endsWith('。') ? description.slice(0, -1) : description;
+}
+
 function getConferenceChairDisplayLabel(event) {
   const original = event.conferenceChair || '';
   if (!event.isConference) return original;
@@ -2315,7 +2321,7 @@ function createEventCardHtml(event) {
           <h3 class="card-title">${hasConferenceTitleLink ? `<a class="conference-title-link" href="${escapeHtml(event.eventOfficialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}</h3>
         </div>
         <p class="card-subtitle">${escapeHtml(event.subtitle)}</p>
-        ${event.isConference && event.conferenceRegion !== 'international' && event.eventType !== '海外学会' ? '' : `<p class="card-desc">${escapeHtml(event.description)}</p>`}
+        ${event.isConference && event.conferenceRegion !== 'international' && event.eventType !== '海外学会' ? '' : `<p class="card-desc">${escapeHtml(getEventDescriptionDisplayText(event))}</p>`}
       </div>
 
       <!-- 学会特有メタ情報（国内学会・国際学会のみ） -->

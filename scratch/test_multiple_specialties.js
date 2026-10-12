@@ -27,6 +27,14 @@ vm.runInContext(`
   assert.equal(sampleEvents.filter(e => getEventSpecialties(e).includes('眼炎症感染')).length, 3);
   assert.equal(sampleEvents.filter(e => getEventSpecialties(e).includes('その他')).length, 14);
   state.events = sampleEvents;
+  const internationalDescription = {isConference:true,conferenceRegion:'international',description:'前半。後半。'};
+  assert.equal(getEventDescriptionDisplayText(internationalDescription),'前半。後半');
+  assert.equal(internationalDescription.description,'前半。後半。','Original description unchanged');
+  assert.equal(getEventDescriptionDisplayText({...internationalDescription,description:'末尾。。'}),'末尾。','Remove exactly one punctuation character');
+  for (const description of ['句点なし','英語.','末尾。 ', '']) assert.equal(getEventDescriptionDisplayText({...internationalDescription,description}),description);
+  assert.equal(getEventDescriptionDisplayText({...internationalDescription,conferenceRegion:'domestic'}),'前半。後半。');
+  assert.equal(getEventDescriptionDisplayText({...internationalDescription,isConference:false}),'前半。後半。');
+  assert.equal(getEventDescriptionDisplayText({...internationalDescription,conferenceRegion:undefined,eventType:'海外学会'}),'前半。後半');
   const chairJoint = sampleEvents.find(e => e.id === 'conf-jp-pediatric-2027');
   assert.equal(getConferenceChairDisplayLabel(chairJoint), '林 思音（山形大学）・彦谷 明子（浜松医科大学）');
   for (const event of sampleEvents.filter(e => e.id !== chairJoint.id)) assert.equal(getConferenceChairDisplayLabel(event), event.conferenceChair || '');
