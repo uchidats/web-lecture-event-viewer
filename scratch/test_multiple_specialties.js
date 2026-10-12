@@ -15,6 +15,8 @@ vm.runInContext(`
   assert.equal(getSpecialtyDisplayLabel('白内障'), '白内障・屈折矯正');
   assert.equal(getConferenceCategoryDisplayLabel('白内障屈折'), '白内障・屈折矯正');
   assert.equal(getConferenceCategoryDisplayLabel('形成腫瘍'), '眼形成');
+  assert.equal(getConferenceCategoryDisplayLabel('小児斜視'), '小児・斜視弱視');
+  assert.equal(getSpecialtyDisplayLabel('小児・斜視弱視'), '小児・斜視弱視');
   assert.equal(getSpecialtyDisplayLabel('眼炎症感染'), '眼炎症・感染');
   assert.equal(getConferenceCategoryDisplayLabel('眼光学CL近視'), '眼光学・CL・近視');
   assert.equal(getConferenceCategoryDisplayLabel('眼炎症感染'), '眼炎症・感染');
@@ -25,9 +27,23 @@ vm.runInContext(`
   assert.equal(sampleEvents.filter(e => getEventSpecialties(e).includes('眼炎症感染')).length, 3);
   assert.equal(sampleEvents.filter(e => getEventSpecialties(e).includes('その他')).length, 14);
   state.events = sampleEvents;
+  const pediatricConferences = sampleEvents.filter(e => e.isConference && e.conferenceCategory === '小児斜視');
+  assert.ok(pediatricConferences.length > 0);
+  for (const event of pediatricConferences) {
+    const html = createEventCardHtml(event);
+    const classification = html.match(/<span class="conf-val conf-classification-val">([\\s\\S]*?)<\\/span>\\s*<\\/div>/)[1];
+    assert.equal((classification.match(/小児・斜視弱視/g) || []).length, 1, event.id + ' has one unified label');
+    assert.ok(!classification.includes('小児斜視'));
+    const multiple = createEventCardHtml({...event, specialty: ['小児・斜視弱視', 'その他']});
+    assert.ok(multiple.includes('conf-category-badge specialty">その他</span>'), 'Distinct specialty is retained');
+  }
   getTodayString = () => '2026-10-12';
   for (const key of FILTER_SET_KEYS) state.filters[key].clear();
   state.filters.includeEndedConferences = true;
+  state.filters.specialty = new Set(['小児・斜視弱視']);
+  assert.equal(getFilteredEvents().length, 5, 'Pediatric specialty filter count is unchanged');
+  assert.equal(pediatricConferences.length, 4, 'Internal conference category remains unchanged');
+  state.filters.specialty.clear();
   for (const [labels, expected] of [[['眼炎症感染'], 3], [['その他'], 14], [['眼炎症感染', 'その他'], 16]]) {
     state.filters.specialty = new Set(labels);
     const result = getFilteredEvents();
