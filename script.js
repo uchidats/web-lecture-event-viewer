@@ -105,7 +105,6 @@ const FILTER_OPTIONS = {
     "神経眼科",
     "眼形成",
     "総合",
-    "一般眼科",
     "その他"
   ],
   eventType: [
