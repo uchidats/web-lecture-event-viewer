@@ -45,7 +45,8 @@
       };
     }
     const endYearPart = end.year !== start.year ? `${end.year}年` : '';
-    const endLabel = `${endYearPart}${end.month}月${end.day}日（${'日月火水木金土'[end.weekday]}${end.isHoliday ? '・祝' : ''}）`;
+    const endMonthPart = end.year !== start.year || end.month !== start.month ? `${end.month}月` : '';
+    const endLabel = `${endYearPart}${endMonthPart}${end.day}日（${'日月火水木金土'[end.weekday]}${end.isHoliday ? '・祝' : ''}）`;
     const holidayList = [];
     if (start.isHoliday) holidayList.push({ name: start.holidayName, position: 'start' });
     if (end.isHoliday && (!start.isHoliday || start.holidayName !== end.holidayName)) {

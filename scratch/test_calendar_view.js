@@ -10,10 +10,10 @@ assert.equal(formatCompactDate(new Date(2027, 2, 21), true), '2027年3月21日�
 
 // formatCompactHeading tests
 const ascrsHeading = formatCompactHeading(new Date(2027, 3, 2), new Date(2027, 3, 5), holidays);
-assert.equal(ascrsHeading.fullText, '2027年4月2日（金）〜4月5日（月）');
+assert.equal(ascrsHeading.fullText, '2027年4月2日（金）〜5日（月）');
 assert.equal(ascrsHeading.isRange, true);
 assert.equal(ascrsHeading.startLabel, '2027年4月2日（金）');
-assert.equal(ascrsHeading.endLabel, '4月5日（月）');
+assert.equal(ascrsHeading.endLabel, '5日（月）');
 assert.equal(ascrsHeading.start.colorClass, '');
 assert.equal(ascrsHeading.end.colorClass, '');
 
@@ -25,12 +25,15 @@ assert.equal(singleDayHeading.end, null);
 
 // Weekend and holiday colors
 const satMonHolidayHeading = formatCompactHeading(new Date(2026, 8, 19), new Date(2026, 8, 21), holidays);
-assert.equal(satMonHolidayHeading.fullText, '2026年9月19日（土）〜9月21日（月・祝）');
+assert.equal(satMonHolidayHeading.fullText, '2026年9月19日（土）〜21日（月・祝）');
 assert.equal(satMonHolidayHeading.start.colorClass, 'compact-date-saturday');
 assert.equal(satMonHolidayHeading.end.colorClass, 'compact-date-holiday');
 assert.equal(satMonHolidayHeading.holidays[0].name, '敬老の日');
 
 // Cross-year multi-day range
+assert.equal(formatCompactHeading('2026-12-04', '2026-12-06').fullText, '2026年12月4日（金）〜6日（日）');
+assert.equal(formatCompactHeading('2026-10-29', '2026-11-01').fullText, '2026年10月29日（木）〜11月1日（日）');
+assert.equal(formatCompactHeading('2026-01-03', '2027-01-03').endLabel, '2027年1月3日（日）');
 const crossYearHeading = formatCompactHeading(new Date(2026, 11, 31), new Date(2027, 0, 3), holidays);
 assert.equal(crossYearHeading.fullText, '2026年12月31日（木）〜2027年1月3日（日）');
 assert.equal(crossYearHeading.end.colorClass, 'compact-date-sunday');
