@@ -94,7 +94,7 @@ async function main() {
 
 
 
-    for(const width of [1280,390,320]) {
+    for(const width of [1280,900,768,390,320]) {
       await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});await navigate('/');
       await evaluate('elements.eventList.innerHTML=[sampleEvents.find(e=>e.id==="conf-jp-pharmacology-2026"),sampleEvents.find(e=>e.id==="oph-002")].map(createEventCardHtml).join("")');
       const data=await evaluate(`Array.from(elements.eventList.querySelectorAll('.event-card'),card=>{
@@ -102,7 +102,7 @@ async function main() {
         return {id:card.dataset.id,centerDelta:Math.abs(date.top+date.height/2-region.top-region.height/2),hasTime:!!time,clock:!!time?.querySelector('svg'),stacked:!!time&&time.getBoundingClientRect().top<venue.getBoundingClientRect().top,alignment:getComputedStyle(card.querySelector('.date-time-block')).alignItems,venue:venue.textContent,href:link?.href,fits:card.scrollWidth<=card.clientWidth+1&&document.documentElement.scrollWidth<=innerWidth+1};
       })`);
       const [noTime,timed]=data;assert.equal(noTime.hasTime,false);assert.equal(noTime.clock,false);assert.ok(noTime.centerDelta<1);assert.equal(noTime.alignment,'center');assert.ok(noTime.href.includes('google.com/maps'));assert.ok(noTime.venue.includes(String.fromCharCode(20013,37096)));
-      assert.ok(timed.hasTime&&timed.clock&&timed.stacked);assert.equal(timed.alignment,width<=980?'flex-start':'center');assert.ok(data.every(e=>e.fits));
+      assert.ok(timed.hasTime&&timed.clock&&timed.stacked);assert.equal(timed.alignment,'center');assert.ok(timed.centerDelta<1);assert.ok(data.every(e=>e.fits));
       console.log(JSON.stringify({width,data}));
     }
     await call('Browser.close');

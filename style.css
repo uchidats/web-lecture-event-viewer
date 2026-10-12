@@ -2607,7 +2607,7 @@ body:has(#calendar-panel[data-view="calendar"]:not([hidden])) .beta-notice :is(#
   }
 
   .date-time-block {
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
   }
 
