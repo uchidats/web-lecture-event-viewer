@@ -151,6 +151,7 @@
     const detail = document.getElementById('calendar-event-detail');
     const holidays = window.OPHTHAL_JAPAN_HOLIDAYS || {};
     const smallScreen = window.matchMedia('(max-width: 600px)');
+    const desktopGrid = window.matchMedia('(min-width: 769px)');
     const calendarElement = document.getElementById('event-calendar');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let monthTransition = null;
@@ -201,6 +202,10 @@
     }
     window.addEventListener('resize', finishMonthTransition);
     reducedMotion.addEventListener('change', finishMonthTransition);
+    desktopGrid.addEventListener('change', () => {
+      finishMonthTransition();
+      if (calendar) calendar.setOption('dayMaxEvents', desktopGrid.matches ? false : 3);
+    });
     let swipe = null, suppressClickUntil = 0;
     calendarElement.addEventListener('pointerdown', event => {
       if (monthTransition) { swipe = null; return; }
@@ -421,7 +426,7 @@
           }
         },
         noEventsText: 'この月には条件に合うイベントがありません',
-        editable: false, dayMaxEvents: 3, displayEventTime: false,
+        editable: false, dayMaxEvents: desktopGrid.matches ? false : 3, displayEventTime: false,
         events: (_info, success) => {
           const isCompact = mode === 'compact';
           if (isCompact) {
