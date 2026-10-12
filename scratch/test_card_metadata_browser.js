@@ -122,7 +122,7 @@ async function main() {
             const period=order.indexOf('会期:'),chair=order.indexOf('会長:'),category=order.indexOf('学会分類:'),abstract=order.indexOf('演題募集:');
             assert.equal(chair,period+2,'City row precedes chair');assert.equal(category,chair+1);assert.ok(abstract>category);
             const chairText=await evaluate('Array.from(document.querySelector('+JSON.stringify(selector)+').querySelectorAll(".conf-item")).find(e=>e.querySelector(".conf-label")?.textContent==="会長:").querySelector(".conf-val").textContent');
-            assert.ok(chairText.includes('林 思音（山形大学）'));assert.ok(chairText.includes('彦谷 明子（浜松医科大学）'));
+            assert.equal(chairText,'林 思音（山形大学）・彦谷 明子（浜松医科大学）');
             assert.ok(!chairText.includes('医学部'));assert.ok(!chairText.includes('講座'));
             const withoutChair=await evaluate('createEventCardHtml({...state.events.find(e=>e.id==='+JSON.stringify(id)+'),conferenceChair:""})');
             assert.ok(!withoutChair.includes('>会長:</span>'),'Missing chair has no row');

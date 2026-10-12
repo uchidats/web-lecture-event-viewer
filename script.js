@@ -2063,6 +2063,23 @@ function getEventCreditLabel(event) {
   return `${scheme ? scheme + " " : ""}${units}単位`;
 }
 
+function getConferenceChairDisplayLabel(event) {
+  const original = event.conferenceChair || '';
+  if (!event.isConference) return original;
+  // Split between chair entries, never inside a multiple-affiliation parenthesis.
+  const entries = original.split(/(?<=）)\s*[／/]\s*/);
+  if (entries.length < 2) return original;
+  const title = (event.title || '').replace(/\s/g, '');
+  const chairs = entries.map(entry => {
+    const match = entry.match(/^(.+?)[:：]\s*(.+（[^）]+）)$/);
+    if (!match) return null;
+    const position = title.indexOf(match[1].replace(/\s/g, ''));
+    return position < 0 ? null : { position, label: match[2] };
+  });
+  if (chairs.some(chair => !chair)) return original;
+  return chairs.sort((a, b) => a.position - b.position).map(chair => chair.label).join('・');
+}
+
 function createEventCardHtml(event) {
   const creditLabel = getEventCreditLabel(event);
   const dateBadgeInfo = formatEventDateBadge(event);
@@ -2203,7 +2220,7 @@ function createEventCardHtml(event) {
           <span class="conf-label conf-city-label">${getEventCityDisplay(event).label === "開催都市・国" ? '<span class="city-label-full">開催都市・国：</span><span class="city-label-mobile">都市：</span>' : `${getEventCityDisplay(event).label}：`}</span>
           <span class="conf-val">${escapeHtml(getEventCityDisplay(event).value)}</span>
         </div>
-        ${event.conferenceChair ? `<div class="conf-item conf-item-full"><span class="conf-label">会長:</span><span class="conf-val">${escapeHtml(event.conferenceChair)}</span></div>` : ''}
+        ${event.conferenceChair ? `<div class="conf-item conf-item-full"><span class="conf-label">会長:</span><span class="conf-val">${escapeHtml(getConferenceChairDisplayLabel(event))}</span></div>` : ''}
         ${event.conferenceCategory || event.conferenceRegion ? `
         <div class="conf-item conf-item-full">
           <span class="conf-label">学会分類:</span>

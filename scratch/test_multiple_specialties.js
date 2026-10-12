@@ -27,6 +27,13 @@ vm.runInContext(`
   assert.equal(sampleEvents.filter(e => getEventSpecialties(e).includes('眼炎症感染')).length, 3);
   assert.equal(sampleEvents.filter(e => getEventSpecialties(e).includes('その他')).length, 14);
   state.events = sampleEvents;
+  const chairJoint = sampleEvents.find(e => e.id === 'conf-jp-pediatric-2027');
+  assert.equal(getConferenceChairDisplayLabel(chairJoint), '林 思音（山形大学）・彦谷 明子（浜松医科大学）');
+  for (const event of sampleEvents.filter(e => e.id !== chairJoint.id)) assert.equal(getConferenceChairDisplayLabel(event), event.conferenceChair || '');
+  const threeChairs = {isConference: true, title: '第1回甲学会／第2回乙学会／第3回丙学会', conferenceChair: '第3回丙学会: 丙先生（丙病院）／第1回甲学会: 甲先生（甲大学/甲病院）／第2回乙学会: 乙先生（乙大学）'};
+  assert.equal(getConferenceChairDisplayLabel(threeChairs), '甲先生（甲大学/甲病院）・乙先生（乙大学）・丙先生（丙病院）');
+  assert.equal(getConferenceChairDisplayLabel({...threeChairs, title: '別大会'}), threeChairs.conferenceChair, 'Unmatched conference labels are not guessed');
+  assert.ok(createEventCardHtml(chairJoint).includes('林 思音（山形大学）・彦谷 明子（浜松医科大学）'));
   const pediatricConferences = sampleEvents.filter(e => e.isConference && e.conferenceCategory === '小児斜視');
   assert.ok(pediatricConferences.length > 0);
   for (const event of pediatricConferences) {
