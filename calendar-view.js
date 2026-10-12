@@ -444,6 +444,16 @@
           }
         },
         eventClick: info => { info.jsEvent.preventDefault(); openDetail(info.event.id); },
+        eventContent: info => {
+          if (info.view.type !== 'dayGridMonth') return true;
+          const full = document.createElement('span');
+          full.className = 'fc-event-title calendar-event-title-full';
+          full.textContent = info.event.title;
+          const short = document.createElement('span');
+          short.className = 'fc-event-title calendar-event-title-mobile';
+          short.textContent = info.event.title.replace(/^第\s*[0-9０-９]+\s*回[\s　]*/, '');
+          return { domNodes: [full, short] };
+        },
         eventDidMount: info => {
           info.el.title = info.event.title;
           info.el.dataset.eventId = info.event.id;
