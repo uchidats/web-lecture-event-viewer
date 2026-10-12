@@ -902,6 +902,7 @@ button, input, select, textarea {
 
 /* The calendar and list share filters and existing card actions. */
 #event-list[hidden], #calendar-panel[hidden], .sort-selector-wrapper[hidden] { display: none; }
+body:has(#calendar-panel[data-view="calendar"]:not([hidden])) .beta-notice :is(#analytics-settings, #analytics-choice, #analytics-privacy) { display: none; }
 .event-view-switch {
   display: inline-flex;
   gap: 4px;
