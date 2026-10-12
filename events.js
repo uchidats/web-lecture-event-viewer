@@ -2263,7 +2263,7 @@ const sampleEvents = [
     ],
     "description": "眼瞼・眼窩の手術解剖、低侵襲手技、難症例再建の供覧。",
     "isConference": true,
-    "conferenceChair": "田邉 美香（九州大学病院）"
+    "conferenceChair": "田邉 美香（九州大学）"
   },
   {
     "id": "conf-jp-pediatric-2027",
@@ -2680,7 +2680,7 @@ const sampleEvents = [
     ],
     "description": "CL関連眼障害の予防と適正使用、乱視・遠近両用・治療用CLの最新知見。",
     "isConference": true,
-    "conferenceChair": "土至田 宏（聖マリアンナ医科大学横浜市西部病院）"
+    "conferenceChair": "土至田 宏（聖マリアンナ医科大学）"
   },
   {
     "id": "conf-jp-optics-2027",

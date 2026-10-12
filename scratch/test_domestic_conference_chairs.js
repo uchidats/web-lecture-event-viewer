@@ -22,6 +22,7 @@ for(const record of evidence.records){
   assert.ok(person.officialAffiliation,'Full official affiliation remains available in provenance');
   assert.ok(record.officialConferenceChair.includes(person.officialAffiliation));
   assert.doesNotMatch(person.affiliation,/教授|講師|大学院|研究科|講座|教室|研究室|医学部|医学医療系|ビジョンケア部門/);
+  assert.doesNotMatch(person.affiliation,/大学[^/]*病院/, 'University hospital affiliations use university name only');
  }
 }
 const joint=events.find(e=>e.id==='conf-jp-pediatric-2027').conferenceChair;
@@ -34,8 +35,10 @@ assert.equal(evidence.records.filter(r=>r.specialHandling).length,2);
 const chair=id=>events.find(e=>e.id===id).conferenceChair;
 assert.equal(chair('oph-001'),'近藤 峰生（三重大学）');
 assert.equal(chair('conf-jp-pharmacology-2026'),'嶋澤 雅光（岐阜薬科大学）');
-assert.equal(chair('conf-jp-jsoprs-2027'),'田邉 美香（九州大学病院）');
-assert.equal(chair('conf-jp-cl-2027'),'土至田 宏（聖マリアンナ医科大学横浜市西部病院）');
+assert.equal(chair('conf-jp-jsoprs-2027'),'田邉 美香（九州大学）');
+assert.equal(chair('conf-jp-cl-2027'),'土至田 宏（聖マリアンナ医科大学）');
+assert.equal(chair('conf-jp-surgery-2026'),'宮田 和典（宮田眼科病院）');
+assert.equal(chair('conf-jp-strabismus-2026'),'横山 吉美（JCHO中京病院）');
 assert.equal(chair('conf-jp-surgery-2027'),'稲富 勉（国立長寿医療研究センター/京都府立医科大学）');
 assert.equal(chair('conf-jp-inflammation-2027'),'髙瀬 博（宮田眼科 東京）');
 assert.equal(evidence.affiliationSimplification.beforeWithChair,evidence.affiliationSimplification.afterWithChair);

@@ -503,13 +503,13 @@
       "sourceUrl": "https://orbit-cs.net/jsoprs2027/outline.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "田邉 美香（九州大学病院）",
+      "conferenceChair": "田邉 美香（九州大学）",
       "people": [
         {
           "conference": "第14回 日本眼形成再建外科学会学術集会 (JSOPRS 2027)",
           "role": "会長",
           "name": "田邉 美香",
-          "affiliation": "九州大学病院",
+          "affiliation": "九州大学",
           "officialAffiliation": "九州大学病院 眼科 診療講師"
         }
       ],
@@ -603,13 +603,13 @@
       "sourceUrl": "https://www.congre.co.jp/jcls2027/outline/index.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "土至田 宏（聖マリアンナ医科大学横浜市西部病院）",
+      "conferenceChair": "土至田 宏（聖マリアンナ医科大学）",
       "people": [
         {
           "conference": "第69回 日本コンタクトレンズ学会総会",
           "role": "会長",
           "name": "土至田 宏",
-          "affiliation": "聖マリアンナ医科大学横浜市西部病院",
+          "affiliation": "聖マリアンナ医科大学",
           "officialAffiliation": "聖マリアンナ医科大学横浜市西部病院眼科 教授"
         }
       ],
@@ -701,17 +701,22 @@
     "checkedOn": "2026-10-13",
     "beforeWithChair": 34,
     "afterWithChair": 34,
-    "changedRecords": 30,
-    "shortenedRecords": 27,
+    "changedRecords": 32,
+    "shortenedRecords": 29,
     "separatorOnlyRecords": 3,
-    "unchangedRecords": 4,
+    "unchangedRecords": 2,
+    "universityHospitalNormalization": {
+      "changedRecords": 2,
+      "eventIds": ["conf-jp-jsoprs-2027", "conf-jp-cl-2027"],
+      "rule": "大学所属・大学病院所属は大学名まで。大学以外の病院・研究センターは施設名を維持する。"
+    },
     "manualDecisions": [
       {
         "eventIds": [
           "conf-jp-jsoprs-2027",
           "conf-jp-cl-2027"
         ],
-        "reason": "大学病院は施設名を維持し、大学名だけにしない"
+        "reason": "大学病院も大学名までに短縮する。大学以外の病院・研究センターは施設名を維持する"
       },
       {
         "eventIds": [
