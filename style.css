@@ -2373,7 +2373,7 @@ button, input, select, textarea {
 
   /* 上部操作エリア：2段構成
      1段目: 「カレンダー連携設定」「登録済み一覧」「マイ学会履歴」（3等分）
-     2段目: 「条件で絞り込む」（全幅）
+     2段目: 「条件で絞り込む」（内容幅・左寄せ）
   */
   .header-actions {
     display: grid;
@@ -2444,10 +2444,12 @@ button, input, select, textarea {
     flex-shrink: 0;
   }
 
-  .header-actions #mobile-filter-btn {
+  .app-header:not(.is-compact) .header-actions #mobile-filter-btn {
     grid-column: 1 / -1;
-    width: 100%;
-    min-width: 0;
+    justify-self: start;
+    width: max-content;
+    min-width: 200px;
+    max-width: 100%;
     padding: 10px 14px;
     font-size: 0.88rem;
     justify-content: center;
@@ -2477,9 +2479,49 @@ button, input, select, textarea {
   }
 
   .sidebar-footer {
-    padding: 16px 20px;
+    padding: 10px 16px;
     border-top: 1px solid var(--border-color);
     background: #ffffff;
+  }
+
+  /* Keep the drawer readable while spending less height on spacing. */
+  .sidebar-header {
+    padding: 12px 16px 10px;
+  }
+
+  .sidebar-title-row {
+    margin-bottom: 8px;
+  }
+
+  .sidebar .search-input-wrapper input {
+    min-height: 40px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  .sidebar-body {
+    padding: 12px 16px 16px;
+    gap: 14px;
+    min-height: 0;
+  }
+
+  .sidebar .filter-group {
+    gap: 6px;
+  }
+
+  .sidebar .chip-checkbox-grid {
+    gap: 5px;
+  }
+
+  .sidebar .chip-btn {
+    min-height: 32px;
+    padding: 5px 10px;
+  }
+
+  #apply-mobile-filter {
+    min-height: 40px;
+    padding-top: 7px;
+    padding-bottom: 7px;
   }
 
   .btn-block {
