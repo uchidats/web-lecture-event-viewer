@@ -68,6 +68,7 @@ module.exports = {
     {
       "eventId": "conf-jp-eyelid-2027",
       "indexUrls": [
+        "https://convention.jtbcom.co.jp/gigan38/",
         "https://www.nichigan.or.jp/member/syukai/hyoji_other.html"
       ]
     },
@@ -227,6 +228,7 @@ module.exports = {
     {
       "eventId": "conf-jp-eyelid-2028",
       "indexUrls": [
+        "https://convention.jtbcom.co.jp/gigan38/",
         "https://www.nichigan.or.jp/member/syukai/hyoji_other.html"
       ]
     },

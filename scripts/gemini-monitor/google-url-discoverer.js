@@ -279,6 +279,10 @@ function buildSearchQueries(event) {
     secondaryQuery = `${primaryQuery} ${city}`.trim();
   }
 
+  if (editionNumber && /日本眼瞼義眼床手術学会/.test(rawTitle)) {
+    secondaryQuery = primaryQuery;
+    primaryQuery = `site:convention.jtbcom.co.jp/gigan${editionNumber}/ 第${editionNumber}回 日本眼瞼義眼床手術学会 ${year}`;
+  }
   return {
     primaryQuery,
     secondaryQuery,
@@ -704,7 +708,7 @@ async function discoverOfficialUrlWithGoogle(event, options = {}) {
         try {
           const doc = await options.getPage({ url: candidate.url, role: 'discovery-event' });
           if (doc?.html) {
-            candidate.pageEvidence = doc.html.slice(0, 2000);
+            candidate.pageEvidence = doc.html.slice(0, /日本眼瞼義眼床手術学会/.test(event.title) ? 200000 : 2000);
           } else if (doc?.error) {
             candidate.pageFetchError = doc.error;
           }
@@ -714,6 +718,16 @@ async function discoverOfficialUrlWithGoogle(event, options = {}) {
       }
 
       const verification = await verifyCandidateWithGemini(event, candidate, candidate.rank, searchOptions);
+      if (/日本眼瞼義眼床手術学会/.test(event.title)) {
+        const { identity, checkIdentity, pageEvidence } = require('../auto-updater/discovery');
+        const pageChecks = checkIdentity(pageEvidence(candidate.pageEvidence || ''), identity(event));
+        if (!pageChecks.nameMatches || !pageChecks.yearMatches || !pageChecks.editionMatches) {
+          verification.is_official_page = false;
+          verification.officialPageIdentityVerified = false;
+          verification.confidence = 0;
+          verification.recommended_action = 'reject_and_continue';
+        } else verification.officialPageIdentityVerified = true;
+      }
       evaluatedCandidates.push({ candidate, verification });
 
       const meetsAllCriteria =

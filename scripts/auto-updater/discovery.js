@@ -5,9 +5,10 @@ const normalize = value => compact(value).normalize('NFKC').toLowerCase();
 function identity(event) {
   const year = Number(event.date?.slice(0, 4));
   const editions = [...event.title.matchAll(/第\s*(\d+)\s*回|(\d+)(?:st|nd|rd|th)\b/gi)].map(m => Number(m[1] || m[2]));
-  const name = event.title.replace(/第\s*\d+\s*回/g, '').replace(/\b\d+(?:st|nd|rd|th)\b/gi, '')
+  let name = event.title.replace(/第\s*\d+\s*回/g, '').replace(/\b\d+(?:st|nd|rd|th)\b/gi, '')
     .replace(/20\d{2}/g, '').replace(/\([^)]*\)|（[^）]*）/g, '').trim();
   // Annual meetings without numbered editions use their annual year as edition identity.
+  if (name.includes('日本眼瞼義眼床手術学会')) name = '日本眼瞼義眼床手術学会';
   return { year, editions, name, annual: !editions.length && /Annual Meeting|FujiRetina/i.test(event.title) };
 }
 function cleanHtmlForEvidence(html) {
@@ -35,7 +36,11 @@ function checkIdentity(evidence, expected) {
   const editions = [...evidence.matchAll(/第\s*(\d+)\s*回|(\d+)(?:st|nd|rd|th)\b/gi)].map(m => Number(m[1] || m[2]));
   const nameMatches = input.includes(normalize(expected.name));
   const yearMatches = years.length === 1 && years[0] === expected.year;
-  const editionMatches = expected.editions.length ? expected.editions.every(n => editions.includes(n)) : expected.annual && yearMatches;
+  let editionMatches = expected.editions.length ? expected.editions.every(n => editions.includes(n)) : expected.annual && yearMatches;
+  if (expected.name === '日本眼瞼義眼床手術学会') {
+    const uniqueEditions = [...new Set(editions)];
+    editionMatches = expected.editions.length === 1 && uniqueEditions.length === 1 && uniqueEditions[0] === expected.editions[0];
+  }
   return { nameMatches, yearMatches, editionMatches, years, editions };
 }
 function pageEvidence(html) {
@@ -89,6 +94,7 @@ function officialDomain(url, entry, event) {
 }
 
 const ORGANIZER_PATTERNS = [
+  { domain: 'convention.jtbcom.co.jp', societySlugs: [{ slug: 'gigan', keywords: ['日本眼瞼義眼床手術学会'] }] },
   {
     domain: 'www.ganki.jp',
     societySlugs: [
@@ -129,6 +135,13 @@ function generateOrganizerCandidates(event, expected, knownUrls = []) {
       } catch {}
     }
     for (const slug of matchedSlugs) {
+      if (org.domain === 'convention.jtbcom.co.jp') {
+        if (slug === 'gigan' && expected.editions.length === 1) {
+          generated.push({ url: `https://${org.domain}/gigan${expected.editions[0]}/summary/index.html`, pattern: 'organizer-edition-overview' });
+          generated.push({ url: `https://${org.domain}/gigan${expected.editions[0]}/`, pattern: 'organizer-edition-root' });
+        }
+        continue;
+      }
       generated.push({
         url: `https://${org.domain}/${slug}${year}/information.html`,
         pattern: 'organizer-pattern-information'
@@ -247,8 +260,12 @@ async function discoverMissingEventUrls({ events, config, getPage = fetchOfficia
     let pageCount = 0;
     // Prefer information.html candidates first
     const sortedLeads = [...leads.values()].sort((a, b) => {
-      const aInfo = /\/information\.html$/i.test(a.url);
-      const bInfo = /\/information\.html$/i.test(b.url);
+      const targetPath = `/gigan${expected.editions[0]}/`;
+      const aEdition = new URL(a.url).hostname === 'convention.jtbcom.co.jp' && new URL(a.url).pathname.startsWith(targetPath);
+      const bEdition = new URL(b.url).hostname === 'convention.jtbcom.co.jp' && new URL(b.url).pathname.startsWith(targetPath);
+      if (aEdition !== bEdition) return Number(bEdition) - Number(aEdition);
+      const aInfo = /\/information\.html$|\/gigan\d+\/summary\/index\.html$/i.test(a.url);
+      const bInfo = /\/information\.html$|\/gigan\d+\/summary\/index\.html$/i.test(b.url);
       return (bInfo ? 1 : 0) - (aInfo ? 1 : 0);
     });
 
@@ -360,4 +377,4 @@ async function discoverMissingEventUrls({ events, config, getPage = fetchOfficia
   return { enabled: true, review, records };
 }
 
-module.exports = { discoverMissingEventUrls, identity, checkIdentity, links, pageEvidence };
+module.exports = { discoverMissingEventUrls, identity, checkIdentity, links, pageEvidence, generateOrganizerCandidates };
