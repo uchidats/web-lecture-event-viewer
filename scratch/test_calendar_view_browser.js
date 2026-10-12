@@ -111,6 +111,11 @@ async function main() {
         await call('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
       }
       await delay(100);
+      await evaluate(`new Promise(resolve => {
+        const settled = () => document.getElementById('event-calendar').hasAttribute('aria-busy')
+          ? requestAnimationFrame(settled) : resolve();
+        settled();
+      })`);
     };
     for (const width of [Number(process.env.CALENDAR_TEST_WIDTH)]) {
       await call('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width <= 768 });
@@ -331,8 +336,9 @@ async function main() {
         assert.equal(await evaluate('JSON.stringify(Object.fromEntries(Object.keys(localStorage).map(k=>[k,localStorage.getItem(k)])))'), storage);
         assert.equal(await evaluate('new URL(location.href).searchParams.get("keep")'), 'yes');
         assert.equal(await evaluate('location.hash'), '#calendar-test');
+        const previousTimeOrigin = await evaluate('performance.timeOrigin');
         await call('Page.reload');
-        for(let i=0;i<100 && !await evaluate('!!window.OphthalCalendarView?.getCalendar()');i++) await delay(100);
+        for(let i=0;i<100 && !await evaluate(`performance.timeOrigin !== ${previousTimeOrigin} && document.readyState === 'complete' && !!window.OphthalCalendarView?.getCalendar()`);i++) await delay(100);
         assert.equal(await evaluate('OphthalCalendarView.getMode()'), displayMode);
         assert.equal(await evaluate('OphthalCalendarView.getCalendar().view.currentStart.getMonth()'), 2);
         console.log(`PASS: ${width}px ${route} ${displayMode}, 3-mode filters, holidays, navigation/swipes/taps, URL reload and localStorage`);

@@ -152,8 +152,58 @@
     const holidays = window.OPHTHAL_JAPAN_HOLIDAYS || {};
     const smallScreen = window.matchMedia('(max-width: 600px)');
     const calendarElement = document.getElementById('event-calendar');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let monthTransition = null;
+    function finishMonthTransition() {
+      if (!monthTransition) return;
+      const { incoming, snapshot, animations } = monthTransition;
+      monthTransition = null;
+      animations.forEach(animation => animation.cancel());
+      snapshot.remove();
+      incoming.replaceWith(...incoming.childNodes);
+      calendarElement.classList.remove('calendar-sliding');
+      calendarElement.removeAttribute('aria-busy');
+    }
+    function slideMonth(forward) {
+      if (monthTransition) return;
+      if (reducedMotion.matches || typeof calendarElement.animate !== 'function') {
+        if (forward) calendar.next(); else calendar.prev();
+        return;
+      }
+      // Keep the old month visible while FullCalendar immediately renders the new one.
+      // Both layers remain inside #event-calendar so date/holiday styling is preserved.
+      const snapshot = calendarElement.cloneNode(true);
+      snapshot.removeAttribute('id');
+      snapshot.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
+      snapshot.classList.add('calendar-slide-snapshot');
+      snapshot.setAttribute('aria-hidden', 'true');
+      snapshot.inert = true;
+      if (forward) calendar.next(); else calendar.prev();
+      const incoming = document.createElement('div');
+      incoming.className = 'calendar-slide-incoming';
+      incoming.append(...calendarElement.childNodes);
+      calendarElement.append(incoming, snapshot);
+      calendarElement.classList.add('calendar-sliding');
+      calendarElement.setAttribute('aria-busy', 'true');
+      const direction = forward ? -1 : 1;
+      const options = { duration: 200, easing: 'ease-out', fill: 'both' };
+      const animations = [
+        snapshot.animate([{ transform: 'translateX(0)' }, { transform: `translateX(${direction * 100}%)` }], options),
+        incoming.animate([{ transform: `translateX(${-direction * 100}%)` }, { transform: 'translateX(0)' }], options)
+      ];
+      const transition = { incoming, snapshot, animations };
+      monthTransition = transition;
+      Promise.all(animations.map(animation => animation.finished)).then(() => {
+        if (monthTransition === transition) finishMonthTransition();
+      }).catch(() => {
+        if (monthTransition === transition) finishMonthTransition();
+      });
+    }
+    window.addEventListener('resize', finishMonthTransition);
+    reducedMotion.addEventListener('change', finishMonthTransition);
     let swipe = null, suppressClickUntil = 0;
     calendarElement.addEventListener('pointerdown', event => {
+      if (monthTransition) { swipe = null; return; }
       // A new deliberate tap/click must never be swallowed after a swipe.
       suppressClickUntil = 0;
       if (event.pointerType !== 'touch' || !event.isPrimary || mode === 'list') {
@@ -175,14 +225,19 @@
     calendarElement.addEventListener('pointerup', event => {
       const gesture = swipe;
       swipe = null;
-      if (!gesture || gesture.id !== event.pointerId || !calendar || mode === 'list') return;
+      if (monthTransition || !gesture || gesture.id !== event.pointerId || !calendar || mode === 'list') return;
       const dx = event.clientX - gesture.x, dy = Math.abs(event.clientY - gesture.y);
       if (Math.abs(dx) < 60 || Math.abs(dx) < dy * 1.5) return;
       suppressClickUntil = window.performance.now() + 400;
       // Navigate once at release, using datesSet's existing URL synchronization.
-      if (dx < 0) calendar.next(); else calendar.prev();
+      slideMonth(dx < 0);
     }, { passive: true });
     calendarElement.addEventListener('click', event => {
+      if (monthTransition) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        return;
+      }
       if (event.detail !== 0 && window.performance.now() < suppressClickUntil) {
         suppressClickUntil = 0;
         event.preventDefault();
@@ -418,6 +473,7 @@
       return true;
     }
     function setMode(nextMode, push = true) {
+      finishMonthTransition();
       switchingMode = true;
       const prevMode = mode;
       mode = initialMode(nextMode, smallScreen.matches);
@@ -452,6 +508,7 @@
     window.addEventListener('popstate', () => setMode(fromUrl().searchParams.get('view'), false));
     return {
       sync(events) {
+        finishMonthTransition();
         filtered = events;
         const selection = dependencies.getSelectedYears().slice().sort().join(',');
         if (calendar) {

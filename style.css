@@ -922,6 +922,10 @@ button, input, select, textarea {
 #calendar-panel { min-width: 0; padding: 14px; background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-md); }
 .calendar-note { margin: 0 0 12px; font-size: 0.8rem; color: var(--text-muted); }
 #event-calendar { --fc-border-color: #e2e8f0; --fc-button-bg-color: #0284c7; --fc-button-border-color: #0284c7; --fc-today-bg-color: #f0f9ff; }
+#event-calendar.calendar-sliding { position: relative; overflow: hidden; }
+.calendar-slide-incoming { width: 100%; pointer-events: none; }
+.calendar-slide-snapshot { position: absolute; inset: 0 auto auto 0; width: 100%; margin: 0; pointer-events: none; background: #fff; }
+#event-calendar.calendar-sliding .fc-header-toolbar { position: static; }
 #event-calendar { touch-action: pan-y pinch-zoom; }
 #event-calendar .fc-toolbar-title { font-size: 1.25rem; }
 #event-calendar .fc-button { font-size: 0.8rem; }
