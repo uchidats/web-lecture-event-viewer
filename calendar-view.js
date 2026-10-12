@@ -64,6 +64,60 @@
   function formatCompactDate(date, isHoliday = false) {
     return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日（${'日月火水木金土'[date.getDay()]}${isHoliday ? '・祝' : ''}）`;
   }
+  function createHeadingNodes(headingInfo, textId, doc = (typeof document !== 'undefined' ? document : null)) {
+    if (!doc) return [];
+    const nodes = [];
+    if (headingInfo.isRange) {
+      const startSpan = doc.createElement('span');
+      startSpan.className = 'compact-date compact-date-start';
+      if (headingInfo.start.colorClass) startSpan.classList.add(headingInfo.start.colorClass);
+      startSpan.textContent = headingInfo.startLabel;
+      if (textId) startSpan.id = textId;
+      nodes.push(startSpan);
+
+      const sepSpan = doc.createElement('span');
+      sepSpan.className = 'compact-date-separator';
+      sepSpan.textContent = '〜';
+      nodes.push(sepSpan);
+
+      const endSpan = doc.createElement('span');
+      endSpan.className = 'compact-date compact-date-end';
+      if (headingInfo.end.colorClass) endSpan.classList.add(headingInfo.end.colorClass);
+      endSpan.textContent = headingInfo.endLabel;
+      nodes.push(endSpan);
+    } else {
+      const dateSpan = doc.createElement('span');
+      dateSpan.className = 'compact-date';
+      if (headingInfo.start.colorClass) dateSpan.classList.add(headingInfo.start.colorClass);
+      dateSpan.textContent = headingInfo.startLabel;
+      if (textId) dateSpan.id = textId;
+      nodes.push(dateSpan);
+    }
+    for (const h of headingInfo.holidays) {
+      const holiday = doc.createElement('small');
+      holiday.className = 'calendar-holiday-name';
+      holiday.textContent = h.name;
+      nodes.push(holiday);
+    }
+    return nodes;
+  }
+  function eventDurationDays(event) {
+    const start = Date.parse(event.date);
+    const end = Date.parse(event.endDate || event.date);
+    return Math.max(1, Math.round((end - start) / 86400000) + 1);
+  }
+  function compareCompactEvents(a, b, originalOrderMap) {
+    if (a.date !== b.date) return a.date.localeCompare(b.date);
+    const durA = eventDurationDays(a);
+    const durB = eventDurationDays(b);
+    if (durA !== durB) return durA - durB;
+    if (originalOrderMap) {
+      const idxA = originalOrderMap.get(a) ?? Number.MAX_SAFE_INTEGER;
+      const idxB = originalOrderMap.get(b) ?? Number.MAX_SAFE_INTEGER;
+      return idxA - idxB;
+    }
+    return 0;
+  }
   function toCalendarEvent(event) {
     // Date-only strings preserve official local conference dates in every timezone.
     // The same adapter can later supply timed seminar instances separately.
@@ -206,6 +260,84 @@
         }
       });
     }
+    let headerSyncFrame = null;
+    function scheduleSyncCompactHeaders() {
+      if (headerSyncFrame) window.cancelAnimationFrame(headerSyncFrame);
+      headerSyncFrame = window.requestAnimationFrame(() => {
+        headerSyncFrame = null;
+        syncCompactHeaders();
+      });
+    }
+    function getSortedCompactEvents() {
+      const originalOrderMap = new Map(filtered.map((e, idx) => [e, idx]));
+      return filtered.slice().sort((a, b) => compareCompactEvents(a, b, originalOrderMap));
+    }
+    function syncCompactHeaders() {
+      if (mode !== 'compact' || !calendarElement) return;
+      const tbody = calendarElement.querySelector('.fc-list-table tbody');
+      if (!tbody) return;
+
+      tbody.querySelectorAll('tr[data-compact-injected="true"]').forEach(el => el.remove());
+
+      const eventMap = new Map(filtered.map(e => [e.id, e]));
+      let currentNativeDay = null;
+      let lastEventEndDate = null;
+
+      const rows = Array.from(tbody.children);
+      for (const row of rows) {
+        if (row.classList.contains('fc-list-day')) {
+          currentNativeDay = row;
+          lastEventEndDate = null;
+          continue;
+        }
+        if (row.classList.contains('fc-list-event')) {
+          const event = eventMap.get(row.dataset.eventId);
+          if (!event) continue;
+          const eventEndDate = event.endDate || event.date;
+
+          if (lastEventEndDate === null) {
+            lastEventEndDate = eventEndDate;
+            if (currentNativeDay) {
+              const cushion = currentNativeDay.querySelector('.fc-list-day-cushion');
+              if (cushion) {
+                const headingInfo = formatCompactHeading(event.date, event.endDate, holidays);
+                cushion.innerHTML = '';
+                cushion.append(...createHeadingNodes(headingInfo, null, document));
+                if (headingInfo.holidays.length > 0) {
+                  currentNativeDay.classList.add('calendar-holiday');
+                } else {
+                  currentNativeDay.classList.remove('calendar-holiday');
+                }
+              }
+            }
+          } else if (eventEndDate !== lastEventEndDate) {
+            const injectedTr = document.createElement('tr');
+            injectedTr.className = 'fc-list-day';
+            injectedTr.dataset.date = event.date;
+            injectedTr.dataset.compactInjected = 'true';
+
+            const headingInfo = formatCompactHeading(event.date, event.endDate, holidays);
+            if (headingInfo.holidays.length > 0) {
+              injectedTr.classList.add('calendar-holiday');
+            }
+
+            const th = document.createElement('th');
+            th.colSpan = 3;
+            th.scope = 'colgroup';
+
+            const cushion = document.createElement('div');
+            cushion.className = 'fc-list-day-cushion fc-cell-shaded';
+            cushion.append(...createHeadingNodes(headingInfo, null, document));
+
+            th.appendChild(cushion);
+            injectedTr.appendChild(th);
+
+            row.before(injectedTr);
+            lastEventEndDate = eventEndDate;
+          }
+        }
+      }
+    }
     function ensureCalendar() {
       if (calendar) return true;
       if (!window.FullCalendar) {
@@ -224,54 +356,22 @@
         headerToolbar: { left: 'prev,today,next', center: 'title', right: '' },
         buttonIcons: false, buttonText: { today: '今月', prev: '前月', next: '翌月' },
         titleFormat: { year: 'numeric', month: 'long' },
+        eventOrder: 'compactOrder,start,-duration,allDay,title',
         views: {
           listMonth: {
             listDaySideFormat: false,
             dayHeaderContent: info => {
               const dayStr = toDateString(info.date);
-              const dayEvents = filtered.filter(e => e.date === dayStr);
-              const multiDayEvent = dayEvents.find(e => e.endDate && e.endDate !== e.date);
-              const headingInfo = formatCompactHeading(info.date, multiDayEvent ? multiDayEvent.endDate : null, holidays);
-              const nodes = [];
-              if (headingInfo.isRange) {
-                const startSpan = document.createElement('span');
-                startSpan.className = 'compact-date compact-date-start';
-                if (headingInfo.start.colorClass) startSpan.classList.add(headingInfo.start.colorClass);
-                startSpan.textContent = headingInfo.startLabel;
-                if (info.textId) startSpan.id = info.textId;
-                nodes.push(startSpan);
-
-                const sepSpan = document.createElement('span');
-                sepSpan.className = 'compact-date-separator';
-                sepSpan.textContent = '〜';
-                nodes.push(sepSpan);
-
-                const endSpan = document.createElement('span');
-                endSpan.className = 'compact-date compact-date-end';
-                if (headingInfo.end.colorClass) endSpan.classList.add(headingInfo.end.colorClass);
-                endSpan.textContent = headingInfo.endLabel;
-                nodes.push(endSpan);
-              } else {
-                const dateSpan = document.createElement('span');
-                dateSpan.className = 'compact-date';
-                if (headingInfo.start.colorClass) dateSpan.classList.add(headingInfo.start.colorClass);
-                dateSpan.textContent = headingInfo.startLabel;
-                if (info.textId) dateSpan.id = info.textId;
-                nodes.push(dateSpan);
-              }
-              for (const h of headingInfo.holidays) {
-                const holiday = document.createElement('small');
-                holiday.className = 'calendar-holiday-name';
-                holiday.textContent = h.name;
-                nodes.push(holiday);
-              }
-              return { domNodes: nodes };
+              const dayEvents = getSortedCompactEvents().filter(e => e.date === dayStr);
+              const firstEvent = dayEvents[0];
+              const headingInfo = formatCompactHeading(info.date, firstEvent ? firstEvent.endDate : null, holidays);
+              return { domNodes: createHeadingNodes(headingInfo, info.textId, document) };
             },
             dayHeaderDidMount: info => {
               const dayStr = toDateString(info.date);
-              const dayEvents = filtered.filter(e => e.date === dayStr);
-              const multiDayEvent = dayEvents.find(e => e.endDate && e.endDate !== e.date);
-              const headingInfo = formatCompactHeading(info.date, multiDayEvent ? multiDayEvent.endDate : null, holidays);
+              const dayEvents = getSortedCompactEvents().filter(e => e.date === dayStr);
+              const firstEvent = dayEvents[0];
+              const headingInfo = formatCompactHeading(info.date, firstEvent ? firstEvent.endDate : null, holidays);
               if (headingInfo.holidays.length > 0) info.el.classList.add('calendar-holiday');
             }
           }
@@ -280,15 +380,33 @@
         editable: false, dayMaxEvents: 3, displayEventTime: false,
         events: (_info, success) => {
           const isCompact = mode === 'compact';
-          success(filtered.map(isCompact ? toCompactCalendarEvent : toCalendarEvent));
+          if (isCompact) {
+            const sorted = getSortedCompactEvents();
+            const fcEvents = sorted.map((event, index) => {
+              const fcEvent = toCompactCalendarEvent(event);
+              fcEvent.extendedProps.compactOrder = index;
+              return fcEvent;
+            });
+            success(fcEvents);
+          } else {
+            success(filtered.map(toCalendarEvent));
+          }
         },
         eventClick: info => { info.jsEvent.preventDefault(); openDetail(info.event.id); },
-        eventDidMount: info => { info.el.title = info.event.title; info.el.dataset.eventId = info.event.id; },
+        eventDidMount: info => {
+          info.el.title = info.event.title;
+          info.el.dataset.eventId = info.event.id;
+          if (mode === 'compact') scheduleSyncCompactHeaders();
+        },
         dayCellClassNames: info => (holidayName(info.date) ? ['calendar-holiday'] : []),
         dayCellDidMount: info => mountHoliday(info, '.fc-daygrid-day-top'),
         datesSet: () => {
           syncGridHolidays();
+          if (mode === 'compact') scheduleSyncCompactHeaders();
           if (initialized && mode !== 'list' && !switchingMode) updateUrl();
+        },
+        windowResize: () => {
+          if (mode === 'compact') scheduleSyncCompactHeaders();
         }
       });
       calendar.render();
@@ -317,6 +435,7 @@
         }
         if (!push && targetMonth) calendar.gotoDate(targetMonth);
         calendar.updateSize();
+        if (mode === 'compact') scheduleSyncCompactHeaders();
       }
       switchingMode = false;
       if (push) updateUrl(true);
@@ -350,7 +469,16 @@
       getMode: () => mode
     };
   }
-  const api = { toCalendarEvent, toCompactCalendarEvent, nextDate, initialMode, formatCompactDate, formatCompactHeading };
+  const api = {
+    toCalendarEvent,
+    toCompactCalendarEvent,
+    nextDate,
+    initialMode,
+    formatCompactDate,
+    formatCompactHeading,
+    eventDurationDays,
+    compareCompactEvents
+  };
   let view;
   api.init = dependencies => { view = createView(root.document, root, dependencies); };
   api.sync = events => view?.sync(events);
