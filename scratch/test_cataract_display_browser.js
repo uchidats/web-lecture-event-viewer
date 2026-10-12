@@ -106,14 +106,14 @@ async function main() {
         assert.deepEqual(await evaluate('getFilteredEvents().map(e=>e.id).sort()'),expected);
         if(mode==='list') {
           assert.deepEqual(await evaluate('[...elements.eventList.querySelectorAll(".event-card")].map(e=>e.dataset.id).sort()'),expected);
-          assert.equal(await evaluate('Array.from(elements.eventList.querySelectorAll(".event-specialty-labels strong"),e=>e.textContent).filter(v=>v==='+JSON.stringify(display)+').length'),15);
+          assert.equal(await evaluate('Array.from(elements.eventList.querySelectorAll(".event-specialty-labels strong, .conf-classification-val .category, .conf-classification-val .specialty"),e=>e.textContent).filter(v=>v==='+JSON.stringify(display)+').length'),15);
           assert.ok(await evaluate('Array.from(elements.eventList.querySelectorAll(".conf-category-badge.category"),e=>e.textContent).every(v=>v==='+JSON.stringify(display)+')'));
         } else {
           assert.deepEqual(await evaluate('OphthalCalendarView.getCalendar().getEvents().map(e=>e.id).sort()'),expected);
           await evaluate('OphthalCalendarView.getCalendar().gotoDate(state.events.find(e=>e.id==="oph-010").date)');
           await evaluate('new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))');
           await evaluate(`document.querySelector('.fc-event[data-event-id="oph-010"]').click()`);
-          assert.equal(await evaluate('document.querySelector("#calendar-event-detail .event-specialty-labels strong").textContent'),display);
+          assert.equal(await evaluate('document.querySelector("#calendar-event-detail .event-specialty-labels strong, #calendar-event-detail .conf-classification-val .category").textContent'),display);
           assert.equal(await evaluate('document.querySelector("#calendar-event-detail .conf-category-badge.category").textContent'),display);
           await evaluate('document.getElementById("calendar-event-close").click()');
         }

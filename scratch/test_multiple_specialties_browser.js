@@ -109,13 +109,13 @@ async function main() {
           assert.deepEqual(await evaluate('getFilteredEvents().map(e=>e.id).sort()'),expected);
           if(mode==='list') {
             assert.deepEqual(await evaluate('[...elements.eventList.querySelectorAll(".event-card")].map(e=>e.dataset.id).sort()'),expected);
-            assert.deepEqual(await evaluate(`[...document.querySelector('[data-id="`+joint+`"] .event-specialty-labels').children].map(e=>e.textContent)`),[displayLabel,other]);
+            assert.deepEqual(await evaluate(`[...document.querySelector('[data-id="`+joint+`"] .conf-classification-val').querySelectorAll('.category,.specialty')].map(e=>e.textContent)`),[displayLabel,other]);
           } else {
             assert.deepEqual(await evaluate('OphthalCalendarView.getCalendar().getEvents().map(e=>e.id).sort()'),expected);
             await evaluate('OphthalCalendarView.getCalendar().gotoDate(state.events.find(e=>e.id==='+JSON.stringify(joint)+').date)');await evaluate('new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))');
             assert.equal(await evaluate(`document.querySelectorAll('.fc-event[data-event-id="`+joint+`"]').length`),1);
             await evaluate(`document.querySelector('.fc-event[data-event-id="`+joint+`"]').click()`);
-            assert.deepEqual(await evaluate('Array.from(document.querySelectorAll("#calendar-event-detail .event-specialty-labels strong"),e=>e.textContent)'),[displayLabel,other]);
+            assert.deepEqual(await evaluate('Array.from(document.querySelectorAll("#calendar-event-detail .conf-classification-val .category, #calendar-event-detail .conf-classification-val .specialty"),e=>e.textContent)'),[displayLabel,other]);
             assert.equal(await evaluate('document.querySelector("#calendar-event-detail .conf-category-badge.category").textContent'), displayLabel);
             await evaluate('document.getElementById("calendar-event-close").click()');
           }

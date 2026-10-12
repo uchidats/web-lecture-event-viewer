@@ -106,7 +106,7 @@ async function main() {
         assert.deepEqual(await evaluate('getFilteredEvents().map(e=>e.id).sort()'),expectedIds);
         if(mode==='list') {
           assert.deepEqual(await evaluate('[...elements.eventList.querySelectorAll(".event-card")].map(e=>e.dataset.id).sort()'),expectedIds);
-          assert.ok(await evaluate(`[...elements.eventList.querySelectorAll('.card-meta-item strong')].filter(e=>e.textContent===getSpecialtyDisplayLabel(`+JSON.stringify(category)+`)).length===6`));
+          assert.ok(await evaluate(`[...elements.eventList.querySelectorAll('.card-meta-item strong, .conf-classification-val .category, .conf-classification-val .specialty')].filter(e=>e.textContent===getSpecialtyDisplayLabel(`+JSON.stringify(category)+`)).length===6`));
           assert.ok(await evaluate(`[...elements.eventList.querySelectorAll('.conf-category-badge.category')].every(e=>e.textContent===getConferenceCategoryDisplayLabel(`+JSON.stringify(category)+`))`));
         } else assert.deepEqual(await evaluate('OphthalCalendarView.getCalendar().getEvents().map(e=>e.id).sort()'),expectedIds);
         assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth+1'));

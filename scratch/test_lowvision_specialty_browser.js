@@ -99,7 +99,7 @@ async function main() {
         assert.deepEqual(await evaluate('getFilteredEvents().map(e=>e.id).sort()'),expectedIds);
         if(mode==='list') {
           assert.deepEqual(await evaluate('[...elements.eventList.querySelectorAll(".event-card")].map(e=>e.dataset.id).sort()'),expectedIds);
-          assert.ok(await evaluate(`[...elements.eventList.querySelectorAll('.card-meta-item strong')].filter(e=>e.textContent===`+JSON.stringify(category)+`).length===2`));
+          assert.ok(await evaluate(`[...elements.eventList.querySelectorAll('.card-meta-item strong, .conf-classification-val .category, .conf-classification-val .specialty')].filter(e=>e.textContent===`+JSON.stringify(category)+`).length===2`));
         } else assert.deepEqual(await evaluate('OphthalCalendarView.getCalendar().getEvents().map(e=>e.id).sort()'),expectedIds);
         assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth+1'));
       }

@@ -2124,6 +2124,7 @@ function createEventCardHtml(event) {
   const isNotAttended = historyStatus === "not_attended";
 
   // 学会（国内学会・国際学会）特有の表示ブロック
+  const hasTopConferenceClassification = Boolean(event.isConference && (event.conferenceCategory || event.conferenceRegion));
   let conferenceBlockHtml = "";
   if (event.isConference) {
     conferenceBlockHtml = `
@@ -2207,6 +2208,7 @@ function createEventCardHtml(event) {
           <span class="conf-val conf-classification-val">
             <span class="conf-category-badge region">${event.conferenceRegion === 'international' ? '国際学会' : '国内学会'}</span>
             ${event.conferenceCategory ? `<span class="conf-category-badge category">${escapeHtml(getConferenceCategoryDisplayLabel(event.conferenceCategory))}</span>` : ''}
+            ${getEventSpecialties(event).filter(value => getSpecialtyDisplayLabel(value) !== getConferenceCategoryDisplayLabel(event.conferenceCategory)).map(value => `<span class="conf-category-badge specialty">${escapeHtml(getSpecialtyDisplayLabel(value))}</span>`).join('')}
           </span>
         </div>
         ` : ''}
@@ -2300,6 +2302,7 @@ function createEventCardHtml(event) {
 
       <!-- メタ情報: 診療領域・共催・取得単位 -->
       <div class="card-meta-list">
+        ${hasTopConferenceClassification ? '' : `
         <div class="card-meta-item">
           <span class="card-meta-label">専門領域:</span>
           <span class="event-specialty-labels">${getEventSpecialties(event).map(value => `<strong>${escapeHtml(getSpecialtyDisplayLabel(value))}</strong>`).join('')}</span>
@@ -2308,6 +2311,7 @@ function createEventCardHtml(event) {
           <span class="card-meta-label">種別:</span>
           <span>${escapeHtml(getEventTypeDisplayLabel(event.eventType))}</span>
         </div>
+        `}
         <div class="card-meta-item">
           <span class="card-meta-label">主催/共催:</span>
           <span>${escapeHtml(event.sponsor)}</span>
