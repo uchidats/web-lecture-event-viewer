@@ -16,7 +16,7 @@
  *  - venueId: 任意。venues.js の安定ID（未指定の場合は venue を使用）
  *  - timeZone: 任意。IANAタイムゾーン名（会場マスター未登録の場合にも使用可能）
  *  - venue: 開催会場（未定の場合は "未定"）
- *  - specialty: 専門領域（総合/網膜・硝子体/緑内障/白内障/角膜・外眼部/小児・斜視弱視/神経眼科/眼形成/その他）
+ *  - specialty: 専門領域（総合/網膜・硝子体/緑内障/白内障/角膜・外眼部/小児・斜視弱視/神経眼科/眼形成/眼光学CL近視/その他）
  *  - eventType: "国内学会" | "海外学会" | "講演会・勉強会" | "地方会・研究会"
  *  - format: "現地" | "Web" | "ハイブリッド"
  *  - sponsor: 主催・共催団体
@@ -2386,7 +2386,7 @@ const sampleEvents = [
     "time": "全日程",
     "region": "関東",
     "venue": "高輪ゲートウェイコンベンションセンター",
-    "specialty": "その他",
+    "specialty": "眼光学CL近視",
     "eventType": "国内学会",
     "format": "現地",
     "sponsor": "日本近視学会",
@@ -2593,7 +2593,7 @@ const sampleEvents = [
     "time": "全日程",
     "region": "関東",
     "venue": "東京建物 ぴあ シアター＆カンファレンス",
-    "specialty": "その他",
+    "specialty": "眼光学CL近視",
     "eventType": "国内学会",
     "format": "現地",
     "sponsor": "日本コンタクトレンズ学会",
@@ -2644,7 +2644,7 @@ const sampleEvents = [
     "time": "全日程",
     "region": "関東",
     "venue": "御茶ノ水ソラシティカンファレンスセンター",
-    "specialty": "その他",
+    "specialty": "眼光学CL近視",
     "eventType": "国内学会",
     "format": "現地",
     "sponsor": "日本眼光学学会",
@@ -3886,7 +3886,7 @@ const sampleEvents = [
     "time": "全日程",
     "region": "関西",
     "venue": "コングレコンベンションセンター（グランフロント大阪）",
-    "specialty": "その他",
+    "specialty": "眼光学CL近視",
     "eventType": "国内学会",
     "format": "現地",
     "sponsor": "日本近視学会",
@@ -4085,7 +4085,7 @@ const sampleEvents = [
     "time": "全日程",
     "region": "九州・沖縄",
     "venue": "未定",
-    "specialty": "その他",
+    "specialty": "眼光学CL近視",
     "eventType": "国内学会",
     "format": "現地",
     "sponsor": "日本眼光学学会",
@@ -4236,7 +4236,7 @@ const sampleEvents = [
     "time": "全日程",
     "region": "関西",
     "venue": "神戸国際会議場",
-    "specialty": "その他",
+    "specialty": "眼光学CL近視",
     "eventType": "国内学会",
     "format": "現地",
     "sponsor": "日本コンタクトレンズ学会",
