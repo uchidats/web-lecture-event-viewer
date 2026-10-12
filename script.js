@@ -1373,6 +1373,10 @@ function setupEventListeners() {
 
   // モバイルメニュー開閉
   const toggleSidebar = (open) => {
+    if (open && window.matchMedia('(min-width: 981px)').matches) {
+      elements.keywordSearch.focus({ preventScroll: true });
+      return;
+    }
     elements.filterSidebar.classList.toggle("open", open);
     elements.filterBackdrop.classList.toggle("open", open);
     document.body.style.overflow = open ? "hidden" : "";
@@ -1766,6 +1770,7 @@ function renderEvents() {
 /**
  * 適用中フィルタータグの描画
  */
+let activeFilterChipOrder = [];
 function renderActiveFilterChips() {
   const chips = [];
   state.filters.company.forEach(id => {
@@ -1819,6 +1824,15 @@ function renderActiveFilterChips() {
   if (state.filters.includeEndedConferences) {
     chips.push({ group: "includeEndedConferences", label: "終了した学会も表示", value: "true" });
   }
+
+  const chipKey = chip => JSON.stringify([chip.group, chip.value]);
+  const activeKeys = new Set(chips.map(chipKey));
+  activeFilterChipOrder = activeFilterChipOrder.filter(key => activeKeys.has(key));
+  chips.forEach(chip => {
+    const key = chipKey(chip);
+    if (!activeFilterChipOrder.includes(key)) activeFilterChipOrder.push(key);
+  });
+  chips.sort((a, b) => activeFilterChipOrder.indexOf(chipKey(a)) - activeFilterChipOrder.indexOf(chipKey(b)));
 
   if (chips.length === 0) {
     elements.activeFilterChips.innerHTML = "";

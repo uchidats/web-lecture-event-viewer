@@ -822,6 +822,10 @@ button, input, select, textarea {
   gap: 8px;
   align-items: center;
 }
+.filter-trigger-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; width: 100%; min-width: 0; grid-column: 1 / -1; grid-row: 3; }
+.filter-trigger-row .active-chips-bar { display: contents; }
+.filter-trigger-row .active-filter-badge { max-width: 100%; overflow-wrap: anywhere; }
+.filter-trigger-row #mobile-filter-btn { flex-shrink: 0; }
 
 .active-filter-badge {
   display: inline-flex;
@@ -1008,7 +1012,9 @@ button, input, select, textarea {
   .app-header.is-compact .brand-logo,
   .app-header.is-compact .brand-subtitle,
   .app-header.is-compact .beta-badge,
-  .app-header.is-compact .header-actions > :not(#mobile-filter-btn) { display: none !important; }
+  .app-header.is-compact .header-actions > :not(.filter-trigger-row) { display: none !important; }
+  .app-header.is-compact .filter-trigger-row { width: auto; flex-wrap: nowrap; }
+  .app-header.is-compact .filter-trigger-row .active-chips-bar { display: none; }
   .app-header.is-compact .header-actions { display: flex; width: auto; }
   .app-header.is-compact .header-actions #mobile-filter-btn {
     width: auto; min-height: 36px; padding: 6px 10px; font-size: 0.8rem;
