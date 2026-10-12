@@ -2203,6 +2203,7 @@ function createEventCardHtml(event) {
           <span class="conf-label conf-city-label">${getEventCityDisplay(event).label === "開催都市・国" ? '<span class="city-label-full">開催都市・国：</span><span class="city-label-mobile">都市：</span>' : `${getEventCityDisplay(event).label}：`}</span>
           <span class="conf-val">${escapeHtml(getEventCityDisplay(event).value)}</span>
         </div>
+        ${event.conferenceChair ? `<div class="conf-item conf-item-full"><span class="conf-label">会長:</span><span class="conf-val">${escapeHtml(event.conferenceChair)}</span></div>` : ''}
         ${event.conferenceCategory || event.conferenceRegion ? `
         <div class="conf-item conf-item-full">
           <span class="conf-label">学会分類:</span>
@@ -2213,7 +2214,6 @@ function createEventCardHtml(event) {
           </span>
         </div>
         ` : ''}
-        ${event.conferenceChair ? `<div class="conf-item conf-item-full"><span class="conf-label">会長:</span><span class="conf-val">${escapeHtml(event.conferenceChair)}</span></div>` : ''}
         <div class="conf-deadlines-row">
           <div class="conf-item">
             <span class="conf-label">演題募集:</span>

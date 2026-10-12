@@ -111,7 +111,14 @@ async function main() {
           const result=await evaluate('(() => {const card=document.querySelector('+JSON.stringify(selector)+');return {labels:Array.from(card.querySelectorAll(".card-meta-label"),e=>e.textContent),top:!!card.querySelector(".conf-classification-val"),classification:Array.from(card.querySelectorAll(".conf-classification-val .conf-category-badge"),e=>e.textContent),sponsor:card.querySelector(".card-meta-list").textContent, fits:card.scrollWidth<=card.clientWidth+1,pageFits:document.documentElement.scrollWidth<=innerWidth+1};})()');
           const specialty=String.fromCharCode(23554,38272,38936,22495)+':',type=String.fromCharCode(31278,21029)+':',sponsor=String.fromCharCode(20027,20652)+'/'+String.fromCharCode(20849,20652)+':';
           assert.equal(result.labels.includes(specialty),id===webinar);assert.equal(result.labels.includes(type),id===webinar);assert.ok(result.labels.includes(sponsor));assert.equal(result.top,id!==webinar);assert.ok(result.fits);assert.ok(result.pageFits);if(id===aao)assert.ok(result.sponsor.includes('American Academy of Ophthalmology'));
-          if(id==='conf-jp-pediatric-2027') {assert.equal(result.classification.filter(label=>label==='小児・斜視弱視').length,1);assert.ok(!result.classification.includes('小児斜視'));}
+          if(id==='conf-jp-pediatric-2027') {
+            assert.equal(result.classification.filter(label=>label==='小児・斜視弱視').length,1);assert.ok(!result.classification.includes('小児斜視'));
+            const order=await evaluate('Array.from(document.querySelector('+JSON.stringify(selector)+').querySelectorAll(".conf-label"),e=>e.textContent)');
+            const period=order.indexOf('会期:'),chair=order.indexOf('会長:'),category=order.indexOf('学会分類:'),abstract=order.indexOf('演題募集:');
+            assert.equal(chair,period+2,'City row precedes chair');assert.equal(category,chair+1);assert.ok(abstract>category);
+            const withoutChair=await evaluate('createEventCardHtml({...state.events.find(e=>e.id==='+JSON.stringify(id)+'),conferenceChair:""})');
+            assert.ok(!withoutChair.includes('>会長:</span>'),'Missing chair has no row');
+          }
           if(mode!=='list')await evaluate('document.getElementById("calendar-event-close").click()');
         }
       }
