@@ -60,12 +60,24 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
   const groups = new Map();
   const registrations = candidates.filter(c => c.field === 'registration');
   const multipleRegistrations = new Set(registrations.filter(c => validRegistration(c.value, limits)).map(c => registrationKey(c.value))).size > 1;
-  for (const candidate of candidates) {
+  for (const originalCandidate of candidates) {
+    const candidate = {...originalCandidate};
     if (!fields.has(candidate.field)) { reject(candidate, 'protected-or-unknown-field'); continue; }
     if (candidate.value === null || candidate.value === undefined || candidate.value === '') { reject(candidate, 'missing-value-never-deletes'); continue; }
     if (candidate.field === 'registration') {
       if (!trustedUrl(candidate.url, source)) { reject(candidate, 'untrusted-evidence-url'); continue; }
+      if (candidate.value?.periods?.some(period=>period.sourceUrl&&!trustedUrl(period.sourceUrl,source))) { reject(candidate,'untrusted-evidence-url');continue; }
       if (!validRegistration(candidate.value, limits)) { reject(candidate, 'invalid-registration'); continue; }
+      // Older extractors omit metadata; omission must not erase reviewed phase semantics.
+      if (event.registration) {
+        candidate.value = {...candidate.value, periods:candidate.value.periods.map(period=>{
+          const stored=event.registration.periods.find(old=>compact(old.label).toLowerCase()===compact(period.label).toLowerCase());
+          const merged={...period};
+          for(const key of ['category','advanceEligible','sourceUrl'])if(merged[key]===undefined&&stored?.[key]!==undefined)merged[key]=stored[key];
+          return merged;
+        })};
+        for(const key of ['version','timeZone'])if(candidate.value[key]===undefined&&event.registration[key]!==undefined)candidate.value[key]=event.registration[key];
+      }
       const expectedType = event.conferenceRegion === 'international' ? 'international' : 'domestic';
       if (candidate.value.type !== expectedType) { reject(candidate, 'registration-type-conflict'); continue; }
       const periods = candidate.value.periods;

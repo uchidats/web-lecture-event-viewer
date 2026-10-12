@@ -1,0 +1,20 @@
+# 参加登録期間の互換レイヤー
+
+`registration.periods[]` の `label`（公式表記）、`start`、`deadline` を維持し、任意の `category`（early / regular / onsite / null）、`advanceEligible`（true / false / null）、`sourceUrl` を追加する。`registration.version: 2` と `timeZone` も任意。分類・事前登録対象が不明なときは null とし、順番だけで第1次・第2次を分類しない。
+
+構造化データがあれば旧 `earlyRegistrationDeadline` / `earlyBirdDeadline` より優先する。旧値は削除せず、明示された旧日付のみ表示時に互換投影する。「未定」「締切済」から架空の期間を作らない。旧形式の明確な公式ラベルによる分類は読み取り時のみで、データへ書き戻さない。
+
+カードと並び替えは `getRegistrationState` を共用する。事前登録対象が true で、有効な未終了の締切の最小値を採用し、開始前の期間も次の期限に含める。カードはその1期間だけ表示する。事前期限がなければ、受付中または開始予定の確認済み期間を1件表示し、確認済み事前期限が終了していれば終了を併記する。全期間終了なら最新の終了期間を表示する。
+
+日付だけの締切は対象タイムゾーンの当日末まで有効。時刻付きはその時刻まで有効。オフセット付き日時は絶対時刻で比較する。タイムゾーン未指定の旧形式は既存UIに合わせAsia/Tokyoとして扱う。海外の現地時刻は公式のタイムゾーン確認後に明示する。
+
+並び順は未締切、締切済み、不明の順。同日の期限でも時刻が明記されていれば時刻順、同一日時は開催日順。締切済み同士は最新の期限順。onsite と advanceEligible=false / 未確認の期間は事前期限の対象外。
+
+監視の比較キーには category、advanceEligible、sourceUrl、timeZone を含める。旧抽出器が任意属性を省略した場合は、同じ公式ラベルの確認済み属性を保持する。明示的な変更はレビュー対象とし、自動適用しない。各sourceUrlも登録済み公式情報ソースとの一致を検証する。
+
+## 今回確認した2件（2026-10-13）
+
+- [第65回日本網膜硝子体学会・参加登録](https://convention.jtbcom.co.jp/65moumaku/join/index.html)：事前参加登録は2026-05-19正午～10-16、直前・当日登録は11-12正午～12-06。前者 regular / true、後者 onsite / false。公式名称・期間を保持する。
+- [第38回日本眼瞼義眼床手術学会・参加登録](https://convention.jtbcom.co.jp/gigan38/join/index.html)：事前登録は2026-10-08正午～2027-01-08、追加登録は2027-01-15正午～02-20。前者 regular / true、追加登録のcategoryとadvanceEligibleはnull。追加登録を「当日登録」と推測しない。
+
+新しい期間や料金額は今回追加していない。他のイベントの一括移行も行っていない。

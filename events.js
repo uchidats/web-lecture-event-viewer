@@ -1158,14 +1158,22 @@ const sampleEvents = [
         {
           "label": "事前参加登録",
           "start": "2026-05-19T12:00",
-          "deadline": "2026-10-16"
+          "deadline": "2026-10-16",
+          "category": "regular",
+          "advanceEligible": true,
+          "sourceUrl": "https://convention.jtbcom.co.jp/65moumaku/join/index.html"
         },
         {
           "label": "直前・当日登録",
           "start": "2026-11-12T12:00",
-          "deadline": "2026-12-06"
+          "deadline": "2026-12-06",
+          "category": "onsite",
+          "advanceEligible": false,
+          "sourceUrl": "https://convention.jtbcom.co.jp/65moumaku/join/index.html"
         }
-      ]
+      ],
+      "version": 2,
+      "timeZone": "Asia/Tokyo"
     },
     "subtitle": "網膜硝子体疾患の病態解明と外科・内科的治療革新",
     "date": "2026-12-04",
@@ -1580,14 +1588,22 @@ const sampleEvents = [
         {
           "label": "事前登録",
           "start": "2026-10-08T12:00",
-          "deadline": "2027-01-08"
+          "deadline": "2027-01-08",
+          "category": "regular",
+          "advanceEligible": true,
+          "sourceUrl": "https://convention.jtbcom.co.jp/gigan38/join/index.html"
         },
         {
           "label": "追加登録",
           "start": "2027-01-15T12:00",
-          "deadline": "2027-02-20"
+          "deadline": "2027-02-20",
+          "category": null,
+          "advanceEligible": null,
+          "sourceUrl": "https://convention.jtbcom.co.jp/gigan38/join/index.html"
         }
-      ]
+      ],
+      "version": 2,
+      "timeZone": "Asia/Tokyo"
     }
   },
   {

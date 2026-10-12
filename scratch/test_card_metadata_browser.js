@@ -107,7 +107,7 @@ async function main() {
       const webinar=await evaluate('state.events.find(e=>!e.isConference&&!e.parentConferenceId&&e.specialty===String.fromCharCode(32209,20869,38556)).id');
       for(const mode of ['list','calendar','compact']) {
         await evaluate('document.getElementById("view-'+mode+'").click()');
-        for(const id of [aao,webinar,'conf-jp-pediatric-2027','conf-jp-myopia-2028','conf-jp-cornea-2026']) {
+        for(const id of [aao,webinar,'conf-jp-pediatric-2027','conf-jp-myopia-2028','conf-jp-cornea-2026','conf-jp-jrvs-2026','conf-jp-eyelid-2027']) {
           if(mode==='calendar'&&id==='conf-jp-cornea-2026')continue; // Pre-October ended events are outside monthly calendar history.
           let selector='[data-id="'+id+'"]';
           if(mode!=='list') {
@@ -121,6 +121,10 @@ async function main() {
           if(id===aao||id===webinar) {
             const description=await evaluate('(() => {const event=state.events.find(e=>e.id==='+JSON.stringify(id)+');return {shown:document.querySelector('+JSON.stringify(selector)+').querySelector(".card-desc").textContent,original:event.description};})()');
             assert.equal(description.shown,id===aao&&description.original.endsWith('。')?description.original.slice(0,-1):description.original);
+          }
+          if(id==='conf-jp-jrvs-2026'||id==='conf-jp-eyelid-2027') {
+            const registration=await evaluate('(() => {const event=state.events.find(e=>e.id==='+JSON.stringify(id)+');const rows=Array.from(document.querySelector('+JSON.stringify(selector)+').querySelectorAll(".conf-registration-period"));return {labels:rows.map(e=>e.querySelector(".conf-label").textContent),expected:getRegistrationState(event).display.label+"：",fits:rows.every(e=>e.scrollWidth<=e.clientWidth+1)};})()');
+            assert.deepEqual(registration.labels,[registration.expected]);assert.ok(registration.fits,'Single next registration phase fits');
           }
           const abstractChip=await evaluate('(() => {const card=document.querySelector('+JSON.stringify(selector)+');const link=card.querySelector(".abstract-submit-link"),badge=card.querySelector(".conf-category-badge.region");if(!link||!badge)return null;const measure=e=>{const s=getComputedStyle(e);return {height:e.getBoundingClientRect().height,padding:s.padding,borderRadius:s.borderRadius,fontSize:s.fontSize};};const status=card.querySelector(".abstract-status-tag.closed");return {link:measure(link),badge:measure(badge),href:link.getAttribute("href"),expected:state.events.find(e=>e.id==='+JSON.stringify(id)+').abstractSubmission.url,external:link.textContent.includes("↗"),target:link.target,aligned:!status||Math.abs(status.getBoundingClientRect().y+status.getBoundingClientRect().height/2-link.getBoundingClientRect().y-link.getBoundingClientRect().height/2)<1};})()');
           if(abstractChip){assert.deepEqual(abstractChip.link,abstractChip.badge,'Abstract and category chip dimensions match');assert.equal(abstractChip.href,abstractChip.expected);assert.equal(abstractChip.target,'_blank');assert.ok(abstractChip.external);assert.ok(abstractChip.aligned,'Closed status and link remain on same row');}

@@ -1082,46 +1082,98 @@ function parseAbstractDate(value) {
   return { year, month, day, timestamp };
 }
 
-function getRegistrationSortDeadline(event, today = getTodayString()) {
-  const periods = event.registration?.periods;
-  let deadlines;
-  if (Array.isArray(periods)) {
-    deadlines = periods.filter(period => !period.label || /事前|早期|early|regular|advance|pre.?registration/i.test(period.label))
-      .map(period => parseAbstractDate(period.deadline)).filter(Boolean);
-  } else {
-    deadlines = [event.earlyRegistrationDeadline, event.earlyBirdDeadline].map(value => {
-      const normalized = typeof value === 'string' ? value.replace(/^(\d{4})年(\d{1,2})月(\d{1,2})日.*$/, (_, y, m, d) => `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`) : value;
-      return parseAbstractDate(normalized);
-    }).filter(Boolean);
+// Compatibility projection only: never generate or persist inferred phases.
+function getRegistrationPeriods(event) {
+  const international = (event.registration?.type || event.conferenceRegion) === 'international';
+  const fallbackLabel = international ? 'Early bird' : '事前参加登録';
+  const legacy = event.earlyRegistrationDeadline || event.earlyBirdDeadline;
+  const normalizedLegacy = typeof legacy === 'string' ? legacy.replace(/^(\d{4})年(\d{1,2})月(\d{1,2})日.*$/, (_, y, m, d) => `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`) : null;
+  const periods = Array.isArray(event.registration?.periods) ? event.registration.periods :
+    parseAbstractDate(normalizedLegacy) ? [{label: fallbackLabel, deadline: normalizedLegacy, advanceEligible: true}] : [];
+  return periods.map(period => {
+    const label = period.label || fallbackLabel;
+    const category = period.category !== undefined ? period.category :
+      /^(?:Early\s*bird|事前早期|早期)/i.test(label) ? 'early' :
+      /^(?:Regular|事前通常)/i.test(label) ? 'regular' : /^(?:On[ -]?site|当日|直前・当日)/i.test(label) ? 'onsite' : null;
+    const advanceEligible = period.advanceEligible !== undefined ? period.advanceEligible :
+      category === 'onsite' ? false : ['early', 'regular'].includes(category) || /^(?:事前(?:参加)?登録|Advance|Pre.?registration)/i.test(label) ? true : null;
+    return {...period, label, category, advanceEligible};
+  });
+}
+
+function registrationTimestamp(value, timeZone = 'Asia/Tokyo', endOfDay = false) {
+  if (!parseAbstractDate(value)) return null;
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2})(?:\.\d+)?)?(Z|[+-]\d{2}:\d{2})?)?$/);
+  if (!match) return null;
+  const [, y, m, d, hour, minute, second, offset] = match;
+  if (hour && (+hour > 23 || +minute > 59 || +(second || 0) > 59)) return null;
+  if (offset) { const timestamp = Date.parse(value); return Number.isFinite(timestamp) ? timestamp : null; }
+  const wall = Date.UTC(+y, +m - 1, +d, hour ? +hour : endOfDay ? 23 : 0, hour ? +minute : endOfDay ? 59 : 0, hour ? +(second || 0) : endOfDay ? 59 : 0);
+  try {
+    const formatter = new Intl.DateTimeFormat('en-GB', {timeZone, year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'});
+    let timestamp = wall;
+    for (let i = 0; i < 3; i++) {
+      const parts = Object.fromEntries(formatter.formatToParts(new Date(timestamp)).map(p => [p.type,p.value]));
+      const displayed = Date.UTC(+parts.year,+parts.month-1,+parts.day,+parts.hour,+parts.minute,+parts.second);
+      timestamp += wall - displayed;
+    }
+    const verified = Object.fromEntries(formatter.formatToParts(new Date(timestamp)).map(p=>[p.type,p.value]));
+    if (Date.UTC(+verified.year,+verified.month-1,+verified.day,+verified.hour,+verified.minute,+verified.second) !== wall) return null;
+    return timestamp + (!hour && endOfDay ? 999 : 0);
+  } catch { return null; }
+}
+
+function getRegistrationState(event, reference = getTodayString()) {
+  const timeZone = event.registration?.timeZone || 'Asia/Tokyo';
+  let now = reference instanceof Date ? reference.getTime() : registrationTimestamp(reference, timeZone);
+  // Live date-only callers use the current clock; fixed test/historical dates use midnight.
+  if (typeof reference === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(reference)) {
+    const live = new Date();
+    const liveDay = `${live.getFullYear()}-${String(live.getMonth()+1).padStart(2,'0')}-${String(live.getDate()).padStart(2,'0')}`;
+    if (liveDay === reference) now = live.getTime();
   }
-  const todayTimestamp = parseAbstractDate(today).timestamp;
-  const upcoming = deadlines.filter(deadline => deadline.timestamp >= todayTimestamp);
-  const candidates = upcoming.length ? upcoming : deadlines;
-  return candidates.length ? (upcoming.length ? Math.min(...candidates.map(d => d.timestamp)) : Math.max(...candidates.map(d => d.timestamp))) : null;
+  const periods = getRegistrationPeriods(event).map(period => ({...period,
+    startTimestamp: registrationTimestamp(period.start, timeZone),
+    deadlineTimestamp: registrationTimestamp(period.deadline, timeZone, true)}));
+  const advance = periods.filter(p => p.category !== 'onsite' && p.advanceEligible === true && p.deadlineTimestamp !== null);
+  const next = advance.filter(p => p.deadlineTimestamp >= now).sort((a,b)=>a.deadlineTimestamp-b.deadlineTimestamp)[0] || null;
+  const expired = advance.filter(p => p.deadlineTimestamp < now).sort((a,b)=>b.deadlineTimestamp-a.deadlineTimestamp)[0] || null;
+  const remaining = periods.filter(p => (p.deadlineTimestamp === null || p.deadlineTimestamp >= now) && (p.startTimestamp !== null || p.deadlineTimestamp !== null));
+  const active = remaining.filter(p=>p.startTimestamp===null||p.startTimestamp<=now);
+  const fallback = (active.length ? active : remaining).sort((a,b)=>(a.startTimestamp??Infinity)-(b.startTimestamp??Infinity))[0] || null;
+  const lastExpired = periods.filter(p=>p.deadlineTimestamp!==null&&p.deadlineTimestamp<now).sort((a,b)=>b.deadlineTimestamp-a.deadlineTimestamp)[0] || null;
+  return {periods, next, expired, display: next || fallback || lastExpired || periods[0] || null, now};
+}
+
+function getRegistrationSortDeadline(event, today = getTodayString()) {
+  const state = getRegistrationState(event, today);
+  const period = state.next || state.expired;
+  // Keep the existing numeric API; grouping uses the shared state, not this date value.
+  return period ? parseAbstractDate(period.deadline).timestamp : null;
 }
 
 function renderRegistrationHtml(event, today = getTodayString()) {
   const international = (event.registration?.type || event.conferenceRegion) === 'international';
   const defaultLabel = international ? 'Early bird' : '事前参加登録';
   const legacy = event.earlyRegistrationDeadline || event.earlyBirdDeadline;
-  const legacyDate = typeof legacy === 'string' ? legacy.replace(/^(\d{4})年(\d{1,2})月(\d{1,2})日.*$/, (_, y, m, d) => `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`) : null;
-  const periods = Array.isArray(event.registration?.periods) ? event.registration.periods :
-    parseAbstractDate(legacyDate) ? [{ label: defaultLabel, deadline: legacyDate }] : null;
+  const registrationState = getRegistrationState(event, today);
+  const periods = registrationState.display ? [registrationState.display] : null;
   const rows = periods ? periods.map(period => {
     const label = period.label || defaultLabel;
     const deadline = parseAbstractDate(period.deadline);
     const start = parseAbstractDate(period.start);
-    const closed = !!deadline && period.deadline.slice(0, 10) < today;
+    const closed = period.deadlineTimestamp !== null && period.deadlineTimestamp < registrationState.now;
     let value = '要確認';
     if (closed) {
       value = `${formatAbstractDeadline(period.deadline)} 締切済`;
-    } else if (start && period.start.slice(0, 10) > today) {
-      value = `${formatAbstractDeadline(period.start, { showTime: false })}開始`;
+    } else if (start && period.startTimestamp > registrationState.now) {
+      value = `${formatAbstractDeadline(period.start)}開始${deadline ? `／${formatAbstractDeadline(period.deadline)}締切` : ''}`;
     } else if (deadline) {
       value = `${formatAbstractDeadline(period.deadline)}まで`;
     } else if (start) {
       value = `${formatAbstractDeadline(period.start, { showTime: false })}開始`;
     }
+    if (!registrationState.next && registrationState.expired && !closed) value += '（事前登録終了）';
     return { label, value, closed };
   }) : [{ label: defaultLabel, value: legacy || '要確認', closed: /締切済|受付終了/.test(legacy || '') }];
   return rows.map(({ label, value, closed }) => `<div class="conf-item conf-registration-period"><span class="conf-label">${escapeHtml(label)}：</span><span class="conf-val deadline-highlight${closed ? ' closed' : ''}">${escapeHtml(value)}</span></div>`).join('');
@@ -1682,6 +1734,11 @@ function shouldHideEndedEvent(event, todayStr, viewMode) {
 
 function getFilteredEvents(ignoreCalendar = false, viewMode = typeof OphthalCalendarView !== "undefined" ? OphthalCalendarView.getMode() || 'list' : 'list') {
   const todayStr = getTodayString();
+  const registrationSortStates = new Map();
+  const registrationForSort = event => {
+    if (!registrationSortStates.has(event)) registrationSortStates.set(event, getRegistrationState(event, todayStr));
+    return registrationSortStates.get(event);
+  };
   return state.events.filter(event => {
     // 月間カレンダーは2026年10月以降の履歴を維持。その他は従来の終了学会フィルタ。
     if (shouldHideEndedEvent(event, todayStr, viewMode)) return false;
@@ -1766,12 +1823,12 @@ function getFilteredEvents(ignoreCalendar = false, viewMode = typeof OphthalCale
     if (state.sortBy === "date-asc") {
       return new Date(a.date) - new Date(b.date);
     } else if (state.sortBy === "registration-deadline-asc") {
-      const deadlineA = getRegistrationSortDeadline(a, todayStr);
-      const deadlineB = getRegistrationSortDeadline(b, todayStr);
-      const todayTimestamp = parseAbstractDate(todayStr).timestamp;
-      const group = deadline => deadline === null ? 2 : deadline < todayTimestamp ? 1 : 0;
-      if (group(deadlineA) !== group(deadlineB)) return group(deadlineA) - group(deadlineB);
-      if (deadlineA !== deadlineB) return group(deadlineA) === 1 ? deadlineB - deadlineA : deadlineA - deadlineB;
+      const registrationA = registrationForSort(a), registrationB = registrationForSort(b);
+      const group = registration => registration.next ? 0 : registration.expired ? 1 : 2;
+      if (group(registrationA) !== group(registrationB)) return group(registrationA) - group(registrationB);
+      const deadlineA = (registrationA.next || registrationA.expired)?.deadlineTimestamp ?? null;
+      const deadlineB = (registrationB.next || registrationB.expired)?.deadlineTimestamp ?? null;
+      if (deadlineA !== deadlineB) return group(registrationA) === 1 ? deadlineB - deadlineA : deadlineA - deadlineB;
       return new Date(a.date) - new Date(b.date);
     } else if (state.sortBy === "abstract-deadline-asc") {
       const deadlineA = parseAbstractDate(getCurrentAbstractDeadline(a.abstractSubmission))?.timestamp ?? Infinity;

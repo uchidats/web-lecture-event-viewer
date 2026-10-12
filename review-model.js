@@ -52,7 +52,7 @@
   function formatValue(field, value) {
     if (value == null || value === '') return '未入力';
     if (field === 'eventMetadata') return Object.entries(value).filter(([k])=>['title','date','endDate','venue','subtitle','sponsor','eventOfficialUrl'].includes(k)).map(([k,v])=>`${fieldLabels[k] || k}：${v ?? '未確認'}`).join(' / ');
-    if (field === 'registration' && Array.isArray(value.periods)) return value.periods.map(p => `${p?.label || '名称未確認'}：${p?.start ? p.start + ' ～ ' : ''}${p?.deadline || '締切未確認'}`).join(' / ');
+    if (field === 'registration' && Array.isArray(value.periods)) return value.periods.map(p => `${p?.label || '名称未確認'}：${p?.start ? p.start + ' ～ ' : ''}${p?.deadline || '締切未確認'}${p?.category ? ` [${p.category}]` : ''}${typeof p?.advanceEligible==='boolean' ? `（事前登録対象：${p.advanceEligible?'はい':'いいえ'}）` : ''}`).join(' / ');
     if (field === 'abstractSubmission.status') return statuses[value] || '未確認の状態';
     return String(value).replace(/^(\d{4})-(\d{2})-(\d{2})/, '$1/$2/$3');
   }
