@@ -2279,8 +2279,6 @@ function createEventCardHtml(event) {
           ${isAttended ? '<span class="conf-history-attended-badge">✓ 参加済</span>' : ''}
           <!-- 学会参加予定バッジ (会期前の学会のみ) -->
           ${!isConferenceEndedEvent && isConferenceAttending ? '<span class="conf-attending-badge">✓ 参加予定</span>' : ''}
-          <!-- 開催形式バッジ -->
-          <span class="format-badge ${formatClass}">${escapeHtml(event.format)}</span>
           <!-- カレンダー予定空き状況バッジ -->
           <span class="schedule-badge ${effective.badgeClass}">${escapeHtml(effective.badgeText)}</span>
         </div>
@@ -2292,7 +2290,10 @@ function createEventCardHtml(event) {
       <!-- 中段: タイトル・サブタイトル・概要 -->
       <div class="card-content-block">
         ${parentConferenceBadgeHtml}
-        <h3 class="card-title">${event.isConference && event.eventOfficialUrl ? `<a class="conference-title-link" href="${escapeHtml(event.eventOfficialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}</h3>
+        <div class="card-title-row">
+          <h3 class="card-title">${event.isConference && event.eventOfficialUrl ? `<a class="conference-title-link" href="${escapeHtml(event.eventOfficialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}</h3>
+          <span class="format-badge ${formatClass}">${escapeHtml(event.format)}</span>
+        </div>
         <p class="card-subtitle">${escapeHtml(event.subtitle)}</p>
         ${event.isConference && event.conferenceRegion !== 'international' && event.eventType !== '海外学会' ? '' : `<p class="card-desc">${escapeHtml(event.description)}</p>`}
       </div>

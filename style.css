@@ -894,7 +894,7 @@ button, input, select, textarea {
 /* 上段ヘッダー：日付・バッジ群 */
 .card-top-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
@@ -1304,6 +1304,9 @@ button, input, select, textarea {
   line-height: 1.4;
   letter-spacing: -0.015em;
 }
+.card-title-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.card-title-row .card-title { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.card-title-row .format-badge { flex-shrink: 0; }
 
 .conference-title-link {
   color: inherit;
@@ -2587,8 +2590,8 @@ button, input, select, textarea {
   }
 
   .card-top-row {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    align-items: center;
     gap: 10px;
   }
 
