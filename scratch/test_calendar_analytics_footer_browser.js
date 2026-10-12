@@ -101,11 +101,11 @@ async function main() {
       for(const mode of ['list','calendar','compact','list']) {
         await evaluate('document.getElementById("view-'+mode+'").click()');
         const displays=await evaluate('Array.from(document.querySelectorAll("#analytics-settings,#analytics-choice,#analytics-privacy"),e=>getComputedStyle(e).display)');
-        assert.equal(displays.every(d=>d==='none'),mode==='calendar');if(mode!=='calendar')assert.ok(displays.every(d=>d!=='none'));
+        assert.equal(displays.every(d=>d==='none'),mode!=='list');if(mode==='list')assert.ok(displays.every(d=>d!=='none'));
         assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth+1'));
       }
       await evaluate('document.getElementById("analytics-settings").click()');assert.equal(await evaluate('document.getElementById("analytics-notice").hidden'),false);await evaluate('document.getElementById("analytics-decline").click()');assert.equal(await evaluate('OphthalAnalytics.getConsent()'),'denied');assert.equal(await evaluate('document.getElementById("analytics-notice").hidden'),true);
-      console.log('PASS '+width+'px: footer hidden only in calendar, list/compact restored, consent settings still work');
+      console.log('PASS '+width+'px: footer hidden in calendar/compact, list restored, consent settings still work');
     }
     await call('Browser.close');
   } finally {socket?.close();if(browser.exitCode===null)browser.kill();await new Promise(resolve=>server.close(resolve));}
