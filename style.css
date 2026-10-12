@@ -969,6 +969,18 @@ button, input, select, textarea {
 #event-calendar .calendar-holiday .fc-daygrid-day-number { color: #b45353; }
 #event-calendar .fc-daygrid-day-top { flex-wrap: wrap; align-items: center; }
 #event-calendar .fc-daygrid-day-number { width: 100%; text-align: center; }
+@media (hover: hover) and (min-width: 601px) {
+  #event-calendar .fc-daygrid-day[data-holiday-name] { position: relative; }
+  #event-calendar .fc-daygrid-day[data-holiday-name]::after {
+    content: attr(data-holiday-name);
+    position: absolute; top: 28px; left: 50%; transform: translateX(-50%);
+    z-index: 60; pointer-events: none; white-space: nowrap;
+    padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px;
+    background: #fff; color: var(--text-muted); font-size: .72rem;
+    box-shadow: var(--shadow-sm); visibility: hidden;
+  }
+  #event-calendar .fc-daygrid-day[data-holiday-name]:hover::after { visibility: visible; }
+}
 .calendar-holiday-name { font-size: 0.65rem; font-weight: 400; color: #a54e4e; padding: 0 3px; overflow-wrap: anywhere; }
 #event-calendar .fc-list-event-title { white-space: normal; overflow-wrap: anywhere; }
 #event-calendar .fc-list-event-time { display: none; }

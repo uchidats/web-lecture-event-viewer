@@ -226,7 +226,7 @@ async function main() {
         assert.ok(await evaluate('getComputedStyle(elements.eventList).display === "none"'));
         assert.deepEqual(await calendarIds(), await filteredIds());
         assert.equal(await evaluate('document.querySelector(".fc-toolbar-title").textContent'), '2027年3月');
-        if(displayMode==='calendar') assert.ok(await evaluate('document.querySelector("#calendar-panel").textContent.includes("春分の日")'));
+        if(displayMode==='calendar') assert.equal(await evaluate('document.querySelector(\'.fc-daygrid-day[data-date="2027-03-21"]\').dataset.holidayName'), '春分の日');
         assert.ok(await evaluate('!document.getElementById("calendar-month-holidays")&&!document.getElementById("calendar-holiday-note")'),'No redundant holiday footer');
         assert.equal(await evaluate('document.querySelector(".fc-prev-button").textContent'), '前月');
         assert.equal(await evaluate('document.querySelector(".fc-next-button").textContent'), '翌月');

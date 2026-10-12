@@ -281,16 +281,16 @@
       const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
       return holidays[key];
     }
-    function mountHoliday(info, selector) {
-      const name = holidayName(info.date);
-      if (!name) return;
-      info.el.classList.add('calendar-holiday');
-      const container = info.el.querySelector(selector) || info.el;
-      if (!container.querySelector('.calendar-holiday-name')) {
-        const label = document.createElement('small');
-        label.className = 'calendar-holiday-name';
-        label.textContent = name;
-        container.append(label);
+    function setGridHoliday(cell, name) {
+      const top = cell.querySelector('.fc-daygrid-day-top');
+      const number = cell.querySelector('.fc-daygrid-day-number');
+      cell.classList.toggle('calendar-holiday', Boolean(name));
+      top?.querySelectorAll('.calendar-holiday-name').forEach(label => label.remove());
+      if (name) {
+        cell.dataset.holidayName = name;
+        number?.setAttribute('aria-label', `${cell.dataset.date} ${name}`);
+      } else {
+        delete cell.dataset.holidayName;
       }
     }
     function syncGridHolidays() {
@@ -298,22 +298,7 @@
       calendarElement.querySelectorAll('.fc-daygrid-day').forEach(cell => {
         const dateStr = cell.getAttribute('data-date');
         const name = dateStr ? holidays[dateStr] : null;
-        const top = cell.querySelector('.fc-daygrid-day-top') || cell;
-        const existing = top.querySelector('.calendar-holiday-name');
-        if (name) {
-          cell.classList.add('calendar-holiday');
-          if (existing) {
-            if (existing.textContent !== name) existing.textContent = name;
-          } else {
-            const label = document.createElement('small');
-            label.className = 'calendar-holiday-name';
-            label.textContent = name;
-            top.append(label);
-          }
-        } else {
-          cell.classList.remove('calendar-holiday');
-          if (existing) existing.remove();
-        }
+        setGridHoliday(cell, name);
       });
     }
     let headerSyncFrame = null;
@@ -458,7 +443,7 @@
           if (mode === 'compact') scheduleSyncCompactHeaders();
         },
         dayCellClassNames: info => (holidayName(info.date) ? ['calendar-holiday'] : []),
-        dayCellDidMount: info => mountHoliday(info, '.fc-daygrid-day-top'),
+        dayCellDidMount: info => setGridHoliday(info.el, holidayName(info.date)),
         datesSet: () => {
           syncGridHolidays();
           if (mode === 'compact') scheduleSyncCompactHeaders();
