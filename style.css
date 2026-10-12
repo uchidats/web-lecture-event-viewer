@@ -964,6 +964,7 @@ button, input, select, textarea {
 #event-calendar .fc-day-sat .fc-daygrid-day-number { color: #0284c7; }
 #event-calendar .calendar-holiday .fc-daygrid-day-number { color: #b45353; }
 #event-calendar .fc-daygrid-day-top { flex-wrap: wrap; align-items: center; }
+#event-calendar .fc-daygrid-day-number { width: 100%; text-align: center; }
 .calendar-holiday-name { font-size: 0.65rem; font-weight: 400; color: #a54e4e; padding: 0 3px; overflow-wrap: anywhere; }
 #event-calendar .fc-list-event-title { white-space: normal; overflow-wrap: anywhere; }
 #event-calendar .fc-list-event-time { display: none; }
