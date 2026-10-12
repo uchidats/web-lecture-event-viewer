@@ -97,6 +97,7 @@ const elements = {
 // 選択肢定義（眼科領域仕様）
 const FILTER_OPTIONS = {
   specialty: [
+    "総合",
     "網膜・硝子体",
     "緑内障",
     "白内障",
@@ -106,7 +107,7 @@ const FILTER_OPTIONS = {
     "眼形成",
     "眼光学CL近視",
     "眼炎症感染",
-    "総合",
+    "ロービジョン",
     "その他"
   ],
   eventType: [

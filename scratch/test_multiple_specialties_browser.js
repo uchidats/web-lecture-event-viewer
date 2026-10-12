@@ -91,7 +91,7 @@ async function main() {
     for(const width of [1280,390,320]) {
       await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});await navigate('/');
       await evaluate('document.getElementById("reset-filter-btn").click();state.filters.includeEndedConferences=true;syncCheckboxesWithState();renderEvents()');
-      for(const [values,count] of [[[label],3],[[other],16],[[label,other],18]]) {
+      for(const [values,count] of [[[label],3],[[other],14],[[label,other],16]]) {
         await evaluate('state.filters.specialty.clear();syncCheckboxesWithState();renderEvents()');
         for(const value of values)await evaluate(`[...document.querySelectorAll('#filter-specialty input')].find(e=>e.value===`+JSON.stringify(value)+`).click()`);
         const expected=await evaluate('state.events.filter(e=>getEventSpecialties(e).some(s=>'+JSON.stringify(values)+'.includes(s))).map(e=>e.id).sort()');assert.equal(expected.length,count);assert.ok(expected.includes(joint));if(values[0]===label&&values.length===1)assert.deepEqual(expected,inflammatory);
@@ -112,9 +112,9 @@ async function main() {
           assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth+1'));
         }
       }
-      for(const [value,count] of [[label,3],[other,16]])assert.equal(await evaluate(`[...document.querySelectorAll('#filter-specialty input')].find(e=>e.value===`+JSON.stringify(value)+`).nextElementSibling.querySelector('.chip-count').textContent`),'('+count+')');
+      for(const [value,count] of [[label,3],[other,14]])assert.equal(await evaluate(`[...document.querySelectorAll('#filter-specialty input')].find(e=>e.value===`+JSON.stringify(value)+`).nextElementSibling.querySelector('.chip-count').textContent`),'('+count+')');
       if(width<500){await evaluate('document.getElementById("mobile-filter-btn").click()');await delay(350);assert.ok(await evaluate('document.querySelector(".sidebar-body").scrollWidth<=document.querySelector(".sidebar-body").clientWidth+1'));await evaluate('document.getElementById("close-mobile-filter").click()');}
-      console.log('PASS '+width+'px: inflammation 3, other 16, union 18, joint labels, three modes and no duplicate cards/overflow');
+      console.log('PASS '+width+'px: inflammation 3, other 14, union 16, joint labels, three modes and no duplicate cards/overflow');
     }
     await call('Browser.close');
   } finally {socket?.close();if(browser.exitCode===null)browser.kill();await new Promise(resolve=>server.close(resolve));}
