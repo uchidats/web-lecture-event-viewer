@@ -500,6 +500,7 @@
         if (mode === 'compact') scheduleSyncCompactHeaders();
       }
       switchingMode = false;
+      if (prevMode !== mode) dependencies.onModeChange?.();
       if (push) updateUrl(true);
     }
     listButton.addEventListener('click', () => setMode('list'));

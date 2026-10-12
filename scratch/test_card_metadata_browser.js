@@ -104,6 +104,7 @@ async function main() {
       for(const mode of ['list','calendar','compact']) {
         await evaluate('document.getElementById("view-'+mode+'").click()');
         for(const id of [aao,webinar,'conf-jp-pediatric-2027','conf-jp-myopia-2028','conf-jp-cornea-2026']) {
+          if(mode==='calendar'&&id==='conf-jp-cornea-2026')continue; // Pre-October ended events are outside monthly calendar history.
           let selector='[data-id="'+id+'"]';
           if(mode!=='list') {
             await evaluate('OphthalCalendarView.getCalendar().gotoDate(state.events.find(e=>e.id==='+JSON.stringify(id)+').date)');await evaluate('new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))');await evaluate('document.querySelector('+JSON.stringify('.fc-event[data-event-id="'+id+'"]')+').click()');selector='#calendar-event-detail '+selector;
@@ -130,6 +131,21 @@ async function main() {
         }
       }
       console.log('PASS '+width+'px: AAO hides redundant fields, glaucoma webinar keeps fields, sponsor retained in all three modes');
+      await evaluate('getTodayString=()=>"2026-11-02";state.filters.includeEndedConferences=false;syncCheckboxesWithState();document.getElementById("view-list").click();renderEvents()');
+      for(const enabled of [false,true]) {
+        await evaluate('state.filters.includeEndedConferences='+enabled+';syncCheckboxesWithState();renderEvents()');
+        for(const mode of ['calendar','compact','list','calendar']) {
+          await evaluate('document.getElementById("view-'+mode+'").click()');
+          const history=await evaluate('({ids:getFilteredEvents().map(e=>e.id),count:Number(elements.eventCount.textContent),calendar:OphthalCalendarView.getCalendar().getEvents().map(e=>e.id),overflow:document.documentElement.scrollWidth>innerWidth+1})');
+          assert.equal(history.ids.includes('oph-004'),mode==='calendar'||enabled,'AAO ended visibility');
+          assert.equal(history.ids.includes('conf-jp-lowvision-2026'),mode!=='calendar'&&enabled,'September cutoff and checkbox');
+          assert.equal(history.count,history.ids.length);assert.ok(!history.overflow);
+          if(mode!=='list')assert.deepEqual(history.calendar.sort(),history.ids.sort());
+          if(mode==='calendar') {await evaluate('OphthalCalendarView.getCalendar().gotoDate("2026-10-01")');assert.ok(await evaluate('!!document.querySelector(".fc-event[data-event-id=oph-004]")'),'AAO visible in October grid');}
+        }
+      }
+      console.log('PASS '+width+'px: ended AAO retained only in monthly calendar by default; September cutoff, checkbox and switch counts');
+      await evaluate('getTodayString=()=>"2026-10-13"');
     }
     await call('Browser.close');
   } finally {socket?.close();if(browser.exitCode===null)browser.kill();await new Promise(resolve=>server.close(resolve));}

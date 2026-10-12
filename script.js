@@ -184,7 +184,8 @@ function initApp() {
     renderCard: createEventCardHtml,
     bindActions: attachCardActionListeners,
     getToday: getTodayString,
-    getSelectedYears: () => [...state.filters.year]
+    getSelectedYears: () => [...state.filters.year],
+    onModeChange: renderEvents
   });
   if (typeof GoogleCalendar !== "undefined") GoogleCalendar.setupUI(() => {updateRegisteredBadge(); renderEvents();});
   renderEvents();
@@ -1653,16 +1654,19 @@ function computeLegacyCalendarMockStatus(event) {
 /**
  * フィルタリング & ソートの計算
  */
-function getFilteredEvents(ignoreCalendar = false) {
+function shouldHideEndedEvent(event, todayStr, viewMode) {
+  if (viewMode === 'calendar') {
+    const end = event.endDate || event.date;
+    return !!(end && end < todayStr && (!event.date || event.date < '2026-10-01'));
+  }
+  return !state.filters.includeEndedConferences && isConferenceEnded(event, todayStr);
+}
+
+function getFilteredEvents(ignoreCalendar = false, viewMode = typeof OphthalCalendarView !== "undefined" ? OphthalCalendarView.getMode() || 'list' : 'list') {
   const todayStr = getTodayString();
   return state.events.filter(event => {
-    // 終了済み学会の表示制御 (isConference: true のみ対象)
-    // 「終了した学会も表示」がOFFの場合、会期終了済み(endDate < 今日)の学会を除外
-    if (!state.filters.includeEndedConferences && event.isConference) {
-      if (isConferenceEnded(event, todayStr)) {
-        return false;
-      }
-    }
+    // 月間カレンダーは2026年10月以降の履歴を維持。その他は従来の終了学会フィルタ。
+    if (shouldHideEndedEvent(event, todayStr, viewMode)) return false;
 
     // 非表示にした学会の除外（「参加予定：なし」）
     if (event.isConference && state.hiddenConferences.has(event.id)) {
@@ -1676,12 +1680,8 @@ function getFilteredEvents(ignoreCalendar = false) {
         return false;
       }
       // 親学会が終了して非表示になっている場合は関連セミナーも非表示
-      if (!state.filters.includeEndedConferences) {
-        const parentConf = state.events.find(e => e.id === event.parentConferenceId);
-        if (parentConf && isConferenceEnded(parentConf, todayStr)) {
-          return false;
-        }
-      }
+      const parentConf = state.events.find(e => e.id === event.parentConferenceId);
+      if (parentConf && shouldHideEndedEvent(parentConf, todayStr, viewMode)) return false;
     }
 
     const effective = computeEffectiveScheduleStatus(event);
