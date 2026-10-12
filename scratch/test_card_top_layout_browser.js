@@ -102,11 +102,11 @@ async function main() {
         {...fixture,id:'no-application-fixture',officialUrl:'',eventOfficialUrl:'',title:fixture.title.repeat(4)}
       ].map(createEventCardHtml).join(''));`);
       const results=await evaluate(`Array.from(elements.eventList.querySelectorAll('.event-card'),card=>{
-        const title=card.querySelector('.card-title').getBoundingClientRect(),format=card.querySelector('.format-badge').getBoundingClientRect(),status=card.querySelector('.schedule-badge'),buttons=card.querySelector('.card-actions-row');const sr=status.getBoundingClientRect(),first=buttons.querySelector('.btn').getBoundingClientRect();
-        return {id:card.dataset.id,formatRight:Math.abs(format.left-title.right-8)<1,formatCenter:Math.abs(title.top+title.height/2-format.top-format.height/2)<1,oneFormat:card.querySelectorAll('.format-badge').length===1,calendarCenter:status.parentElement===buttons&&buttons.firstElementChild===status&&(first.top>=sr.bottom||Math.abs(first.top+first.height/2-sr.top-sr.height/2)<1),fits:card.scrollWidth<=card.clientWidth+1};
+        const date=card.querySelector('.date-badge').getBoundingClientRect(),format=card.querySelector('.format-badge').getBoundingClientRect(),region=card.querySelector('.time-and-region').getBoundingClientRect(),block=card.querySelector('.date-time-block'),status=card.querySelector('.schedule-badge'),buttons=card.querySelector('.card-actions-row');const sr=status.getBoundingClientRect(),first=buttons.querySelector('.btn').getBoundingClientRect(),event=sampleEvents.find(e=>e.id===card.dataset.id);
+        return {id:card.dataset.id,formatRight:format.left>=date.right&&region.left>=format.right,formatCenter:Math.abs(date.top+date.height/2-format.top-format.height/2)<1&&Math.abs(date.top+date.height/2-region.top-region.height/2)<1,order:[...block.children].map(e=>e.className.split(' ')[0]).join(',')==='date-badge,format-badge,time-and-region',titleMatches:!event||card.querySelector('.card-title').textContent===event.title,oneFormat:card.querySelectorAll('.format-badge').length===1,calendarCenter:status.parentElement===buttons&&buttons.firstElementChild===status&&(first.top>=sr.bottom||Math.abs(first.top+first.height/2-sr.top-sr.height/2)<1),fits:card.scrollWidth<=card.clientWidth+1};
       })`);
-      assert.ok(results.every(e=>e.formatRight&&e.formatCenter&&e.oneFormat&&e.calendarCenter&&e.fits));assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth+1'));
-      console.log('PASS '+width+'px: '+results.length+' cards, title/format centered, calendar first in footer, centered or wrapped, no overflow');
+      assert.ok(results.every(e=>e.formatRight&&e.formatCenter&&e.order&&e.titleMatches&&e.oneFormat&&e.calendarCenter&&e.fits));assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth+1'));
+      console.log('PASS '+width+'px: '+results.length+' cards, date/format/time-venue order and center alignment, unchanged titles, no overflow');
     }
     await call('Browser.close');
   } finally {socket?.close();if(browser.exitCode===null)browser.kill();await new Promise(resolve=>server.close(resolve));}

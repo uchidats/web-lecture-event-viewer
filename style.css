@@ -1045,7 +1045,11 @@ body:has(#calendar-panel[data-view="calendar"]:not([hidden])) .beta-notice :is(#
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+  max-width: 100%;
 }
+.date-time-block > .format-badge { flex-shrink: 0; }
+.date-time-block > .time-and-region { min-width: 0; }
 .date-time-block.no-time { align-items: center; }
 
 .date-badge {
@@ -1317,7 +1321,6 @@ body:has(#calendar-panel[data-view="calendar"]:not([hidden])) .beta-notice :is(#
 }
 .card-title-row { display: flex; align-items: center; gap: 8px; }
 .card-title-row .card-title { flex: 0 1 auto; min-width: 0; overflow-wrap: anywhere; }
-.card-title-row .format-badge { flex-shrink: 0; }
 
 .conference-title-link {
   color: inherit;

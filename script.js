@@ -2253,6 +2253,7 @@ function createEventCardHtml(event) {
             <span class="month-day">${escapeHtml(dateBadgeInfo.dateText)}</span>
             <span class="day-week">${escapeHtml(dateBadgeInfo.weekdayText)}</span>
           </div>
+          <span class="format-badge ${formatClass}">${escapeHtml(event.format)}</span>
           <div class="time-and-region ${hasTime ? 'has-time' : 'no-time'}">
             ${hasTime ? `
             <div class="time-text">
@@ -2292,7 +2293,6 @@ function createEventCardHtml(event) {
         ${parentConferenceBadgeHtml}
         <div class="card-title-row">
           <h3 class="card-title">${event.isConference && event.eventOfficialUrl ? `<a class="conference-title-link" href="${escapeHtml(event.eventOfficialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}</h3>
-          <span class="format-badge ${formatClass}">${escapeHtml(event.format)}</span>
         </div>
         <p class="card-subtitle">${escapeHtml(event.subtitle)}</p>
         ${event.isConference && event.conferenceRegion !== 'international' && event.eventType !== '海外学会' ? '' : `<p class="card-desc">${escapeHtml(event.description)}</p>`}
