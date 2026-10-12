@@ -1304,8 +1304,8 @@ button, input, select, textarea {
   line-height: 1.4;
   letter-spacing: -0.015em;
 }
-.card-title-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
-.card-title-row .card-title { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.card-title-row { display: flex; align-items: center; gap: 8px; }
+.card-title-row .card-title { flex: 0 1 auto; min-width: 0; overflow-wrap: anywhere; }
 .card-title-row .format-badge { flex-shrink: 0; }
 
 .conference-title-link {
@@ -3115,6 +3115,7 @@ button, input, select, textarea {
     grid-template-columns:repeat(3, minmax(0, 1fr));
     gap:6px;
   }
+  .card-actions-row .schedule-badge { grid-column: 1 / -1; justify-self: start; }
   .card-actions-row .btn {
     min-width:0;
     min-height:36px;

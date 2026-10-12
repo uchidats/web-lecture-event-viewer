@@ -97,12 +97,16 @@ async function main() {
     for(const width of [1280,900,768,390,320]) {
       await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});await navigate('/');
       await evaluate('state.filters.includeEndedConferences=true;for(const k of FILTER_SET_KEYS)state.filters[k].clear();renderEvents()');
+      await evaluate(`const fixture=sampleEvents.find(e=>e.id==='oph-001');elements.eventList.insertAdjacentHTML('beforeend',[
+        {...fixture,id:'no-pdf-fixture',pdfUrl:null,title:fixture.title.repeat(4)},
+        {...fixture,id:'no-application-fixture',officialUrl:'',eventOfficialUrl:'',title:fixture.title.repeat(4)}
+      ].map(createEventCardHtml).join(''));`);
       const results=await evaluate(`Array.from(elements.eventList.querySelectorAll('.event-card'),card=>{
-        const title=card.querySelector('.card-title').getBoundingClientRect(),format=card.querySelector('.format-badge').getBoundingClientRect(),date=card.querySelector('.date-time-block').getBoundingClientRect(),badges=card.querySelector('.badges-group').getBoundingClientRect();
-        return {id:card.dataset.id,formatRight:format.left>=title.right-1,formatCenter:Math.abs(title.top+title.height/2-format.top-format.height/2)<1,oneFormat:card.querySelectorAll('.format-badge').length===1,calendarCenter:badges.top>=date.bottom||Math.abs(date.top+date.height/2-badges.top-badges.height/2)<1,fits:card.scrollWidth<=card.clientWidth+1};
+        const title=card.querySelector('.card-title').getBoundingClientRect(),format=card.querySelector('.format-badge').getBoundingClientRect(),status=card.querySelector('.schedule-badge'),buttons=card.querySelector('.card-actions-row');const sr=status.getBoundingClientRect(),first=buttons.querySelector('.btn').getBoundingClientRect();
+        return {id:card.dataset.id,formatRight:Math.abs(format.left-title.right-8)<1,formatCenter:Math.abs(title.top+title.height/2-format.top-format.height/2)<1,oneFormat:card.querySelectorAll('.format-badge').length===1,calendarCenter:status.parentElement===buttons&&buttons.firstElementChild===status&&(first.top>=sr.bottom||Math.abs(first.top+first.height/2-sr.top-sr.height/2)<1),fits:card.scrollWidth<=card.clientWidth+1};
       })`);
       assert.ok(results.every(e=>e.formatRight&&e.formatCenter&&e.oneFormat&&e.calendarCenter&&e.fits));assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth+1'));
-      console.log('PASS '+width+'px: '+results.length+' cards, title/format centered, calendar centered or wrapped, no overflow');
+      console.log('PASS '+width+'px: '+results.length+' cards, title/format centered, calendar first in footer, centered or wrapped, no overflow');
     }
     await call('Browser.close');
   } finally {socket?.close();if(browser.exitCode===null)browser.kill();await new Promise(resolve=>server.close(resolve));}

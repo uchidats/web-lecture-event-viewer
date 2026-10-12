@@ -2272,6 +2272,7 @@ function createEventCardHtml(event) {
           </div>
         </div>
 
+        ${isConferenceEndedEvent || isAttended || isConferenceAttending ? `
         <div class="badges-group">
           <!-- 終了学会バッジ -->
           ${isConferenceEndedEvent ? '<span class="conf-ended-badge">終了</span>' : ''}
@@ -2279,9 +2280,8 @@ function createEventCardHtml(event) {
           ${isAttended ? '<span class="conf-history-attended-badge">✓ 参加済</span>' : ''}
           <!-- 学会参加予定バッジ (会期前の学会のみ) -->
           ${!isConferenceEndedEvent && isConferenceAttending ? '<span class="conf-attending-badge">✓ 参加予定</span>' : ''}
-          <!-- カレンダー予定空き状況バッジ -->
-          <span class="schedule-badge ${effective.badgeClass}">${escapeHtml(effective.badgeText)}</span>
         </div>
+        ` : ''}
       </div>
 
       <!-- 予定重複アラート（重複時のみ表示） -->
@@ -2332,6 +2332,7 @@ function createEventCardHtml(event) {
 
       <!-- 下段: 3つの操作ボタン (カレンダーに追加 / 案内PDF / 公式申込ページ) -->
       <div class="card-actions-row">
+        <span class="schedule-badge ${effective.badgeClass}">${escapeHtml(effective.badgeText)}</span>
         <!-- 1. カレンダーに追加 -->
         <button class="btn btn-calendar" data-action="add-calendar" title="Google Calendarに登録 / ICSダウンロード" ${effective.isAdding ? 'disabled aria-busy="true"' : ''}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
