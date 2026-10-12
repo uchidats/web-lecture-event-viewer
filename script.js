@@ -140,7 +140,14 @@ const WEEKDAYS = ["日", "月", "火", "水", "木", "金", "土"];
 
 // 表示だけ統一し、既存のデータ・フィルタ値は維持する。
 function getSpecialtyDisplayLabel(value) {
-  return value === "網膜・硝子体" ? "網膜硝子体" : value;
+  if (value === "網膜・硝子体") return "網膜硝子体";
+  return getConferenceCategoryDisplayLabel(value);
+}
+
+function getConferenceCategoryDisplayLabel(value) {
+  if (value === "眼光学CL近視") return "眼光学・CL・近視";
+  if (value === "眼炎症感染") return "眼炎症・感染";
+  return value;
 }
 
 // A specialty is a single label or an array of labels for joint conferences.
@@ -742,7 +749,7 @@ function renderConferenceHistoryModal() {
                 <span class="conf-category-badge region ${conf.conferenceRegion === 'international' ? 'international' : 'domestic'}">
                   ${conf.conferenceRegion === 'international' ? '国際学会' : '国内学会'}
                 </span>
-                ${conf.conferenceCategory ? `<span class="conf-category-badge category">${escapeHtml(conf.conferenceCategory)}</span>` : ''}
+                ${conf.conferenceCategory ? `<span class="conf-category-badge category">${escapeHtml(getConferenceCategoryDisplayLabel(conf.conferenceCategory))}</span>` : ''}
               </div>
               <h5 class="history-conf-title">
                 ${conf.officialUrl ? `<a href="${escapeHtml(conf.officialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(conf.title)} ↗</a>` : escapeHtml(conf.title)}
@@ -1692,7 +1699,7 @@ function getFilteredEvents(ignoreCalendar = false) {
     if (state.filters.keyword && !ignoreCalendar) {
       const q = state.filters.keyword;
       const conflictText = effective.conflicts.map(c => `${c.providerLabel} ${c.title}`).join(" ");
-      const combined = `${event.title} ${event.subtitle} ${getEventSpecialties(event).join(" ")} ${event.sponsor} ${event.credits} ${event.region} ${event.tags.join(" ")} ${conflictText}`.toLowerCase();
+      const combined = `${event.title} ${event.subtitle} ${getEventSpecialties(event).flatMap(value => [value, getSpecialtyDisplayLabel(value)]).join(" ")} ${event.sponsor} ${event.credits} ${event.region} ${event.tags.join(" ")} ${conflictText}`.toLowerCase();
       if (!combined.includes(q)) return false;
     }
 
@@ -2196,7 +2203,7 @@ function createEventCardHtml(event) {
           <span class="conf-label">学会分類:</span>
           <span class="conf-val conf-classification-val">
             <span class="conf-category-badge region">${event.conferenceRegion === 'international' ? '国際学会' : '国内学会'}</span>
-            ${event.conferenceCategory ? `<span class="conf-category-badge category">${escapeHtml(event.conferenceCategory)}</span>` : ''}
+            ${event.conferenceCategory ? `<span class="conf-category-badge category">${escapeHtml(getConferenceCategoryDisplayLabel(event.conferenceCategory))}</span>` : ''}
           </span>
         </div>
         ` : ''}

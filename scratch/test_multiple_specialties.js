@@ -11,6 +11,10 @@ for (const file of ['venues.js', 'companies.js', 'events.js', 'script.js']) {
 }
 vm.runInContext(`
   assert.deepEqual(FILTER_OPTIONS.specialty, ['総合', '網膜・硝子体', '緑内障', '白内障', '角膜', '小児・斜視弱視', '神経眼科', '眼形成', '眼光学CL近視', '眼炎症感染', 'ロービジョン', 'その他']);
+  assert.equal(getSpecialtyDisplayLabel('眼光学CL近視'), '眼光学・CL・近視');
+  assert.equal(getSpecialtyDisplayLabel('眼炎症感染'), '眼炎症・感染');
+  assert.equal(getConferenceCategoryDisplayLabel('眼光学CL近視'), '眼光学・CL・近視');
+  assert.equal(getConferenceCategoryDisplayLabel('眼炎症感染'), '眼炎症・感染');
   const joint = sampleEvents.find(e => e.id === 'conf-jp-inflammation-2028');
   assert.deepEqual(getEventSpecialties(joint), ['眼炎症感染', 'その他']);
   assert.deepEqual(getEventSpecialties({specialty: 'その他'}), ['その他']);
@@ -27,6 +31,11 @@ vm.runInContext(`
     assert.equal(result.length, expected);
     assert.equal(new Set(result.map(e => e.id)).size, result.length);
     assert.ok(result.some(e => e.id === joint.id));
+  }
+  state.filters.specialty.clear();
+  for (const [keyword, count] of [['眼光学CL近視', 6], ['眼光学・CL・近視', 6], ['眼炎症感染', 3], ['眼炎症・感染', 3]]) {
+    state.filters.keyword = keyword.toLowerCase();
+    assert.equal(getFilteredEvents().length, count);
   }
 `, context);
 for (const specialty of ['その他', ['眼炎症感染', 'その他']]) {

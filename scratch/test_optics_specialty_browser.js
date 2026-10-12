@@ -55,9 +55,17 @@ async function main() {
   let socket;
   try {
     const portFile = path.join(profile, 'DevToolsActivePort');
-    for (let i = 0; i < 150 && !fs.existsSync(portFile); i++) await delay(100);
-    assert.ok(fs.existsSync(portFile));
-    const port = fs.readFileSync(portFile, 'utf8').split('\n')[0].trim();
+    let port;
+    for (let i = 0; i < 150; i++) {
+      try {
+        const candidate = fs.readFileSync(portFile, 'utf8').split('\n')[0].trim();
+        if (/^\d+$/.test(candidate)) { port = candidate; break; }
+      } catch (error) {
+        if (!['ENOENT', 'EBUSY'].includes(error.code)) throw error;
+      }
+      await delay(100);
+    }
+    assert.ok(port, 'Browser debugging port must be readable after startup');
     const pages = await (await fetch(`http://127.0.0.1:${port}/json/list`)).json();
     socket = new WebSocket(pages.find(p => p.type === 'page').webSocketDebuggerUrl);
     await new Promise(resolve => socket.addEventListener('open', resolve, { once: true }));
@@ -98,7 +106,8 @@ async function main() {
         assert.deepEqual(await evaluate('getFilteredEvents().map(e=>e.id).sort()'),expectedIds);
         if(mode==='list') {
           assert.deepEqual(await evaluate('[...elements.eventList.querySelectorAll(".event-card")].map(e=>e.dataset.id).sort()'),expectedIds);
-          assert.ok(await evaluate(`[...elements.eventList.querySelectorAll('.card-meta-item strong')].filter(e=>e.textContent===`+JSON.stringify(category)+`).length===6`));
+          assert.ok(await evaluate(`[...elements.eventList.querySelectorAll('.card-meta-item strong')].filter(e=>e.textContent===getSpecialtyDisplayLabel(`+JSON.stringify(category)+`)).length===6`));
+          assert.ok(await evaluate(`[...elements.eventList.querySelectorAll('.conf-category-badge.category')].every(e=>e.textContent===getConferenceCategoryDisplayLabel(`+JSON.stringify(category)+`))`));
         } else assert.deepEqual(await evaluate('OphthalCalendarView.getCalendar().getEvents().map(e=>e.id).sort()'),expectedIds);
         assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth+1'));
       }
