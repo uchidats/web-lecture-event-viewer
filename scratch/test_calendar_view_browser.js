@@ -9,6 +9,7 @@ const { once } = require('node:events');
 const { buildDualSite } = require('../scripts/build-dual-site');
 const root = path.resolve(__dirname, '..'), delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 const bootstrap = `
+  const CalendarTestDate=Date;window.Date=class extends CalendarTestDate {constructor(...args){super(...(args.length?args:['2026-10-12T00:00:00+09:00']));}};
   window.dualApiCalls = [];
   window.dualFirebaseSDK = {
     getApps:()=>[{name:'ophthalconf-auth'}], initializeApp:(config,name)=>({name}), getAuth:()=>({}),
@@ -122,12 +123,12 @@ async function main() {
       await call('Emulation.setTouchEmulationEnabled', { enabled: width <= 768, maxTouchPoints: 5 });
       // Range headings use the real renderer at each device width and both routes.
       const rangeFixtures = [
-        { date: '2026-12-04', endDate: '2026-12-06', text: '2026年12月4日（金）〜6日（日）', startClass: '', endClass: 'compact-date-sunday' },
-        { date: '2026-10-29', endDate: '2026-11-01', text: '2026年10月29日（木）〜11月1日（日）', startClass: '', endClass: 'compact-date-sunday' },
+        { date: '2026-12-04', endDate: '2026-12-06', text: '12月4日（金）〜6日（日）', startClass: '', endClass: 'compact-date-sunday' },
+        { date: '2026-10-29', endDate: '2026-11-01', text: '10月29日（木）〜11月1日（日）', startClass: '', endClass: 'compact-date-sunday' },
         { date: '2026-12-31', endDate: '2027-01-03', text: '2026年12月31日（木）〜2027年1月3日（日）', startClass: '', endClass: 'compact-date-sunday' },
-        { date: '2026-09-19', endDate: '2026-09-21', text: '2026年9月19日（土）〜21日（月・祝）', startClass: 'compact-date-saturday', endClass: 'compact-date-holiday', holiday: '敬老の日' },
+        { date: '2026-09-19', endDate: '2026-09-21', text: '9月19日（土）〜21日（月・祝）', startClass: 'compact-date-saturday', endClass: 'compact-date-holiday', holiday: '敬老の日' },
         { date: '2027-02-11', endDate: '2027-02-13', text: '2027年2月11日（木・祝）〜13日（土）', startClass: 'compact-date-holiday', endClass: 'compact-date-saturday', holiday: '建国記念の日' },
-        { date: '2026-12-06', endDate: '2026-12-07', text: '2026年12月6日（日）〜7日（月）', startClass: 'compact-date-sunday', endClass: '' }
+        { date: '2026-12-06', endDate: '2026-12-07', text: '12月6日（日）〜7日（月）', startClass: 'compact-date-sunday', endClass: '' }
       ];
       const rangeColors = {
         'compact-date-sunday': 'rgb(180, 83, 83)',
@@ -176,9 +177,9 @@ async function main() {
           renderEvents();OphthalCalendarView.getCalendar().gotoDate('2026-11-01');
         `);
         const expectedGroups = [
-          { heading: '2026年11月7日（土）', ids: ['duration-one'] },
-          { heading: '2026年11月7日（土）〜8日（日）', ids: ['duration-two-first', 'duration-two-second'] },
-          { heading: '2026年11月7日（土）〜10日（火）', ids: ['duration-four'] }
+          { heading: '11月7日（土）', ids: ['duration-one'] },
+          { heading: '11月7日（土）〜8日（日）', ids: ['duration-two-first', 'duration-two-second'] },
+          { heading: '11月7日（土）〜10日（火）', ids: ['duration-four'] }
         ];
         // Re-rendering must not accumulate duplicate injected headings.
         for (let pass = 0; pass < 2; pass++) {

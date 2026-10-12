@@ -27,13 +27,14 @@
     else if (weekday === 6) colorClass = 'compact-date-saturday';
     return { date, year: y, month: m, day: d, weekday, isHoliday, holidayName, colorClass };
   }
-  function formatCompactHeading(startDate, endDate, holidaySource = (root.OPHTHAL_JAPAN_HOLIDAYS || {})) {
+  function formatCompactHeading(startDate, endDate, holidaySource = (root.OPHTHAL_JAPAN_HOLIDAYS || {}), currentYear = null) {
     const sStr = typeof startDate === 'string' ? startDate : toDateString(startDate);
     const start = parseDateParts(sStr, holidaySource);
     const eStr = endDate ? (typeof endDate === 'string' ? endDate : toDateString(endDate)) : null;
     const isRange = Boolean(eStr && eStr !== sStr);
     const end = isRange ? parseDateParts(eStr, holidaySource) : null;
-    const startLabel = `${start.year}年${start.month}月${start.day}日（${'日月火水木金土'[start.weekday]}${start.isHoliday ? '・祝' : ''}）`;
+    const startYearPart = start.year === currentYear && (!end || end.year === start.year) ? '' : `${start.year}年`;
+    const startLabel = `${startYearPart}${start.month}月${start.day}日（${'日月火水木金土'[start.weekday]}${start.isHoliday ? '・祝' : ''}）`;
     if (!isRange) {
       return {
         isRange: false,
@@ -150,6 +151,7 @@
     const dialog = document.getElementById('calendar-event-dialog');
     const detail = document.getElementById('calendar-event-detail');
     const holidays = window.OPHTHAL_JAPAN_HOLIDAYS || {};
+    const compactHeading = (start, end) => formatCompactHeading(start, end, holidays, Number(dependencies.getToday().slice(0, 4)));
     const smallScreen = window.matchMedia('(max-width: 600px)');
     const desktopGrid = window.matchMedia('(min-width: 769px)');
     const calendarElement = document.getElementById('event-calendar');
@@ -346,7 +348,7 @@
             if (currentNativeDay) {
               const cushion = currentNativeDay.querySelector('.fc-list-day-cushion');
               if (cushion) {
-                const headingInfo = formatCompactHeading(event.date, event.endDate, holidays);
+                const headingInfo = compactHeading(event.date, event.endDate);
                 cushion.innerHTML = '';
                 cushion.append(...createHeadingNodes(headingInfo, null, document));
                 if (headingInfo.holidays.length > 0) {
@@ -362,7 +364,7 @@
             injectedTr.dataset.date = event.date;
             injectedTr.dataset.compactInjected = 'true';
 
-            const headingInfo = formatCompactHeading(event.date, event.endDate, holidays);
+            const headingInfo = compactHeading(event.date, event.endDate);
             if (headingInfo.holidays.length > 0) {
               injectedTr.classList.add('calendar-holiday');
             }
@@ -413,14 +415,14 @@
               const dayStr = toDateString(info.date);
               const dayEvents = getSortedCompactEvents().filter(e => e.date === dayStr);
               const firstEvent = dayEvents[0];
-              const headingInfo = formatCompactHeading(info.date, firstEvent ? firstEvent.endDate : null, holidays);
+              const headingInfo = compactHeading(info.date, firstEvent ? firstEvent.endDate : null);
               return { domNodes: createHeadingNodes(headingInfo, info.textId, document) };
             },
             dayHeaderDidMount: info => {
               const dayStr = toDateString(info.date);
               const dayEvents = getSortedCompactEvents().filter(e => e.date === dayStr);
               const firstEvent = dayEvents[0];
-              const headingInfo = formatCompactHeading(info.date, firstEvent ? firstEvent.endDate : null, holidays);
+              const headingInfo = compactHeading(info.date, firstEvent ? firstEvent.endDate : null);
               if (headingInfo.holidays.length > 0) info.el.classList.add('calendar-holiday');
             }
           }

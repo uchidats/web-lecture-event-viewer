@@ -37,6 +37,12 @@ assert.equal(holidaySatHeading.end.colorClass, 'compact-date-saturday');
 assert.deepEqual(holidaySatHeading.holidays, [{ name: '建国記念の日', position: 'start' }]);
 
 // Same-month, cross-month and cross-year ranges.
+assert.equal(formatCompactHeading('2026-10-10', '2026-10-12', holidays, 2026).fullText, '10月10日（土）〜12日（月・祝）');
+assert.equal(formatCompactHeading('2026-10-15', null, holidays, 2026).fullText, '10月15日（木）');
+assert.equal(formatCompactHeading('2026-10-29', '2026-11-01', holidays, 2026).fullText, '10月29日（木）〜11月1日（日）');
+assert.equal(formatCompactHeading('2027-02-11', '2027-02-13', holidays, 2026).fullText, '2027年2月11日（木・祝）〜13日（土）');
+assert.equal(formatCompactHeading('2026-12-31', '2027-01-03', holidays, 2026).fullText, '2026年12月31日（木）〜2027年1月3日（日）');
+assert.equal(formatCompactHeading('2027-02-11', null, holidays, 2027).fullText, '2月11日（木・祝）');
 assert.equal(formatCompactHeading('2026-12-04', '2026-12-06').fullText, '2026年12月4日（金）〜6日（日）');
 assert.equal(formatCompactHeading('2026-10-29', '2026-11-01').fullText, '2026年10月29日（木）〜11月1日（日）');
 assert.equal(formatCompactHeading('2026-01-03', '2027-01-03').endLabel, '2027年1月3日（日）');
