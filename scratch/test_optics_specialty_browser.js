@@ -90,7 +90,7 @@ async function main() {
     for(const width of [1280,390,320]) {
       await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});await navigate('/');
       await evaluate('document.getElementById("reset-filter-btn").click();state.filters.includeEndedConferences=true;syncCheckboxesWithState();renderEvents()');
-      const data=await evaluate('({optics:state.events.filter(e=>e.specialty==='+JSON.stringify(category)+').map(e=>e.id).sort(),other:state.events.filter(e=>e.specialty==='+JSON.stringify(other)+').length})');assert.deepEqual(data.optics,expectedIds);assert.equal(data.other,18);
+      const data=await evaluate('({optics:state.events.filter(e=>e.specialty==='+JSON.stringify(category)+').map(e=>e.id).sort(),other:state.events.filter(e=>getEventSpecialties(e).includes('+JSON.stringify(other)+')).length})');assert.deepEqual(data.optics,expectedIds);assert.equal(data.other,16);
       await evaluate(`[...document.querySelectorAll('#filter-specialty input')].find(e=>e.value===`+JSON.stringify(category)+`).click()`);
       assert.equal(await evaluate(`[...document.querySelectorAll('#filter-specialty input')].find(e=>e.value===`+JSON.stringify(category)+`).nextElementSibling.querySelector('.chip-count').textContent`),'(6)');
       for(const mode of ['list','calendar','compact']) {
@@ -104,11 +104,11 @@ async function main() {
       }
       await evaluate('document.getElementById("view-list").click()');
       await evaluate(`[...document.querySelectorAll('#filter-specialty input')].find(e=>e.value===`+JSON.stringify(category)+`).click();[...document.querySelectorAll('#filter-specialty input')].find(e=>e.value===`+JSON.stringify(other)+`).click()`);
-      assert.equal(await evaluate('getFilteredEvents().length'),18);
+      assert.equal(await evaluate('getFilteredEvents().length'),16);
       assert.ok(await evaluate('getFilteredEvents().every(e=>!'+JSON.stringify(expectedIds)+'.includes(e.id))'));
-      assert.equal(await evaluate(`[...document.querySelectorAll('#filter-specialty input')].find(e=>e.value===`+JSON.stringify(other)+`).nextElementSibling.querySelector('.chip-count').textContent`),'(18)');
+      assert.equal(await evaluate(`[...document.querySelectorAll('#filter-specialty input')].find(e=>e.value===`+JSON.stringify(other)+`).nextElementSibling.querySelector('.chip-count').textContent`),'(16)');
       if(width<500){await evaluate('document.getElementById("mobile-filter-btn").click()');await delay(350);assert.ok(await evaluate('document.querySelector(".sidebar-body").scrollWidth<=document.querySelector(".sidebar-body").clientWidth+1'));await evaluate('document.getElementById("close-mobile-filter").click()');}
-      console.log('PASS '+width+'px: optics 6, other 18, all card labels, list/calendar/compact filters and no overflow');
+      console.log('PASS '+width+'px: optics 6, other 16, all card labels, list/calendar/compact filters and no overflow');
     }
     await call('Browser.close');
   } finally {socket?.close();if(browser.exitCode===null)browser.kill();await new Promise(resolve=>server.close(resolve));}

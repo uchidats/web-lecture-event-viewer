@@ -16,7 +16,7 @@
  *  - venueId: 任意。venues.js の安定ID（未指定の場合は venue を使用）
  *  - timeZone: 任意。IANAタイムゾーン名（会場マスター未登録の場合にも使用可能）
  *  - venue: 開催会場（未定の場合は "未定"）
- *  - specialty: 専門領域（総合/網膜・硝子体/緑内障/白内障/角膜・外眼部/小児・斜視弱視/神経眼科/眼形成/眼光学CL近視/その他）
+ *  - specialty: 専門領域の文字列または文字列配列（総合/網膜・硝子体/緑内障/白内障/角膜・外眼部/小児・斜視弱視/神経眼科/眼形成/眼光学CL近視/眼炎症感染/その他）
  *  - eventType: "国内学会" | "海外学会" | "講演会・勉強会" | "地方会・研究会"
  *  - format: "現地" | "Web" | "ハイブリッド"
  *  - sponsor: 主催・共催団体
@@ -2439,7 +2439,7 @@ const sampleEvents = [
     "time": "全日程",
     "region": "九州・沖縄",
     "venue": "福岡国際会議場",
-    "specialty": "その他",
+    "specialty": "眼炎症感染",
     "eventType": "海外学会",
     "format": "現地",
     "sponsor": "International Ocular Inflammation Society",
@@ -2490,7 +2490,7 @@ const sampleEvents = [
     "time": "全日程",
     "region": "九州・沖縄",
     "venue": "福岡国際会議場",
-    "specialty": "その他",
+    "specialty": "眼炎症感染",
     "eventType": "国内学会",
     "format": "現地",
     "sponsor": "日本眼感染症学会 / 日本眼炎症学会 / 日本眼科アレルギー学会 / 日本涙道・涙液学会",
@@ -4185,7 +4185,10 @@ const sampleEvents = [
     "time": "全日程",
     "region": "四国",
     "venue": "高知市文化プラザかるぽーと",
-    "specialty": "その他",
+    "specialty": [
+      "眼炎症感染",
+      "その他"
+    ],
     "eventType": "国内学会",
     "format": "現地",
     "sponsor": "日本眼感染症学会 / 日本眼炎症学会 / 日本眼科アレルギー学会 / 日本涙道・涙液学会",

@@ -1937,6 +1937,7 @@ button, input, select, textarea {
   white-space: nowrap;
   flex-shrink: 0;
 }
+.event-specialty-labels { display: flex; flex-wrap: wrap; gap: 4px 8px; }
 
 .card-meta-item > :last-child {
   flex: 1;

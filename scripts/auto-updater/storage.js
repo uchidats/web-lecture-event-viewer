@@ -23,6 +23,10 @@ function validateEvents(events, baseline) {
   for (const e of events) {
     if (!e.id || ids.has(e.id)) throw new Error('Duplicate/missing event ID');
     ids.add(e.id);
+    if (e.specialty !== undefined) {
+      const specialties = Array.isArray(e.specialty) ? e.specialty : [e.specialty];
+      if (!specialties.length || specialties.some(value => typeof value !== 'string' || !value.trim()) || new Set(specialties).size !== specialties.length) throw new Error('Invalid specialty labels');
+    }
     if (e.registration && !validRegistration(e.registration)) throw new Error('Invalid registration periods');
     for (const field of ['eventOfficialUrl', 'societyUrl']) if (e[field]) {
       const url = new URL(e[field]);
@@ -86,6 +90,7 @@ const checks = [
   ['scratch/test_gemini_discovery_grounding.js'],
   ['scratch/test_gemini_year_evidence.js'],
   ['scratch/test_calendar_view.js'],
+  ['scratch/test_multiple_specialties.js'],
   ['scratch/test_pediatric_2026_identity.js'],
   ['scratch/test_monitor_zero_update_delivery.js'],
   ['scratch/test_gemini_notification_policy.js'], ['scratch/test_analytics.js']

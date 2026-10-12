@@ -105,6 +105,7 @@ const FILTER_OPTIONS = {
     "神経眼科",
     "眼形成",
     "眼光学CL近視",
+    "眼炎症感染",
     "総合",
     "その他"
   ],
@@ -139,6 +140,11 @@ const WEEKDAYS = ["日", "月", "火", "水", "木", "金", "土"];
 // 表示だけ統一し、既存のデータ・フィルタ値は維持する。
 function getSpecialtyDisplayLabel(value) {
   return value === "網膜・硝子体" ? "網膜硝子体" : value;
+}
+
+// A specialty is a single label or an array of labels for joint conferences.
+function getEventSpecialties(event) {
+  return Array.isArray(event.specialty) ? [...new Set(event.specialty)] : (event.specialty ? [event.specialty] : []);
 }
 
 // 学会分類表示を「国際学会」に統一し、既存のデータ・フィルタ内部値は維持する。
@@ -1220,7 +1226,7 @@ function renderFilterOptions() {
     const items = FILTER_OPTIONS[key];
     container.innerHTML = items.map(val => {
       // 該当カテゴリに属するイベント件数を計算
-      const count = state.events.filter(e => e[key] === val).length;
+      const count = state.events.filter(e => key === 'specialty' ? getEventSpecialties(e).includes(val) : e[key] === val).length;
       const displayLabel = key === 'specialty'
         ? getSpecialtyDisplayLabel(val)
         : (key === 'eventType' ? getEventTypeDisplayLabel(val) : val);
@@ -1684,12 +1690,12 @@ function getFilteredEvents(ignoreCalendar = false) {
     if (state.filters.keyword && !ignoreCalendar) {
       const q = state.filters.keyword;
       const conflictText = effective.conflicts.map(c => `${c.providerLabel} ${c.title}`).join(" ");
-      const combined = `${event.title} ${event.subtitle} ${event.specialty} ${event.sponsor} ${event.credits} ${event.region} ${event.tags.join(" ")} ${conflictText}`.toLowerCase();
+      const combined = `${event.title} ${event.subtitle} ${getEventSpecialties(event).join(" ")} ${event.sponsor} ${event.credits} ${event.region} ${event.tags.join(" ")} ${conflictText}`.toLowerCase();
       if (!combined.includes(q)) return false;
     }
 
     // 専門領域
-    if (state.filters.specialty.size > 0 && !state.filters.specialty.has(event.specialty)) {
+    if (state.filters.specialty.size > 0 && !getEventSpecialties(event).some(value => state.filters.specialty.has(value))) {
       return false;
     }
 
@@ -2284,7 +2290,7 @@ function createEventCardHtml(event) {
       <div class="card-meta-list">
         <div class="card-meta-item">
           <span class="card-meta-label">専門領域:</span>
-          <strong>${escapeHtml(getSpecialtyDisplayLabel(event.specialty))}</strong>
+          <span class="event-specialty-labels">${getEventSpecialties(event).map(value => `<strong>${escapeHtml(getSpecialtyDisplayLabel(value))}</strong>`).join('')}</span>
         </div>
         <div class="card-meta-item">
           <span class="card-meta-label">種別:</span>
