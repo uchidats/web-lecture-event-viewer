@@ -194,7 +194,7 @@ function initApp() {
 const FILTER_STATE_KEY = 'ophthalconf_filter_state';
 const FILTER_SET_KEYS = ['year', 'specialty', 'eventType', 'abstractStatus', 'format', 'region', 'company', 'scheduleStatus'];
 const FILTER_BOOLEAN_KEYS = ['registeredOnly', 'includeEndedConferences'];
-const FILTER_SORT_VALUES = ['date-asc', 'abstract-deadline-asc', 'title-asc'];
+const FILTER_SORT_VALUES = ['date-asc', 'registration-deadline-asc', 'abstract-deadline-asc', 'title-asc'];
 
 function saveFilterState() {
   try {
@@ -1082,6 +1082,24 @@ function parseAbstractDate(value) {
   return { year, month, day, timestamp };
 }
 
+function getRegistrationSortDeadline(event, today = getTodayString()) {
+  const periods = event.registration?.periods;
+  let deadlines;
+  if (Array.isArray(periods)) {
+    deadlines = periods.filter(period => !period.label || /事前|早期|early|regular|advance|pre.?registration/i.test(period.label))
+      .map(period => parseAbstractDate(period.deadline)).filter(Boolean);
+  } else {
+    deadlines = [event.earlyRegistrationDeadline, event.earlyBirdDeadline].map(value => {
+      const normalized = typeof value === 'string' ? value.replace(/^(\d{4})年(\d{1,2})月(\d{1,2})日.*$/, (_, y, m, d) => `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`) : value;
+      return parseAbstractDate(normalized);
+    }).filter(Boolean);
+  }
+  const todayTimestamp = parseAbstractDate(today).timestamp;
+  const upcoming = deadlines.filter(deadline => deadline.timestamp >= todayTimestamp);
+  const candidates = upcoming.length ? upcoming : deadlines;
+  return candidates.length ? (upcoming.length ? Math.min(...candidates.map(d => d.timestamp)) : Math.max(...candidates.map(d => d.timestamp))) : null;
+}
+
 function renderRegistrationHtml(event, today = getTodayString()) {
   const international = (event.registration?.type || event.conferenceRegion) === 'international';
   const defaultLabel = international ? 'Early bird' : '事前参加登録';
@@ -1746,6 +1764,14 @@ function getFilteredEvents(ignoreCalendar = false, viewMode = typeof OphthalCale
     return true;
   }).sort((a, b) => {
     if (state.sortBy === "date-asc") {
+      return new Date(a.date) - new Date(b.date);
+    } else if (state.sortBy === "registration-deadline-asc") {
+      const deadlineA = getRegistrationSortDeadline(a, todayStr);
+      const deadlineB = getRegistrationSortDeadline(b, todayStr);
+      const todayTimestamp = parseAbstractDate(todayStr).timestamp;
+      const group = deadline => deadline === null ? 2 : deadline < todayTimestamp ? 1 : 0;
+      if (group(deadlineA) !== group(deadlineB)) return group(deadlineA) - group(deadlineB);
+      if (deadlineA !== deadlineB) return group(deadlineA) === 1 ? deadlineB - deadlineA : deadlineA - deadlineB;
       return new Date(a.date) - new Date(b.date);
     } else if (state.sortBy === "abstract-deadline-asc") {
       const deadlineA = parseAbstractDate(getCurrentAbstractDeadline(a.abstractSubmission))?.timestamp ?? Infinity;

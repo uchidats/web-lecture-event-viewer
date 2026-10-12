@@ -100,6 +100,10 @@ async function main() {
     for(const width of [1280,390,320]) {
       await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});await navigate('/');
       await evaluate('document.getElementById("reset-filter-btn").click();state.filters.includeEndedConferences=true;syncCheckboxesWithState();renderEvents()');
+      const sortControl=await evaluate('(() => {const select=document.getElementById("sort-select"),r=select.getBoundingClientRect();return {options:Array.from(select.options,e=>e.textContent),fits:r.right<=innerWidth&&select.scrollWidth<=select.clientWidth+2};})()');
+      assert.deepEqual(sortControl.options,['開催日（近い順）','事前参加登録締切（近い順）','演題締切（近い順）','イベント名（50音順）']);assert.ok(sortControl.fits);
+      await evaluate('elements.sortSelect.value="registration-deadline-asc";elements.sortSelect.dispatchEvent(new Event("change",{bubbles:true}))');
+      assert.equal(await evaluate('state.sortBy'),'registration-deadline-asc');
       const webinar=await evaluate('state.events.find(e=>!e.isConference&&!e.parentConferenceId&&e.specialty===String.fromCharCode(32209,20869,38556)).id');
       for(const mode of ['list','calendar','compact']) {
         await evaluate('document.getElementById("view-'+mode+'").click()');

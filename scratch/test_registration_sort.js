@@ -1,0 +1,26 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const store=new Map();
+const context=vm.createContext({assert,console,localStorage:{setItem:(k,v)=>store.set(k,v),getItem:k=>store.get(k)||null},document:{getElementById:()=>null,addEventListener:()=>{}}});
+for(const file of ['venues.js','companies.js','events.js','script.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'..',file),'utf8'),context);
+vm.runInContext(`
+ getTodayString=()=> '2026-10-13';
+ for(const key of FILTER_SET_KEYS)state.filters[key].clear();
+ const template=sampleEvents.find(e=>e.id==='conf-jp-jrvs-2026');
+ const make=(id,deadline,date='2027-03-01')=>({...template,id,date,endDate:date,registration:{periods:[{label:'事前参加登録',deadline}]}});
+ state.events=[make('unknown',null),make('expired-old','2026-10-01'),make('later','2026-10-20'),make('same-late','2026-10-15','2027-04-01'),make('same-early','2026-10-15','2027-02-01'),make('expired-new','2026-10-12'),make('today','2026-10-13'),make('invalid','2026-02-30')];
+ state.sortBy='registration-deadline-asc';
+ assert.deepEqual(getFilteredEvents().map(e=>e.id),['today','same-early','same-late','later','expired-new','expired-old','unknown','invalid']);
+ const mixed={registration:{periods:[{label:'Early bird',deadline:'2026-10-01'},{label:'Regular',deadline:'2026-10-20'},{label:'On-site',deadline:'2026-10-13'}]}};
+ assert.equal(getRegistrationSortDeadline(mixed),parseAbstractDate('2026-10-20').timestamp);
+ assert.equal(getRegistrationSortDeadline({registration:{periods:[{label:'直前・当日登録',deadline:'2026-10-15'}]}}),null);
+ assert.equal(getRegistrationSortDeadline({earlyBirdDeadline:'2026年10月16日(金)'}),parseAbstractDate('2026-10-16').timestamp);
+ assert.equal(getRegistrationSortDeadline({earlyRegistrationDeadline:'締切済'}),null);
+ state.filters.keyword='same';state.events[3].title='same late';state.events[4].title='same early';
+ assert.deepEqual(getFilteredEvents().map(e=>e.id),['same-early','same-late']);
+ state.filters.keyword='';state.filters.specialty=new Set(['緑内障']);assert.equal(getFilteredEvents().length,0);
+ state.filters.specialty.clear();saveFilterState();state.sortBy='date-asc';loadFilterState();assert.equal(state.sortBy,'registration-deadline-asc');
+`,context);
+const html=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
+assert.ok(html.indexOf('value="date-asc"')<html.indexOf('value="registration-deadline-asc"'));
+assert.ok(html.indexOf('value="registration-deadline-asc"')<html.indexOf('value="abstract-deadline-asc"'));
+console.log('PASS: registration deadline groups/ties, stages, invalid/legacy dates, filters and persisted sort selection');
