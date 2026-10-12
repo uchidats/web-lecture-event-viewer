@@ -1999,6 +1999,16 @@ function formatCalendarConflictTime(conflict, event = {}) {
   return sameDate(start, end) ? `${start.clock}–${end.clock}` : `${shortDate(start)} ${start.clock}–${shortDate(end)} ${end.clock}`;
 }
 
+function shouldDisplayEventTime(event) {
+  if (!event || !event.time) return false;
+  const time = String(event.time).trim();
+  if (!time) return false;
+  // 開始時刻または具体的な時刻情報があるイベント（例: "09:00 - 17:00", "19:00 - 20:30", "08:00 - 17:30 (現地時間)", "09:00 - 18:00 (全日程)" など）
+  if (/\d{1,2}:\d{2}|\d{1,2}時/.test(time)) return true;
+  // 時刻情報がない学会・研究会（"全日程", "現地時間"のみ, "未定", "要確認" などは非表示）
+  return false;
+}
+
 function renderEventTimeHtml(event) {
   const rows = getEventJapanTimes(event);
   if (!rows.length) return escapeHtml(event.time || "");
@@ -2196,24 +2206,27 @@ function createEventCardHtml(event) {
     `;
   }
 
+  const hasTime = shouldDisplayEventTime(event);
+
   return `
     <article class="event-card ${effective.isRegistered ? 'status-registered-card' : ''} ${isConferenceAttending ? 'card-attending-conference' : ''} ${event.parentConferenceId ? 'card-seminar-related' : ''} ${isConferenceEndedEvent ? 'card-conference-ended' : ''} ${isAttended ? 'card-history-attended' : ''}" data-id="${event.id}">
       <!-- 上段: 日程・地域・ステータスバッジ -->
       <div class="card-top-row">
-        <div class="date-time-block">
+        <div class="date-time-block ${hasTime ? 'has-time' : 'no-time'}">
           <div class="date-badge${dateBadgeInfo.yearText ? ' has-year' : ''}">
             ${dateBadgeInfo.yearText ? `<span class="date-year">${escapeHtml(dateBadgeInfo.yearText)}</span>` : ''}
             <span class="month-day">${escapeHtml(dateBadgeInfo.dateText)}</span>
             <span class="day-week">${escapeHtml(dateBadgeInfo.weekdayText)}</span>
           </div>
-          <div class="time-and-region">
+          <div class="time-and-region ${hasTime ? 'has-time' : 'no-time'}">
+            ${hasTime ? `
             <div class="time-text">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
               ${renderEventTimeHtml(event)}
-            </div>
+            </div>` : ""}
             <div class="location-text">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
