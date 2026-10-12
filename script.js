@@ -146,6 +146,7 @@ function getSpecialtyDisplayLabel(value) {
 }
 
 function getConferenceCategoryDisplayLabel(value) {
+  if (value === "形成腫瘍") return "眼形成";
   if (value === "白内障屈折") return "白内障・屈折矯正";
   if (value === "眼光学CL近視") return "眼光学・CL・近視";
   if (value === "眼炎症感染") return "眼炎症・感染";

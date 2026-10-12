@@ -14,6 +14,7 @@ vm.runInContext(`
   assert.equal(getSpecialtyDisplayLabel('眼光学CL近視'), '眼光学・CL・近視');
   assert.equal(getSpecialtyDisplayLabel('白内障'), '白内障・屈折矯正');
   assert.equal(getConferenceCategoryDisplayLabel('白内障屈折'), '白内障・屈折矯正');
+  assert.equal(getConferenceCategoryDisplayLabel('形成腫瘍'), '眼形成');
   assert.equal(getSpecialtyDisplayLabel('眼炎症感染'), '眼炎症・感染');
   assert.equal(getConferenceCategoryDisplayLabel('眼光学CL近視'), '眼光学・CL・近視');
   assert.equal(getConferenceCategoryDisplayLabel('眼炎症感染'), '眼炎症・感染');
