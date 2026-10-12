@@ -16,6 +16,17 @@ function load(original = false) {
 }
 const run = load();
 const before = load(true);
+const euretina = JSON.parse(run('JSON.stringify(sampleEvents.find(e => e.id === "conf-int-euretina-2027"))'));
+assert.equal(euretina.date, '2027-09-16');
+assert.equal(euretina.endDate, '2027-09-19');
+assert.equal(euretina.venue, 'Bella Center');
+assert.equal(euretina.cityCountry, 'コペンハーゲン / デンマーク');
+assert.equal(euretina.eventOfficialUrl, 'https://euretina.org/copenhagen-27/');
+assert.equal(euretina.officialUrl, 'https://euretina.org/');
+assert.equal(run('getEventVenueRegionLabel(sampleEvents.find(e => e.id === "conf-int-euretina-2027"))'), 'デンマーク');
+const euretinaVenueHtml = run('renderVenueHtml(sampleEvents.find(e => e.id === "conf-int-euretina-2027"))');
+const euretinaMaps = new URL(euretinaVenueHtml.match(/href="([^"]+)"/)[1].replaceAll('&amp;', '&'));
+assert.equal(euretinaMaps.searchParams.get('query'), 'Bella Center コペンハーゲン');
 assert.equal(run('Object.keys(venueMaster).length'), 10);
 assert.equal(run('sampleEvents.filter(e => e.venueId).length'), 10); // APACRS corrected away from Singapore.
 assert.equal(run('sampleEvents.find(e=>e.id==="oph-010").venueId'),undefined);
