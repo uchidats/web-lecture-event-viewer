@@ -134,8 +134,12 @@ async function main() {
     const current = realEvents.find(e => e.id === record.id);
     if(record.id==='oph-003'){assert.equal(current,undefined,'Erroneous demo joint meeting removed after official audit');continue;}
     const changes=corrections.find(r=>r.eventId===record.id)?.changes||[];
-    for (const field of ['title', 'date', 'endDate', 'venue']) assert.equal(current[field], changes.find(c=>c.field===field)?.after??record[field], `${record.id}: audited ${field}`);
-    if (record.status === 'needs-review') assert.equal(current.eventOfficialUrl, changes.find(c=>c.field==='eventOfficialUrl')?.after, `${record.id}: reviewed URL`);
+    const manual = record.id === 'conf-jp-eyelid-2027' ? {
+      title: '第38回 日本眼瞼義眼床手術学会', date: '2027-02-20', endDate: '2027-02-20',
+      venue: '京都府立医科大学附属図書館ホール', eventOfficialUrl: 'https://convention.jtbcom.co.jp/gigan38/index.html'
+    } : {};
+    for (const field of ['title', 'date', 'endDate', 'venue']) assert.equal(current[field], manual[field]??changes.find(c=>c.field===field)?.after??record[field], `${record.id}: audited ${field}`);
+    if (record.status === 'needs-review') assert.equal(current.eventOfficialUrl, manual.eventOfficialUrl??changes.find(c=>c.field==='eventOfficialUrl')?.after, `${record.id}: reviewed URL`);
   }
   const callsAlreadySet = [];
   assert.equal((await discoverMissingEventUrls({ events: realEvents.filter(e => e.eventOfficialUrl), config,

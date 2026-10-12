@@ -1509,33 +1509,33 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-eyelid-2027",
-    "title": "第38回 日本眼瞼義眼床手術学会学術集会",
-    "subtitle": "眼瞼・義眼床手術の新たなスタンダード",
-    "date": "2027-02-13",
-    "endDate": "2027-02-14",
-    "time": "全日程",
-    "region": "未定",
-    "venue": "未定",
+    "title": "第38回 日本眼瞼義眼床手術学会",
+    "subtitle": "独創と信頼発信",
+    "date": "2027-02-20",
+    "endDate": "2027-02-20",
+    "time": "",
+    "region": "関西",
+    "venue": "京都府立医科大学附属図書館ホール",
     "specialty": "眼形成",
     "eventType": "国内学会",
     "format": "現地",
     "sponsor": "日本眼瞼義眼床手術学会",
-    "credits": "日本眼科学会認定単位",
+    "credits": "",
     "conferenceRegion": "domestic",
     "conferenceCategory": "形成腫瘍",
     "conferenceTier": "subspecialty",
-    "period": "2027年2月（予定）",
-    "cityCountry": "未定 / 日本",
-    "abstractDeadline": "未定",
-    "earlyBirdDeadline": "未定",
-    "officialUrl": "",
-    "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+    "period": "2027年2月20日(土)",
+    "cityCountry": "京都市（京都府） / 日本",
+    "abstractDeadline": "2026年11月5日 正午",
+    "earlyBirdDeadline": "",
+    "officialUrl": "https://convention.jtbcom.co.jp/gigan38/index.html",
+    "sourceUrl": "https://convention.jtbcom.co.jp/gigan38/summary/index.html",
     "note": "",
     "abstractSubmission": {
-      "status": "unknown",
-      "startDate": null,
-      "deadline": null,
-      "url": ""
+      "status": "open",
+      "startDate": "2026-09-10",
+      "deadline": "2026-11-05T12:00",
+      "url": "https://convention.jtbcom.co.jp/gigan38/abstract/index.html"
     },
     "calendarStatus": {
       "google": {
@@ -1553,8 +1553,25 @@ const sampleEvents = [
       "義眼床",
       "形成外科連携"
     ],
-    "description": "眼科医・形成外科医・義眼技師が協働し、眼瞼下垂や義眼床難症例の再建手術を討議。",
-    "isConference": true
+    "description": "京都府立医科大学附属図書館ホールで開催。",
+    "isConference": true,
+    "conferenceChair": "渡辺 彰英（京都府立医科大学眼科）",
+    "eventOfficialUrl": "https://convention.jtbcom.co.jp/gigan38/index.html",
+    "registration": {
+      "type": "domestic",
+      "periods": [
+        {
+          "label": "事前登録",
+          "start": "2026-10-08T12:00",
+          "deadline": "2027-01-08"
+        },
+        {
+          "label": "追加登録",
+          "start": "2027-01-15T12:00",
+          "deadline": "2027-02-20"
+        }
+      ]
+    }
   },
   {
     "id": "conf-jp-diabetic-2027",

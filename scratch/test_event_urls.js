@@ -21,7 +21,7 @@ async function main() {
   const conferences = events.filter(e => e.isConference);
   const approved = audit.records.filter(record => record.proposedEventOfficialUrl);
   assert.equal(approved.length, 31);
-  assert.equal(conferences.filter(e => e.eventOfficialUrl).length, 46);
+  assert.equal(conferences.filter(e => e.eventOfficialUrl).length, 47);
   assert.equal(additions.length, 5);
   for (const record of additions) assert.equal(events.find(e => e.id === record.id).eventOfficialUrl, record.proposedEventOfficialUrl);
   assert.equal(conferences.filter(e => e.societyUrl).length, 15);
@@ -29,7 +29,12 @@ async function main() {
     const event = events.find(e => e.id === record.id);
     if(record.id==='oph-003'){assert.equal(event,undefined,'Erroneous historical demo record removed');continue;}
     const correction=corrections.find(r=>r.eventId===event.id);
-    const expected=(field,old)=>correction?.changes.find(c=>c.field===field)?.after??old;
+    const manual = event.id === 'conf-jp-eyelid-2027' ? {
+      title: '第38回 日本眼瞼義眼床手術学会',
+      officialUrl: 'https://convention.jtbcom.co.jp/gigan38/index.html',
+      eventOfficialUrl: 'https://convention.jtbcom.co.jp/gigan38/index.html'
+    } : {};
+    const expected=(field,old)=>manual[field]??correction?.changes.find(c=>c.field===field)?.after??old;
     assert.equal(event.officialUrl || null, expected('officialUrl',record.currentOfficialUrl)||null, `${event.id}: legacy URL`);
     assert.equal(event.title, expected('title',record.title));
     assert.equal(Number(event.date.slice(0, 4)), Number(String(expected('date',record.year)).slice(0,4)));

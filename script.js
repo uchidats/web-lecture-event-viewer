@@ -2212,6 +2212,7 @@ function createEventCardHtml(event) {
           </span>
         </div>
         ` : ''}
+        ${event.conferenceChair ? `<div class="conf-item conf-item-full"><span class="conf-label">会長:</span><span class="conf-val">${escapeHtml(event.conferenceChair)}</span></div>` : ''}
         <div class="conf-deadlines-row">
           <div class="conf-item">
             <span class="conf-label">演題募集:</span>

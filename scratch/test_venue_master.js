@@ -27,6 +27,25 @@ assert.equal(run('getEventVenueRegionLabel(sampleEvents.find(e => e.id === "conf
 const euretinaVenueHtml = run('renderVenueHtml(sampleEvents.find(e => e.id === "conf-int-euretina-2027"))');
 const euretinaMaps = new URL(euretinaVenueHtml.match(/href="([^"]+)"/)[1].replaceAll('&amp;', '&'));
 assert.equal(euretinaMaps.searchParams.get('query'), 'Bella Center コペンハーゲン');
+const gigan38 = JSON.parse(run('JSON.stringify(sampleEvents.find(e => e.id === "conf-jp-eyelid-2027"))'));
+assert.equal(gigan38.date, '2027-02-20');
+assert.equal(gigan38.endDate, '2027-02-20');
+assert.equal(gigan38.venue, '京都府立医科大学附属図書館ホール');
+assert.equal(gigan38.cityCountry, '京都市（京都府） / 日本');
+assert.equal(gigan38.region, '関西');
+assert.equal(gigan38.subtitle, '独創と信頼発信');
+assert.equal(gigan38.conferenceChair, '渡辺 彰英（京都府立医科大学眼科）');
+assert.equal(gigan38.eventOfficialUrl, 'https://convention.jtbcom.co.jp/gigan38/index.html');
+assert.equal(gigan38.officialUrl, gigan38.eventOfficialUrl);
+assert.equal(gigan38.abstractSubmission.deadline, '2026-11-05T12:00');
+assert.equal(gigan38.registration.periods.length, 2);
+assert.equal(gigan38.credits, '');
+const giganCard = run('createEventCardHtml(sampleEvents.find(e => e.id === "conf-jp-eyelid-2027"))');
+assert.ok(giganCard.includes('渡辺 彰英') && giganCard.includes('京都府立医科大学附属図書館ホール'));
+assert.ok(!giganCard.includes('眼瞼・義眼床手術の新たなスタンダード'));
+const giganVenueHtml = run('renderVenueHtml(sampleEvents.find(e => e.id === "conf-jp-eyelid-2027"))');
+const giganMaps = new URL(giganVenueHtml.match(/href="([^"]+)"/)[1].replaceAll('&amp;', '&'));
+assert.equal(giganMaps.searchParams.get('query'), '京都府立医科大学附属図書館ホール 京都市（京都府）');
 assert.equal(run('Object.keys(venueMaster).length'), 10);
 assert.equal(run('sampleEvents.filter(e => e.venueId).length'), 10); // APACRS corrected away from Singapore.
 assert.equal(run('sampleEvents.find(e=>e.id==="oph-010").venueId'),undefined);
