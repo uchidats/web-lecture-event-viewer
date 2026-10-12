@@ -11,6 +11,7 @@ const { runGeminiMonitor } = require('../scripts/gemini-monitor/monitor');
 async function main() {
   const repo = path.resolve(__dirname, '..');
   const event = loadEvents(repo).events.find(e => e.id === 'conf-jp-lowvision-2027');
+  delete event.eventOfficialUrl;
   const url = 'https://www.ganki.jp/lowvision2027/';
   const verification = { url, yearMatches: true, editionMatches: true, confidence: 0.95 };
   const html = (year, news = '') => `<title>第28回日本ロービジョン学会学術総会</title><h1>第28回日本ロービジョン学会学術総会</h1>${year ? `<dl><dt>会期</dt><dd>${year}/5/22–23</dd></dl>` : ''}${news}`;
@@ -73,6 +74,9 @@ async function main() {
 
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'gemini-year-shadow-'));
   fs.copyFileSync(path.join(repo, 'events.js'), path.join(root, 'events.js'));
+  const missingFixture = loadEvents(root);
+  delete missingFixture.events.find(e => e.id === event.id).eventOfficialUrl;
+  fs.writeFileSync(missingFixture.file, missingFixture.serialize(missingFixture.events));
   const before = fs.readFileSync(path.join(root, 'events.js'));
   const oldApply = process.env.ENABLE_AUTO_APPLY;
   try {

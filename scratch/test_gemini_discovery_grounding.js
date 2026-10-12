@@ -9,6 +9,7 @@ const os = require('node:os');
 
 async function main() {
   const event = loadEvents(require('node:path').resolve(__dirname, '..')).events.find(e => e.id === 'conf-jp-lowvision-2027');
+  delete event.eventOfficialUrl; // Exercise missing-URL behavior independently of the published dataset.
   assert.equal(buildSearchQueries(event).primaryQuery, '第28回 日本ロービジョン学会学術総会 2027');
   const url = 'https://www.ganki.jp/lowvision2027/information.html';
   const originalFetch = global.fetch;
@@ -68,6 +69,9 @@ async function main() {
   assert.equal(searches, 0);
   const shadowRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'gemini-shadow-review-'));
   fs.copyFileSync(path.resolve(__dirname, '../events.js'), path.join(shadowRoot, 'events.js'));
+  const shadowFixture = loadEvents(shadowRoot);
+  delete shadowFixture.events.find(e => e.id === event.id).eventOfficialUrl;
+  fs.writeFileSync(shadowFixture.file, shadowFixture.serialize(shadowFixture.events));
   const before = fs.readFileSync(path.join(shadowRoot, 'events.js'));
   const oldApply = process.env.ENABLE_AUTO_APPLY;
   try {

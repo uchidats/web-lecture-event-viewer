@@ -376,6 +376,9 @@ async function main() {
   // Test Case 13: hash unchanged + URLなし + 探索期間内 -> URL探索する
   // ==========================================
   console.log('--- Test 13: hash unchanged + URLなし + 探索期間内 -> URL探索する ---');
+  const missingUrlFixture = loadEvents(monitorRoot);
+  delete missingUrlFixture.events.find(e => e.id === 'conf-jp-lowvision-2027').eventOfficialUrl;
+  fs.writeFileSync(missingUrlFixture.file, missingUrlFixture.serialize(missingUrlFixture.events));
   let searchCallCount13 = 0;
   const mockSearch13 = async () => {
     searchCallCount13++;

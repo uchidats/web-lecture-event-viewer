@@ -137,7 +137,7 @@ async function main() {
     const manual = record.id === 'conf-jp-eyelid-2027' ? {
       title: '第38回 日本眼瞼義眼床手術学会', date: '2027-02-20', endDate: '2027-02-20',
       venue: '京都府立医科大学附属図書館ホール', eventOfficialUrl: 'https://convention.jtbcom.co.jp/gigan38/index.html'
-    } : {};
+    } : record.id === 'conf-jp-lowvision-2027' ? { eventOfficialUrl: 'https://www.ganki.jp/lowvision2027/information.html' } : {};
     for (const field of ['title', 'date', 'endDate', 'venue']) assert.equal(current[field], manual[field]??changes.find(c=>c.field===field)?.after??record[field], `${record.id}: audited ${field}`);
     if (record.status === 'needs-review') assert.equal(current.eventOfficialUrl, manual.eventOfficialUrl??changes.find(c=>c.field==='eventOfficialUrl')?.after, `${record.id}: reviewed URL`);
   }
@@ -171,7 +171,7 @@ async function main() {
     <title>第28回日本ロービジョン学会学術総会</title>
     <nav class="nav_global"><a href="information.html"><span>開催概要</span></a></nav>
   `);
-  const lowvisionEvent = realEvents.find(e => e.id === 'conf-jp-lowvision-2027');
+  const lowvisionEvent = { ...realEvents.find(e => e.id === 'conf-jp-lowvision-2027'), eventOfficialUrl: undefined };
   assert.ok(lowvisionEvent, 'conf-jp-lowvision-2027 exists');
   const lowvisionConfig = {
     ...registry,
@@ -216,6 +216,9 @@ async function main() {
   const isolated = fs.mkdtempSync(path.join(os.tmpdir(), 'event-discovery-pipeline-'));
   fs.copyFileSync(path.join(root, 'events.js'), path.join(isolated, 'events.js'));
   fs.copyFileSync(path.join(root, 'venues.js'), path.join(isolated, 'venues.js'));
+  const unresolvedFixture = loadEvents(isolated);
+  delete unresolvedFixture.events.find(e => e.id === 'conf-jp-lowvision-2027').eventOfficialUrl;
+  fs.writeFileSync(unresolvedFixture.file, unresolvedFixture.serialize(unresolvedFixture.events));
   const original = fs.readFileSync(path.join(isolated, 'events.js'), 'utf8');
   const blank = realEvents.find(e => e.id === 'conf-jp-lowvision-2027');
   const source = registry.sources[0];

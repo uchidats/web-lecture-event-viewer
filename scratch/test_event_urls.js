@@ -21,7 +21,7 @@ async function main() {
   const conferences = events.filter(e => e.isConference);
   const approved = audit.records.filter(record => record.proposedEventOfficialUrl);
   assert.equal(approved.length, 31);
-  assert.equal(conferences.filter(e => e.eventOfficialUrl).length, 47);
+  assert.equal(conferences.filter(e => e.eventOfficialUrl).length, 48);
   assert.equal(additions.length, 5);
   for (const record of additions) assert.equal(events.find(e => e.id === record.id).eventOfficialUrl, record.proposedEventOfficialUrl);
   assert.equal(conferences.filter(e => e.societyUrl).length, 15);
@@ -33,6 +33,9 @@ async function main() {
       title: '第38回 日本眼瞼義眼床手術学会',
       officialUrl: 'https://convention.jtbcom.co.jp/gigan38/index.html',
       eventOfficialUrl: 'https://convention.jtbcom.co.jp/gigan38/index.html'
+    } : event.id === 'conf-jp-lowvision-2027' ? {
+      officialUrl: 'https://www.ganki.jp/lowvision2027/information.html',
+      eventOfficialUrl: 'https://www.ganki.jp/lowvision2027/information.html'
     } : {};
     const expected=(field,old)=>manual[field]??correction?.changes.find(c=>c.field===field)?.after??old;
     assert.equal(event.officialUrl || null, expected('officialUrl',record.currentOfficialUrl)||null, `${event.id}: legacy URL`);

@@ -16,6 +16,19 @@ function load(original = false) {
 }
 const run = load();
 const before = load(true);
+const lowvision2027 = JSON.parse(run('JSON.stringify(sampleEvents.find(e=>e.id==="conf-jp-lowvision-2027"))'));
+assert.equal(lowvision2027.date, '2027-05-22');
+assert.equal(lowvision2027.endDate, '2027-05-23');
+assert.equal(lowvision2027.venue, '大阪国際会議場（グランキューブ大阪）');
+assert.equal(lowvision2027.cityCountry, '大阪市（大阪府） / 日本');
+assert.equal(lowvision2027.specialty, 'ロービジョン');
+assert.equal(lowvision2027.subtitle, '未来を視る ー ワクワクする明日へ');
+assert.equal(lowvision2027.conferenceChair, '阿曽沼 早苗（中之島アイセンター／大阪大学）');
+assert.equal(lowvision2027.eventOfficialUrl, 'https://www.ganki.jp/lowvision2027/information.html');
+assert.equal(lowvision2027.officialUrl, lowvision2027.eventOfficialUrl);
+const lowvisionCard = run('createEventCardHtml(sampleEvents.find(e=>e.id==="conf-jp-lowvision-2027"))');
+assert.ok(lowvisionCard.includes('阿曽沼 早苗') && lowvisionCard.includes('未来を視る'));
+assert.ok(lowvisionCard.includes('google.com/maps') && !lowvisionCard.includes('[関西]'));
 const euretina = JSON.parse(run('JSON.stringify(sampleEvents.find(e => e.id === "conf-int-euretina-2027"))'));
 assert.equal(euretina.date, '2027-09-16');
 assert.equal(euretina.endDate, '2027-09-19');

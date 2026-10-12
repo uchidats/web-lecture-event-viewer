@@ -2041,7 +2041,7 @@ const sampleEvents = [
     "id": "conf-jp-lowvision-2027",
     "venueId": "osaka-international-convention-center",
     "title": "第28回 日本ロービジョン学会学術総会",
-    "subtitle": "共生社会の実現に向けたロービジョンケアの深化",
+    "subtitle": "未来を視る ー ワクワクする明日へ",
     "date": "2027-05-22",
     "endDate": "2027-05-23",
     "time": "全日程",
@@ -2059,8 +2059,8 @@ const sampleEvents = [
     "cityCountry": "大阪市（大阪府） / 日本",
     "abstractDeadline": "未定",
     "earlyBirdDeadline": "未定",
-    "officialUrl": "",
-    "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+    "officialUrl": "https://www.ganki.jp/lowvision2027/information.html",
+    "sourceUrl": "https://www.ganki.jp/lowvision2027/information.html",
     "note": "",
     "abstractSubmission": {
       "status": "unknown",
@@ -2084,8 +2084,10 @@ const sampleEvents = [
       "福祉機器",
       "視覚リハビリテーション"
     ],
-    "description": "視覚障害者の自立支援、最新支援技術、医療と福祉の架け橋。",
-    "isConference": true
+    "description": "",
+    "isConference": true,
+    "conferenceChair": "阿曽沼 早苗（中之島アイセンター／大阪大学）",
+    "eventOfficialUrl": "https://www.ganki.jp/lowvision2027/information.html"
   },
   {
     "id": "conf-int-apacrs-2027",
