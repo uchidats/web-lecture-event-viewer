@@ -135,13 +135,16 @@ for (const [event, expected] of [
   [{ region: '海外', cityCountry: 'ニューオーリンズ / 米国' }, '米国'],
   [{ region: '海外', cityCountry: 'シンガポール / シンガポール共和国' }, 'シンガポール'],
   [{ region: '海外', cityCountry: 'マニラ ／ フィリピン', venueId: 'missing' }, 'フィリピン'],
-  [{ region: '海外', cityCountry: '未定 / 欧州' }, '海外'],
-  [{ region: '海外', cityCountry: '未定 / 未定' }, '海外'],
-  [{ region: '海外', cityCountry: 'ウィーン' }, '海外'],
-  [{ region: '海外', cityCountry: null }, '海外'],
-  [{ region: '国内', cityCountry: '東京 / 日本' }, '国内'],
-  [{ region: '関東', conferenceRegion: 'international', cityCountry: '東京 / 日本' }, '関東'],
-  [{ region: '海外', cityCountry: 'ウィーン / オーストリア', venueId: 'tokyo-international-forum' }, '国内']
+  [{ region: '海外', cityCountry: '未定 / 欧州' }, ''],
+  [{ region: '海外', cityCountry: '未定 / 未定' }, ''],
+  [{ region: '海外', cityCountry: 'ウィーン' }, ''],
+  [{ region: '海外', cityCountry: null }, ''],
+  [{ region: '国内', cityCountry: '東京 / 日本' }, '東京'],
+  [{ region: '関東', conferenceRegion: 'international', cityCountry: '東京 / 日本' }, '東京'],
+  [{ region: '海外', cityCountry: 'ウィーン / オーストリア', venueId: 'tokyo-international-forum' }, ''],
+  [{ region: '関東', cityCountry: '横浜市（神奈川県） / 日本', venue: 'ロイヤルホールヨコハマ' }, '横浜'],
+  [{ region: '中部', cityCountry: '岐阜市（岐阜県） / 日本', venue: 'じゅうろくプラザ' }, '岐阜'],
+  [{ region: '関東', venueId: 'tokyo-international-forum', venue: '東京国際フォーラム' }, '']
 ]) {
   assert.equal(run(`getEventVenueRegionLabel(${JSON.stringify(event)})`), expected);
 }
@@ -154,7 +157,7 @@ for (const event of events) {
   const serialized = JSON.stringify(event);
   const label = run(`getEventVenueRegionLabel(${serialized})`);
   const card = run(`createEventCardHtml(${serialized})`);
-  assert.ok(card.includes(`[${run(`escapeHtml(${JSON.stringify(label)})`)}]`), event.id);
+  assert.ok(label ? card.includes(`[${run(`escapeHtml(${JSON.stringify(label)})`)}]`) : !card.includes('[]'), event.id);
   if (process.argv[2]) {
     // 国名ラベルを除き、全94カードのHTMLとMapsリンクが変更前と一致する。
     const normalized = card.replace(`[${run(`escapeHtml(${JSON.stringify(label)})`)}]`, `[${event.region}]`);

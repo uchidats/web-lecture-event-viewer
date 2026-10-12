@@ -101,7 +101,7 @@ async function main() {
         const date=card.querySelector('.date-badge').getBoundingClientRect(),region=card.querySelector('.time-and-region').getBoundingClientRect(),time=card.querySelector('.time-text'),venue=card.querySelector('.location-text'),link=venue.querySelector('a');
         return {id:card.dataset.id,centerDelta:Math.abs(date.top+date.height/2-region.top-region.height/2),hasTime:!!time,clock:!!time?.querySelector('svg'),stacked:!!time&&time.getBoundingClientRect().top<venue.getBoundingClientRect().top,alignment:getComputedStyle(card.querySelector('.date-time-block')).alignItems,venue:venue.textContent,href:link?.href,fits:card.scrollWidth<=card.clientWidth+1&&document.documentElement.scrollWidth<=innerWidth+1};
       })`);
-      const [noTime,timed]=data;assert.equal(noTime.hasTime,false);assert.equal(noTime.clock,false);assert.ok(noTime.centerDelta<1);assert.equal(noTime.alignment,'center');assert.ok(noTime.href.includes('google.com/maps'));assert.ok(noTime.venue.includes(String.fromCharCode(20013,37096)));
+      const [noTime,timed]=data;assert.equal(noTime.hasTime,false);assert.equal(noTime.clock,false);assert.ok(noTime.centerDelta<1);assert.equal(noTime.alignment,'center');assert.ok(noTime.href.includes('google.com/maps'));assert.ok(!noTime.venue.includes('['));
       assert.ok(timed.hasTime&&timed.clock&&timed.stacked);assert.equal(timed.alignment,'center');assert.ok(timed.centerDelta<1);assert.ok(data.every(e=>e.fits));
       console.log(JSON.stringify({width,data}));
     }

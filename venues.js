@@ -284,11 +284,20 @@ function getEventVenueRegionLabel(event) {
     : "";
   const country = (typeof masterCountry === "string" && masterCountry.trim()) || legacyCountry;
   const region = event.region || "";
-  if (country === "日本") return region === "海外" ? "国内" : region;
-  if (region !== "海外" && event.conferenceRegion !== "international") return region;
+  if (country === "日本" || (region !== "海外" && event.conferenceRegion !== "international")) {
+    const master = getEventVenue(event);
+    const rawCity = (event.cityCountry || '').split(/[/／]/)[0].trim();
+    const city = (/未定|不明|要確認/.test(rawCity) ? '' : rawCity.replace(/[（(].*?[）)]/g, '').trim()) || master?.city || '';
+    const prefecture = master?.prefecture || (rawCity.match(/[（(]([^）)]+[都道府県])[）)]/) || [])[1] || '';
+    const normalized = value => value.normalize('NFKC').replace(/[\s　]/g, '').replace(/[市区町村府県]$/, '').replace(/^東京都$/, '東京');
+    const venue = normalized(getEventVenueName(event));
+    const hints = [city, prefecture].filter(Boolean);
+    if (hints.some(value => normalized(value) && venue.includes(normalized(value)))) return '';
+    return city ? normalized(city) : prefecture;
+  }
   // 地域名や未確認の文字列を国名として表示しない。
   if (!country || /未定|要確認|不明/.test(country) || ["欧州", "アジア", "海外"].includes(country)) {
-    return region;
+    return '';
   }
   return country === "シンガポール共和国" ? "シンガポール" : country;
 }
