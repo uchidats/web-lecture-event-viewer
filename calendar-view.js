@@ -359,6 +359,9 @@
         titleFormat: { year: 'numeric', month: 'long' },
         eventOrder: 'compactOrder,start,-duration,allDay,title',
         views: {
+          dayGridMonth: {
+            dayCellContent: info => String(info.date.getDate())
+          },
           listMonth: {
             listDaySideFormat: false,
             dayHeaderContent: info => {
