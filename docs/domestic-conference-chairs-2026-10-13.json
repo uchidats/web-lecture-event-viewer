@@ -16,16 +16,18 @@
       "sourceUrl": "https://www.congre.co.jp/cornea2026/greeting.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "堀 裕一（東邦大学医学部眼科学講座）",
+      "conferenceChair": "堀 裕一（東邦大学）",
       "people": [
         {
           "conference": "角膜カンファランス2026（第50回日本角膜学会総会／第42回日本角膜移植学会）",
           "role": "学会長",
           "name": "堀 裕一",
-          "affiliation": "東邦大学医学部眼科学講座"
+          "affiliation": "東邦大学",
+          "officialAffiliation": "東邦大学医学部眼科学講座"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "堀 裕一（東邦大学医学部眼科学講座）"
     },
     {
       "eventId": "conf-jp-jos-2026",
@@ -34,16 +36,18 @@
       "sourceUrl": "https://www.congre.co.jp/130jos/outline.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "園田 康平（九州大学大学院医学研究院 眼科学分野 教授）",
+      "conferenceChair": "園田 康平（九州大学）",
       "people": [
         {
           "conference": "第130回 日本眼科学会総会",
           "role": "総会長",
           "name": "園田 康平",
-          "affiliation": "九州大学大学院医学研究院 眼科学分野 教授"
+          "affiliation": "九州大学",
+          "officialAffiliation": "九州大学大学院医学研究院 眼科学分野 教授"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "園田 康平（九州大学大学院医学研究院 眼科学分野 教授）"
     },
     {
       "eventId": "conf-jp-perimetry-2026",
@@ -52,16 +56,18 @@
       "sourceUrl": "https://n-practice.co.jp/jips2026/greeting/index.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "仲泊 聡（東京慈恵会医科大学 眼科学講座）",
+      "conferenceChair": "仲泊 聡（東京慈恵会医科大学）",
       "people": [
         {
           "conference": "第15回日本視野画像学会学術集会",
           "role": "会長",
           "name": "仲泊 聡",
-          "affiliation": "東京慈恵会医科大学 眼科学講座"
+          "affiliation": "東京慈恵会医科大学",
+          "officialAffiliation": "東京慈恵会医科大学 眼科学講座"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "仲泊 聡（東京慈恵会医科大学 眼科学講座）"
     },
     {
       "eventId": "conf-jp-glaucoma-2026",
@@ -70,16 +76,18 @@
       "sourceUrl": "https://www.congre.co.jp/jgs2026/contents/greeting.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "柏木 賢治（山梨大学医学部眼科学教室 教授）",
+      "conferenceChair": "柏木 賢治（山梨大学）",
       "people": [
         {
           "conference": "第37回 日本緑内障学会",
           "role": "会長",
           "name": "柏木 賢治",
-          "affiliation": "山梨大学医学部眼科学教室 教授"
+          "affiliation": "山梨大学",
+          "officialAffiliation": "山梨大学医学部眼科学教室 教授"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "柏木 賢治（山梨大学医学部眼科学教室 教授）"
     },
     {
       "eventId": "conf-jp-lowvision-2026",
@@ -88,16 +96,18 @@
       "sourceUrl": "https://convention.jtbcom.co.jp/lowvision2026/greeting/index.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "池田 康博（宮崎大学医学部眼科学）",
+      "conferenceChair": "池田 康博（宮崎大学）",
       "people": [
         {
           "conference": "第27回 日本ロービジョン学会学術総会",
           "role": "会長",
           "name": "池田 康博",
-          "affiliation": "宮崎大学医学部眼科学"
+          "affiliation": "宮崎大学",
+          "officialAffiliation": "宮崎大学医学部眼科学"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "池田 康博（宮崎大学医学部眼科学）"
     },
     {
       "eventId": "oph-001",
@@ -106,16 +116,18 @@
       "sourceUrl": "https://convention.jtbcom.co.jp/80ringan/summary/index.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "近藤 峰生（三重大学大学院医学系研究科 臨床医学系講座 眼科学 教授）",
+      "conferenceChair": "近藤 峰生（三重大学）",
       "people": [
         {
           "conference": "第80回 日本臨床眼科学会 (臨眼 2026)",
           "role": "学会長",
           "name": "近藤 峰生",
-          "affiliation": "三重大学大学院医学系研究科 臨床医学系講座 眼科学 教授"
+          "affiliation": "三重大学",
+          "officialAffiliation": "三重大学大学院医学系研究科 臨床医学系講座 眼科学 教授"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "近藤 峰生（三重大学大学院医学系研究科 臨床医学系講座 眼科学 教授）"
     },
     {
       "eventId": "oph-008",
@@ -124,16 +136,18 @@
       "sourceUrl": "https://jsoprs2026.com/",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "中島 勇魚（高知大学医学部眼科学講座）",
+      "conferenceChair": "中島 勇魚（高知大学）",
       "people": [
         {
           "conference": "第13回 日本眼形成再建外科学会学術集会 (JSOPRS 2026)",
           "role": "会長",
           "name": "中島 勇魚",
-          "affiliation": "高知大学医学部眼科学講座"
+          "affiliation": "高知大学",
+          "officialAffiliation": "高知大学医学部眼科学講座"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "中島 勇魚（高知大学医学部眼科学講座）"
     },
     {
       "eventId": "conf-jp-strabismus-2026",
@@ -142,16 +156,18 @@
       "sourceUrl": "https://convention.jtbcom.co.jp/jasa2026/greeting/index.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "横山 吉美（JCHO中京病院 眼科）",
+      "conferenceChair": "横山 吉美（JCHO中京病院）",
       "people": [
         {
           "conference": "第82回 日本弱視斜視学会総会",
           "role": "会長",
           "name": "横山 吉美",
-          "affiliation": "JCHO中京病院 眼科"
+          "affiliation": "JCHO中京病院",
+          "officialAffiliation": "JCHO中京病院 眼科"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "横山 吉美（JCHO中京病院 眼科）"
     },
     {
       "eventId": "conf-jp-pediatric-2026",
@@ -160,16 +176,18 @@
       "sourceUrl": "https://www.congre.co.jp/japo2026/",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "井上 俊洋（熊本大学大学院生命科学研究部眼科学講座 教授）",
+      "conferenceChair": "井上 俊洋（熊本大学）",
       "people": [
         {
           "conference": "第51回 日本小児眼科学会総会",
           "role": "会長",
           "name": "井上 俊洋",
-          "affiliation": "熊本大学大学院生命科学研究部眼科学講座 教授"
+          "affiliation": "熊本大学",
+          "officialAffiliation": "熊本大学大学院生命科学研究部眼科学講座 教授"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "井上 俊洋（熊本大学大学院生命科学研究部眼科学講座 教授）"
     },
     {
       "eventId": "conf-jp-pharmacology-2026",
@@ -178,16 +196,18 @@
       "sourceUrl": "https://square.umin.ac.jp/jsop46/overview.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "嶋澤 雅光（岐阜薬科大学 薬効解析学研究室 教授）",
+      "conferenceChair": "嶋澤 雅光（岐阜薬科大学）",
       "people": [
         {
           "conference": "第46回 日本眼薬理学会",
           "role": "会長",
           "name": "嶋澤 雅光",
-          "affiliation": "岐阜薬科大学 薬効解析学研究室 教授"
+          "affiliation": "岐阜薬科大学",
+          "officialAffiliation": "岐阜薬科大学 薬効解析学研究室 教授"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "嶋澤 雅光（岐阜薬科大学 薬効解析学研究室 教授）"
     },
     {
       "eventId": "conf-jp-jrvs-2026",
@@ -196,16 +216,18 @@
       "sourceUrl": "https://convention.jtbcom.co.jp/65moumaku/summary/index.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "井上 真（杏林大学医学部眼科学教室）",
+      "conferenceChair": "井上 真（杏林大学）",
       "people": [
         {
           "conference": "第65回 日本網膜硝子体学会総会",
           "role": "会長",
           "name": "井上 真",
-          "affiliation": "杏林大学医学部眼科学教室"
+          "affiliation": "杏林大学",
+          "officialAffiliation": "杏林大学医学部眼科学教室"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "井上 真（杏林大学医学部眼科学教室）"
     },
     {
       "eventId": "conf-jp-neuro-2026",
@@ -214,16 +236,18 @@
       "sourceUrl": "https://n-practice.co.jp/64thJNOS/greeting/index.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "秋山 久尚（聖マリアンナ医科大学 脳神経内科学）",
+      "conferenceChair": "秋山 久尚（聖マリアンナ医科大学）",
       "people": [
         {
           "conference": "第64回 日本神経眼科学会総会",
           "role": "会長",
           "name": "秋山 久尚",
-          "affiliation": "聖マリアンナ医科大学 脳神経内科学"
+          "affiliation": "聖マリアンナ医科大学",
+          "officialAffiliation": "聖マリアンナ医科大学 脳神経内科学"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "秋山 久尚（聖マリアンナ医科大学 脳神経内科学）"
     },
     {
       "eventId": "conf-jp-surgery-2027",
@@ -232,16 +256,18 @@
       "sourceUrl": "https://50.jsos.jp/",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "稲富 勉（国立長寿医療研究センター／京都府立医科大学）",
+      "conferenceChair": "稲富 勉（国立長寿医療研究センター/京都府立医科大学）",
       "people": [
         {
           "conference": "第50回 日本眼科手術学会学術総会",
           "role": "会長",
           "name": "稲富 勉",
-          "affiliation": "国立長寿医療研究センター／京都府立医科大学"
+          "affiliation": "国立長寿医療研究センター/京都府立医科大学",
+          "officialAffiliation": "国立長寿医療研究センター／京都府立医科大学"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "稲富 勉（国立長寿医療研究センター／京都府立医科大学）"
     },
     {
       "eventId": "conf-jp-eyelid-2026",
@@ -250,16 +276,18 @@
       "sourceUrl": "https://www.ggigan.com/",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "覚道 奈津子（関西医科大学 形成外科学講座 教授）",
+      "conferenceChair": "覚道 奈津子（関西医科大学）",
       "people": [
         {
           "conference": "第37回 日本眼瞼義眼床手術学会学術集会",
           "role": "会長",
           "name": "覚道 奈津子",
-          "affiliation": "関西医科大学 形成外科学講座 教授"
+          "affiliation": "関西医科大学",
+          "officialAffiliation": "関西医科大学 形成外科学講座 教授"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "覚道 奈津子（関西医科大学 形成外科学講座 教授）"
     },
     {
       "eventId": "conf-jp-cornea-2027",
@@ -268,16 +296,18 @@
       "sourceUrl": "https://www.okinawa-congre.co.jp/cornea2027/outline/index.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "臼井 智彦（国際医療福祉大学医学部眼科学 代表教授）",
+      "conferenceChair": "臼井 智彦（国際医療福祉大学）",
       "people": [
         {
           "conference": "角膜カンファランス2027",
           "role": "会長",
           "name": "臼井 智彦",
-          "affiliation": "国際医療福祉大学医学部眼科学 代表教授"
+          "affiliation": "国際医療福祉大学",
+          "officialAffiliation": "国際医療福祉大学医学部眼科学 代表教授"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "臼井 智彦（国際医療福祉大学医学部眼科学 代表教授）"
     },
     {
       "eventId": "conf-jp-eyelid-2027",
@@ -286,16 +316,18 @@
       "sourceUrl": "https://convention.jtbcom.co.jp/gigan38/summary/index.html",
       "checkedOn": "2026-10-13",
       "preserved": true,
-      "conferenceChair": "渡辺 彰英（京都府立医科大学眼科）",
+      "conferenceChair": "渡辺 彰英（京都府立医科大学）",
       "people": [
         {
           "conference": "第38回 日本眼瞼義眼床手術学会",
           "role": "会長",
           "name": "渡辺 彰英",
-          "affiliation": "京都府立医科大学眼科"
+          "affiliation": "京都府立医科大学",
+          "officialAffiliation": "京都府立医科大学眼科"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "渡辺 彰英（京都府立医科大学眼科）"
     },
     {
       "eventId": "conf-jp-diabetic-2027",
@@ -304,16 +336,18 @@
       "sourceUrl": "https://convention.jtbcom.co.jp/jsod33/summary/index.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "本田 茂（大阪公立大学大学院医学研究科視覚病態学 教授）",
+      "conferenceChair": "本田 茂（大阪公立大学）",
       "people": [
         {
           "conference": "第33回 日本糖尿病眼学会総会",
           "role": "会長",
           "name": "本田 茂",
-          "affiliation": "大阪公立大学大学院医学研究科視覚病態学 教授"
+          "affiliation": "大阪公立大学",
+          "officialAffiliation": "大阪公立大学大学院医学研究科視覚病態学 教授"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "本田 茂（大阪公立大学大学院医学研究科視覚病態学 教授）"
     },
     {
       "eventId": "conf-jp-iscev-2027",
@@ -322,16 +356,18 @@
       "sourceUrl": "https://www.congre.co.jp/73jscev/outline.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "上野 真治（弘前大学大学院医学研究科眼科学講座 教授）",
+      "conferenceChair": "上野 真治（弘前大学）",
       "people": [
         {
           "conference": "第73回 日本臨床視覚電気生理学会",
           "role": "会長",
           "name": "上野 真治",
-          "affiliation": "弘前大学大学院医学研究科眼科学講座 教授"
+          "affiliation": "弘前大学",
+          "officialAffiliation": "弘前大学大学院医学研究科眼科学講座 教授"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "上野 真治（弘前大学大学院医学研究科眼科学講座 教授）"
     },
     {
       "eventId": "oph-011",
@@ -340,16 +376,18 @@
       "sourceUrl": "https://convention.jtbcom.co.jp/131jos/summary/index.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "石田 晋（北海道大学大学院医学研究院眼科学教室 教授）",
+      "conferenceChair": "石田 晋（北海道大学）",
       "people": [
         {
           "conference": "第131回 日本眼科学会総会",
           "role": "総会長",
           "name": "石田 晋",
-          "affiliation": "北海道大学大学院医学研究院眼科学教室 教授"
+          "affiliation": "北海道大学",
+          "officialAffiliation": "北海道大学大学院医学研究院眼科学教室 教授"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "石田 晋（北海道大学大学院医学研究院眼科学教室 教授）"
     },
     {
       "eventId": "oph-014",
@@ -358,16 +396,18 @@
       "sourceUrl": "https://site2.convention.co.jp/jgs2027/info/",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "森 和彦（バプテスト眼科長岡京クリニック・京都府立医科大学）",
+      "conferenceChair": "森 和彦（バプテスト眼科長岡京クリニック/京都府立医科大学）",
       "people": [
         {
           "conference": "第38回 日本緑内障学会",
           "role": "会長",
           "name": "森 和彦",
-          "affiliation": "バプテスト眼科長岡京クリニック・京都府立医科大学"
+          "affiliation": "バプテスト眼科長岡京クリニック/京都府立医科大学",
+          "officialAffiliation": "バプテスト眼科長岡京クリニック・京都府立医科大学"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "森 和彦（バプテスト眼科長岡京クリニック・京都府立医科大学）"
     },
     {
       "eventId": "conf-jp-perimetry-2027",
@@ -376,16 +416,18 @@
       "sourceUrl": "https://www.ganki.jp/jips2027/information.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "野本 裕貴（近畿大学医学部眼科学教室）",
+      "conferenceChair": "野本 裕貴（近畿大学）",
       "people": [
         {
           "conference": "第16回日本視野画像学会学術集会",
           "role": "会長",
           "name": "野本 裕貴",
-          "affiliation": "近畿大学医学部眼科学教室"
+          "affiliation": "近畿大学",
+          "officialAffiliation": "近畿大学医学部眼科学教室"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "野本 裕貴（近畿大学医学部眼科学教室）"
     },
     {
       "eventId": "conf-jp-pediatric-2027",
@@ -394,22 +436,25 @@
       "sourceUrl": "https://jasa-japo2027.jp/gaiyo.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "第83回日本弱視斜視学会総会: 林 思音（山形大学医学部眼科学講座）／第52回日本小児眼科学会総会: 彦谷 明子（浜松医科大学医学部眼科学講座）",
+      "conferenceChair": "第83回日本弱視斜視学会総会: 林 思音（山形大学）／第52回日本小児眼科学会総会: 彦谷 明子（浜松医科大学）",
       "people": [
         {
           "conference": "第83回日本弱視斜視学会総会",
           "role": "会長",
           "name": "林 思音",
-          "affiliation": "山形大学医学部眼科学講座"
+          "affiliation": "山形大学",
+          "officialAffiliation": "山形大学医学部眼科学講座"
         },
         {
           "conference": "第52回日本小児眼科学会総会",
           "role": "会長",
           "name": "彦谷 明子",
-          "affiliation": "浜松医科大学医学部眼科学講座"
+          "affiliation": "浜松医科大学",
+          "officialAffiliation": "浜松医科大学医学部眼科学講座"
         }
       ],
-      "specialHandling": "separate-chairs-for-joint-conferences"
+      "specialHandling": "separate-chairs-for-joint-conferences",
+      "officialConferenceChair": "第83回日本弱視斜視学会総会: 林 思音（山形大学医学部眼科学講座）／第52回日本小児眼科学会総会: 彦谷 明子（浜松医科大学医学部眼科学講座）"
     },
     {
       "eventId": "oph-013",
@@ -424,10 +469,12 @@
           "conference": "第42回 JSCRS学術総会 (日本白内障屈折矯正手術学会)",
           "role": "会長",
           "name": "神谷 和孝",
-          "affiliation": "昭和医科大学"
+          "affiliation": "昭和医科大学",
+          "officialAffiliation": "昭和医科大学"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "神谷 和孝（昭和医科大学）"
     },
     {
       "eventId": "conf-jp-surgery-2026",
@@ -442,10 +489,12 @@
           "conference": "第49回 日本眼科手術学会学術総会",
           "role": "総会長",
           "name": "宮田 和典",
-          "affiliation": "宮田眼科病院"
+          "affiliation": "宮田眼科病院",
+          "officialAffiliation": "宮田眼科病院"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "宮田 和典（宮田眼科病院）"
     },
     {
       "eventId": "conf-jp-jsoprs-2027",
@@ -454,16 +503,18 @@
       "sourceUrl": "https://orbit-cs.net/jsoprs2027/outline.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "田邉 美香（九州大学病院 眼科 診療講師）",
+      "conferenceChair": "田邉 美香（九州大学病院）",
       "people": [
         {
           "conference": "第14回 日本眼形成再建外科学会学術集会 (JSOPRS 2027)",
           "role": "会長",
           "name": "田邉 美香",
-          "affiliation": "九州大学病院 眼科 診療講師"
+          "affiliation": "九州大学病院",
+          "officialAffiliation": "九州大学病院 眼科 診療講師"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "田邉 美香（九州大学病院 眼科 診療講師）"
     },
     {
       "eventId": "conf-jp-lowvision-2027",
@@ -472,16 +523,18 @@
       "sourceUrl": "https://www.ganki.jp/lowvision2027/information.html",
       "checkedOn": "2026-10-13",
       "preserved": true,
-      "conferenceChair": "阿曽沼 早苗（中之島アイセンター／大阪大学）",
+      "conferenceChair": "阿曽沼 早苗（中之島アイセンター/大阪大学）",
       "people": [
         {
           "conference": "第28回 日本ロービジョン学会学術総会",
           "role": "会長",
           "name": "阿曽沼 早苗",
-          "affiliation": "中之島アイセンター／大阪大学"
+          "affiliation": "中之島アイセンター/大阪大学",
+          "officialAffiliation": "中之島アイセンター／大阪大学"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "阿曽沼 早苗（中之島アイセンター／大阪大学）"
     },
     {
       "eventId": "conf-jp-myopia-2027",
@@ -490,16 +543,18 @@
       "sourceUrl": "https://www.ganki.jp/myopia2027/information.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "松村 沙衣子（東邦大学医学部眼科学講座 准教授）",
+      "conferenceChair": "松村 沙衣子（東邦大学）",
       "people": [
         {
           "conference": "第9回 日本近視学会総会",
           "role": "会長",
           "name": "松村 沙衣子",
-          "affiliation": "東邦大学医学部眼科学講座 准教授"
+          "affiliation": "東邦大学",
+          "officialAffiliation": "東邦大学医学部眼科学講座 准教授"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "松村 沙衣子（東邦大学医学部眼科学講座 准教授）"
     },
     {
       "eventId": "conf-jp-circulation-2027",
@@ -514,10 +569,12 @@
           "conference": "第43回 日本眼循環学会",
           "role": "会長",
           "name": "岡田 アナベル あやめ",
-          "affiliation": "杏林大学"
+          "affiliation": "杏林大学",
+          "officialAffiliation": "杏林大学"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "岡田 アナベル あやめ（杏林大学）"
     },
     {
       "eventId": "conf-jp-inflammation-2027",
@@ -532,10 +589,12 @@
           "conference": "第60回 日本眼炎症学会",
           "role": "第60回日本眼炎症学会会長",
           "name": "髙瀬 博",
-          "affiliation": "宮田眼科 東京"
+          "affiliation": "宮田眼科 東京",
+          "officialAffiliation": "宮田眼科 東京"
         }
       ],
-      "specialHandling": "only-target-conference-chair-from-joint-page"
+      "specialHandling": "only-target-conference-chair-from-joint-page",
+      "officialConferenceChair": "髙瀬 博（宮田眼科 東京）"
     },
     {
       "eventId": "conf-jp-cl-2027",
@@ -544,16 +603,18 @@
       "sourceUrl": "https://www.congre.co.jp/jcls2027/outline/index.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "土至田 宏（聖マリアンナ医科大学横浜市西部病院眼科 教授）",
+      "conferenceChair": "土至田 宏（聖マリアンナ医科大学横浜市西部病院）",
       "people": [
         {
           "conference": "第69回 日本コンタクトレンズ学会総会",
           "role": "会長",
           "name": "土至田 宏",
-          "affiliation": "聖マリアンナ医科大学横浜市西部病院眼科 教授"
+          "affiliation": "聖マリアンナ医科大学横浜市西部病院",
+          "officialAffiliation": "聖マリアンナ医科大学横浜市西部病院眼科 教授"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "土至田 宏（聖マリアンナ医科大学横浜市西部病院眼科 教授）"
     },
     {
       "eventId": "conf-jp-oncology-2027",
@@ -562,16 +623,18 @@
       "sourceUrl": "https://www.ganki.jp/jsoo2027/information.html",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "柚木 達也（富山大学 学術研究部医学系 眼科学講座）",
+      "conferenceChair": "柚木 達也（富山大学）",
       "people": [
         {
           "conference": "第44回日本眼腫瘍学会",
           "role": "会長",
           "name": "柚木 達也",
-          "affiliation": "富山大学 学術研究部医学系 眼科学講座"
+          "affiliation": "富山大学",
+          "officialAffiliation": "富山大学 学術研究部医学系 眼科学講座"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "柚木 達也（富山大学 学術研究部医学系 眼科学講座）"
     },
     {
       "eventId": "conf-jp-presbyopia-2028",
@@ -580,16 +643,18 @@
       "sourceUrl": "https://www.rousi.jp/jps5-overview",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "平岡 孝浩（筑波大学医学医療系 眼科）",
+      "conferenceChair": "平岡 孝浩（筑波大学）",
       "people": [
         {
           "conference": "日本老視学会 第5回学術総会",
           "role": "会長",
           "name": "平岡 孝浩",
-          "affiliation": "筑波大学医学医療系 眼科"
+          "affiliation": "筑波大学",
+          "officialAffiliation": "筑波大学医学医療系 眼科"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "平岡 孝浩（筑波大学医学医療系 眼科）"
     },
     {
       "eventId": "conf-jp-presbyopia-2027",
@@ -598,16 +663,18 @@
       "sourceUrl": "https://www.rousi.jp/jps4-greeting",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "神谷 和孝（昭和医科大学保健医療学部）",
+      "conferenceChair": "神谷 和孝（昭和医科大学）",
       "people": [
         {
           "conference": "日本老視学会 第4回学術総会",
           "role": "会長",
           "name": "神谷 和孝",
-          "affiliation": "昭和医科大学保健医療学部"
+          "affiliation": "昭和医科大学",
+          "officialAffiliation": "昭和医科大学保健医療学部"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "神谷 和孝（昭和医科大学保健医療学部）"
     },
     {
       "eventId": "conf-jp-optics-2027",
@@ -616,16 +683,48 @@
       "sourceUrl": "https://www.jsoo-ws.com/63overview",
       "checkedOn": "2026-10-13",
       "preserved": false,
-      "conferenceChair": "祁 華（HOYA株式会社ビジョンケア部門）",
+      "conferenceChair": "祁 華（HOYA株式会社）",
       "people": [
         {
           "conference": "第63回 日本眼光学学会総会",
           "role": "会長",
           "name": "祁 華",
-          "affiliation": "HOYA株式会社ビジョンケア部門"
+          "affiliation": "HOYA株式会社",
+          "officialAffiliation": "HOYA株式会社ビジョンケア部門"
         }
       ],
-      "specialHandling": null
+      "specialHandling": null,
+      "officialConferenceChair": "祁 華（HOYA株式会社ビジョンケア部門）"
     }
-  ]
+  ],
+  "affiliationSimplification": {
+    "checkedOn": "2026-10-13",
+    "beforeWithChair": 34,
+    "afterWithChair": 34,
+    "changedRecords": 30,
+    "shortenedRecords": 27,
+    "separatorOnlyRecords": 3,
+    "unchangedRecords": 4,
+    "manualDecisions": [
+      {
+        "eventIds": [
+          "conf-jp-jsoprs-2027",
+          "conf-jp-cl-2027"
+        ],
+        "reason": "大学病院は施設名を維持し、大学名だけにしない"
+      },
+      {
+        "eventIds": [
+          "conf-jp-inflammation-2027"
+        ],
+        "reason": "宮田眼科 東京は施設識別に必要な東京を維持"
+      },
+      {
+        "eventIds": [
+          "conf-jp-optics-2027"
+        ],
+        "reason": "企業所属はHOYA株式会社までとし、ビジョンケア部門を省略"
+      }
+    ]
+  }
 }

@@ -16,7 +16,13 @@ for(const record of evidence.records){
  assert.equal(event.conferenceChair,record.conferenceChair);
  assert.equal(event.date,record.date,'Evidence belongs to this edition/year');
  assert.equal(new URL(record.sourceUrl).protocol,'https:');
- for(const person of record.people){assert.ok(record.conferenceChair.includes(person.name));if(person.affiliation)assert.ok(record.conferenceChair.includes(person.affiliation));}
+ for(const person of record.people){
+  assert.ok(record.conferenceChair.includes(person.name));
+  assert.ok(record.conferenceChair.includes('（'+person.affiliation+'）'));
+  assert.ok(person.officialAffiliation,'Full official affiliation remains available in provenance');
+  assert.ok(record.officialConferenceChair.includes(person.officialAffiliation));
+  assert.doesNotMatch(person.affiliation,/教授|講師|大学院|研究科|講座|教室|研究室|医学部|医学医療系|ビジョンケア部門/);
+ }
 }
 const joint=events.find(e=>e.id==='conf-jp-pediatric-2027').conferenceChair;
 assert.match(joint,/第83回日本弱視斜視学会総会: 林 思音/);
@@ -25,4 +31,13 @@ const inflammation=events.find(e=>e.id==='conf-jp-inflammation-2027').conference
 assert.match(inflammation,/髙瀬 博/);
 assert.doesNotMatch(inflammation,/園田|蕪城|堀 裕一|渡辺|三村/);
 assert.equal(evidence.records.filter(r=>r.specialHandling).length,2);
+const chair=id=>events.find(e=>e.id===id).conferenceChair;
+assert.equal(chair('oph-001'),'近藤 峰生（三重大学）');
+assert.equal(chair('conf-jp-pharmacology-2026'),'嶋澤 雅光（岐阜薬科大学）');
+assert.equal(chair('conf-jp-jsoprs-2027'),'田邉 美香（九州大学病院）');
+assert.equal(chair('conf-jp-cl-2027'),'土至田 宏（聖マリアンナ医科大学横浜市西部病院）');
+assert.equal(chair('conf-jp-surgery-2027'),'稲富 勉（国立長寿医療研究センター/京都府立医科大学）');
+assert.equal(chair('conf-jp-inflammation-2027'),'髙瀬 博（宮田眼科 東京）');
+assert.equal(evidence.affiliationSimplification.beforeWithChair,evidence.affiliationSimplification.afterWithChair);
+assert.equal(evidence.affiliationSimplification.changedRecords+evidence.affiliationSimplification.unchangedRecords,34);
 console.log('PASS: 34 domestic chairs, 32 additions, 27 unknown; official provenance, affiliations and joint meeting attribution');

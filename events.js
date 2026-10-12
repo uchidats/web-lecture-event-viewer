@@ -144,7 +144,7 @@ const sampleEvents = [
     ],
     "description": "形成外科医、眼科医、義眼師による眼瞼および義眼床手術の機能と整容性を追求する学術集会。",
     "isConference": true,
-    "conferenceChair": "覚道 奈津子（関西医科大学 形成外科学講座 教授）"
+    "conferenceChair": "覚道 奈津子（関西医科大学）"
   },
   {
     "id": "conf-jp-cornea-2026",
@@ -196,7 +196,7 @@ const sampleEvents = [
     ],
     "description": "角膜疾患、角膜移植術、ドライアイ、眼表面再建の最新知見が集う年次学術集会。",
     "isConference": true,
-    "conferenceChair": "堀 裕一（東邦大学医学部眼科学講座）"
+    "conferenceChair": "堀 裕一（東邦大学）"
   },
   {
     "id": "conf-jp-jos-2026",
@@ -248,7 +248,7 @@ const sampleEvents = [
     ],
     "description": "春の日本眼科学会年次総会。基礎・臨床の全領域にわたるシンポジウムおよび一般演題発表。",
     "isConference": true,
-    "conferenceChair": "園田 康平（九州大学大学院医学研究院 眼科学分野 教授）"
+    "conferenceChair": "園田 康平（九州大学）"
   },
   {
     "id": "conf-jp-perimetry-2026",
@@ -300,7 +300,7 @@ const sampleEvents = [
     "description": "静的動的視野解析、OCT/OCTA画像診断、緑内障・神経眼科疾患の機能構造連関を検討。",
     "isConference": true,
     "eventOfficialUrl": "https://n-practice.co.jp/jips2026/",
-    "conferenceChair": "仲泊 聡（東京慈恵会医科大学 眼科学講座）"
+    "conferenceChair": "仲泊 聡（東京慈恵会医科大学）"
   },
   {
     "id": "oph-008",
@@ -353,7 +353,7 @@ const sampleEvents = [
     ],
     "description": "眼形成再建外科分野の年次学術集会。眼瞼下垂・挙筋腱膜前転術、ミュラー筋タッキング、眼窩再建手技の供覧。",
     "isConference": true,
-    "conferenceChair": "中島 勇魚（高知大学医学部眼科学講座）"
+    "conferenceChair": "中島 勇魚（高知大学）"
   },
   {
     "id": "oph-008-s1",
@@ -445,7 +445,7 @@ const sampleEvents = [
     ],
     "description": "視覚障害者支援、拡大読書器・デジタル技術の活用、多職種連携を議論。",
     "isConference": true,
-    "conferenceChair": "池田 康博（宮崎大学医学部眼科学）"
+    "conferenceChair": "池田 康博（宮崎大学）"
   },
   {
     "id": "conf-int-euretina-2026",
@@ -551,7 +551,7 @@ const sampleEvents = [
     ],
     "description": "緑内障の基礎研究から薬物治療・低侵襲手術(MIGS)・濾過手術まで最新知見を網羅。",
     "isConference": true,
-    "conferenceChair": "柏木 賢治（山梨大学医学部眼科学教室 教授）"
+    "conferenceChair": "柏木 賢治（山梨大学）"
   },
   {
     "id": "oph-004",
@@ -701,7 +701,7 @@ const sampleEvents = [
     ],
     "description": "国内最大規模の眼科学術集会。全サブスペシャリティの最新実臨床知見が集結。",
     "isConference": true,
-    "conferenceChair": "近藤 峰生（三重大学大学院医学系研究科 臨床医学系講座 眼科学 教授）"
+    "conferenceChair": "近藤 峰生（三重大学）"
   },
   {
     "id": "conf-jp-pediatric-2026",
@@ -749,7 +749,7 @@ const sampleEvents = [
     "tags": [],
     "description": "第2回アジア太平洋小児網膜学会（APPREA）会議と同時開催。日本弱視斜視学会総会との合同開催ではありません。",
     "isConference": true,
-    "conferenceChair": "井上 俊洋（熊本大学大学院生命科学研究部眼科学講座 教授）"
+    "conferenceChair": "井上 俊洋（熊本大学）"
   },
   {
     "id": "conf-jp-strabismus-2026",
@@ -797,7 +797,7 @@ const sampleEvents = [
     "tags": [],
     "description": "第82回日本弱視斜視学会総会。2026年は日本小児眼科学会総会とは別日程・別会場で開催。",
     "isConference": true,
-    "conferenceChair": "横山 吉美（JCHO中京病院 眼科）"
+    "conferenceChair": "横山 吉美（JCHO中京病院）"
   },
   {
     "id": "oph-001-s1",
@@ -975,7 +975,7 @@ const sampleEvents = [
     ],
     "description": "眼科薬物療法の基盤研究、点眼剤・徐放デバイス開発の最前線。",
     "isConference": true,
-    "conferenceChair": "嶋澤 雅光（岐阜薬科大学 薬効解析学研究室 教授）"
+    "conferenceChair": "嶋澤 雅光（岐阜薬科大学）"
   },
   {
     "id": "oph-005",
@@ -1144,7 +1144,7 @@ const sampleEvents = [
     ],
     "description": "視神経疾患、眼球運動障害、中枢性視覚異常の診断と治療。",
     "isConference": true,
-    "conferenceChair": "秋山 久尚（聖マリアンナ医科大学 脳神経内科学）"
+    "conferenceChair": "秋山 久尚（聖マリアンナ医科大学）"
   },
   {
     "id": "conf-jp-jrvs-2026",
@@ -1213,7 +1213,7 @@ const sampleEvents = [
     ],
     "description": "国内最大の網膜専門学会。最新の手術手技および抗VEGF療法エビデンス。",
     "isConference": true,
-    "conferenceChair": "井上 真（杏林大学医学部眼科学教室）"
+    "conferenceChair": "井上 真（杏林大学）"
   },
   {
     "id": "conf-int-arc-2026",
@@ -1416,7 +1416,7 @@ const sampleEvents = [
     "description": "老眼に対する水晶体再建術、点眼薬、調節機能解析の最新トピックス。",
     "isConference": true,
     "eventOfficialUrl": "https://www.rousi.jp/jps4",
-    "conferenceChair": "神谷 和孝（昭和医科大学保健医療学部）"
+    "conferenceChair": "神谷 和孝（昭和医科大学）"
   },
   {
     "id": "conf-jp-surgery-2027",
@@ -1470,7 +1470,7 @@ const sampleEvents = [
     ],
     "description": "白内障・網膜・緑内障・角膜・眼形成まで全領域の手術手技が集う年次学術集会。",
     "isConference": true,
-    "conferenceChair": "稲富 勉（国立長寿医療研究センター／京都府立医科大学）"
+    "conferenceChair": "稲富 勉（国立長寿医療研究センター/京都府立医科大学）"
   },
   {
     "id": "conf-jp-cornea-2027",
@@ -1522,7 +1522,7 @@ const sampleEvents = [
     ],
     "description": "角膜移植手技、角膜内皮再生医療、重症ドライアイの最前線。",
     "isConference": true,
-    "conferenceChair": "臼井 智彦（国際医療福祉大学医学部眼科学 代表教授）"
+    "conferenceChair": "臼井 智彦（国際医療福祉大学）"
   },
   {
     "id": "conf-jp-eyelid-2027",
@@ -1572,7 +1572,7 @@ const sampleEvents = [
     ],
     "description": "京都府立医科大学附属図書館ホールで開催。",
     "isConference": true,
-    "conferenceChair": "渡辺 彰英（京都府立医科大学眼科）",
+    "conferenceChair": "渡辺 彰英（京都府立医科大学）",
     "eventOfficialUrl": "https://convention.jtbcom.co.jp/gigan38/index.html",
     "registration": {
       "type": "domestic",
@@ -1640,7 +1640,7 @@ const sampleEvents = [
     "description": "糖尿病網膜症・黄斑浮腫の病態解明、早期発見、内科連携を議論。",
     "isConference": true,
     "eventOfficialUrl": "https://convention.jtbcom.co.jp/jsod33/",
-    "conferenceChair": "本田 茂（大阪公立大学大学院医学研究科視覚病態学 教授）"
+    "conferenceChair": "本田 茂（大阪公立大学）"
   },
   {
     "id": "conf-jp-iscev-2027",
@@ -1692,7 +1692,7 @@ const sampleEvents = [
     "description": "ERG・VEPによる網膜・視覚伝導路の客観的機能検査と遺伝性網膜ジストロフィ診断。",
     "isConference": true,
     "eventOfficialUrl": "https://www.congre.co.jp/73jscev/",
-    "conferenceChair": "上野 真治（弘前大学大学院医学研究科眼科学講座 教授）"
+    "conferenceChair": "上野 真治（弘前大学）"
   },
   {
     "id": "conf-int-apao-2027",
@@ -1899,7 +1899,7 @@ const sampleEvents = [
     ],
     "description": "日本眼科学会の年次総会。基礎研究から最新臨床まで眼科学の全領域を見渡す最高峰の学術集会。",
     "isConference": true,
-    "conferenceChair": "石田 晋（北海道大学大学院医学研究院眼科学教室 教授）"
+    "conferenceChair": "石田 晋（北海道大学）"
   },
   {
     "id": "oph-014",
@@ -1952,7 +1952,7 @@ const sampleEvents = [
     "description": "世界緑内障コングレス(WGC)と併催される歴史的学術集会。",
     "isConference": true,
     "eventOfficialUrl": "https://site2.convention.co.jp/jgs2027/",
-    "conferenceChair": "森 和彦（バプテスト眼科長岡京クリニック・京都府立医科大学）"
+    "conferenceChair": "森 和彦（バプテスト眼科長岡京クリニック/京都府立医科大学）"
   },
   {
     "id": "conf-int-wgc-2027",
@@ -2107,7 +2107,7 @@ const sampleEvents = [
     ],
     "description": "",
     "isConference": true,
-    "conferenceChair": "阿曽沼 早苗（中之島アイセンター／大阪大学）",
+    "conferenceChair": "阿曽沼 早苗（中之島アイセンター/大阪大学）",
     "eventOfficialUrl": "https://www.ganki.jp/lowvision2027/information.html"
   },
   {
@@ -2210,7 +2210,7 @@ const sampleEvents = [
     "description": "視野検査手法と眼底イメージングの最新融合解析。",
     "isConference": true,
     "eventOfficialUrl": "https://www.ganki.jp/jips2027/",
-    "conferenceChair": "野本 裕貴（近畿大学医学部眼科学教室）"
+    "conferenceChair": "野本 裕貴（近畿大学）"
   },
   {
     "id": "conf-jp-jsoprs-2027",
@@ -2263,7 +2263,7 @@ const sampleEvents = [
     ],
     "description": "眼瞼・眼窩の手術解剖、低侵襲手技、難症例再建の供覧。",
     "isConference": true,
-    "conferenceChair": "田邉 美香（九州大学病院 眼科 診療講師）"
+    "conferenceChair": "田邉 美香（九州大学病院）"
   },
   {
     "id": "conf-jp-pediatric-2027",
@@ -2315,7 +2315,7 @@ const sampleEvents = [
     ],
     "description": "小児眼疾患、斜視手術、弱視訓練、近視進行抑制の最新知見。",
     "isConference": true,
-    "conferenceChair": "第83回日本弱視斜視学会総会: 林 思音（山形大学医学部眼科学講座）／第52回日本小児眼科学会総会: 彦谷 明子（浜松医科大学医学部眼科学講座）"
+    "conferenceChair": "第83回日本弱視斜視学会総会: 林 思音（山形大学）／第52回日本小児眼科学会総会: 彦谷 明子（浜松医科大学）"
   },
   {
     "id": "conf-int-soe-2027",
@@ -2471,7 +2471,7 @@ const sampleEvents = [
     "description": "小児近視進行予防、病的近視合併症対策、光環境と屈折発達。",
     "isConference": true,
     "eventOfficialUrl": "https://www.ganki.jp/myopia2027/",
-    "conferenceChair": "松村 沙衣子（東邦大学医学部眼科学講座 准教授）"
+    "conferenceChair": "松村 沙衣子（東邦大学）"
   },
   {
     "id": "conf-int-iois-2027",
@@ -2680,7 +2680,7 @@ const sampleEvents = [
     ],
     "description": "CL関連眼障害の予防と適正使用、乱視・遠近両用・治療用CLの最新知見。",
     "isConference": true,
-    "conferenceChair": "土至田 宏（聖マリアンナ医科大学横浜市西部病院眼科 教授）"
+    "conferenceChair": "土至田 宏（聖マリアンナ医科大学横浜市西部病院）"
   },
   {
     "id": "conf-jp-optics-2027",
@@ -2732,7 +2732,7 @@ const sampleEvents = [
     ],
     "description": "角膜・水晶体の光学特性、波面収差、視覚心理物理学の学際的探求。",
     "isConference": true,
-    "conferenceChair": "祁 華（HOYA株式会社ビジョンケア部門）"
+    "conferenceChair": "祁 華（HOYA株式会社）"
   },
   {
     "id": "conf-jp-cataract-2027",
@@ -2935,7 +2935,7 @@ const sampleEvents = [
     "description": "眼球内・眼付属器腫瘍の病理診断、重粒子線治療、機能温存外科。",
     "isConference": true,
     "eventOfficialUrl": "https://www.ganki.jp/jsoo2027/",
-    "conferenceChair": "柚木 達也（富山大学 学術研究部医学系 眼科学講座）"
+    "conferenceChair": "柚木 達也（富山大学）"
   },
   {
     "id": "conf-int-escrs-2027",
@@ -3335,7 +3335,7 @@ const sampleEvents = [
     "description": "老眼の基礎研究、多焦点レンズ、点眼薬の最新エビデンス。",
     "isConference": true,
     "eventOfficialUrl": "https://www.rousi.jp/jps5",
-    "conferenceChair": "平岡 孝浩（筑波大学医学医療系 眼科）"
+    "conferenceChair": "平岡 孝浩（筑波大学）"
   },
   {
     "id": "conf-jp-surgery-2028",

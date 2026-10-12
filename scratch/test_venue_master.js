@@ -23,7 +23,7 @@ assert.equal(lowvision2027.venue, '大阪国際会議場（グランキューブ
 assert.equal(lowvision2027.cityCountry, '大阪市（大阪府） / 日本');
 assert.equal(lowvision2027.specialty, 'ロービジョン');
 assert.equal(lowvision2027.subtitle, '未来を視る ー ワクワクする明日へ');
-assert.equal(lowvision2027.conferenceChair, '阿曽沼 早苗（中之島アイセンター／大阪大学）');
+assert.equal(lowvision2027.conferenceChair, '阿曽沼 早苗（中之島アイセンター/大阪大学）');
 assert.equal(lowvision2027.eventOfficialUrl, 'https://www.ganki.jp/lowvision2027/information.html');
 assert.equal(lowvision2027.officialUrl, lowvision2027.eventOfficialUrl);
 const lowvisionCard = run('createEventCardHtml(sampleEvents.find(e=>e.id==="conf-jp-lowvision-2027"))');
@@ -47,7 +47,7 @@ assert.equal(gigan38.venue, '京都府立医科大学附属図書館ホール');
 assert.equal(gigan38.cityCountry, '京都市（京都府） / 日本');
 assert.equal(gigan38.region, '関西');
 assert.equal(gigan38.subtitle, '独創と信頼発信');
-assert.equal(gigan38.conferenceChair, '渡辺 彰英（京都府立医科大学眼科）');
+assert.equal(gigan38.conferenceChair, '渡辺 彰英（京都府立医科大学）');
 assert.equal(gigan38.eventOfficialUrl, 'https://convention.jtbcom.co.jp/gigan38/index.html');
 assert.equal(gigan38.officialUrl, gigan38.eventOfficialUrl);
 assert.equal(gigan38.abstractSubmission.deadline, '2026-11-05T12:00');
