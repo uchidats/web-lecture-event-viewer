@@ -28,9 +28,9 @@ const bootstrap = `
   };
 `;
 async function main() {
-  const { output } = buildDualSite(), requests = [];
+  const { output } = buildDualSite();
   const server = http.createServer((req, res) => {
-    const url = new URL(req.url, 'http://test'); requests.push(url.pathname);
+    const url = new URL(req.url, 'http://test');
     let file = path.resolve(output, '.' + url.pathname);
     if (file !== output && !file.startsWith(output + path.sep)) { res.writeHead(403).end(); return; }
     if (!fs.existsSync(file)) { res.writeHead(404).end(); return; }
@@ -94,6 +94,7 @@ async function main() {
     `);
     const calendarIds = () => evaluate('OphthalCalendarView.getCalendar().getEvents().map(e=>e.id).sort()');
     const filteredIds = () => evaluate('getFilteredEvents().map(e=>e.id).sort()');
+    const waitForHeadingSync = () => evaluate('new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))');
     const gesture = async (dx, dy, mouse = false) => {
       await evaluate('document.querySelector(".fc-view-harness").scrollIntoView({block:"center"})');
       const point = await evaluate(`(() => {const r=document.querySelector('.fc-view-harness').getBoundingClientRect();const header=document.querySelector('header').getBoundingClientRect();return {x:r.left+r.width*${dx < 0 ? 0.8 : 0.2},y:Math.max(header.bottom+160,Math.min(innerHeight-160,r.top+70))};})()`);
@@ -114,6 +115,87 @@ async function main() {
     for (const width of [Number(process.env.CALENDAR_TEST_WIDTH)]) {
       await call('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width <= 768 });
       await call('Emulation.setTouchEmulationEnabled', { enabled: width <= 768, maxTouchPoints: 5 });
+      // Range headings use the real renderer at each device width and both routes.
+      const rangeFixtures = [
+        { date: '2026-12-04', endDate: '2026-12-06', text: '2026年12月4日（金）〜6日（日）', startClass: '', endClass: 'compact-date-sunday' },
+        { date: '2026-10-29', endDate: '2026-11-01', text: '2026年10月29日（木）〜11月1日（日）', startClass: '', endClass: 'compact-date-sunday' },
+        { date: '2026-12-31', endDate: '2027-01-03', text: '2026年12月31日（木）〜2027年1月3日（日）', startClass: '', endClass: 'compact-date-sunday' },
+        { date: '2026-09-19', endDate: '2026-09-21', text: '2026年9月19日（土）〜21日（月・祝）', startClass: 'compact-date-saturday', endClass: 'compact-date-holiday', holiday: '敬老の日' },
+        { date: '2027-02-11', endDate: '2027-02-13', text: '2027年2月11日（木・祝）〜13日（土）', startClass: 'compact-date-holiday', endClass: 'compact-date-saturday', holiday: '建国記念の日' },
+        { date: '2026-12-06', endDate: '2026-12-07', text: '2026年12月6日（日）〜7日（月）', startClass: 'compact-date-sunday', endClass: '' }
+      ];
+      const rangeColors = {
+        'compact-date-sunday': 'rgb(180, 83, 83)',
+        'compact-date-holiday': 'rgb(180, 83, 83)',
+        'compact-date-saturday': 'rgb(71, 122, 158)'
+      };
+      for (const route of ['/', '/ophthalconf/']) {
+        await navigate(route + '?view=list');
+        await reset();
+        for (const fixture of rangeFixtures) {
+          await evaluate(`state.events=[{...sampleEvents.find(e=>e.isConference),id:'range-regression',title:'日付範囲の回帰テスト',date:${JSON.stringify(fixture.date)},endDate:${JSON.stringify(fixture.endDate)}}];renderEvents();document.getElementById('view-compact').click();OphthalCalendarView.getCalendar().gotoDate(${JSON.stringify(fixture.date.slice(0, 7) + '-01')});`);
+          await waitForHeadingSync();
+          const heading = await evaluate(`(() => {
+            const cushion=document.querySelector('.fc-list-day-cushion');
+            const start=cushion.querySelector('.compact-date-start'),end=cushion.querySelector('.compact-date-end');
+            return {
+              text:start.textContent+cushion.querySelector('.compact-date-separator').textContent+end.textContent,
+              startClass:start.className,endClass:end.className,
+              startColor:getComputedStyle(start).color,endColor:getComputedStyle(end).color,
+              weekdayColor:getComputedStyle(cushion).color,
+              holiday:cushion.querySelector('.calendar-holiday-name')?.textContent,
+              headingFits:cushion.scrollWidth<=cushion.clientWidth+1,
+              calendarFits:document.getElementById('event-calendar').scrollWidth<=document.getElementById('event-calendar').clientWidth+1,
+              pageFits:document.documentElement.scrollWidth<=innerWidth+1
+            };
+          })()`);
+          assert.equal(heading.text, fixture.text);
+          for (const side of ['start', 'end']) {
+            const colorClass = fixture[side + 'Class'];
+            if (colorClass) assert.ok(heading[side + 'Class'].split(' ').includes(colorClass));
+            assert.equal(heading[side + 'Color'], rangeColors[colorClass] || heading.weekdayColor, side + ' date color');
+          }
+          assert.equal(heading.holiday, fixture.holiday);
+          assert.ok(heading.headingFits && heading.calendarFits && heading.pageFits, process.env.CALENDAR_TEST_WIDTH + 'px ' + route + ' ' + fixture.date + ' range fits');
+        }
+        // Different durations on one start date need distinct headings; equal
+        // durations share a heading and retain their original relative order.
+        await evaluate(`
+          const template=sampleEvents.find(e=>e.isConference);
+          state.events=[
+            {id:'duration-four',endDate:'2026-11-10'},
+            {id:'duration-two-first',endDate:'2026-11-08'},
+            {id:'duration-one',endDate:'2026-11-07'},
+            {id:'duration-two-second',endDate:'2026-11-08'}
+          ].map(e=>({...template,date:'2026-11-07',title:e.id,...e}));
+          renderEvents();OphthalCalendarView.getCalendar().gotoDate('2026-11-01');
+        `);
+        const expectedGroups = [
+          { heading: '2026年11月7日（土）', ids: ['duration-one'] },
+          { heading: '2026年11月7日（土）〜8日（日）', ids: ['duration-two-first', 'duration-two-second'] },
+          { heading: '2026年11月7日（土）〜10日（火）', ids: ['duration-four'] }
+        ];
+        // Re-rendering must not accumulate duplicate injected headings.
+        for (let pass = 0; pass < 2; pass++) {
+          if (pass) await evaluate('renderEvents()');
+          await waitForHeadingSync();
+          const groups = await evaluate(`(() => {
+            const groups=[];
+            for (const row of document.querySelectorAll('.fc-list-table tbody > tr')) {
+              if (row.classList.contains('fc-list-day')) {
+                const cushion=row.querySelector('.fc-list-day-cushion');
+                if (cushion.scrollWidth>cushion.clientWidth+1) throw Error('Duration heading overflow');
+                groups.push({heading:[...cushion.querySelectorAll('.compact-date,.compact-date-separator')].map(e=>e.textContent).join(''),ids:[]});
+              } else if (row.classList.contains('fc-list-event')) {
+                groups.at(-1).ids.push(row.dataset.eventId);
+              }
+            }
+            return groups;
+          })()`);
+          assert.deepEqual(groups, expectedGroups, width + 'px ' + route + ' duration groups, render ' + pass);
+        }
+      }
+      console.log('PASS: ' + width + 'px range headings, month/year boundaries, weekend/holiday colors, duration groups and no horizontal overflow on both routes');
       for (const route of ['/', '/ophthalconf/']) {
         await navigate(route + '?month=2027-03');
         assert.equal(await evaluate('OphthalCalendarView.getMode()'), width <= 600 ? 'compact' : 'calendar', 'Width default only applies without explicit URL');
@@ -132,7 +214,6 @@ async function main() {
           await reset();
         }
         for (const displayMode of ['calendar', 'compact']) {
-        console.log(`CHECK: ${width}px ${route} ${displayMode}`);
         await navigate(route + `?view=${displayMode}&month=2027-03&keep=yes#calendar-test`);
         await reset();
         assert.equal(await evaluate('OphthalCalendarView.getCalendar().view.type'), displayMode === 'calendar' ? 'dayGridMonth' : 'listMonth');
@@ -277,7 +358,8 @@ async function main() {
     assert.equal(await evaluate('OphthalCalendarView.getMode()'), 'compact');
     await evaluate('history.forward()'); await delay(300);
     assert.equal(await evaluate('OphthalCalendarView.getMode()'), 'list');
-    console.log('PASS: resize and browser back/forward; artifacts directory: ' + profile);
+    console.log('PASS: resize and browser back/forward');
+    if (process.env.CALENDAR_SCREENSHOTS === '1') console.log('Screenshots: ' + profile);
     await call('Browser.close');
   } finally { socket?.close(); if (browser.exitCode === null) browser.kill(); await new Promise(resolve => server.close(resolve)); }
 }

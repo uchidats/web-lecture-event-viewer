@@ -1,7 +1,7 @@
 const assert = require('node:assert/strict');
 const path = require('node:path');
 const holidays = require('../japan-holidays');
-const { toCalendarEvent, toCompactCalendarEvent, nextDate, initialMode, formatCompactDate, formatCompactHeading } = require('../calendar-view');
+const { toCalendarEvent, toCompactCalendarEvent, nextDate, initialMode, formatCompactDate, formatCompactHeading, eventDurationDays, compareCompactEvents } = require('../calendar-view');
 assert.equal(formatCompactDate(new Date(2027, 6, 3)), '2027年7月3日（土）');
 assert.equal(formatCompactDate(new Date(2027, 6, 4)), '2027年7月4日（日）');
 assert.equal(formatCompactDate(new Date(2026, 9, 12)), '2026年10月12日（月）');
@@ -30,7 +30,13 @@ assert.equal(satMonHolidayHeading.start.colorClass, 'compact-date-saturday');
 assert.equal(satMonHolidayHeading.end.colorClass, 'compact-date-holiday');
 assert.equal(satMonHolidayHeading.holidays[0].name, '敬老の日');
 
-// Cross-year multi-day range
+const holidaySatHeading = formatCompactHeading('2027-02-11', '2027-02-13', holidays);
+assert.equal(holidaySatHeading.fullText, '2027年2月11日（木・祝）〜13日（土）');
+assert.equal(holidaySatHeading.start.colorClass, 'compact-date-holiday');
+assert.equal(holidaySatHeading.end.colorClass, 'compact-date-saturday');
+assert.deepEqual(holidaySatHeading.holidays, [{ name: '建国記念の日', position: 'start' }]);
+
+// Same-month, cross-month and cross-year ranges.
 assert.equal(formatCompactHeading('2026-12-04', '2026-12-06').fullText, '2026年12月4日（金）〜6日（日）');
 assert.equal(formatCompactHeading('2026-10-29', '2026-11-01').fullText, '2026年10月29日（木）〜11月1日（日）');
 assert.equal(formatCompactHeading('2026-01-03', '2027-01-03').endLabel, '2027年1月3日（日）');
@@ -80,4 +86,30 @@ assert.equal(holidays['2027-03-21'], '春分の日');
 assert.equal(holidays['2027-03-22'], '休日');
 assert.equal(holidays['2027-01-11'], '成人の日');
 assert.equal(holidays['2028-03-20'], undefined, 'Unpublished holidays are not estimated');
-console.log('PASS: all 95 event ranges, four-day inclusive dates, single days, leap/year boundaries, unchanged international dates and published holidays');
+
+// eventDurationDays tests
+assert.equal(eventDurationDays({ date: '2026-11-07' }), 1);
+assert.equal(eventDurationDays({ date: '2026-11-07', endDate: '2026-11-07' }), 1);
+assert.equal(eventDurationDays({ date: '2026-11-07', endDate: '2026-11-08' }), 2);
+assert.equal(eventDurationDays({ date: '2027-04-02', endDate: '2027-04-05' }), 4);
+assert.equal(eventDurationDays({ date: '2026-10-29', endDate: '2026-11-01' }), 4);
+assert.equal(eventDurationDays({ date: '2026-12-31', endDate: '2027-01-03' }), 4);
+
+// compareCompactEvents sorting tests
+const ev1 = { id: 'conf-2d', date: '2026-11-07', endDate: '2026-11-08' }; // 2 days
+const ev2 = { id: 'sem-1d', date: '2026-11-07', endDate: '2026-11-07' };  // 1 day
+const ev3 = { id: 'sem-next-week', date: '2026-11-14' };                 // 1 day
+const ev4 = { id: 'conf-2d-dup', date: '2026-11-07', endDate: '2026-11-08' }; // 2 days
+
+const testEvents = [ev3, ev1, ev2, ev4];
+const orderMap = new Map(testEvents.map((e, idx) => [e, idx]));
+const sortedEvents = testEvents.slice().sort((a, b) => compareCompactEvents(a, b, orderMap));
+
+assert.deepEqual(sortedEvents.map(e => e.id), [
+  'sem-1d',        // 2026-11-07, 1 day (shorter duration first)
+  'conf-2d',       // 2026-11-07, 2 days (original index 1)
+  'conf-2d-dup',   // 2026-11-07, 2 days (original index 3, preserves original order)
+  'sem-next-week'  // 2026-11-14, 1 day (later start date)
+]);
+
+console.log(`PASS: all ${events.length} event ranges, four-day inclusive dates, single days, month/year boundaries, duration calculations, compact sorting, and published holidays`);
