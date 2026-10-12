@@ -972,6 +972,9 @@ button, input, select, textarea {
 #calendar-panel[data-view="compact"] .compact-date-holiday { color: #b45353; }
 #calendar-panel[data-view="compact"] .compact-date-separator { color: var(--text-muted, #64748b); padding: 0 1px; font-weight: normal; }
 #calendar-panel[data-view="compact"] .fc-list-day-cushion { gap: 4px 6px; }
+@media (max-width: 480px) {
+  #calendar-panel[data-view="compact"] .calendar-holiday-name { display: none; }
+}
 #calendar-event-dialog { width: min(760px, calc(100% - 24px)); max-width: calc(100% - 24px); }
 #calendar-event-dialog .dialog-content { min-width: 0; }
 #calendar-event-detail .event-card { margin: 0; }
