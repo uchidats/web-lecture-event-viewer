@@ -16,7 +16,7 @@
  *  - venueId: 任意。venues.js の安定ID（未指定の場合は venue を使用）
  *  - timeZone: 任意。IANAタイムゾーン名（会場マスター未登録の場合にも使用可能）
  *  - venue: 開催会場（未定の場合は "未定"）
- *  - specialty: 専門領域の文字列または文字列配列（総合/網膜・硝子体/緑内障/白内障/角膜・外眼部/小児・斜視弱視/神経眼科/眼形成/眼光学CL近視/眼炎症感染/ロービジョン/その他）
+ *  - specialty: 専門領域の文字列または文字列配列（総合/網膜・硝子体/緑内障/白内障/角膜/小児・斜視弱視/神経眼科/眼形成/眼光学CL近視/眼炎症感染/ロービジョン/その他）
  *  - eventType: "国内学会" | "海外学会" | "講演会・勉強会" | "地方会・研究会"
  *  - format: "現地" | "Web" | "ハイブリッド"
  *  - sponsor: 主催・共催団体
@@ -154,7 +154,7 @@ const sampleEvents = [
     "time": "全日程",
     "region": "関東",
     "venue": "TAKANAWA GATEWAY Convention Center",
-    "specialty": "角膜・外眼部",
+    "specialty": "角膜",
     "eventType": "国内学会",
     "format": "現地",
     "sponsor": "日本角膜学会 / 日本角膜移植学会",
@@ -1011,7 +1011,7 @@ const sampleEvents = [
     "time": "14:00 - 17:30",
     "region": "関西",
     "venue": "梅田スカイビル スペース36 / オンライン中継",
-    "specialty": "角膜・外眼部",
+    "specialty": "角膜",
     "eventType": "地方会・研究会",
     "format": "ハイブリッド",
     "sponsor": "近畿角膜疾患研究グループ",
@@ -1466,7 +1466,7 @@ const sampleEvents = [
     "time": "全日程",
     "region": "九州・沖縄",
     "venue": "沖縄コンベンションセンター",
-    "specialty": "角膜・外眼部",
+    "specialty": "角膜",
     "eventType": "国内学会",
     "format": "現地",
     "sponsor": "日本角膜学会 / 日本角膜移植学会",
@@ -3344,7 +3344,7 @@ const sampleEvents = [
     "time": "全日程",
     "region": "中国",
     "venue": "米子コンベンションセンター（ビッグシップ）",
-    "specialty": "角膜・外眼部",
+    "specialty": "角膜",
     "eventType": "国内学会",
     "format": "現地",
     "sponsor": "日本角膜学会 / 日本角膜移植学会",

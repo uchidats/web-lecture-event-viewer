@@ -10,7 +10,7 @@ for (const file of ['venues.js', 'companies.js', 'events.js', 'script.js']) {
   vm.runInContext(fs.readFileSync(path.join(root, file), 'utf8'), context);
 }
 vm.runInContext(`
-  assert.deepEqual(FILTER_OPTIONS.specialty, ['総合', '網膜・硝子体', '緑内障', '白内障', '角膜・外眼部', '小児・斜視弱視', '神経眼科', '眼形成', '眼光学CL近視', '眼炎症感染', 'ロービジョン', 'その他']);
+  assert.deepEqual(FILTER_OPTIONS.specialty, ['総合', '網膜・硝子体', '緑内障', '白内障', '角膜', '小児・斜視弱視', '神経眼科', '眼形成', '眼光学CL近視', '眼炎症感染', 'ロービジョン', 'その他']);
   const joint = sampleEvents.find(e => e.id === 'conf-jp-inflammation-2028');
   assert.deepEqual(getEventSpecialties(joint), ['眼炎症感染', 'その他']);
   assert.deepEqual(getEventSpecialties({specialty: 'その他'}), ['その他']);

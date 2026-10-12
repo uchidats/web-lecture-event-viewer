@@ -101,7 +101,7 @@ const FILTER_OPTIONS = {
     "網膜・硝子体",
     "緑内障",
     "白内障",
-    "角膜・外眼部",
+    "角膜",
     "小児・斜視弱視",
     "神経眼科",
     "眼形成",
@@ -207,6 +207,7 @@ function loadFilterState() {
       if (!Array.isArray(saved.filters[key])) continue;
       const values = saved.filters[key]
         .map(value => (key === 'eventType' && value === '国際学会') ? '海外学会' : value)
+        .map(value => (key === 'specialty' && value === '角膜・外眼部') ? '角膜' : value)
         .filter(value => typeof value === 'string' && options[key].includes(value));
       if (!saved.filters[key].length || values.length) state.filters[key] = new Set(values);
     }

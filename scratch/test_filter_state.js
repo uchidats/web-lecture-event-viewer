@@ -85,5 +85,8 @@ empty.evaluate('loadFilterState();');
 assert.equal(empty.evaluate('state.filters.scheduleStatus.size'), 0);
 assert.equal(empty.evaluate('state.sortBy'), 'title-asc');
 const unavailable = load({}, true);
+const renamed = load({ [key]: JSON.stringify({ version: 1, filters: { specialty: ['角膜・外眼部', '角膜', '緑内障'] } }) });
+renamed.evaluate('loadFilterState(); saveFilterState();');
+assert.deepEqual(JSON.parse(renamed.data.get(key)).filters.specialty, ['角膜', '緑内障']);
 assert.doesNotThrow(() => unavailable.evaluate('loadFilterState(); saveFilterState(); clearSavedFilterState();'));
 console.log('PASS: filter/sort round-trip, Sets, both toggles, defaults, stale options, corrupt storage, storage failures, reset deletion and unrelated storage isolation');
