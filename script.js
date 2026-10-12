@@ -141,10 +141,12 @@ const WEEKDAYS = ["日", "月", "火", "水", "木", "金", "土"];
 // 表示だけ統一し、既存のデータ・フィルタ値は維持する。
 function getSpecialtyDisplayLabel(value) {
   if (value === "網膜・硝子体") return "網膜硝子体";
+  if (value === "白内障") return "白内障・屈折矯正";
   return getConferenceCategoryDisplayLabel(value);
 }
 
 function getConferenceCategoryDisplayLabel(value) {
+  if (value === "白内障屈折") return "白内障・屈折矯正";
   if (value === "眼光学CL近視") return "眼光学・CL・近視";
   if (value === "眼炎症感染") return "眼炎症・感染";
   return value;

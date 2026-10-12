@@ -12,6 +12,8 @@ for (const file of ['venues.js', 'companies.js', 'events.js', 'script.js']) {
 vm.runInContext(`
   assert.deepEqual(FILTER_OPTIONS.specialty, ['総合', '網膜・硝子体', '緑内障', '白内障', '角膜', '小児・斜視弱視', '神経眼科', '眼形成', '眼光学CL近視', '眼炎症感染', 'ロービジョン', 'その他']);
   assert.equal(getSpecialtyDisplayLabel('眼光学CL近視'), '眼光学・CL・近視');
+  assert.equal(getSpecialtyDisplayLabel('白内障'), '白内障・屈折矯正');
+  assert.equal(getConferenceCategoryDisplayLabel('白内障屈折'), '白内障・屈折矯正');
   assert.equal(getSpecialtyDisplayLabel('眼炎症感染'), '眼炎症・感染');
   assert.equal(getConferenceCategoryDisplayLabel('眼光学CL近視'), '眼光学・CL・近視');
   assert.equal(getConferenceCategoryDisplayLabel('眼炎症感染'), '眼炎症・感染');
