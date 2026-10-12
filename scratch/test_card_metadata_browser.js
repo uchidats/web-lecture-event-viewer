@@ -103,7 +103,7 @@ async function main() {
       const webinar=await evaluate('state.events.find(e=>!e.isConference&&!e.parentConferenceId&&e.specialty===String.fromCharCode(32209,20869,38556)).id');
       for(const mode of ['list','calendar','compact']) {
         await evaluate('document.getElementById("view-'+mode+'").click()');
-        for(const id of [aao,webinar,'conf-jp-pediatric-2027']) {
+        for(const id of [aao,webinar,'conf-jp-pediatric-2027','conf-jp-myopia-2028']) {
           let selector='[data-id="'+id+'"]';
           if(mode!=='list') {
             await evaluate('OphthalCalendarView.getCalendar().gotoDate(state.events.find(e=>e.id==='+JSON.stringify(id)+').date)');await evaluate('new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))');await evaluate('document.querySelector('+JSON.stringify('.fc-event[data-event-id="'+id+'"]')+').click()');selector='#calendar-event-detail '+selector;
@@ -111,6 +111,8 @@ async function main() {
           const result=await evaluate('(() => {const card=document.querySelector('+JSON.stringify(selector)+');return {labels:Array.from(card.querySelectorAll(".card-meta-label"),e=>e.textContent),top:!!card.querySelector(".conf-classification-val"),classification:Array.from(card.querySelectorAll(".conf-classification-val .conf-category-badge"),e=>e.textContent),sponsor:card.querySelector(".card-meta-list").textContent, fits:card.scrollWidth<=card.clientWidth+1,pageFits:document.documentElement.scrollWidth<=innerWidth+1};})()');
           const specialty=String.fromCharCode(23554,38272,38936,22495)+':',type=String.fromCharCode(31278,21029)+':',sponsor=String.fromCharCode(20027,20652)+'/'+String.fromCharCode(20849,20652)+':';
           assert.equal(result.labels.includes(specialty),id===webinar);assert.equal(result.labels.includes(type),id===webinar);assert.ok(result.labels.includes(sponsor));assert.equal(result.top,id!==webinar);assert.ok(result.fits);assert.ok(result.pageFits);if(id===aao)assert.ok(result.sponsor.includes('American Academy of Ophthalmology'));
+          const actions=await evaluate('(() => {const card=document.querySelector('+JSON.stringify(selector)+');const event=state.events.find(e=>e.id==='+JSON.stringify(id)+');return {linked:!!(event.isConference&&event.eventOfficialUrl),titleUrl:card.querySelector(".conference-title-link")?.getAttribute("href")||null,expectedUrl:event.eventOfficialUrl||null,pdf:!!card.querySelector("[data-action=view-pdf]"),official:!!card.querySelector(".btn-official"),calendar:!!card.querySelector("[data-action=add-calendar]"),status:!!card.querySelector(".card-actions-row .schedule-badge")};})()');
+          assert.equal(actions.pdf,!actions.linked);assert.equal(actions.official,!actions.linked);assert.ok(actions.calendar);assert.ok(actions.status);if(actions.linked)assert.equal(actions.titleUrl,actions.expectedUrl);
           if(id==='conf-jp-pediatric-2027') {
             assert.equal(result.classification.filter(label=>label==='小児・斜視弱視').length,1);assert.ok(!result.classification.includes('小児斜視'));
             const order=await evaluate('Array.from(document.querySelector('+JSON.stringify(selector)+').querySelectorAll(".conf-label"),e=>e.textContent)');

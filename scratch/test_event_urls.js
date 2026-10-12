@@ -64,8 +64,12 @@ async function main() {
       const html = createEventCardHtml(event);
       const title = html.match(/<h3 class="card-title">([\\s\\S]*?)<\\/h3>/)[1];
       const before = {...event}; delete before.eventOfficialUrl; delete before.societyUrl;
-      const maskTitle = value => value.replace(/<h3 class="card-title">[\\s\\S]*?<\\/h3>/, '<h3 class="card-title"></h3>');
-      assert.equal(maskTitle(html), maskTitle(createEventCardHtml(before)), event.id + ': other card content');
+      const maskLinkedContent = value => value.replace(/<h3 class="card-title">[\\s\\S]*?<\\/h3>/, '<h3 class="card-title"></h3>')
+        .replace(/<!-- 2. 案内PDF -->[\\s\\S]*?<\\/a>/, '').replace(/>\\s+</g, '><');
+      assert.equal(maskLinkedContent(html), maskLinkedContent(createEventCardHtml(before)), event.id + ': other card content');
+      assert.ok(createEventCardHtml(before).includes('data-action="view-pdf"'), 'No official event URL retains PDF');
+      assert.equal(html.includes('data-action="view-pdf"'), !(event.isConference && event.eventOfficialUrl));
+      assert.equal(html.includes('class="btn btn-official"'), !(event.isConference && event.eventOfficialUrl));
       if (event.isConference && event.eventOfficialUrl) {
         assert.ok(title.includes('href="' + escapeHtml(event.eventOfficialUrl) + '"'));
         assert.ok(title.includes('target="_blank" rel="noopener noreferrer"'));

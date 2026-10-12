@@ -2244,6 +2244,7 @@ function createEventCardHtml(event) {
   }
 
   const hasTime = shouldDisplayEventTime(event);
+  const hasConferenceTitleLink = !!(event.isConference && event.eventOfficialUrl);
 
   return `
     <article class="event-card ${effective.isRegistered ? 'status-registered-card' : ''} ${isConferenceAttending ? 'card-attending-conference' : ''} ${event.parentConferenceId ? 'card-seminar-related' : ''} ${isConferenceEndedEvent ? 'card-conference-ended' : ''} ${isAttended ? 'card-history-attended' : ''}" data-id="${event.id}">
@@ -2294,7 +2295,7 @@ function createEventCardHtml(event) {
       <div class="card-content-block">
         ${parentConferenceBadgeHtml}
         <div class="card-title-row">
-          <h3 class="card-title">${event.isConference && event.eventOfficialUrl ? `<a class="conference-title-link" href="${escapeHtml(event.eventOfficialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}</h3>
+          <h3 class="card-title">${hasConferenceTitleLink ? `<a class="conference-title-link" href="${escapeHtml(event.eventOfficialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}</h3>
         </div>
         <p class="card-subtitle">${escapeHtml(event.subtitle)}</p>
         ${event.isConference && event.conferenceRegion !== 'international' && event.eventType !== '海外学会' ? '' : `<p class="card-desc">${escapeHtml(event.description)}</p>`}
@@ -2348,6 +2349,7 @@ function createEventCardHtml(event) {
           <span class="card-action-full">${effective.isAdding ? "カレンダーに追加中…" : "カレンダーに追加"}</span><span class="card-action-mobile">${effective.isAdding ? "追加中…" : "追加"}</span>
         </button>
 
+        ${hasConferenceTitleLink ? '' : `
         <!-- 2. 案内PDF -->
         <button class="btn btn-outline" data-action="view-pdf" title="案内チラシ・抄録PDFを表示">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2368,6 +2370,7 @@ function createEventCardHtml(event) {
           </svg>
           <span class="card-action-full">公式申込ページ</span><span class="card-action-mobile">申込</span>
         </a>
+        `}
       </div>
     </article>
   `;

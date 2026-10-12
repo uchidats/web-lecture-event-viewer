@@ -37,6 +37,18 @@ vm.runInContext(`
     const multiple = createEventCardHtml({...event, specialty: ['小児・斜視弱視', 'その他']});
     assert.ok(multiple.includes('conf-category-badge specialty">その他</span>'), 'Distinct specialty is retained');
   }
+  for (const event of sampleEvents) {
+    const html = createEventCardHtml(event);
+    const linkedConference = !!(event.isConference && event.eventOfficialUrl);
+    assert.equal(html.includes('data-action="view-pdf"'), !linkedConference, event.id + ' PDF visibility');
+    assert.equal(html.includes('class="btn btn-official"'), !linkedConference, event.id + ' application visibility');
+    assert.equal(html.includes('class="conference-title-link"'), linkedConference);
+    assert.ok(html.includes('data-action="add-calendar"'));
+    assert.ok(html.includes('class="schedule-badge '));
+  }
+  const pdfOnly = createEventCardHtml({...pediatricConferences[0], eventOfficialUrl: '', officialUrl: '', pdfUrl: 'official.pdf'});
+  assert.ok(pdfOnly.includes('data-action="view-pdf"'), 'Conference without event URL retains primary PDF');
+  assert.ok(!pdfOnly.includes('class="conference-title-link"'));
   getTodayString = () => '2026-10-12';
   for (const key of FILTER_SET_KEYS) state.filters[key].clear();
   state.filters.includeEndedConferences = true;
