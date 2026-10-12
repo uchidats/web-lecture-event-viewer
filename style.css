@@ -1885,8 +1885,7 @@ body:has(#calendar-panel[data-view="calendar"]:not([hidden])) .beta-notice :is(#
   text-decoration: underline;
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
-  padding: 6px 10px;
+  padding: 2px 8px;
   border: 1px solid #bfdbfe;
   background: #eff6ff;
   border-radius: var(--radius-sm);
@@ -1903,10 +1902,6 @@ body:has(#calendar-panel[data-view="calendar"]:not([hidden])) .beta-notice :is(#
     width: 100%;
     gap: 8px;
   }
-
-  .abstract-submit-link {
-    min-height: 44px;
-  }
 }
 
 .abstract-submit-link:hover {
@@ -1914,16 +1909,14 @@ body:has(#calendar-panel[data-view="calendar"]:not([hidden])) .beta-notice :is(#
   background: var(--primary-light);
 }
 
-.abstract-submit-link.abstract-submit-link-closed {
-  color: #64748b;
-  font-weight: 500;
-  border-color: transparent;
-  background: transparent;
-}
+@media (max-width: 360px) {
+  .conf-deadlines-row > .conf-item:has(.abstract-status-tag.closed) {
+    flex-wrap: wrap;
+  }
 
-.abstract-submit-link.abstract-submit-link-closed:hover {
-  color: #334155;
-  background: #f1f5f9;
+  .conf-item:has(.abstract-status-tag.closed) > .conf-abstract-deadline-val {
+    flex-basis: 100%;
+  }
 }
 
 .deadline-highlight.closed {
