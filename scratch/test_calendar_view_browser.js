@@ -204,7 +204,7 @@ async function main() {
       console.log('PASS: ' + width + 'px range headings, month/year boundaries, weekend/holiday colors, duration groups and no horizontal overflow on both routes');
       for (const route of ['/', '/ophthalconf/']) {
         await navigate(route + '?month=2027-03');
-        assert.equal(await evaluate('OphthalCalendarView.getMode()'), width <= 600 ? 'compact' : 'calendar', 'Width default only applies without explicit URL');
+        assert.equal(await evaluate('OphthalCalendarView.getMode()'), 'list', 'No explicit URL view defaults to list at every width');
         await navigate(route + '?view=list&month=2027-03');
         assert.equal(await evaluate('OphthalCalendarView.getMode()'), 'list');
         assert.equal(await evaluate('elements.eventList.hidden'), false);

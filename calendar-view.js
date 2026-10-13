@@ -7,7 +7,7 @@
     return day.toISOString().slice(0, 10);
   }
   function initialMode(view, smallScreen) {
-    return ['list', 'calendar', 'compact'].includes(view) ? view : smallScreen ? 'compact' : 'calendar';
+    return ['list', 'calendar', 'compact'].includes(view) ? view : 'list';
   }
   function padZero(n) {
     return String(n).padStart(2, '0');

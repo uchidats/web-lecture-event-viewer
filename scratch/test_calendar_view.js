@@ -52,7 +52,7 @@ assert.equal(crossYearHeading.end.colorClass, 'compact-date-sunday');
 
 for (const mobile of [true, false]) {
   for (const view of ['list', 'calendar', 'compact']) assert.equal(initialMode(view, mobile), view);
-  assert.equal(initialMode(null, mobile), mobile ? 'compact' : 'calendar');
+  for(const missing of [null,undefined,'','invalid'])assert.equal(initialMode(missing, mobile), 'list');
 }
 const { loadEvents } = require('../scripts/auto-updater/storage');
 assert.equal(nextDate('2027-03-21'), '2027-03-22');

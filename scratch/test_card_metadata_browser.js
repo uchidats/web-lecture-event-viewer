@@ -74,12 +74,12 @@ async function main() {
       const result = JSON.parse(event.data), task = pending.get(result.id); if (!task) return;
       pending.delete(result.id); clearTimeout(task.timer); result.error ? task.reject(result.error) : task.resolve(result.result);
     });
-    const call = (method, params = {}) => new Promise((resolve, reject) => {
+    const call = (method, params = {}, sessionId) => new Promise((resolve, reject) => {
       const id = ++sequence, timer = setTimeout(() => reject(new Error(method + ' timeout')), 15000);
-      pending.set(id, { resolve, reject, timer }); socket.send(JSON.stringify({ id, method, params }));
+      pending.set(id, { resolve, reject, timer }); socket.send(JSON.stringify({ id, method, params, ...(sessionId ? {sessionId} : {}) }));
     });
-    const evaluate = async expression => {
-      const result = await call('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true });
+    const evaluate = async (expression, sessionId) => {
+      const result = await call('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true }, sessionId);
       if (result.exceptionDetails) throw new Error(JSON.stringify(result.exceptionDetails));
       return result.result.value;
     };
@@ -97,8 +97,30 @@ async function main() {
 
 
     const aao='oph-004';
-    for(const width of [1280,900,768,390,320]) {
+    const initialViewOnly=process.argv.includes('--initial-view-only');
+    const requestedWidth=Number(process.argv.find(arg=>arg.startsWith('--width='))?.split('=')[1]);
+    for(const width of (requestedWidth ? [requestedWidth] : [1280,900,768,390,320])) {
       await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});await navigate('/');
+      if(initialViewOnly) {
+      for(const route of ['/', '/ophthalconf/']) {
+        await navigate(route+'?entry=direct');assert.equal(await evaluate('OphthalCalendarView.getMode()'),'list');assert.equal(await evaluate('elements.eventList.hidden'),false);
+        await evaluate('window.initialReloadMarker=true');await call('Page.reload',{ignoreCache:true});
+        for(let i=0;i<100;i++){if(await evaluate('document.readyState==="complete"&&window.initialReloadMarker===undefined&&window.OphthalAuth?.snapshot().phase==="ready"&&!!window.OphthalCalendarView?.getMode()'))break;await delay(100);}
+        assert.equal(await evaluate('OphthalCalendarView.getMode()'),'list','URL without view stays list on reload');
+        for(const mode of ['compact','calendar','list']) {
+          await navigate(route+'?view='+mode);assert.equal(await evaluate('OphthalCalendarView.getMode()'),mode);assert.equal(await evaluate('new URL(location.href).searchParams.get("view")'),mode);
+        }
+        await evaluate('document.getElementById("view-compact").click()');assert.equal(await evaluate('new URL(location.href).searchParams.get("view")'),'compact');
+        const target=await call('Target.createTarget',{url:origin+route});const attached=await call('Target.attachToTarget',{targetId:target.targetId,flatten:true});
+        await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500},attached.sessionId);
+        for(let i=0;i<100;i++){if(await evaluate('document.readyState==="complete"&&window.OphthalAuth?.snapshot().phase==="ready"&&!!window.OphthalCalendarView?.getMode()',attached.sessionId))break;await delay(100);}
+        assert.equal(await evaluate('OphthalCalendarView.getMode()',attached.sessionId),'list','New tab ignores previously selected compact mode');await call('Target.closeTarget',{targetId:target.targetId});
+        await call('Target.activateTarget',{targetId:pages.find(p=>p.type==='page').id});
+        await navigate(route+'?entry=after-compact');assert.equal(await evaluate('OphthalCalendarView.getMode()'),'list','Direct URL ignores previous view');
+      }
+      console.log('PASS '+width+'px: both routes, reload, direct URL, new tab, explicit views and previous compact ignored');
+      continue;
+      }
       await evaluate('document.getElementById("reset-filter-btn").click();state.filters.includeEndedConferences=true;syncCheckboxesWithState();renderEvents()');
       const calendarActions=await evaluate('(() => {const host=document.createElement("div");host.style.width=Math.min(innerWidth-32,1000)+"px";host.style.margin="0 16px";host.innerHTML=state.events.map(createEventCardHtml).join("");document.body.append(host);const cards=Array.from(host.querySelectorAll(".event-card"));const before=document.createElement("style");before.textContent="@media(max-width:480px){.card-actions-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));justify-content:flex-end}.card-actions-row .schedule-badge{grid-column:1/-1;justify-self:start;min-height:0;padding:4px 11px;font-size:.76rem}.card-actions-row .btn-calendar{min-width:0}}";document.head.append(before);const heights=cards.map(card=>card.querySelector(".card-actions-row").getBoundingClientRect().height);before.remove();const rows=cards.map((card,i)=>{const actions=card.querySelector(".card-actions-row"),badge=actions.querySelector(".schedule-badge"),button=actions.querySelector(".btn-calendar"),b=badge.getBoundingClientRect(),r=button.getBoundingClientRect();return {id:card.dataset.id,sameRow:Math.abs(b.top+b.height/2-r.top-r.height/2)<1,left:b.right<=r.left,heights:[b.height,r.height],fits:card.scrollWidth<=card.clientWidth+1&&badge.scrollWidth<=badge.clientWidth+1&&button.scrollWidth<=button.clientWidth+1,fewer:actions.children.length===2,height:actions.getBoundingClientRect().height,previousHeight:heights[i]};});host.remove();return rows;})()');
       for(const row of calendarActions){assert.ok(row.fits,row.id+' actions fit');if(width<=480){assert.ok(row.sameRow,row.id+' state/add centered on same row');assert.ok(row.left);assert.deepEqual(row.heights,[36,36]);if(row.fewer)assert.ok(row.height<row.previousHeight,'Conference actions reduce vertical space');}else assert.equal(row.height,row.previousHeight,'PC/tablet action layout unchanged');}
