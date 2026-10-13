@@ -1055,10 +1055,19 @@ function getAvailableEventYears() {
  */
 function getDaysUntilAbstractDeadline(event, baseDate = new Date()) {
   if (!event.isConference) return null;
-  const deadline = parseAbstractDate(getCurrentAbstractDeadline(event.abstractSubmission));
-  const today = parseAbstractDate(typeof baseDate === "string" ? baseDate :
-    `${baseDate.getFullYear()}-${String(baseDate.getMonth() + 1).padStart(2, "0")}-${String(baseDate.getDate()).padStart(2, "0")}`);
-  return deadline && today ? (deadline.timestamp - today.timestamp) / 86400000 : null;
+  const timeZone = getAbstractTimeZone(event);
+  const deadline = registrationTimestamp(getCurrentAbstractDeadline(event.abstractSubmission), timeZone, true);
+  const now = baseDate instanceof Date ? baseDate.getTime() : registrationTimestamp(baseDate, timeZone);
+  if (deadline === null || now === null || !Number.isFinite(now)) return null;
+  const calendarDay = timestamp => {
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('en-GB', {timeZone,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date(timestamp)).map(p=>[p.type,p.value]));
+    return Date.UTC(+parts.year,+parts.month-1,+parts.day);
+  };
+  return (calendarDay(deadline) - calendarDay(now)) / 86400000;
+}
+
+function getAbstractTimeZone(event) {
+  return event.abstractSubmission?.timeZone || event.timeZone || event.registration?.timeZone || getEventVenue(event)?.timeZone || 'Asia/Tokyo';
 }
 
 // deadline remains the accepted baseline; currentDeadline supports future extension records.
@@ -1173,16 +1182,19 @@ function renderRegistrationHtml(event, today = new Date()) {
   return rows.map(({ label, value, closed }) => `<div class="conf-item conf-registration-period"><span class="conf-label">${escapeHtml(label)}：</span><span class="conf-val deadline-highlight${closed ? ' closed' : ''}">${escapeHtml(value)}</span></div>`).join('');
 }
 
-function getAbstractSubmissionState(event, baseDate = getTodayString()) {
+function getAbstractSubmissionState(event, baseDate = new Date()) {
   const sub = event.isConference ? event.abstractSubmission : null;
   const days = getDaysUntilAbstractDeadline(event, baseDate);
-  const status = sub?.status === "open" && days !== null && days < 0 ? "closed" : sub?.status || "unknown";
+  const timeZone = getAbstractTimeZone(event);
+  const deadlineTimestamp = registrationTimestamp(getCurrentAbstractDeadline(sub), timeZone, true);
+  const now = baseDate instanceof Date ? baseDate.getTime() : registrationTimestamp(baseDate, timeZone);
+  const status = deadlineTimestamp !== null && now !== null && deadlineTimestamp < now ? "closed" : sub?.status || "unknown";
   const urgency = status !== "open" || days === null || days > 30 ? "normal" :
     days === 0 ? "today" : days <= 7 ? "urgent" : "soon";
   return { status, days, urgency, isOpen: status === "open" };
 }
 
-function matchesAbstractFilter(event, condition, baseDate = getTodayString()) {
+function matchesAbstractFilter(event, condition, baseDate = new Date()) {
   const info = getAbstractSubmissionState(event, baseDate);
   if (!info.isOpen) return false;
   if (condition === "open") return true;
@@ -1190,24 +1202,26 @@ function matchesAbstractFilter(event, condition, baseDate = getTodayString()) {
   return limit !== null && info.days !== null && info.days >= 0 && info.days <= limit;
 }
 
-function renderAbstractSubmissionHtml(event, baseDate = getTodayString()) {
+function renderAbstractSubmissionHtml(event, baseDate = new Date()) {
   const sub = event.abstractSubmission;
   if (!sub) return `<span class="deadline-highlight">${escapeHtml(event.abstractDeadline || "要確認")}</span>`;
   const info = getAbstractSubmissionState(event, baseDate);
   const labels = { open: "演題募集中", upcoming: "演題募集予定", closed: "演題募集終了" };
-  const isClosed = sub.status === "closed" || (info.days !== null && info.days < 0);
+  const isClosed = info.status === "closed";
   const displayStatus = isClosed ? "closed" : info.status;
-  const deadlineLabel = formatAbstractDeadline(getCurrentAbstractDeadline(sub));
+  const deadlineLabel = formatAbstractDeadline(getCurrentAbstractDeadline(sub), {showTime: !isClosed});
   const extensionLabel = sub.extended === true ? '（延長）' : '';
   const parts = [];
-  if (labels[displayStatus]) parts.push(`<span class="abstract-status-tag ${displayStatus}">${isClosed && deadlineLabel ? escapeHtml(deadlineLabel) + ' 締切済' + extensionLabel : labels[displayStatus]}</span>`);
-  if (!isClosed && deadlineLabel) parts.push(`<span class="deadline-highlight">締切：${escapeHtml(deadlineLabel)}${extensionLabel}</span>`);
-  if (!isClosed && info.isOpen && info.days !== null) {
-    const text = info.days === 0 ? "本日締切" : `${info.urgency === "urgent" ? "締切間近・" : info.urgency === "soon" ? "注意・" : ""}締切まで${info.days}日`;
-    parts.push(`<span class="abstract-status-tag ${info.urgency}">${text}</span>`);
+  if (isClosed) return `<span class="deadline-highlight closed">${deadlineLabel ? escapeHtml(deadlineLabel) + ' 締切済' + extensionLabel : '演題募集終了'}</span>`;
+  if (info.isOpen && sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-status-tag open abstract-open-link">演題募集中 ↗</a>`);
+  else if (labels[displayStatus]) parts.push(`<span class="abstract-status-tag ${displayStatus}">${labels[displayStatus]}</span>`);
+  if (deadlineLabel) {
+    const urgent = info.isOpen && info.days !== null && info.days <= 30;
+    const prefix = urgent ? info.days === 0 ? '本日締切：' : `締切${info.days}日前：` : '締切：';
+    parts.push(`<span class="abstract-deadline"><span class="abstract-deadline-prefix${urgent ? ' urgent' : ''}">${prefix}</span>${escapeHtml(deadlineLabel)}${extensionLabel}</span>`);
   }
   if (!isClosed && info.status === "upcoming" && sub.startDate) parts.push(`<span class="abstract-start-date">募集開始予定 ${escapeHtml(sub.startDate)}</span>`);
-  if (sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link${isClosed ? ' abstract-submit-link-closed' : ''}">${info.isOpen ? "演題登録" : "演題募集詳細"} ↗</a>`);
+  if (!info.isOpen && sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link">演題募集詳細 ↗</a>`);
   return parts.join(" ") || '<span class="abstract-unknown">演題募集情報未確認</span>';
 }
 
@@ -1271,7 +1285,7 @@ function renderFilterOptions() {
   // 2. 演題募集フィルター（学会特有：募集中、30日以内、7日以内）
   const abstractContainer = document.getElementById("filter-abstractStatus");
   if (abstractContainer) {
-    const today = getTodayString();
+    const today = new Date();
     const openCount = state.events.filter(e => matchesAbstractFilter(e, "open", today)).length;
     const d30Count = state.events.filter(e => matchesAbstractFilter(e, "deadline_30d", today)).length;
     const d7Count = state.events.filter(e => matchesAbstractFilter(e, "deadline_7d", today)).length;
@@ -1789,7 +1803,7 @@ function getFilteredEvents(ignoreCalendar = false, viewMode = typeof OphthalCale
 
     // 演題募集フィルター (学会対象: 複数選択時はOR、未選択時は全件)
     if (state.filters.abstractStatus.size > 0) {
-      if (![...state.filters.abstractStatus].some(condition => matchesAbstractFilter(event, condition, todayStr))) return false;
+      if (![...state.filters.abstractStatus].some(condition => matchesAbstractFilter(event, condition, registrationReference))) return false;
     }
 
     // 開催形式

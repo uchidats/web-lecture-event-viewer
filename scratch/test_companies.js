@@ -29,7 +29,9 @@ assert.deepEqual(getCoSponsorCompanyIds({ sponsor: '参天製薬株式会社' })
 assert.equal(matchesCoSponsorCompanies({}, new Set(), []), true);
 
 const root = path.resolve(__dirname, '..');
-const context = vm.createContext({ assert, console, document: { getElementById: () => null, addEventListener: () => {} } });
+const fixedNow=Date.parse('2026-10-05T12:00:00+09:00');
+class FixedDate extends Date {constructor(...args){super(...(args.length?args:[fixedNow]));}static now(){return fixedNow;}}
+const context = vm.createContext({ assert, console, Date:FixedDate, document: { getElementById: () => null, addEventListener: () => {} } });
 for (const file of ['venues.js', 'companies.js', 'events.js', 'script.js']) {
   vm.runInContext(fs.readFileSync(path.join(root, file), 'utf8'), context);
 }

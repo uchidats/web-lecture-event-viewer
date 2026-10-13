@@ -1891,6 +1891,11 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
   border: 1px solid #a7f3d0;
 }
 
+.abstract-open-link { text-decoration: underline; }
+.abstract-open-link:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+.abstract-deadline { color: #0f172a; }
+.abstract-deadline-prefix.urgent { color: #b91c1c; font-weight: 600; }
+
 .abstract-status-tag.soon {
   background: #fffbeb;
   color: #b45309;
