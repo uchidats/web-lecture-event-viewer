@@ -131,7 +131,7 @@ for (const event of events) {
     const html = run(`renderVenueHtml(${JSON.stringify(event)})`);
     const query = run(`getEventVenue(${JSON.stringify(event)}).googleMaps.searchQuery`);
     assert.ok(html.includes(encodeURIComponent(query)), event.id);
-    assert.ok(html.includes(run(`escapeHtml(${JSON.stringify(event.venue)})`)), event.id);
+    assert.ok(html.includes(run(`escapeHtml(formatVenueDisplayName(${JSON.stringify(event)},${JSON.stringify(event.venue)}))`)), event.id);
   }
 }
 for (const venue of ['', '未定', 'Web', 'オンライン', 'Zoom会議', '東京国際フォーラム / Web同時配信', '<会場>&"']) {

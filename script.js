@@ -2039,6 +2039,25 @@ function isPhysicalVenue(venue) {
  * @param {Object} event 
  * @returns {string} HTML string
  */
+function formatVenueDisplayName(event, name) {
+  if (typeof name !== 'string') return name;
+  const master = getEventVenue(event);
+  const country = master?.country || String(event.cityCountry || '').split(/[/／]/)[1]?.trim() || '';
+  if (/^(日本|Japan|JP)$/i.test(country)) return name;
+  const overseas = event.region === '海外' || event.conferenceRegion === 'international' ||
+    (country && !/^(日本|Japan|JP)$/i.test(country));
+  if (!overseas) return name;
+  const parts = name.split(/[,，]/).map(part => part.trim());
+  if (/^(米国|アメリカ|アメリカ合衆国|USA|US|United States)$/i.test(country) && parts.length > 1 &&
+      /^(AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY|DC)$/.test(parts.at(-1))) parts.pop();
+  if (parts.length > 1) {
+    const city = parts.at(-1).toLowerCase().replace(/\s+/g, ' ');
+    const venueName = parts.slice(0, -1).join(', ').toLowerCase().replace(/\s+/g, ' ');
+    if (city && (' ' + venueName + ' ').includes(' ' + city + ' ')) parts.pop();
+  }
+  return parts.join(', ');
+}
+
 function renderVenueHtml(event) {
   const venues = Array.isArray(event.venues) ? event.venues.filter(v=>v && typeof v.name==='string' && v.name.trim()) : [];
   if (venues.length) {
@@ -2046,7 +2065,7 @@ function renderVenueHtml(event) {
       let url;
       try { const candidate=new URL(venue.mapUrl); if(candidate.protocol==='https:'&&!candidate.username&&!candidate.password&&
         (candidate.hostname==='maps.app.goo.gl'||(/^(?:www\.|maps\.)?google\.(?:com|co\.jp)$/.test(candidate.hostname)&&(candidate.hostname.startsWith('maps.')||candidate.pathname.startsWith('/maps')))))url=candidate.href; } catch {}
-      return `<span class="venue-item">${url && isPhysicalVenue(venue.name) ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="venue-map-link" title="Googleマップで場所を表示">${escapeHtml(venue.name)}</a>` : renderVenueHtml({...event, venues:undefined, venueId:undefined, venue:venue.name})}</span>`;
+      return `<span class="venue-item">${url && isPhysicalVenue(venue.name) ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="venue-map-link" title="Googleマップで場所を表示">${escapeHtml(formatVenueDisplayName(event, venue.name))}</a>` : renderVenueHtml({...event, venues:undefined, venueId:undefined, venue:venue.name})}</span>`;
     });
     return `<span class="venue-links${venues.length>1?' multiple-venues':''}">${links.join('')}</span>`;
   }
@@ -2076,7 +2095,7 @@ function renderVenueHtml(event) {
 
   const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(masterVenue?.googleMaps.searchQuery || searchQuery)}`;
 
-  return `<a href="${mapUrl}" target="_blank" rel="noopener noreferrer" class="venue-map-link" title="Googleマップで場所を表示">${escapeHtml(venue)}</a>`;
+  return `<a href="${mapUrl}" target="_blank" rel="noopener noreferrer" class="venue-map-link" title="Googleマップで場所を表示">${escapeHtml(formatVenueDisplayName(event, venue))}</a>`;
 }
 
 /**
