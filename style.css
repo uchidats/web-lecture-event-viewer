@@ -1790,7 +1790,7 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
 }
 
 .conf-category-badge,
-.abstract-status-tag.closed,
+.abstract-status-tag,
 .abstract-submit-link {
   display: inline-flex;
   align-items: center;
@@ -1799,6 +1799,8 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
   font-size: 0.72rem;
   font-weight: 600;
   line-height: 1.5;
+  height: calc(0.72rem * 1.5 + 6px);
+  box-sizing: border-box;
 }
 
 .conf-category-badge.region {
@@ -1835,6 +1837,7 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
 }
 
 .abstract-status-tag.closed {
+  font-weight: 600;
   background: #f1f5f9;
   color: #475569;
   border: 1px solid #cbd5e1;
@@ -1844,7 +1847,6 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
   background: #991b1b;
   color: #ffffff;
   border: 2px solid #7f1d1d;
-  font-size: 0.8rem;
 }
 
 .abstract-start-date,
@@ -1854,11 +1856,6 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
 }
 
 .abstract-status-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 1px 7px;
-  border-radius: var(--radius-sm);
-  font-size: 0.70rem;
   font-weight: 700;
   white-space: nowrap;
 }
