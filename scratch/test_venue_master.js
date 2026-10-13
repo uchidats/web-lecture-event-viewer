@@ -16,6 +16,15 @@ function load(original = false) {
 }
 const run = load();
 const before = load(true);
+const originalCredits = run('sampleEvents.find(e=>e.id==="oph-001").credits');
+assert.equal(run('getEventCreditLabel(sampleEvents.find(e=>e.id==="oph-001"))'),'日本眼科学会生涯教育 8単位');
+assert.equal(run('sampleEvents.find(e=>e.id==="oph-001").credits'),originalCredits);
+for(const [credits,expected] of [
+  ['日本眼科学会生涯教育 8単位 / 専門医制度認定 / CME 2単位','日本眼科学会生涯教育 8単位 / CME 2単位'],
+  ['日本眼科学会生涯教育 8単位／専門医制度認定','日本眼科学会生涯教育 8単位'],
+  ['日本眼科学会専門医制度 8単位','日本眼科学会専門医制度 8単位'],
+  ['教育 8単位 / 専門医制度認定対象外','教育 8単位 / 専門医制度認定対象外']
+])assert.equal(run(`getEventCreditLabel({creditUnits:8,credits:${JSON.stringify(credits)}})`),expected);
 const lowvision2027 = JSON.parse(run('JSON.stringify(sampleEvents.find(e=>e.id==="conf-jp-lowvision-2027"))'));
 assert.equal(lowvision2027.date, '2027-05-22');
 assert.equal(lowvision2027.endDate, '2027-05-23');

@@ -2190,7 +2190,7 @@ function renderEventTimeHtml(event) {
 function getEventCreditLabel(event) {
   const units = event.creditUnits;
   if (typeof units !== "number" || !Number.isFinite(units) || units < 0) return "";
-  const credits = typeof event.credits === "string" ? event.credits.trim() : "";
+  const credits = typeof event.credits === "string" ? event.credits.trim().replace(/\s*[/／]\s*専門医制度認定(?=\s*(?:[/／]|$))/g, '') : "";
   if (!credits || /未定|未確認|不明|要確認/.test(credits)) return `${units}単位`;
   if (/\d+(?:\.\d+)?\s*単位/.test(credits)) return credits.replace(/\d+(?:\.\d+)?\s*単位/, `${units}単位`);
   const scheme = credits.replace(/(?:認定)?単位(?:情報)?$/, "").trim();

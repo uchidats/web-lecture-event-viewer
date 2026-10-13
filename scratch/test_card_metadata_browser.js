@@ -183,6 +183,8 @@ async function main() {
             assert.equal(venue.name,'San Diego Convention Center');assert.ok(venue.query.includes(venue.original));assert.ok(venue.country);assert.ok(venue.city);assert.ok(venue.fits);
           }
           if(id==='oph-001') {
+            const credits=await evaluate('(() => {const card=document.querySelector('+JSON.stringify(selector)+'),label=card.querySelector(".credits-highlight"),event=state.events.find(e=>e.id==="oph-001"),text=label.textContent,height=label.getBoundingClientRect().height;label.textContent=event.credits;const oldHeight=label.getBoundingClientRect().height;label.textContent=text;return {text,original:event.credits,height,oldHeight,fits:card.scrollWidth<=card.clientWidth+1};})()');
+            assert.equal(credits.text,'日本眼科学会生涯教育 8単位');assert.equal(credits.original,'日本眼科学会生涯教育 8単位 / 専門医制度認定');assert.ok(credits.fits);if(width<=480)assert.ok(credits.height<=credits.oldHeight,'Credits wrapping does not increase');
             const title=await evaluate('(() => {const card=document.querySelector('+JSON.stringify(selector)+'),event=state.events.find(e=>e.id==="oph-001"),link=card.querySelector(".conference-title-link");return {visible:link.innerText,full:event.title,url:link.getAttribute("href"),expectedUrl:event.eventOfficialUrl,suffix:!!link.querySelector(".conference-title-ringan-suffix")};})()');
             assert.equal(title.visible,'第80回 日本臨床眼科学会');assert.equal(title.full,title.visible);assert.ok(!title.suffix);assert.equal(title.url,title.expectedUrl);
             if(mode!=='list')assert.equal(await evaluate('OphthalCalendarView.getCalendar().getEventById("oph-001").title'),'第80回 日本臨床眼科学会');
