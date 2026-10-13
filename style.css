@@ -1333,8 +1333,7 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
 }
 .card-title-row { display: flex; align-items: center; gap: 8px; }
 .card-title-row .card-title { flex: 0 1 auto; min-width: 0; overflow-wrap: anywhere; }
-.card-title .format-badge { display: inline-block; vertical-align: middle; line-height: 1.55; letter-spacing: normal; margin-left: 4px; white-space: nowrap; }
-.card-title .format-badge:is(.hybrid, .web) {
+.conf-classification-val .format-badge {
   display: inline-flex;
   align-items: center;
   font-size: 0.72rem;
@@ -1342,6 +1341,8 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
   height: calc(0.72rem * 1.5 + 6px);
   box-sizing: border-box;
   padding: 2px 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .conference-title-link {

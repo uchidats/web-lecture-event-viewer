@@ -2316,6 +2316,7 @@ function createEventCardHtml(event) {
             <span class="conf-category-badge region">${event.conferenceRegion === 'international' ? '国際学会' : '国内学会'}</span>
             ${event.conferenceCategory ? `<span class="conf-category-badge category">${escapeHtml(getConferenceCategoryDisplayLabel(event.conferenceCategory))}</span>` : ''}
             ${getEventSpecialties(event).filter(value => getSpecialtyDisplayLabel(value) !== getConferenceCategoryDisplayLabel(event.conferenceCategory)).map(value => `<span class="conf-category-badge specialty">${escapeHtml(getSpecialtyDisplayLabel(value))}</span>`).join('')}
+            ${shouldDisplayEventFormat(event) ? `<span class="format-badge ${formatClass}">${escapeHtml(event.format)}</span>` : ''}
           </span>
         </div>
         ` : ''}
@@ -2400,7 +2401,7 @@ function createEventCardHtml(event) {
       <div class="card-content-block">
         ${parentConferenceBadgeHtml}
         <div class="card-title-row">
-          <h3 class="card-title">${hasConferenceTitleLink ? `<a class="conference-title-link" href="${escapeHtml(event.eventOfficialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}${event.isConference && shouldDisplayEventFormat(event) ? ` <span class="format-badge ${formatClass}">${escapeHtml(event.format)}</span>` : ''}</h3>
+          <h3 class="card-title">${hasConferenceTitleLink ? `<a class="conference-title-link" href="${escapeHtml(event.eventOfficialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}</h3>
         </div>
         <p class="card-subtitle">${escapeHtml(event.subtitle)}</p>
         ${event.isConference && event.conferenceRegion !== 'international' && event.eventType !== '海外学会' ? '' : `<p class="card-desc">${escapeHtml(getEventDescriptionDisplayText(event))}</p>`}
