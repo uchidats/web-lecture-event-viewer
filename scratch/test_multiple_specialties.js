@@ -27,6 +27,14 @@ vm.runInContext(`
   assert.equal(sampleEvents.filter(e => getEventSpecialties(e).includes('眼炎症感染')).length, 3);
   assert.equal(sampleEvents.filter(e => getEventSpecialties(e).includes('その他')).length, 14);
   state.events = sampleEvents;
+  for(const format of ['現地','onsite','Onsite','ハイブリッド','Web']) {
+    const conference={...sampleEvents.find(e=>e.isConference),format};
+    const expected=!['現地','onsite','Onsite'].includes(format);
+    assert.equal(shouldDisplayEventFormat(conference),expected);
+    assert.equal(createEventCardHtml(conference).includes('class="format-badge '),expected);
+    assert.equal(conference.format,format,'Stored format remains unchanged');
+    assert.ok(createEventCardHtml({...conference,isConference:false}).includes('class="format-badge '),'Standalone event retains format badge');
+  }
   const internationalDescription = {isConference:true,conferenceRegion:'international',description:'前半。後半。'};
   assert.equal(getEventDescriptionDisplayText(internationalDescription),'前半。後半');
   assert.equal(internationalDescription.description,'前半。後半。','Original description unchanged');

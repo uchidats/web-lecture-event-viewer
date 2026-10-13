@@ -2152,6 +2152,10 @@ function getEventDescriptionDisplayText(event) {
   return international && description.endsWith('。') ? description.slice(0, -1) : description;
 }
 
+function shouldDisplayEventFormat(event) {
+  return !(event.isConference && ['現地', 'onsite'].includes(String(event.format || '').trim().toLowerCase()));
+}
+
 function getConferenceChairDisplayLabel(event) {
   const original = event.conferenceChair || '';
   if (!event.isConference) return original;
@@ -2362,7 +2366,7 @@ function createEventCardHtml(event) {
             <span class="month-day">${escapeHtml(dateBadgeInfo.dateText)}</span>
             <span class="day-week">${escapeHtml(dateBadgeInfo.weekdayText)}</span>
           </div>
-          <span class="format-badge ${formatClass}">${escapeHtml(event.format)}</span>
+          ${shouldDisplayEventFormat(event) ? `<span class="format-badge ${formatClass}">${escapeHtml(event.format)}</span>` : ''}
           <div class="time-and-region ${hasTime ? 'has-time' : 'no-time'}">
             ${hasTime ? `
             <div class="time-text">
