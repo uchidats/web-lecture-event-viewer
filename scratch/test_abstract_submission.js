@@ -59,9 +59,9 @@ vm.runInContext(`
   ]) {
     const ended = make(status, deadline);
     const html = renderAbstractSubmissionHtml(ended);
-    assert.equal(html, '<span class="deadline-highlight closed">' + (deadline ? formatAbstractDeadline(deadline,{showTime:false}) + ' 締切済' : '演題募集終了') + '</span>');
+    assert.equal(html, '<span class="deadline-highlight closed">' + (deadline ? formatAbstractDeadline(deadline,{showTime:false}) + ' 締切済' : '締切済') + '</span>');
     const linked = renderAbstractSubmissionHtml(make(status, deadline, 'https://example.com/abstract'));
-    assert.ok(linked.includes(deadline ? '締切済' : '演題募集終了'));
+    assert.ok(linked.includes('締切済'));assert.ok(!linked.includes('演題募集終了'));assert.ok(!linked.includes('受付終了'));
     assert.ok(!linked.includes('<a '));
     assert.ok(!linked.includes('abstract-status-tag'));
     assert.ok(!linked.includes('演題締切'));

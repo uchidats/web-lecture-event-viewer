@@ -1207,15 +1207,23 @@ function matchesAbstractFilter(event, condition, baseDate = new Date()) {
 
 function renderAbstractSubmissionHtml(event, baseDate = new Date()) {
   const sub = event.abstractSubmission;
-  if (!sub) return `<span class="deadline-highlight">${escapeHtml(event.abstractDeadline || "要確認")}</span>`;
+  if (!sub) {
+    const legacy = event.abstractDeadline || '要確認';
+    if (/受付終了|演題募集終了|締切済/.test(legacy)) {
+      const rawDate = legacy.match(/\d{4}-\d{2}-\d{2}/)?.[0] || legacy.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/)?.slice(1).map((v,i)=>i?v.padStart(2,'0'):v).join('-');
+      const date = formatAbstractDeadline(rawDate, {showTime:false});
+      return `<span class="deadline-highlight closed">${date ? escapeHtml(date) + ' ' : ''}締切済</span>`;
+    }
+    return `<span class="deadline-highlight">${escapeHtml(legacy)}</span>`;
+  }
   const info = getAbstractSubmissionState(event, baseDate);
-  const labels = { open: "演題募集中", upcoming: "演題募集予定", closed: "演題募集終了" };
+  const labels = { open: "演題募集中", upcoming: "演題募集予定", closed: "締切済" };
   const isClosed = info.status === "closed";
   const displayStatus = isClosed ? "closed" : info.status;
   const deadlineLabel = formatAbstractDeadline(getCurrentAbstractDeadline(sub), {showTime: !isClosed});
   const extensionLabel = sub.extended === true ? '（延長）' : '';
   const parts = [];
-  if (isClosed) return `<span class="deadline-highlight closed">${deadlineLabel ? escapeHtml(deadlineLabel) + ' 締切済' + extensionLabel : '演題募集終了'}</span>`;
+  if (isClosed) return `<span class="deadline-highlight closed">${deadlineLabel ? escapeHtml(deadlineLabel) + ' 締切済' + extensionLabel : '締切済'}</span>`;
   if (info.isOpen && sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-status-tag open abstract-open-link">演題募集中 ↗</a>`);
   else if (labels[displayStatus]) parts.push(`<span class="abstract-status-tag ${displayStatus}">${labels[displayStatus]}</span>`);
   if (deadlineLabel) {
