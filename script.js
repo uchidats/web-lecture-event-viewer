@@ -2040,6 +2040,16 @@ function isPhysicalVenue(venue) {
  * @returns {string} HTML string
  */
 function renderVenueHtml(event) {
+  const venues = Array.isArray(event.venues) ? event.venues.filter(v=>v && typeof v.name==='string' && v.name.trim()) : [];
+  if (venues.length) {
+    const links = venues.map(venue => {
+      let url;
+      try { const candidate=new URL(venue.mapUrl); if(candidate.protocol==='https:'&&!candidate.username&&!candidate.password&&
+        (candidate.hostname==='maps.app.goo.gl'||(/^(?:www\.|maps\.)?google\.(?:com|co\.jp)$/.test(candidate.hostname)&&(candidate.hostname.startsWith('maps.')||candidate.pathname.startsWith('/maps')))))url=candidate.href; } catch {}
+      return `<span class="venue-item">${url && isPhysicalVenue(venue.name) ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="venue-map-link" title="Googleマップで場所を表示">${escapeHtml(venue.name)}</a>` : renderVenueHtml({...event, venues:undefined, venueId:undefined, venue:venue.name})}</span>`;
+    });
+    return `<span class="venue-links${venues.length>1?' multiple-venues':''}">${links.join('')}</span>`;
+  }
   const masterVenue = getEventVenue(event);
   const venue = getEventVenueName(event);
   if (!isPhysicalVenue(venue)) {
@@ -2379,7 +2389,7 @@ function createEventCardHtml(event) {
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                 <circle cx="12" cy="10" r="3"></circle>
               </svg>
-              <span>${getEventVenueRegionLabel(event) ? `[${escapeHtml(getEventVenueRegionLabel(event))}] ` : ''}${renderVenueHtml(event)}</span>
+              <span class="location-venues">${getEventVenueRegionLabel(event) ? `[${escapeHtml(getEventVenueRegionLabel(event))}] ` : ''}${renderVenueHtml(event)}</span>
             </div>
           </div>
         </div>

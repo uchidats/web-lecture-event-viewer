@@ -22,6 +22,8 @@ function validateEvents(events, baseline) {
   const ids = new Set();
   for (const e of events) {
     if (!e.id || ids.has(e.id)) throw new Error('Duplicate/missing event ID');
+    if (e.venues !== undefined && (!Array.isArray(e.venues) || !e.venues.length || e.venues.some(v=>!v||typeof v.name!=='string'||!v.name.trim()||
+      (v.mapUrl!==undefined&&(!URL.canParse(v.mapUrl)||new URL(v.mapUrl).protocol!=='https:'||new URL(v.mapUrl).username||new URL(v.mapUrl).password))))) throw new Error('Invalid venues');
     ids.add(e.id);
     if (e.specialty !== undefined) {
       const specialties = Array.isArray(e.specialty) ? e.specialty : [e.specialty];
@@ -79,7 +81,7 @@ const checks = [
     'scripts/gemini-monitor/applier.js', 'scripts/gemini-monitor/monitor.js', 'scripts/run-gemini-monitor.js',
     'scripts/gemini-monitor/google-url-discoverer.js', 'scripts/send-gemini-monitor-notification.js'].map(file => ['--check', file]),
   ['scratch/test_ended_conferences.js'], ['scratch/test_calendar_ended_visibility.js'], ['scratch/test_conference_history.js'], ['scratch/test_domestic_conference_chairs.js'],
-  ['scratch/test_venue_master.js'], ['scratch/test_comprehensive_regression.js'],
+  ['scratch/test_venue_master.js'], ['scratch/test_multiple_venues.js'], ['scratch/test_comprehensive_regression.js'],
   ['scratch/test_abstract_submission.js'], ['scratch/test_auto_updater.js'],
   ['scratch/test_brand_storage.js'], ['scratch/test_companies.js'], ['scratch/test_time_zones.js'],
   ['scratch/test_venue_update_policy.js'], ['scratch/test_registration.js'], ['scratch/test_registration_phases.js'], ['scratch/test_registration_sort.js'], ['scratch/test_registration_timezones.js'], ['scratch/test_filter_state.js'], ['scratch/test_event_urls.js'], ['scratch/test_event_url_discovery.js'], ['scratch/test_bot_protected_event_urls.js'], ['scratch/test_ascrs_2027_official.js'],

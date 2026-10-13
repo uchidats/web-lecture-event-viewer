@@ -261,6 +261,8 @@ function getEventVenue(event) {
 
 // イベント固有の部屋名や配信併記を保持する。
 function getEventVenueName(event) {
+  const names = Array.isArray(event.venues) ? event.venues.filter(v=>v && typeof v.name==='string' && v.name.trim()).map(v=>v.name.trim()) : [];
+  if (names.length) return names.join('、');
   return event.venue || getEventVenue(event)?.name || "";
 }
 

@@ -1159,6 +1159,13 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
 }
 
 /* 会場Google Mapsリンク（ボタン化せず、自然なインラインリンクとして表示） */
+.location-text > svg { flex-shrink: 0; }
+.location-venues { min-width: 0; }
+.venue-links { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; max-width: 100%; }
+.venue-item { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 480px) {
+  .venue-links.multiple-venues { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; }
+}
 .venue-map-link {
   color: inherit;
   text-decoration: underline;

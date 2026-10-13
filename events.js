@@ -15,6 +15,7 @@
  *  - showConferenceTime: 任意。学会カードで時間表示が必要な場合のみ true（時間データは保持）
  *  - region: 国内地域区分（北海道/東北/関東/中部/関西/中国/四国/九州・沖縄、または "海外"）
  *  - venueId: 任意。venues.js の安定ID（未指定の場合は venue を使用）
+ *  - venues: 任意。複数会場の [{ name, mapUrl }]。表示は旧 venue より優先する
  *  - timeZone: 任意。IANAタイムゾーン名（会場マスター未登録の場合にも使用可能）
  *  - venue: 開催会場（未定の場合は "未定"）
  *  - specialty: 専門領域の文字列または文字列配列（総合/網膜・硝子体/緑内障/白内障/角膜/小児・斜視弱視/神経眼科/眼形成/眼光学CL近視/眼炎症感染/ロービジョン/その他）
@@ -702,7 +703,17 @@ const sampleEvents = [
     ],
     "description": "国内最大規模の眼科学術集会。全サブスペシャリティの最新実臨床知見が集結。",
     "isConference": true,
-    "conferenceChair": "近藤 峰生（三重大学）"
+    "conferenceChair": "近藤 峰生（三重大学）",
+    "venues": [
+      {
+        "name": "国立京都国際会館",
+        "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%9B%BD%E7%AB%8B%E4%BA%AC%E9%83%BD%E5%9B%BD%E9%9A%9B%E4%BC%9A%E9%A4%A8%20%E4%BA%AC%E9%83%BD%E5%B8%82%E5%B7%A6%E4%BA%AC%E5%8C%BA%E5%B2%A9%E5%80%89%E5%A4%A7%E9%B7%BA%E7%94%BA422%E7%95%AA%E5%9C%B0"
+      },
+      {
+        "name": "ザ・プリンス 京都宝ヶ池",
+        "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%82%B6%E3%83%BB%E3%83%97%E3%83%AA%E3%83%B3%E3%82%B9%20%E4%BA%AC%E9%83%BD%E5%AE%9D%E3%83%B6%E6%B1%A0%20%E4%BA%AC%E9%83%BD%E5%B8%82%E5%B7%A6%E4%BA%AC%E5%8C%BA%E5%B2%A9%E5%80%89%E5%B9%A1%E6%9E%9D%E7%94%BA1092%E7%95%AA%E5%9C%B02"
+      }
+    ]
   },
   {
     "id": "conf-jp-pediatric-2026",
