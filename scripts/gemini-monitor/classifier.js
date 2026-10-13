@@ -1,5 +1,6 @@
 const { THRESHOLDS, SEVERITY, RECOMMENDED_ACTIONS, SOURCE_QUALITY, LEARNING_FLAGS } = require('./constants');
 const { diffDays } = require('./scheduler');
+const {validVenues,venueKey}=require('../auto-updater/venues');
 
 /**
  * Compare proposed changes against current event and classify into:
@@ -65,7 +66,11 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
   }
 
   // 3. Venue changed
-  if (geminiResult.venue && geminiResult.venue !== currentEvent.venue) {
+  const officialVenues=options.officialVenues;
+  if(validVenues(officialVenues)&&officialVenues.length>1&&venueKey(officialVenues)!==venueKey(currentEvent.venues)){
+    fieldChanges.push({field:'venues',before:currentEvent.venues||null,after:officialVenues,severity:SEVERITY.HIGH});
+  }
+  if (!options.venueCountUnconfirmed&&!officialVenues&&!currentEvent.venues?.length&&geminiResult.venue && geminiResult.venue !== currentEvent.venue) {
     fieldChanges.push({
       field: 'venue',
       before: currentEvent.venue || null,
@@ -201,6 +206,9 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
       code: 'different_event_or_edition',
       detail: 'Gemini determined page does not match the current conference edition.'
     };
+  } else if (activeChanges.some(change => change.field === 'venues')) {
+    finalAction = RECOMMENDED_ACTIONS.NEEDS_REVIEW;
+    structuredReason = { code: 'multiple_venues_needs_review', detail: 'Confirm each officially listed venue before applying the structured list.' };
   } else if (learnedRiskCode) {
     finalAction = RECOMMENDED_ACTIONS.NEEDS_REVIEW;
     structuredReason = {

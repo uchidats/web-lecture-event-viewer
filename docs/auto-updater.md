@@ -144,6 +144,8 @@ applyコマンド自体はGit commit/pushを行わない。安全な適用後の
 
 ## 全科への展開
 
+複数会場の登録・巡回・表示は [multiple-venues.md](multiple-venues.md) の方針に従う。公式に確認できる複数会場は `venues[]` の独立要素として抽出し、既存 `venue` は保持する。
+
 空欄のイベント公式URLは、既存開催回の監視とは別に `conference-discovery-sources.js` の公式一覧を入口に探索し、管理レビューへ送る。探索条件、20件の整合性保留、HTTPログとテストは [event-url-discovery.md](event-url-discovery.md) を参照。探索結果からURLを自動反映しない。
 
 対象はregistryに安定ID・開催回・year・公式URL・許可ホスト・概要／演題ページを追加する。HTMLレイアウトが共通ならadapterコードを増やさない。JSON-LD、PDFなど追加の抽出器は `adapters` のインターフェース `{ candidates, issues, fingerprint }` を実装し、候補ごとにfield/value/confidence/method/url/evidenceを返す。methodのconfidence上限もpolicyへ登録する。

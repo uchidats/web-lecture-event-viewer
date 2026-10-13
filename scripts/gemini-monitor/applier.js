@@ -1,6 +1,7 @@
 const path = require('node:path');
 const { loadEvents, atomicWrite } = require('../auto-updater/storage');
 const { THRESHOLDS } = require('./constants');
+const {validVenues}=require('../auto-updater/venues');
 
 /**
  * Apply field changes to a single event object.
@@ -10,6 +11,8 @@ function applyFieldChangesToEvent(event, fieldChanges) {
 
   for (const change of fieldChanges) {
     const { field, after } = change;
+    if(field==='venues'&&!validVenues(after))throw new Error('Invalid venues');
+    if(field==='venue'&&(event.venues?.length||fieldChanges.some(c=>c.field==='venues')))continue; // Preserve the legacy value when adding structured venues.
     if (field.includes('.')) {
       const parts = field.split('.');
       let current = event;

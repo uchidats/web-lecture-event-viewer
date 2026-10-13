@@ -32,11 +32,18 @@
     'untrusted-domain': '候補URLが許可されたドメインではありません', 'untrusted-evidence-url': '情報源URLの確認が必要です',
     'deadline-time-would-be-lost': '締切の時刻情報が失われます', 'auto-update-disabled': 'この学会の自動更新は無効です' };
   const statuses = { open: '募集中', upcoming: '募集開始前', closed: '募集終了', unknown: '未確認' };
+  fieldLabels.venues = '開催会場（複数）';
+  Object.assign(reasonLabels, {
+    'multiple-venues-needs-review': '公式に記載された複数会場を確認してください',
+    'venue-count-unconfirmed': '会場数を公式情報から確定できません',
+    'invalid-venues': '複数会場の形式・出典を確認してください',
+    'structured-venues-preserved': '既存の複数会場情報を保持しています'
+  });
   function safeUrl(value) { try { const url = new URL(value); return url.protocol === 'https:' && !url.username && !url.password ? url.href : null; } catch { return null; } }
   function riskLevel(item) {
     if (item.audit) return item.priority === '高' ? 'high' : item.priority === '中' ? 'medium' : 'low';
     if (item.field === 'eventOfficialUrl') return 'high';
-    if (['title', 'date', 'endDate', 'venue', 'city', 'country'].includes(item.field) || item.reason === 'official-domain-changed') return 'high';
+    if (['title', 'date', 'endDate', 'venue', 'venues', 'city', 'country'].includes(item.field) || item.reason === 'official-domain-changed') return 'high';
     if (['officialUrl', 'societyUrl'].includes(item.field)) {
       try { if (!item.oldValue || new URL(item.oldValue).hostname !== new URL(item.value).hostname) return 'high'; } catch { return 'high'; }
     }
@@ -50,6 +57,7 @@
     return 'medium';
   }
   function formatValue(field, value) {
+    if(field==='venues'&&Array.isArray(value))return value.map(v=>v?.name||'未確認').join(' / ');
     if (value == null || value === '') return '未入力';
     if (field === 'eventMetadata') return Object.entries(value).filter(([k])=>['title','date','endDate','venue','subtitle','sponsor','eventOfficialUrl'].includes(k)).map(([k,v])=>`${fieldLabels[k] || k}：${v ?? '未確認'}`).join(' / ');
     if (field === 'registration' && Array.isArray(value.periods)) return value.periods.map(p => `${p?.label || '名称未確認'}：${p?.start ? p.start + ' ～ ' : ''}${p?.deadline || '締切未確認'}${p?.category ? ` [${p.category}]` : ''}${typeof p?.advanceEligible==='boolean' ? `（事前登録対象：${p.advanceEligible?'はい':'いいえ'}）` : ''}`).join(' / ');
@@ -64,7 +72,7 @@
       return { ...item, reviewId: item.id || signature, signature, riskLevel: riskLevel(item),
         blocked: item.reason === 'mass-change-limit', actionable: !!item.field && !!safeUrl(item.url) &&
           (!['eventOfficialUrl', 'societyUrl'].includes(item.field) || !!safeUrl(item.value)) &&
-          (item.field === 'eventMetadata' && !!item.audit && item.value && typeof item.value === 'object' && Object.keys(item.value).length > 0 || typeof item.value === 'string' && !!item.value || item.field === 'registration' && item.reason !== 'invalid-registration' && ['domestic', 'international'].includes(item.value?.type) &&
+          (item.field==='venues'&&item.reason!=='invalid-venues'&&Array.isArray(item.value)&&item.value.length>1&&item.value.every(v=>v&&typeof v.name==='string'&&!!v.name.trim()&&!!safeUrl(v.mapUrl)) || item.field === 'eventMetadata' && !!item.audit && item.value && typeof item.value === 'object' && Object.keys(item.value).length > 0 || typeof item.value === 'string' && !!item.value || item.field === 'registration' && item.reason !== 'invalid-registration' && ['domestic', 'international'].includes(item.value?.type) &&
             Array.isArray(item.value.periods) && item.value.periods.length > 0 && item.value.periods.every(p => p && typeof p.label === 'string' && !!p.label && (p.start || p.deadline))) };
     });
   }

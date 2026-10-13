@@ -269,7 +269,9 @@ async function runGeminiMonitor(options = {}) {
       suppressions: rollbackHistory.suppressions,
       sourceLearningMeta: rollbackHistory.sourceLearningMeta,
       todayStr,
-      sourceUrl: targetUrl
+      sourceUrl: targetUrl,
+      officialVenues: context.multipleVenueCandidates?.length === 1 ? context.multipleVenueCandidates[0] : null,
+      venueCountUnconfirmed: context.venueCountUnconfirmed || context.multipleVenueCandidates?.length > 1
     });
 
     // Update state cache

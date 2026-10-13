@@ -1,8 +1,9 @@
 const { compact, normalizeDate, normalizeVenue } = require('./extract');
 const { trustedUrl } = require('./fetch');
 const { validRegistration, registrationKey } = require('./registration');
+const {validVenues,venueKey}=require('./venues');
 const { eventSourceUrl, eventUrlReviewReason } = require('./event-urls');
-const fields = new Set(['title', 'date', 'endDate', 'venue', 'city', 'country', 'officialUrl', 'eventOfficialUrl', 'societyUrl', 'registration',
+const fields = new Set(['title', 'date', 'endDate', 'venue', 'venues', 'city', 'country', 'officialUrl', 'eventOfficialUrl', 'societyUrl', 'registration',
   'abstractSubmission.startDate', 'abstractSubmission.deadline', 'abstractSubmission.status', 'abstractSubmission.url']);
 const dateFields = new Set(['date', 'endDate', 'abstractSubmission.startDate', 'abstractSubmission.deadline']);
 const countryAliases = { JP: '日本', Japan: '日本', US: '米国', USA: '米国', 'United States': '米国', AT: 'オーストリア', Austria: 'オーストリア', SG: 'シンガポール', Singapore: 'シンガポール', 'シンガポール共和国': 'シンガポール' };
@@ -18,6 +19,7 @@ function oldValue(event, field) {
 }
 function canonical(field, value) {
   if (value == null) return '';
+  if(field==='venues')return venueKey(value);
   if (field === 'registration') return registrationKey(value);
   if (field === 'venue') return compact(normalizeVenue(value));
   if (field === 'city') return compact(value).replace(/[（(].*?[）)]/g, '');
@@ -64,6 +66,15 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
     const candidate = {...originalCandidate};
     if (!fields.has(candidate.field)) { reject(candidate, 'protected-or-unknown-field'); continue; }
     if (candidate.value === null || candidate.value === undefined || candidate.value === '') { reject(candidate, 'missing-value-never-deletes'); continue; }
+    if(candidate.field==='venues'){
+      if(!trustedUrl(candidate.url,source)||candidate.sourceRole!=='overview'||!['labeled-venue','event-location'].includes(candidate.venueEvidence)||!validVenues(candidate.value)){reject(candidate,'invalid-venues');continue;}
+      if(venueKey(event.venues)===venueKey(candidate.value))continue;
+      reject(candidate,'multiple-venues-needs-review');continue;
+    }
+    if(candidate.field==='venue'&&(event.venues?.length||candidates.some(c=>c.field==='venues'))){
+      if(canonical('venue',event.venue)!==canonical('venue',candidate.value))reject(candidate,'structured-venues-preserved');
+      continue;
+    }
     if (candidate.field === 'registration') {
       if (!trustedUrl(candidate.url, source)) { reject(candidate, 'untrusted-evidence-url'); continue; }
       if (candidate.value?.periods?.some(period=>period.sourceUrl&&!trustedUrl(period.sourceUrl,source))) { reject(candidate,'untrusted-evidence-url');continue; }
@@ -206,6 +217,7 @@ function setField(event, field, value) {
     if (url.protocol !== 'https:' || url.username || url.password) throw new Error('Invalid official URL');
   }
   if (field === 'registration' && !validRegistration(value)) throw new Error('Invalid registration');
+  if(field==='venues'&&!validVenues(value))throw new Error('Invalid venues');
   if (field === 'city' || field === 'country') {
     const loc = location(event); loc[field] = value;
     event.cityCountry = `${loc.city} / ${loc.country}`;
@@ -225,6 +237,7 @@ function applyChanges(events, changes) {
   for (const change of changes) {
     const event = result.find(e => e.id === change.eventId);
     if (!event?.isConference) throw new Error('Unknown conference ID');
+    if(change.field==='venues')throw new Error('Multiple venue change requires manual review');
     if (['eventOfficialUrl', 'societyUrl', 'officialUrl'].includes(change.field) && canonical(change.field, oldValue(event, change.field)) !== canonical(change.field, change.value)) {
       throw new Error('Official URL change requires manual review');
     }

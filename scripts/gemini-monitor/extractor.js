@@ -41,9 +41,25 @@ function extractMonitoringContext(html, currentEvent = {}) {
   const overviewPairs = [];
   let datesText = '';
   let venueText = '';
+  const multipleVenueCandidates=[];
+  let venueCountUnconfirmed = false;
   let abstractText = '';
   let registrationText = '';
   let nextMeetingNotice = '';
+
+  // Only structured locations belonging to this exact event/edition are candidates.
+  for (const match of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    try {
+      const parsed = JSON.parse(match[1]);
+      const nodes = Array.isArray(parsed) ? parsed : parsed['@graph'] || [parsed];
+      for (const node of nodes) {
+        if (node['@type'] !== 'Event' || !currentEvent.title || compact(node.name) !== compact(currentEvent.title) ||
+            String(node.startDate || '').slice(0, 4) !== String(currentEvent.date || '').slice(0, 4)) continue;
+        const venues = require('../auto-updater/venues').venuesFromLocations(node.location);
+        if (venues) multipleVenueCandidates.push(venues);
+      }
+    } catch (_) { /* Invalid or unrelated structured data cannot establish venues. */ }
+  }
 
   for (const [key, val] of rawPairs) {
     const k = compact(key);
@@ -58,6 +74,11 @@ function extractMonitoringContext(html, currentEvent = {}) {
     } else if (/^(会場|会場名|開催会場|開催地|開催都市|Venue|Location|City)$/i.test(k)) {
       overviewPairs.push({ label: k, value: v.slice(0, 200) });
       venueText += ` ${v}`;
+      if(/^(会場|会場名|開催会場|Venue|Location)$/i.test(k)){
+        const extracted=require('../auto-updater/venues').extractVenueSection(val,text);
+        if(extracted.venues)multipleVenueCandidates.push(extracted.venues);
+        if(extracted.ambiguous)venueCountUnconfirmed = true;
+      }
     } else if (/^(主催|主催学会|主催団体|会長|Organizer|President)$/i.test(k)) {
       overviewPairs.push({ label: k, value: v.slice(0, 200) });
     } else if (/^(テーマ|大会テーマ|Theme)$/i.test(k)) {
@@ -121,6 +142,8 @@ function extractMonitoringContext(html, currentEvent = {}) {
     overviewPairs,
     datesText: datesText.trim(),
     venueText: venueText.trim(),
+    multipleVenueCandidates,
+    venueCountUnconfirmed,
     abstractText: abstractText.trim(),
     registrationText: registrationText.trim(),
     nextMeetingNotice: nextMeetingNotice.trim(),

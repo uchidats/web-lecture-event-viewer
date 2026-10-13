@@ -44,7 +44,7 @@ async function main() {
       const result = extractOfficialHtml(await fixturePage(p, s), s);
       assert.ok(!result.issues.includes('conference-identity-missing'));
       if (p.role === 'overview') {
-        for (const field of ['title', 'date', 'endDate', 'venue', 'eventOfficialUrl']) assert.ok(result.candidates.some(c => c.field === field), `${s.id}:${field}`);
+        for (const field of ['title', 'date', 'endDate', 'venue', 'eventOfficialUrl']) assert.ok(result.candidates.some(c => c.field === field || field === 'venue' && c.field === 'venues'), `${s.id}:${field}`);
       } else if (p.role === 'abstract') assert.ok(result.candidates.some(c => c.field === 'abstractSubmission.url'));
       else if (p.role === 'registration') assert.ok(result.candidates.some(c => c.field === 'registration'));
       extracted.push(...result.candidates);

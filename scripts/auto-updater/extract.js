@@ -1,5 +1,6 @@
 const crypto = require('node:crypto');
 const { eventSourceUrl, isSocietyUrl } = require('./event-urls');
+const {extractVenueSection,venuesFromLocations}=require('./venues');
 
 function text(html) {
   return html.replace(/<!--[\s\S]*?-->/g, '').replace(/<(script|style|nav|footer)\b[^>]*>[\s\S]*?<\/\1>/gi, '')
@@ -114,7 +115,7 @@ function extractOfficialHtml(document, source) {
   const add = (field, value, confidence, method, evidence) => {
     if (value !== null && value !== undefined && value !== '') candidates.push({ field, value, confidence, method, url,
       evidence: text(evidence || String(value)).slice(0, 500),
-      ...(field === 'venue' ? { sourceRole: role, venueEvidence: method === 'labeled-html' ? 'labeled-venue' : method === 'json-ld' ? 'event-location' : null } : {}) });
+      ...(['venue','venues'].includes(field) ? { sourceRole: role, venueEvidence: method === 'labeled-html' ? 'labeled-venue' : method === 'json-ld' ? 'event-location' : null } : {}) });
   };
   if (!/<(?:html|body|main|table|dl)\b/i.test(html)) return { candidates, issues: ['invalid-html'] };
   const title = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1] || '';
@@ -179,8 +180,10 @@ function extractOfficialHtml(document, source) {
         }
       }
       if (/^会\s*場(?:\s*\/.*)?$/.test(label)) {
-        const venue = normalizeVenue(value);
-        add('venue', venue, 0.97, 'labeled-html', value);
+        const multiple=extractVenueSection(value,text);
+        if(multiple.venues)add('venues',multiple.venues,0.97,'labeled-html',value);
+        else if(multiple.ambiguous)issues.push('venue-count-unconfirmed');
+        else add('venue', normalizeVenue(value), 0.97, 'labeled-html', value);
         // Only the venue section is used; secretariat addresses are never a venue city.
         const cities = [...text(value).matchAll(/(?:東京都|北海道|京都府|大阪府|.{2,3}県)([^\s\d〒、]+?市)/g)].map(m => m[1]);
         for (const city of new Set(cities)) add('city', city, 0.96, 'venue-address', value);
@@ -189,7 +192,7 @@ function extractOfficialHtml(document, source) {
       if (/^(都市|開催都市|City)$/i.test(label)) add('city', text(value), 0.98, 'labeled-html', value);
       if (/^(国|開催国|Country)$/i.test(label)) add('country', text(value), 0.98, 'labeled-html', value);
     }
-    if (!candidates.some(c => c.field === 'venue')) issues.push('venue-unextractable');
+    if (!candidates.some(c => c.field === 'venue' || c.field === 'venues')) issues.push('venue-unextractable');
     if (!candidates.some(c => c.field === 'date')) issues.push('conference-dates-unextractable');
   } else if (role === 'abstract') {
     const periods = labeled.filter(([label]) => /(?:演題|登録|募集).*(?:募集期間|登録期間|受付期間)|^演題募集期間$/.test(label));
@@ -228,7 +231,13 @@ function extractOfficialHtml(document, source) {
           if (!date) issues.push('invalid-date');
           add(field, date?.slice(0, 10), 0.99, 'json-ld', raw);
         }
-        add('venue', event.location?.name, 0.99, 'json-ld', event.location?.name);
+        const multiple=venuesFromLocations(event.location);
+        if(multiple)add('venues',multiple,0.99,'json-ld',JSON.stringify(event.location));
+        else if(Array.isArray(event.location)) {
+          if(event.location.length===1&&event.location[0]?.name)add('venue',event.location[0].name,0.99,'json-ld',event.location[0].name);
+          else issues.push('venue-count-unconfirmed');
+        }
+        else add('venue', event.location?.name, 0.99, 'json-ld', event.location?.name);
         add('city', event.location?.address?.addressLocality, 0.99, 'json-ld');
         const country = event.location?.address?.addressCountry;
         add('country', typeof country === 'object' ? country.name : country, 0.99, 'json-ld');
