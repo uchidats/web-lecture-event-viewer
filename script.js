@@ -2156,6 +2156,12 @@ function shouldDisplayEventFormat(event) {
   return !(event.isConference && ['現地', 'onsite'].includes(String(event.format || '').trim().toLowerCase()));
 }
 
+function renderEventCardTitle(event) {
+  const title = event.title || '';
+  const suffix = event.isConference && title.match(/\s*[（(]\s*臨眼\s+\d{4}\s*[）)]$/);
+  return suffix ? escapeHtml(title.slice(0, suffix.index)) + `<span class="conference-title-ringan-suffix">${escapeHtml(suffix[0])}</span>` : escapeHtml(title);
+}
+
 function getConferenceChairDisplayLabel(event) {
   const original = event.conferenceChair || '';
   if (!event.isConference) return original;
@@ -2405,7 +2411,7 @@ function createEventCardHtml(event) {
       <div class="card-content-block">
         ${parentConferenceBadgeHtml}
         <div class="card-title-row">
-          <h3 class="card-title">${hasConferenceTitleLink ? `<a class="conference-title-link" href="${escapeHtml(event.eventOfficialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}${event.isConference && shouldDisplayEventFormat(event) ? ` <span class="format-badge ${formatClass}">${escapeHtml(event.format)}</span>` : ''}</h3>
+          <h3 class="card-title">${hasConferenceTitleLink ? `<a class="conference-title-link" href="${escapeHtml(event.eventOfficialUrl)}" target="_blank" rel="noopener noreferrer">${renderEventCardTitle(event)}</a>` : renderEventCardTitle(event)}${event.isConference && shouldDisplayEventFormat(event) ? ` <span class="format-badge ${formatClass}">${escapeHtml(event.format)}</span>` : ''}</h3>
         </div>
         <p class="card-subtitle">${escapeHtml(event.subtitle)}</p>
         ${event.isConference && event.conferenceRegion !== 'international' && event.eventType !== '海外学会' ? '' : `<p class="card-desc">${escapeHtml(getEventDescriptionDisplayText(event))}</p>`}

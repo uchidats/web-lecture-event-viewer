@@ -75,7 +75,7 @@ async function main() {
       if (event.isConference && event.eventOfficialUrl) {
         assert.ok(title.includes('href="' + escapeHtml(event.eventOfficialUrl) + '"'));
         assert.ok(title.includes('target="_blank" rel="noopener noreferrer"'));
-      } else assert.equal(title, escapeHtml(event.title));
+      } else assert.equal(title, renderEventCardTitle(event));
     }
     const template = sampleEvents.find(e => e.isConference);
     const fallback = {...template, eventOfficialUrl: undefined, societyUrl: 'https://example.com/society', officialUrl: 'https://example.com/legacy'};
