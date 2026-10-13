@@ -1,4 +1,5 @@
 const { compact, normalizeDate, normalizeVenue } = require('./extract');
+const { normalizeConferenceTitle } = require('./titles');
 const { trustedUrl } = require('./fetch');
 const { validRegistration, registrationKey } = require('./registration');
 const {validVenues,venueKey}=require('./venues');
@@ -64,6 +65,7 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
   const multipleRegistrations = new Set(registrations.filter(c => validRegistration(c.value, limits)).map(c => registrationKey(c.value))).size > 1;
   for (const originalCandidate of candidates) {
     const candidate = {...originalCandidate};
+    if (candidate.field === 'title') candidate.value = normalizeConferenceTitle(candidate.value);
     if (!fields.has(candidate.field)) { reject(candidate, 'protected-or-unknown-field'); continue; }
     if (candidate.value === null || candidate.value === undefined || candidate.value === '') { reject(candidate, 'missing-value-never-deletes'); continue; }
     if(candidate.field==='venues'){
@@ -211,6 +213,7 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
 }
 
 function setField(event, field, value) {
+  if (field === 'title') value = normalizeConferenceTitle(value);
   if (!fields.has(field)) throw new Error(`Protected field: ${field}`);
   if (['eventOfficialUrl', 'societyUrl'].includes(field)) {
     const url = new URL(value);

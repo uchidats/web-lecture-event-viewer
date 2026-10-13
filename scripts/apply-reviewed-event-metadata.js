@@ -2,6 +2,7 @@
 const fs=require('node:fs'),path=require('node:path');
 const {loadEvents,readJson,writeJson,atomicWrite,validateEvents}=require('./auto-updater/storage');
 const model=require('../review-model');
+const { normalizeConferenceTitle } = require('./auto-updater/titles');
 const ALLOWED=new Set(['title','date','endDate','venue','cityCountry','sponsor','subtitle','registration','abstractSubmission.deadline','eventOfficialUrl']);
 const REGION_RULES=[[/北海道/,'北海道'],[/青森|岩手|宮城|秋田|山形|福島/,'東北'],[/東京|神奈川|千葉|埼玉|茨城|栃木|群馬/,'関東'],
   [/新潟|富山|石川|福井|山梨|長野|岐阜|静岡|愛知/,'中部'],[/京都|大阪|兵庫|奈良|滋賀|和歌山/,'関西'],[/鳥取|島根|岡山|広島|山口/,'中国'],
@@ -25,7 +26,7 @@ function applyReviewedMetadata({root,approvals,apply=false}){
       if(field==='eventOfficialUrl'&&!model.safeUrl(value))throw Error('Invalid URL');
       if(field==='registration')event.registration=value;
       else{if(typeof value!=='string'||!value)throw Error('Invalid value');
-        if(field==='abstractSubmission.deadline')event.abstractSubmission={...(event.abstractSubmission||{}),deadline:value};else event[field]=value;}
+        if(field==='abstractSubmission.deadline')event.abstractSubmission={...(event.abstractSubmission||{}),deadline:value};else event[field]=field==='title'?normalizeConferenceTitle(value):value;}
     }
     if(item.value.date||item.value.endDate){
       const format=d=>{const [y,m,day]=d.split('-');return `${y}年${Number(m)}月${Number(day)}日(${new Intl.DateTimeFormat('ja-JP',{weekday:'short',timeZone:'Asia/Tokyo'}).format(new Date(d+'T00:00:00Z'))})`;};

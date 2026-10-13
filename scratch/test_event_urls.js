@@ -41,7 +41,7 @@ async function main() {
     } : {};
     const expected=(field,old)=>manual[field]??correction?.changes.find(c=>c.field===field)?.after??old;
     assert.equal(event.officialUrl || null, expected('officialUrl',record.currentOfficialUrl)||null, `${event.id}: legacy URL`);
-    assert.equal(event.title, expected('title',record.title));
+    assert.equal(event.title, require('../scripts/auto-updater/titles').normalizeConferenceTitle(expected('title',record.title)));
     assert.equal(Number(event.date.slice(0, 4)), Number(String(expected('date',record.year)).slice(0,4)));
     if (record.proposedEventOfficialUrl) {
       assert.equal(event.eventOfficialUrl, record.proposedEventOfficialUrl);

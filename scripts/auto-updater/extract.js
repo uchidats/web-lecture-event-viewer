@@ -1,4 +1,5 @@
 const crypto = require('node:crypto');
+const { normalizeConferenceTitle } = require('./titles');
 const { eventSourceUrl, isSocietyUrl } = require('./event-urls');
 const {extractVenueSection,venuesFromLocations}=require('./venues');
 
@@ -113,6 +114,7 @@ function extractOfficialHtml(document, source) {
   const { html, url, role } = document;
   const candidates = [], issues = [];
   const add = (field, value, confidence, method, evidence) => {
+    if (field === 'title') value = normalizeConferenceTitle(value);
     if (value !== null && value !== undefined && value !== '') candidates.push({ field, value, confidence, method, url,
       evidence: text(evidence || String(value)).slice(0, 500),
       ...(['venue','venues'].includes(field) ? { sourceRole: role, venueEvidence: method === 'labeled-html' ? 'labeled-venue' : method === 'json-ld' ? 'event-location' : null } : {}) });

@@ -1,4 +1,5 @@
 const path = require('node:path');
+const { normalizeConferenceTitle } = require('../auto-updater/titles');
 const { loadEvents, atomicWrite } = require('../auto-updater/storage');
 const { THRESHOLDS } = require('./constants');
 const {validVenues}=require('../auto-updater/venues');
@@ -10,7 +11,8 @@ function applyFieldChangesToEvent(event, fieldChanges) {
   const appliedFields = [];
 
   for (const change of fieldChanges) {
-    const { field, after } = change;
+    const { field } = change;
+    const after = field === 'title' ? normalizeConferenceTitle(change.after) : change.after;
     if(field==='venues'&&!validVenues(after))throw new Error('Invalid venues');
     if(field==='venue'&&(event.venues?.length||fieldChanges.some(c=>c.field==='venues')))continue; // Preserve the legacy value when adding structured venues.
     if (field.includes('.')) {

@@ -1,5 +1,6 @@
 const { THRESHOLDS, SEVERITY, RECOMMENDED_ACTIONS, SOURCE_QUALITY, LEARNING_FLAGS } = require('./constants');
 const { diffDays } = require('./scheduler');
+const { normalizeConferenceTitle } = require('../auto-updater/titles');
 const {validVenues,venueKey}=require('../auto-updater/venues');
 
 /**
@@ -15,6 +16,7 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
   // STRING schemas may return the literal "null" for unproven metadata.
   // Missing evidence must never become a deletion proposal.
   geminiResult = { ...geminiResult };
+  geminiResult.official_title = normalizeConferenceTitle(geminiResult.official_title);
   for (const field of ['official_url', 'start_date', 'end_date', 'venue', 'city', 'abstract_deadline', 'registration_deadline', 'official_title']) {
     const value = geminiResult[field];
     if (value == null || (typeof value === 'string' && /^(?:null|undefined|unknown|n\/?a|none|not available|未定|不明)?$/i.test(value.trim()))) {

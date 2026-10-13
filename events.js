@@ -3033,7 +3033,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-ringan-2027",
-    "title": "第81回 日本臨床眼科学会 (臨眼 2027)",
+    "title": "第81回 日本臨床眼科学会",
     "subtitle": "臨床眼科学の次代を拓く英知の集結",
     "date": "2027-10-21",
     "endDate": "2027-10-24",
@@ -4493,7 +4493,7 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-ringan-2028",
-    "title": "第82回 日本臨床眼科学会 (臨眼 2028)",
+    "title": "第82回 日本臨床眼科学会",
     "subtitle": "臨床眼科の叡智とイノベーション",
     "date": "2028-10-06",
     "endDate": "2028-10-09",

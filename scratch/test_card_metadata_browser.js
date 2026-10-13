@@ -126,6 +126,20 @@ async function main() {
           assert.equal(typography.after.title.padding,typography.before.title.padding);assert.equal(typography.after.title.fontWeight,typography.before.title.fontWeight);
           assert.deepEqual(typography.after.heading,typography.before.heading);assert.ok(typography.after.title.fontSize<typography.after.heading.fontSize);
         }
+        for(const id of ['conf-jp-ringan-2027','conf-jp-ringan-2028']) {
+          let selector='[data-id="'+id+'"]';
+          if(mode!=='list') {
+            await evaluate('OphthalCalendarView.getCalendar().gotoDate(state.events.find(e=>e.id==='+JSON.stringify(id)+').date)');
+            await evaluate('new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))');
+            const eventTitle=await evaluate('document.querySelector('+JSON.stringify('.fc-event[data-event-id="'+id+'"]')+').textContent');
+            assert.ok(eventTitle.includes('日本臨床眼科学会'));assert.ok(!eventTitle.includes('臨眼'));
+            await evaluate('document.querySelector('+JSON.stringify('.fc-event[data-event-id="'+id+'"]')+').click()');
+            selector='#calendar-event-detail '+selector;
+          }
+          const title=await evaluate('(() => {const card=document.querySelector('+JSON.stringify(selector)+'),event=state.events.find(e=>e.id==='+JSON.stringify(id)+');return {text:card.querySelector(".card-title").textContent.trim(),expected:event.title,url:card.querySelector(".conference-title-link")?.getAttribute("href")||null,expectedUrl:event.eventOfficialUrl||null,fits:card.scrollWidth<=card.clientWidth+1};})()');
+          assert.equal(title.text,title.expected);assert.equal(title.url,title.expectedUrl);assert.ok(title.fits);
+          if(mode!=='list')await evaluate('document.getElementById("calendar-event-detail").closest("dialog").close()');
+        }
         for(const id of [aao,webinar,'oph-001','conf-jp-pediatric-2027','conf-jp-myopia-2028','conf-jp-cornea-2026','conf-jp-jrvs-2026','conf-jp-eyelid-2027','conf-int-ascrs-2027']) {
           if(mode==='calendar'&&id==='conf-jp-cornea-2026')continue; // Pre-October ended events are outside monthly calendar history.
           let selector='[data-id="'+id+'"]';

@@ -138,7 +138,10 @@ async function main() {
       title: '第38回 日本眼瞼義眼床手術学会', date: '2027-02-20', endDate: '2027-02-20',
       venue: '京都府立医科大学附属図書館ホール', eventOfficialUrl: 'https://convention.jtbcom.co.jp/gigan38/index.html'
     } : record.id === 'conf-jp-lowvision-2027' ? { eventOfficialUrl: 'https://www.ganki.jp/lowvision2027/information.html' } : record.id === 'oph-001' ? {title:'第80回 日本臨床眼科学会'} : record.id === 'conf-int-ascrs-2027' ? {eventOfficialUrl:'https://annualmeeting.ascrs.org/'} : {};
-    for (const field of ['title', 'date', 'endDate', 'venue']) assert.equal(current[field], manual[field]??changes.find(c=>c.field===field)?.after??record[field], `${record.id}: audited ${field}`);
+    for (const field of ['title', 'date', 'endDate', 'venue']) {
+      const expected=manual[field]??changes.find(c=>c.field===field)?.after??record[field];
+      assert.equal(current[field],field==='title'?require('../scripts/auto-updater/titles').normalizeConferenceTitle(expected):expected,`${record.id}: audited ${field}`);
+    }
     if (record.status === 'needs-review') assert.equal(current.eventOfficialUrl, manual.eventOfficialUrl??changes.find(c=>c.field==='eventOfficialUrl')?.after, `${record.id}: reviewed URL`);
   }
   const callsAlreadySet = [];

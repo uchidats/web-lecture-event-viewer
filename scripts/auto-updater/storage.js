@@ -94,7 +94,7 @@ const checks = [
   ['scratch/test_gemini_year_evidence.js'],
   ['scratch/test_calendar_view.js'],
   ['scratch/test_multiple_specialties.js'],
-  ['scratch/test_pediatric_2026_identity.js'],
+  ['scratch/test_pediatric_2026_identity.js'], ['scratch/test_ringan_titles.js'],
   ['scratch/test_monitor_zero_update_delivery.js'],
   ['scratch/test_gemini_notification_policy.js'], ['scratch/test_analytics.js']
 ];

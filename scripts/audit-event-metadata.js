@@ -1,6 +1,7 @@
 // Read-only event audit. Fetching/report generation never writes events.js.
 const fs = require('node:fs');
 const path = require('node:path');
+const { normalizeConferenceTitle } = require('./auto-updater/titles');
 const { loadEvents, writeJson, readJson, mergeReview, hash } = require('./auto-updater/storage');
 const { fetchOfficialPage } = require('./auto-updater/fetch');
 const { text, compact, blocks, normalizeVenue, dateRanges, registrationPeriods } = require('./auto-updater/extract');
@@ -21,6 +22,7 @@ function clean(html) { return html.replace(/<(script|style|nav|footer)\b[^>]*>[\
 function extractFacts(html, event, url, kind = 'event', role = 'overview') {
   const body = clean(html), pairs = blocks(body), facts = {};
   const add = (field, value, evidence, confidence = 0.97) => {
+    if (field === 'title') value = normalizeConferenceTitle(value);
     if (value !== null && value !== undefined && value !== '' && !facts[field]) facts[field] = { value, evidence: text(evidence).slice(0, 700), url, confidence };
   };
   const headings = [...body.matchAll(/<h[1-3]\b[^>]*>([\s\S]*?)<\/h[1-3]>/gi)].map(m => text(m[1]));
