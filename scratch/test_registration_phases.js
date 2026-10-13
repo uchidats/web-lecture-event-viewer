@@ -17,12 +17,12 @@ vm.runInContext(`
  assert.equal(getRegistrationState(event,'2027-06-30T17:01:00+09:00').next,null);
  assert.equal(getRegistrationState(event,'2027-06-30T08:01:00Z').next,null,'Offset-independent expiry');
  assert.ok(renderRegistrationHtml(event,'2027-07-01').includes('事前登録終了'));
- assert.ok(renderRegistrationHtml(event,'2027-07-01').includes('当日登録'));
+ assert.ok(renderRegistrationHtml(event,'2027-07-01').includes('事前参加登録'));assert.equal(getRegistrationState(event,'2027-07-01').display.label,'当日登録');
  assert.equal((renderRegistrationHtml(event,'2027-03-01').match(/conf-registration-period/g)||[]).length,1);
  assert.ok(renderRegistrationHtml(event,'2027-07-13').includes('締切済'));
  const unknown={registration:{type:'domestic',periods:[{label:'第1次登録',category:null,deadline:'2027-05-01'}]}};
  assert.equal(getRegistrationState(unknown,'2027-04-01').next,null,'Unknown eligibility is not inferred');
- assert.ok(renderRegistrationHtml(unknown,'2027-04-01').includes('第1次登録'));
+ assert.ok(renderRegistrationHtml(unknown,'2027-04-01').includes('事前参加登録'));assert.equal(unknown.registration.periods[0].label,'第1次登録');
  unknown.registration.periods[0].advanceEligible=true;assert.equal(getRegistrationState(unknown,'2027-04-01').next.label,'第1次登録');
  unknown.registration.periods[0].advanceEligible=false;assert.equal(getRegistrationSortDeadline(unknown,'2027-04-01'),null);
  assert.equal(getRegistrationState({registration:{type:'domestic',periods:[{label:'Regular',category:'regular',advanceEligible:false,deadline:'2027-05-01'}]}},'2027-04-01').next,null);

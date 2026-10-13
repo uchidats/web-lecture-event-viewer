@@ -1156,30 +1156,33 @@ function getRegistrationSortDeadline(event, today = new Date()) {
 }
 
 function renderRegistrationHtml(event, today = new Date()) {
-  const international = (event.registration?.type || event.conferenceRegion) === 'international';
-  const defaultLabel = international ? 'Early bird' : '事前参加登録';
+  const defaultLabel = '事前参加登録';
   const legacy = event.earlyRegistrationDeadline || event.earlyBirdDeadline;
   const registrationState = getRegistrationState(event, today);
   const periods = registrationState.display ? [registrationState.display] : null;
   const rows = periods ? periods.map(period => {
-    const label = period.label || defaultLabel;
+    const label = defaultLabel;
     const deadline = parseAbstractDate(period.deadline);
     const start = parseAbstractDate(period.start);
     const closed = period.deadlineTimestamp !== null && period.deadlineTimestamp < registrationState.now;
-    let value = '要確認';
+    let value = '未定', prefix = '';
     if (closed) {
-      value = `${formatAbstractDeadline(period.deadline)} 締切済`;
+      value = `${formatAbstractDeadline(period.deadline, {showTime:false})} 締切済`;
     } else if (start && period.startTimestamp > registrationState.now) {
       value = `${formatAbstractDeadline(period.start)}開始${deadline ? `／${formatAbstractDeadline(period.deadline)}締切` : ''}`;
     } else if (deadline) {
-      value = `${formatAbstractDeadline(period.deadline)}まで`;
+      const days = getDaysUntilAbstractDeadline({isConference:true,timeZone:event.registration?.timeZone||'Asia/Tokyo',abstractSubmission:{deadline:period.deadline}},new Date(registrationState.now));
+      if (days !== null && days >= 0 && days <= 30 && registrationState.next === period) {
+        prefix = days === 0 ? '本日締切：' : `締切${days}日前：`;
+        value = formatAbstractDeadline(period.deadline);
+      } else value = `${formatAbstractDeadline(period.deadline)}まで`;
     } else if (start) {
       value = `${formatAbstractDeadline(period.start, { showTime: false })}開始`;
     }
     if (!registrationState.next && registrationState.expired && !closed) value += '（事前登録終了）';
-    return { label, value, closed };
-  }) : [{ label: defaultLabel, value: legacy || '要確認', closed: /締切済|受付終了/.test(legacy || '') }];
-  return rows.map(({ label, value, closed }) => `<div class="conf-item conf-registration-period"><span class="conf-label">${escapeHtml(label)}：</span><span class="conf-val deadline-highlight${closed ? ' closed' : ''}">${escapeHtml(value)}</span></div>`).join('');
+    return { label, value, closed, prefix };
+  }) : [{ label: defaultLabel, value: legacy && !/^(要確認|未確認)$/.test(legacy) ? legacy : '未定', closed: /締切済|受付終了/.test(legacy || '') }];
+  return rows.map(({ label, value, closed, prefix }) => `<div class="conf-item conf-registration-period"><span class="conf-label">${escapeHtml(label)}：</span><span class="conf-val registration-deadline${closed ? ' closed' : ''}">${prefix ? `<span class="registration-deadline-prefix">${escapeHtml(prefix)}</span>` : ''}${escapeHtml(value)}</span></div>`).join('');
 }
 
 function getAbstractSubmissionState(event, baseDate = new Date()) {
