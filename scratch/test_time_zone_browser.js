@@ -42,7 +42,7 @@ async function main() {
       return result.result.value;
     };
     await call('Page.enable');
-    await call('Page.navigate', { url: pathToFileURL(path.join(root, 'index.html')).href });
+    await call('Page.navigate', { url: pathToFileURL(path.join(root, 'index.html')).href + '?view=list' });
     for (let i = 0; i < 100; i++) {
       if (await evaluate('document.readyState === "complete" && typeof createEventCardHtml === "function"')) break;
       await delay(100);
@@ -51,9 +51,10 @@ async function main() {
 
 
 
-    await evaluate(`getTodayString = () => '2026-10-05'; const template = sampleEvents.find(e => e.id === 'oph-004'); const multi = {...template, id:'dst-test', date:'2026-03-07', endDate:'2026-03-09', timeZone:'America/Chicago'}; elements.eventList.innerHTML = [template, sampleEvents.find(e => e.id === 'oph-010'), multi, sampleEvents.find(e => e.id === 'conf-int-wgc-2027'), sampleEvents.find(e => e.id === 'oph-001'), sampleEvents.find(e => e.id === 'conf-int-fujiretina-2027')].map(createEventCardHtml).join('');`);
+    await evaluate(`getTodayString = () => '2026-10-05'; const template = {...sampleEvents.find(e => e.id === 'oph-004'),showConferenceTime:true}; const multi = {...template, id:'dst-test', date:'2026-03-07', endDate:'2026-03-09', timeZone:'America/Chicago'}; elements.eventList.innerHTML = [template, sampleEvents.find(e => e.id === 'oph-010'), multi, sampleEvents.find(e => e.id === 'conf-int-wgc-2027'), sampleEvents.find(e => e.id === 'oph-001'), sampleEvents.find(e => e.id === 'conf-int-fujiretina-2027')].map(createEventCardHtml).join('');`);
     for (const width of [320, 360, 480, 1280]) {
       await call('Emulation.setDeviceMetricsOverride', {width, height:900, deviceScaleFactor:1, mobile:width<500});
+      await evaluate('new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))');
       const layout = await evaluate(`(() => {
         const zones = [...document.querySelectorAll('.event-time-zones')];
         return {count:zones.length, noOverflow: zones.every(e=>e.scrollWidth<=e.clientWidth+1), pageFits:document.documentElement.scrollWidth<=innerWidth+1,

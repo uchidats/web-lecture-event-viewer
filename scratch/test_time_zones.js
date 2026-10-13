@@ -64,8 +64,8 @@ vm.runInContext(`
   const before = JSON.stringify(sampleEvents);
   for (const e of sampleEvents) {
     const html = createEventCardHtml(e);
-    if (e.id === 'oph-004') assert.ok(html.includes('日本時間'));
-    else assert.ok(!html.includes('class="japan-time"'), e.id);
+    assert.ok(!html.includes('class="japan-time"'), e.id);
+    if (e.id === 'oph-004') assert.ok(createEventCardHtml({...e,showConferenceTime:true}).includes('日本時間'), 'Conference time conversion remains available by explicit opt-in');
   }
   assert.equal(JSON.stringify(sampleEvents), before);
 `, context);

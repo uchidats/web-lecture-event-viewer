@@ -2113,6 +2113,8 @@ function formatCalendarConflictTime(conflict, event = {}) {
 
 function shouldDisplayEventTime(event) {
   if (!event || !event.time) return false;
+  // Conference overview cards omit daily hours unless explicitly opted in.
+  if (event.isConference && event.showConferenceTime !== true) return false;
   const time = String(event.time).trim();
   if (!time) return false;
   // 開始時刻または具体的な時刻情報があるイベント（例: "09:00 - 17:00", "19:00 - 20:30", "08:00 - 17:30 (現地時間)", "09:00 - 18:00 (全日程)" など）

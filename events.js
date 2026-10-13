@@ -12,6 +12,7 @@
  *  - title, subtitle: 学会・講演会名
  *  - date, endDate: 開催期間（YYYY-MM-DD）
  *  - time: 開催時間帯 / セッション時間
+ *  - showConferenceTime: 任意。学会カードで時間表示が必要な場合のみ true（時間データは保持）
  *  - region: 国内地域区分（北海道/東北/関東/中部/関西/中国/四国/九州・沖縄、または "海外"）
  *  - venueId: 任意。venues.js の安定ID（未指定の場合は venue を使用）
  *  - timeZone: 任意。IANAタイムゾーン名（会場マスター未登録の場合にも使用可能）

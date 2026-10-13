@@ -27,6 +27,14 @@ vm.runInContext(`
   assert.equal(sampleEvents.filter(e => getEventSpecialties(e).includes('眼炎症感染')).length, 3);
   assert.equal(sampleEvents.filter(e => getEventSpecialties(e).includes('その他')).length, 14);
   state.events = sampleEvents;
+  const timedConference={...sampleEvents.find(e=>e.isConference),time:'09:00 - 18:00（全日程）'};
+  assert.equal(shouldDisplayEventTime(timedConference),false);
+  assert.ok(!createEventCardHtml(timedConference).includes('class="time-text"'));
+  assert.equal(shouldDisplayEventTime({...timedConference,showConferenceTime:true}),true);
+  assert.ok(createEventCardHtml({...timedConference,showConferenceTime:true}).includes('class="time-text"'));
+  assert.equal(shouldDisplayEventTime({...timedConference,showConferenceTime:true,time:'全日程'}),false);
+  assert.equal(shouldDisplayEventTime({...timedConference,isConference:false}),true);
+  assert.equal(timedConference.time,'09:00 - 18:00（全日程）');
   const ringan = sampleEvents.find(e=>e.id==='oph-001');
   assert.equal(ringan.title,'第80回 日本臨床眼科学会');
   assert.ok(createEventCardHtml(ringan).includes('>第80回 日本臨床眼科学会</a>'));
