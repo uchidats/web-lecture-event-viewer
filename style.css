@@ -1589,9 +1589,9 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
   font-size: 0.78rem;
   white-space: nowrap;
   color: #334155;
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
 }
 
 @media (max-width: 480px) {
@@ -1622,23 +1622,14 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
   width: 16px;
   height: 16px;
   box-sizing: border-box;
-  border: 2px solid #64748b;
+  margin: 0;
+  accent-color: #1d4ed8;
+  appearance: auto;
   background: transparent;
 }
 
-.conf-planned-choice-group .choice-dot::after {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: currentColor;
-  transform: scale(0);
-  transition: transform 0.15s ease;
-}
-
 .conf-planned-choice-group .conf-choice-btn:hover {
-  background: #f8fafc;
-  border-color: #64748b;
+  color: #1d4ed8;
 }
 
 .conf-planned-choice-group .conf-choice-btn:focus-visible {
@@ -1648,18 +1639,13 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
 
 .conf-planned-choice-group .conf-choice-btn.active {
   color: #1d4ed8;
-  background: #eff6ff;
-  border-color: #2563eb;
+  background: transparent;
   box-shadow: none;
 }
 
 .conf-planned-choice-group .conf-choice-btn.active .choice-dot {
   border-color: currentColor;
   background: transparent;
-}
-
-.conf-planned-choice-group .conf-choice-btn.active .choice-dot::after {
-  transform: scale(1);
 }
 
 /* 「参加した」アクティブ時 */

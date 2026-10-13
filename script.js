@@ -2325,36 +2325,7 @@ function createEventCardHtml(event) {
 
           ${isAttended ? '<span class="conf-attended-active-tag">✓ 参加履歴に記録済み</span>' : ''}
         </div>
-        ` : `
-        <!-- 会期終了前: 参加予定（あり・なし 排他2択）切り替えバー -->
-        <div class="conf-attendance-bar conf-planned-attendance-bar ${isConferenceAttending ? 'attending' : ''}">
-          <div class="conf-choice-group conf-planned-choice-group" role="group" aria-label="参加予定の選択">
-            <span class="conf-attendance-main-text">参加予定：</span>
-            <button type="button" 
-              class="conf-choice-btn choice-yes ${isConferenceAttending ? 'active' : ''}" 
-              data-action="attend-choice" 
-              data-choice="yes" 
-              data-conference-id="${escapeHtml(event.id)}" 
-              aria-pressed="${isConferenceAttending ? 'true' : 'false'}"
-              title="${isConferenceAttending ? '参加予定を解除' : '参加予定にする（関連セミナーを表示）'}">
-              <span class="choice-dot"></span>
-              <span class="choice-text">あり<span class="choice-seminar-hint">（関連セミナー表示）</span></span>
-            </button>
-
-            <button type="button" 
-              class="conf-choice-btn choice-no ${isConferenceHidden ? 'active' : ''}" 
-              data-action="attend-choice" 
-              data-choice="no" 
-              data-conference-id="${escapeHtml(event.id)}" 
-              aria-pressed="${isConferenceHidden ? 'true' : 'false'}"
-              title="参加しない（一覧から非表示にする）">
-              <span class="choice-dot"></span>
-              <span class="choice-text">なし（非表示）</span>
-            </button>
-          </div>
-
-        </div>
-        `}
+        ` : ''}
 
         <div class="conf-item conf-item-full">
           <span class="conf-label">会期:</span>
@@ -2385,6 +2356,20 @@ function createEventCardHtml(event) {
           </div>
           <div class="conf-registration-list">${renderRegistrationHtml(event)}</div>
         </div>
+        ${!isConferenceEndedEvent ? `
+        <div class="conf-attendance-bar conf-planned-attendance-bar ${isConferenceAttending ? 'attending' : ''}">
+          <div class="conf-choice-group conf-planned-choice-group" role="radiogroup" aria-label="参加予定の選択">
+            <span class="conf-attendance-main-text">参加予定：</span>
+            <label class="conf-choice-btn choice-yes ${isConferenceAttending ? 'active' : ''}" title="参加予定にする（関連セミナーを表示）">
+              <input type="radio" class="choice-dot" name="attendance-${escapeHtml(event.id)}" value="yes" data-action="attend-choice" data-choice="yes" data-conference-id="${escapeHtml(event.id)}" ${isConferenceAttending ? 'checked' : ''}>
+              <span class="choice-text">あり</span>
+            </label>
+            <label class="conf-choice-btn choice-no ${isConferenceHidden ? 'active' : ''}" title="参加しない（一覧から非表示にする）">
+              <input type="radio" class="choice-dot" name="attendance-${escapeHtml(event.id)}" value="no" data-action="attend-choice" data-choice="no" data-conference-id="${escapeHtml(event.id)}" ${isConferenceHidden ? 'checked' : ''}>
+              <span class="choice-text">なし（非表示）</span>
+            </label>
+          </div>
+        </div>` : ''}
       </div>
     `;
   }
@@ -2559,7 +2544,7 @@ function attachCardActionListeners(container = elements.eventList) {
       calBtn.addEventListener("click", () => addToCalendar(event));
     }
 
-    // 学会カードの「参加予定（あり・なし）」排他2択ボタン
+    // 学会カードの「参加予定（あり・なし）」排他ラジオ選択
     const choiceButtons = card.querySelectorAll('[data-action="attend-choice"]');
     choiceButtons.forEach(btn => {
       btn.addEventListener("click", () => {
