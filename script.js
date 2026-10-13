@@ -1217,19 +1217,18 @@ function renderAbstractSubmissionHtml(event, baseDate = new Date()) {
     return `<span class="deadline-highlight">${escapeHtml(legacy)}</span>`;
   }
   const info = getAbstractSubmissionState(event, baseDate);
-  const labels = { open: "演題募集中", upcoming: "演題募集予定", closed: "締切済" };
+  const labels = { open: "受付中", upcoming: "演題募集予定", closed: "締切済" };
   const isClosed = info.status === "closed";
   const displayStatus = isClosed ? "closed" : info.status;
   const deadlineLabel = formatAbstractDeadline(getCurrentAbstractDeadline(sub), {showTime: !isClosed});
   const extensionLabel = sub.extended === true ? '（延長）' : '';
   const parts = [];
   if (isClosed) return `<span class="deadline-highlight closed">${deadlineLabel ? escapeHtml(deadlineLabel) + ' 締切済' + extensionLabel : '締切済'}</span>`;
-  if (info.isOpen && sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-status-tag open abstract-open-link">演題募集中 ↗</a>`);
+  if (info.isOpen && sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-status-tag open abstract-open-link">受付中 ↗</a>`);
   else if (labels[displayStatus]) parts.push(`<span class="abstract-status-tag ${displayStatus}">${labels[displayStatus]}</span>`);
   if (deadlineLabel) {
     const urgent = info.isOpen && info.days !== null && info.days <= 30;
-    const prefix = urgent ? info.days === 0 ? '本日締切：' : `締切${info.days}日前：` : '締切：';
-    parts.push(`<span class="abstract-deadline"><span class="abstract-deadline-prefix${urgent ? ' urgent' : ''}">${prefix}</span>${escapeHtml(deadlineLabel)}${extensionLabel}</span>`);
+    parts.push(`<span class="abstract-deadline${urgent ? ' urgent' : ''}">${escapeHtml(deadlineLabel)} 締切${extensionLabel}</span>`);
   }
   if (!isClosed && info.status === "upcoming" && sub.startDate) parts.push(`<span class="abstract-start-date">募集開始予定 ${escapeHtml(sub.startDate)}</span>`);
   if (!info.isOpen && sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link">演題募集詳細 ↗</a>`);

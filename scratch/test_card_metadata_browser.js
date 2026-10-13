@@ -159,7 +159,7 @@ async function main() {
       for(const row of abstractRows) {
         assert.ok(row.fits,'Unified abstract row fits at '+width+'px');assert.ok(!row.text.includes('注意・'));assert.ok(!row.text.includes('演題登録'));
         if(row.closed){assert.equal(row.links,0);assert.equal(row.tag,0);assert.ok(!row.text.includes('11:00'));assert.ok(row.text.includes(row.deadline?'2026年10月14日 締切済':'締切済'));assert.ok(!row.text.includes('演題募集終了'));assert.ok(!row.text.includes('受付終了'));}
-        else {assert.equal(row.links,1);assert.equal(row.tag,1);assert.ok(row.text.includes('演題募集中 ↗'));assert.equal(row.href,'https://example.com/abstract');assert.equal(row.height,row.badgeHeight);assert.equal(row.color,'rgb(4, 120, 87)');assert.equal(row.bg,'rgb(236, 253, 245)');assert.equal(row.prefix,row.days===0?'本日締切：':row.days<=30?'締切'+row.days+'日前：':'締切：');assert.equal(row.prefixColor,row.days<=30?'rgb(185, 28, 28)':'rgb(15, 23, 42)');assert.equal(row.deadlineColor,'rgb(15, 23, 42)');}
+        else {assert.equal(row.links,1);assert.equal(row.tag,1);assert.ok(row.text.includes('受付中 ↗'));assert.equal(row.href,'https://example.com/abstract');assert.equal(row.height,row.badgeHeight);assert.equal(row.color,'rgb(4, 120, 87)');assert.equal(row.bg,'rgb(236, 253, 245)');assert.equal(row.prefix??null,null);assert.ok(!row.text.includes('日前'));assert.ok(!row.text.includes('本日締切'));assert.ok(row.text.endsWith(' 締切'));assert.equal(row.deadlineColor,row.days<=30?'rgb(185, 28, 28)':'rgb(15, 23, 42)');}
       }
       for(const mode of ['list','calendar','compact']) {
         await evaluate('document.getElementById("view-'+mode+'").click()');
