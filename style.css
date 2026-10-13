@@ -3142,12 +3142,22 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
   .conf-city-label .city-label-full {display:none;}
   .conf-city-label .city-label-mobile {display:inline;}
   .card-actions-row {
-    display:grid;
-    grid-template-columns:repeat(3, minmax(0, 1fr));
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
     gap:6px;
   }
-  .card-actions-row .schedule-badge { grid-column: 1 / -1; justify-self: start; }
+  .card-actions-row .schedule-badge {
+    flex:0 0 auto;
+    min-height:36px;
+    box-sizing:border-box;
+    padding:6px 8px;
+    font-size:.72rem;
+    white-space:nowrap;
+  }
   .card-actions-row .btn {
+    flex:0 0 auto;
+    width:auto;
     min-width:0;
     min-height:36px;
     padding:7px 4px;
@@ -3157,6 +3167,7 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
     white-space:nowrap;
   }
   .card-actions-row .btn svg {flex-shrink:0;}
+  .card-actions-row .btn-calendar {min-width:60px;}
   .card-actions-row .card-action-full {display:none;}
   .card-actions-row .card-action-mobile {display:inline;}
 }
