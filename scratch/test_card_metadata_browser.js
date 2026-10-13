@@ -120,7 +120,7 @@ async function main() {
           assert.equal(typography.after.title.padding,typography.before.title.padding);assert.equal(typography.after.title.fontWeight,typography.before.title.fontWeight);
           assert.deepEqual(typography.after.heading,typography.before.heading);assert.ok(typography.after.title.fontSize<typography.after.heading.fontSize);
         }
-        for(const id of [aao,webinar,'conf-jp-pediatric-2027','conf-jp-myopia-2028','conf-jp-cornea-2026','conf-jp-jrvs-2026','conf-jp-eyelid-2027']) {
+        for(const id of [aao,webinar,'conf-jp-pediatric-2027','conf-jp-myopia-2028','conf-jp-cornea-2026','conf-jp-jrvs-2026','conf-jp-eyelid-2027','conf-int-ascrs-2027']) {
           if(mode==='calendar'&&id==='conf-jp-cornea-2026')continue; // Pre-October ended events are outside monthly calendar history.
           let selector='[data-id="'+id+'"]';
           if(mode!=='list') {

@@ -1834,7 +1834,7 @@ const sampleEvents = [
     "cityCountry": "サンディエゴ（カリフォルニア州） / 米国",
     "abstractDeadline": "未定",
     "earlyBirdDeadline": "未定",
-    "officialUrl": "https://ascrs.org/",
+    "officialUrl": "https://annualmeeting.ascrs.org/",
     "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
     "note": "",
     "abstractSubmission": {
@@ -1860,7 +1860,9 @@ const sampleEvents = [
       "国際学会"
     ],
     "description": "米国最大の前眼部・白内障・屈折矯正手術学会。",
-    "isConference": true
+    "isConference": true,
+    "societyUrl": "https://ascrs.org/",
+    "eventOfficialUrl": "https://annualmeeting.ascrs.org/"
   },
   {
     "id": "oph-011",

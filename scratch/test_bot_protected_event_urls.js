@@ -11,8 +11,11 @@ const registry = require('../conference-sources');
 const root = path.resolve(__dirname, '..');
 const target = 'https://annualmeeting.ascrs.org/';
 const source = 'https://ascrs.confex.com/ascrs/27am/cfp.cgi';
-const event = loadEvents(root).events.find(e => e.id === 'conf-int-ascrs-2027');
-const original = fs.readFileSync(path.join(root, 'events.js'), 'utf8');
+const fixtureData=loadEvents(root);
+const productionOriginal=fixtureData.original;
+const event = fixtureData.events.find(e => e.id === 'conf-int-ascrs-2027');
+delete event.eventOfficialUrl; delete event.societyUrl; event.officialUrl='https://ascrs.org/';
+const original=fixtureData.serialize(fixtureData.events);
 const alternate = '<html><title>Call for Submissions</title><a href="' + target + '">Main Website</a><h2>2027 ASCRS ASOA Annual Meeting</h2><h3>April 2-5, 2027, San Diego, CA</h3></html>';
 const checkedAt = '2026-10-08T03:00:00Z';
 function getPage(status, body, alternateHtml = alternate) {
@@ -91,7 +94,7 @@ async function main() {
   applyReviewedEventUrls({ root: temp, approvals, apply: true });
   assert.equal(loadEvents(temp).events.find(e => e.id === event.id).eventOfficialUrl, target);
   assert.equal(JSON.parse(fs.readFileSync(path.join(temp, 'reports/auto-update-review.json'))).items.find(i => i.id === item.id).status, 'human-applied');
-  assert.equal(fs.readFileSync(path.join(root, 'events.js'), 'utf8'), original);
+  assert.equal(fs.readFileSync(path.join(root, 'events.js'), 'utf8'), productionOriginal);
   console.log('PASS: ASCRS 2027 bot 403/200, non-bot 403, alternate official evidence, domain/year/name/city/link checks, 404 separation, snapshot expiry, network failure, explicit human approval export/apply and no production mutation');
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

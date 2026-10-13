@@ -119,9 +119,9 @@ async function main() {
     assert.ok(await evaluate('document.getElementById("review-list").textContent.includes("Bot保護を検出")'));
     assert.ok(await evaluate('document.getElementById("review-list").textContent.includes("開催地：一致")'));
     assert.ok(await evaluate('document.getElementById("review-list").textContent.includes("HTTP 403")'));
-    assert.equal(await evaluate('!!sampleEvents.find(e=>e.id==="conf-int-ascrs-2027").eventOfficialUrl'), false);
+    assert.equal(await evaluate('sampleEvents.find(e=>e.id==="conf-int-ascrs-2027").eventOfficialUrl'), 'https://annualmeeting.ascrs.org/');
     await evaluate('document.querySelector("[data-decision=approved]").click()');
-    assert.equal(await evaluate('!!sampleEvents.find(e=>e.id==="conf-int-ascrs-2027").eventOfficialUrl'), false);
+    assert.equal(await evaluate('sampleEvents.find(e=>e.id==="conf-int-ascrs-2027").eventOfficialUrl'), 'https://annualmeeting.ascrs.org/');
     assert.ok(await evaluate('!!document.getElementById("review-export-urls")'));
     const metadataAudit=require('../reports/event-metadata-audit-2026-10-09.json').records.find(r=>r.eventId==='conf-jp-presbyopia-2027');
     const metadataValue=Object.fromEntries(metadataAudit.differences.filter(c=>!['year','edition'].includes(c.field)&&c.confidence>=.95).map(c=>[c.field,c.official]));

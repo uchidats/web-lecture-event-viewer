@@ -28,7 +28,7 @@ async function main() {
   } }));
   const lowvisionEvent = events.find(e => e.id === 'conf-jp-lowvision-2027');
   const fujiretinaEvent = events.find(e => e.id === 'conf-int-fujiretina-2028');
-  const ascrsEvent = events.find(e => e.id === 'conf-int-ascrs-2027');
+  const ascrsEvent = {...events.find(e => e.id === 'conf-int-ascrs-2027'), eventOfficialUrl: undefined}; // Missing-URL fixture independent of manual production confirmation.
 
   assert.ok(lowvisionEvent, 'conf-jp-lowvision-2027 must exist');
   assert.ok(fujiretinaEvent, 'conf-int-fujiretina-2028 must exist');
