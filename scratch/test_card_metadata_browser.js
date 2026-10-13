@@ -97,7 +97,7 @@ async function main() {
 
 
     const aao='oph-004';
-    for(const width of [1280,390,320]) {
+    for(const width of [1280,900,390,320]) {
       await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});await navigate('/');
       await evaluate('document.getElementById("reset-filter-btn").click();state.filters.includeEndedConferences=true;syncCheckboxesWithState();renderEvents()');
       const abstractStates=await evaluate('(() => {const host=document.createElement("div");host.style.width=Math.min(innerWidth-32,800)+"px";host.style.margin="0 16px";const base=state.events.find(e=>e.id==="conf-jp-jrvs-2026");host.innerHTML=createEventCardHtml(base);document.body.append(host);const card=host.querySelector(".event-card"),target=card.querySelector(".conf-abstract-deadline-val"),badge=card.querySelector(".conf-category-badge.region");const measure=e=>{const s=getComputedStyle(e);return {height:e.getBoundingClientRect().height,padding:s.padding,lineHeight:s.lineHeight,fontSize:s.fontSize,borderRadius:s.borderRadius,alignItems:s.alignItems};};const rows=["open","normal","soon","urgent","today","upcoming","closed"].map(state=>{target.innerHTML="<span class=\\"abstract-status-tag "+state+"\\">"+(state==="open"?"演題募集中":"注意・締切まで10日")+"</span> <a class=\\"abstract-submit-link\\" href=\\"https://example.com/\\">演題登録詳細 ↗</a>";const tag=target.querySelector("span"),link=target.querySelector("a"),s=getComputedStyle(tag);return {state,tag:measure(tag),link:measure(link),badge:measure(badge),border:s.borderTopWidth,color:s.color,background:s.backgroundColor,fits:card.scrollWidth<=card.clientWidth+1};});host.remove();return rows;})()');
@@ -110,6 +110,14 @@ async function main() {
       const webinar=await evaluate('state.events.find(e=>!e.isConference&&!e.parentConferenceId&&e.specialty===String.fromCharCode(32209,20869,38556)).id');
       for(const mode of ['list','calendar','compact']) {
         await evaluate('document.getElementById("view-'+mode+'").click()');
+        if(mode==='compact') {
+          await evaluate('OphthalCalendarView.getCalendar().gotoDate("2026-10-01")');
+          const typography=await evaluate('(() => {const title=document.querySelector(".fc-list-event-title"),heading=document.querySelector(".fc-list-day-cushion"),measure=e=>{const s=getComputedStyle(e);return {fontSize:parseFloat(s.fontSize),lineHeight:parseFloat(s.lineHeight),fontWeight:s.fontWeight,padding:s.padding};};const after={title:measure(title),heading:measure(heading)};const baseline=document.createElement("style");baseline.textContent="@media(min-width:601px){#calendar-panel[data-view=compact] .fc-list-event-title{font-size:.75rem;line-height:1.55}}";document.head.append(baseline);const before={title:measure(title),heading:measure(heading)};baseline.remove();return {before,after};})()');
+          assert.equal(typography.after.title.fontSize,width>600?13:13.92);
+          assert.equal(typography.after.title.lineHeight,typography.before.title.lineHeight);
+          assert.equal(typography.after.title.padding,typography.before.title.padding);assert.equal(typography.after.title.fontWeight,typography.before.title.fontWeight);
+          assert.deepEqual(typography.after.heading,typography.before.heading);assert.ok(typography.after.title.fontSize<typography.after.heading.fontSize);
+        }
         for(const id of [aao,webinar,'conf-jp-pediatric-2027','conf-jp-myopia-2028','conf-jp-cornea-2026','conf-jp-jrvs-2026','conf-jp-eyelid-2027']) {
           if(mode==='calendar'&&id==='conf-jp-cornea-2026')continue; // Pre-October ended events are outside monthly calendar history.
           let selector='[data-id="'+id+'"]';
