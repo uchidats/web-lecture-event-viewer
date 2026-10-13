@@ -646,7 +646,7 @@ const sampleEvents = [
     "id": "oph-001",
     "eventOfficialUrl": "https://convention.jtbcom.co.jp/80ringan/index.html",
     "societyUrl": "https://www.nichigan.or.jp/",
-    "title": "第80回 日本臨床眼科学会 (臨眼 2026)",
+    "title": "第80回 日本臨床眼科学会",
     "subtitle": "臨床眼科80年の軌跡と新次元への跳躍",
     "date": "2026-10-29",
     "endDate": "2026-11-01",

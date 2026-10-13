@@ -36,7 +36,7 @@ async function main() {
     } : event.id === 'conf-jp-lowvision-2027' ? {
       officialUrl: 'https://www.ganki.jp/lowvision2027/information.html',
       eventOfficialUrl: 'https://www.ganki.jp/lowvision2027/information.html'
-    } : event.id === 'conf-int-ascrs-2027' ? {
+    } : event.id === 'oph-001' ? {title:'第80回 日本臨床眼科学会'} : event.id === 'conf-int-ascrs-2027' ? {
       officialUrl: 'https://annualmeeting.ascrs.org/', eventOfficialUrl: 'https://annualmeeting.ascrs.org/', societyUrl: 'https://ascrs.org/'
     } : {};
     const expected=(field,old)=>manual[field]??correction?.changes.find(c=>c.field===field)?.after??old;
@@ -75,7 +75,7 @@ async function main() {
       if (event.isConference && event.eventOfficialUrl) {
         assert.ok(title.includes('href="' + escapeHtml(event.eventOfficialUrl) + '"'));
         assert.ok(title.includes('target="_blank" rel="noopener noreferrer"'));
-      } else assert.equal(title, renderEventCardTitle(event));
+      } else assert.equal(title, escapeHtml(event.title));
     }
     const template = sampleEvents.find(e => e.isConference);
     const fallback = {...template, eventOfficialUrl: undefined, societyUrl: 'https://example.com/society', officialUrl: 'https://example.com/legacy'};

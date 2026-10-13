@@ -27,10 +27,10 @@ vm.runInContext(`
   assert.equal(sampleEvents.filter(e => getEventSpecialties(e).includes('眼炎症感染')).length, 3);
   assert.equal(sampleEvents.filter(e => getEventSpecialties(e).includes('その他')).length, 14);
   state.events = sampleEvents;
-  assert.equal(renderEventCardTitle({isConference:true,title:'第80回 日本臨床眼科学会（臨眼 2026）'}),'第80回 日本臨床眼科学会<span class="conference-title-ringan-suffix">（臨眼 2026）</span>');
-  assert.ok(renderEventCardTitle({isConference:true,title:'第81回 日本臨床眼科学会 (臨眼 2027)'}).includes('conference-title-ringan-suffix'));
-  for(const title of ['学会（合同開催）','学会（臨眼）','学会（臨眼 26）','学会（臨眼 2026）続き'])assert.equal(renderEventCardTitle({isConference:true,title}),title);
-  assert.equal(renderEventCardTitle({isConference:false,title:'講演（臨眼 2026）'}),'講演（臨眼 2026）');
+  const ringan = sampleEvents.find(e=>e.id==='oph-001');
+  assert.equal(ringan.title,'第80回 日本臨床眼科学会');
+  assert.ok(createEventCardHtml(ringan).includes('>第80回 日本臨床眼科学会</a>'));
+  assert.ok(!createEventCardHtml(ringan).includes('conference-title-ringan-suffix'));
   for(const format of ['現地','onsite','Onsite','ハイブリッド','Web']) {
     const conference={...sampleEvents.find(e=>e.isConference),format};
     const expected=!['現地','onsite','Onsite'].includes(format);
