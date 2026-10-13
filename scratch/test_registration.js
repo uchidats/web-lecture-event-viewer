@@ -9,7 +9,9 @@ const { loadEvents, validateEvents, mergeReview } = require('../scripts/auto-upd
 const { validRegistration } = require('../scripts/auto-updater/registration');
 const reviewModel = require('../review-model');
 const root = path.resolve(__dirname, '..');
-const context = vm.createContext({ assert, console, setTimeout, clearTimeout,
+const fixedNow=Date.parse('2026-10-07T12:00:00+09:00');
+class FixedDate extends Date {constructor(...args){super(...(args.length?args:[fixedNow]));}static now(){return fixedNow;}}
+const context = vm.createContext({ assert, console, Date:FixedDate, setTimeout, clearTimeout,
   document: { getElementById: () => null, addEventListener: () => {} } });
 for (const file of ['venues.js', 'companies.js', 'events.js', 'script.js']) vm.runInContext(fs.readFileSync(path.join(root, file), 'utf8'), context);
 vm.runInContext(`

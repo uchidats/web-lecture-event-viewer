@@ -1123,15 +1123,9 @@ function registrationTimestamp(value, timeZone = 'Asia/Tokyo', endOfDay = false)
   } catch { return null; }
 }
 
-function getRegistrationState(event, reference = getTodayString()) {
+function getRegistrationState(event, reference = new Date()) {
   const timeZone = event.registration?.timeZone || 'Asia/Tokyo';
   let now = reference instanceof Date ? reference.getTime() : registrationTimestamp(reference, timeZone);
-  // Live date-only callers use the current clock; fixed test/historical dates use midnight.
-  if (typeof reference === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(reference)) {
-    const live = new Date();
-    const liveDay = `${live.getFullYear()}-${String(live.getMonth()+1).padStart(2,'0')}-${String(live.getDate()).padStart(2,'0')}`;
-    if (liveDay === reference) now = live.getTime();
-  }
   const periods = getRegistrationPeriods(event).map(period => ({...period,
     startTimestamp: registrationTimestamp(period.start, timeZone),
     deadlineTimestamp: registrationTimestamp(period.deadline, timeZone, true)}));
@@ -1145,14 +1139,14 @@ function getRegistrationState(event, reference = getTodayString()) {
   return {periods, next, expired, display: next || fallback || lastExpired || periods[0] || null, now};
 }
 
-function getRegistrationSortDeadline(event, today = getTodayString()) {
+function getRegistrationSortDeadline(event, today = new Date()) {
   const state = getRegistrationState(event, today);
   const period = state.next || state.expired;
   // Keep the existing numeric API; grouping uses the shared state, not this date value.
   return period ? parseAbstractDate(period.deadline).timestamp : null;
 }
 
-function renderRegistrationHtml(event, today = getTodayString()) {
+function renderRegistrationHtml(event, today = new Date()) {
   const international = (event.registration?.type || event.conferenceRegion) === 'international';
   const defaultLabel = international ? 'Early bird' : '事前参加登録';
   const legacy = event.earlyRegistrationDeadline || event.earlyBirdDeadline;
@@ -1734,9 +1728,10 @@ function shouldHideEndedEvent(event, todayStr, viewMode) {
 
 function getFilteredEvents(ignoreCalendar = false, viewMode = typeof OphthalCalendarView !== "undefined" ? OphthalCalendarView.getMode() || 'list' : 'list') {
   const todayStr = getTodayString();
+  const registrationReference = new Date();
   const registrationSortStates = new Map();
   const registrationForSort = event => {
-    if (!registrationSortStates.has(event)) registrationSortStates.set(event, getRegistrationState(event, todayStr));
+    if (!registrationSortStates.has(event)) registrationSortStates.set(event, getRegistrationState(event, registrationReference));
     return registrationSortStates.get(event);
   };
   return state.events.filter(event => {

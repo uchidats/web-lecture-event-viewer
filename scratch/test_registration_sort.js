@@ -1,6 +1,8 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const store=new Map();
-const context=vm.createContext({assert,console,localStorage:{setItem:(k,v)=>store.set(k,v),getItem:k=>store.get(k)||null},document:{getElementById:()=>null,addEventListener:()=>{}}});
+const fixedNow=Date.parse('2026-10-13T12:00:00+09:00');
+class FixedDate extends Date {constructor(...args){super(...(args.length?args:[fixedNow]));}static now(){return fixedNow;}}
+const context=vm.createContext({assert,console,Date:FixedDate,localStorage:{setItem:(k,v)=>store.set(k,v),getItem:k=>store.get(k)||null},document:{getElementById:()=>null,addEventListener:()=>{}}});
 for(const file of ['venues.js','companies.js','events.js','script.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'..',file),'utf8'),context);
 vm.runInContext(`
  getTodayString=()=> '2026-10-13';
