@@ -32,6 +32,9 @@ vm.runInContext(`
     const expected=!['現地','onsite','Onsite'].includes(format);
     assert.equal(shouldDisplayEventFormat(conference),expected);
     assert.equal(createEventCardHtml(conference).includes('class="format-badge '),expected);
+    const card=createEventCardHtml(conference),top=card.match(/<div class="card-top-row">([\\s\\S]*?)<!-- 予定重複/)[1];
+    assert.ok(!top.includes('class="format-badge '),'Conference top row has no format badge');
+    if(expected)assert.ok(card.match(/<h3 class="card-title">([\\s\\S]*?)<\\/h3>/)[1].includes('class="format-badge '),'Conference badge follows title inline');
     assert.equal(conference.format,format,'Stored format remains unchanged');
     assert.ok(createEventCardHtml({...conference,isConference:false}).includes('class="format-badge '),'Standalone event retains format badge');
   }
