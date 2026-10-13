@@ -17,6 +17,17 @@ vm.runInContext(`
  const unsafe=renderVenueHtml({...event,venues:[{name:'<script>悪意</script>',mapUrl:'javascript:alert(1)'}]});
  assert.ok(!unsafe.includes('href="javascript:'));assert.ok(unsafe.includes('&lt;script&gt;'));
  assert.equal(JSON.stringify(event),snapshot,'No display-time data mutation');
+ for(const [id,names] of [
+  ['conf-jp-ringan-2027',['東京国際フォーラム','JPタワー']],
+  ['conf-jp-jos-2028',['大阪府立国際会議場（グランキューブ大阪）','リーガロイヤルホテル大阪']],
+  ['oph-011',['グランドメルキュール札幌大通公園','札幌プリンスホテル国際館パミール','札幌市教育文化会館']]
+ ]){
+  const target=sampleEvents.find(e=>e.id===id),html=renderVenueHtml(target);
+  assert.deepEqual(target.venues.map(v=>v.name),names);assert.equal(target.venue,names.join('、'),'Legacy venue preserved');
+  assert.equal((html.match(/class="venue-map-link"/g)||[]).length,names.length);
+  assert.equal(new Set(target.venues.map(v=>v.mapUrl)).size,names.length);
+  for(const venue of target.venues){assert.ok(new URL(venue.mapUrl).searchParams.get('query').includes(venue.name));assert.ok(html.includes(escapeHtml(venue.mapUrl)));}
+ }
 `,context);
 for(const venues of [[],[null],[{name:''}],[{name:'会場',mapUrl:'javascript:alert(1)'}]])assert.throws(()=>validateEvents([{id:'invalid',venues}]),/Invalid venues/);
 console.log('PASS: official Ringan venues, independent Maps links, structured priority, single legacy fallback, escaping and validation');

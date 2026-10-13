@@ -1929,7 +1929,21 @@ const sampleEvents = [
     ],
     "description": "日本眼科学会の年次総会。基礎研究から最新臨床まで眼科学の全領域を見渡す最高峰の学術集会。",
     "isConference": true,
-    "conferenceChair": "石田 晋（北海道大学）"
+    "conferenceChair": "石田 晋（北海道大学）",
+    "venues": [
+      {
+        "name": "グランドメルキュール札幌大通公園",
+        "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%82%B0%E3%83%A9%E3%83%B3%E3%83%89%E3%83%A1%E3%83%AB%E3%82%AD%E3%83%A5%E3%83%BC%E3%83%AB%E6%9C%AD%E5%B9%8C%E5%A4%A7%E9%80%9A%E5%85%AC%E5%9C%92%20%E6%9C%AD%E5%B9%8C"
+      },
+      {
+        "name": "札幌プリンスホテル国際館パミール",
+        "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%9C%AD%E5%B9%8C%E3%83%97%E3%83%AA%E3%83%B3%E3%82%B9%E3%83%9B%E3%83%86%E3%83%AB%E5%9B%BD%E9%9A%9B%E9%A4%A8%E3%83%91%E3%83%9F%E3%83%BC%E3%83%AB%20%E6%9C%AD%E5%B9%8C"
+      },
+      {
+        "name": "札幌市教育文化会館",
+        "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%9C%AD%E5%B9%8C%E5%B8%82%E6%95%99%E8%82%B2%E6%96%87%E5%8C%96%E4%BC%9A%E9%A4%A8%20%E6%9C%AD%E5%B9%8C"
+      }
+    ]
   },
   {
     "id": "oph-014",
@@ -3066,7 +3080,17 @@ const sampleEvents = [
       "専門医単位"
     ],
     "description": "秋の国内最大規模臨床学術集会。全領域のシンポジウム・インストラクションコース。",
-    "isConference": true
+    "isConference": true,
+    "venues": [
+      {
+        "name": "東京国際フォーラム",
+        "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E4%BA%AC%E5%9B%BD%E9%9A%9B%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A9%E3%83%A0%20%E6%9D%B1%E4%BA%AC"
+      },
+      {
+        "name": "JPタワー",
+        "mapUrl": "https://www.google.com/maps/search/?api=1&query=JP%E3%82%BF%E3%83%AF%E3%83%BC%20%E6%9D%B1%E4%BA%AC"
+      }
+    ]
   },
   {
     "id": "conf-int-aao-2027",
@@ -3858,7 +3882,17 @@ const sampleEvents = [
       "専門医単位"
     ],
     "description": "春の日本眼科学会年次総会。基礎・臨床の全領域を網羅する国内最高峰の学会。",
-    "isConference": true
+    "isConference": true,
+    "venues": [
+      {
+        "name": "大阪府立国際会議場（グランキューブ大阪）",
+        "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%E5%BA%9C%E7%AB%8B%E5%9B%BD%E9%9A%9B%E4%BC%9A%E8%AD%B0%E5%A0%B4%EF%BC%88%E3%82%B0%E3%83%A9%E3%83%B3%E3%82%AD%E3%83%A5%E3%83%BC%E3%83%96%E5%A4%A7%E9%98%AA%EF%BC%89%20%E5%A4%A7%E9%98%AA"
+      },
+      {
+        "name": "リーガロイヤルホテル大阪",
+        "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%83%AA%E3%83%BC%E3%82%AC%E3%83%AD%E3%82%A4%E3%83%A4%E3%83%AB%E3%83%9B%E3%83%86%E3%83%AB%E5%A4%A7%E9%98%AA%20%E5%A4%A7%E9%98%AA"
+      }
+    ]
   },
   {
     "id": "conf-int-ascrs-2028",
