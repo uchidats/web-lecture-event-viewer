@@ -2489,14 +2489,12 @@ function createEventCardHtml(event, { showConferenceTags = false } = {}) {
           </div>
         </div>
 
-        ${isConferenceEndedEvent || isAttended || isConferenceAttending ? `
+        ${isConferenceEndedEvent || isAttended ? `
         <div class="badges-group">
           <!-- 終了学会バッジ -->
           ${isConferenceEndedEvent ? '<span class="conf-ended-badge">終了</span>' : ''}
           <!-- 学会参加実績バッジ (マイ学会履歴: 参加した) -->
           ${isAttended ? '<span class="conf-history-attended-badge">✓ 参加済</span>' : ''}
-          <!-- 学会参加予定バッジ (会期前の学会のみ) -->
-          ${!isConferenceEndedEvent && isConferenceAttending ? '<span class="conf-attending-badge">✓ 参加予定</span>' : ''}
         </div>
         ` : ''}
       </div>

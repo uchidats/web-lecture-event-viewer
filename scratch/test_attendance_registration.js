@@ -18,6 +18,8 @@ setConferenceAttendance(id,'registered');
 assert.ok(!renderPlannedAttendance(event).includes('登録日：'));
 assert.ok(renderPlannedAttendance(event).includes('aria-label="登録日"'));
 assert.ok(state.attendingConferences.has(id));assert.ok(!state.hiddenConferences.has(id));
+assert.ok(createEventCardHtml(event).includes('card-attending-conference'));
+assert.ok(!createEventCardHtml(event).includes('conf-attending-badge'));
 assert.equal((renderPlannedAttendance(event).match(/type="radio"/g)||[]).length,1);
 conferenceRegistrations[id].date='2026-10-14';saveConferenceRegistrations();
 assert.equal(formatConferenceRegistrationDate('2026-10-14'),'10月14日');
@@ -25,6 +27,7 @@ assert.ok(renderPlannedAttendance(event).includes('conf-registration-date has-da
 assert.ok(renderPlannedAttendance(event).includes('>10月14日</button>'));
 assert.equal(formatConferenceRegistrationDate('2026-02-30'),'');
 setConferenceAttendance(id,'yes');assert.equal(conferenceRegistrations[id].date,'2026-10-14');
+assert.ok(createEventCardHtml(event).includes('card-attending-conference'));
 setConferenceAttendance(id,'registered');assert.ok(renderPlannedAttendance(event).includes('2026-10-14'));
 conferenceRegistrations={};state.attendingConferences.clear();loadAttendingConferences();
 assert.equal(conferenceAttendanceStatus(id),'registered');assert.equal(conferenceRegistrations[id].date,'2026-10-14');
@@ -32,5 +35,6 @@ attendanceEditing.add(id);assert.equal((renderPlannedAttendance(event).match(/ty
 setConferenceAttendance(id,'no');assert.ok(state.hiddenConferences.has(id));assert.ok(!state.attendingConferences.has(id));
 assert.equal(conferenceRegistrations[id].date,'2026-10-14');
 setConferenceAttendance(id,'none');assert.equal(conferenceAttendanceStatus(id),'none');
+assert.ok(!createEventCardHtml(event).includes('card-attending-conference'));
 `,context);
 console.log('PASS: legacy attendance compatibility, 3 states, exclusivity, date retention/restoration and editing');
