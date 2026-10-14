@@ -9,7 +9,7 @@ vm.runInContext(`
    const html=renderRegistrationHtml(event,now);
    assert.ok(html.includes('事前参加登録：</span>'));assert.ok(!html.includes('Early bird'));assert.ok(!html.includes('Regular'));
    assert.equal(html.includes('registration-deadline-prefix'),days>=0&&days<=30);
-   assert.ok(html.includes(days===0?'本日締切：':days>0&&days<=30?'締切'+days+'日前：':days<0?'2026年12月16日 締切済':'2027年1月17日まで'));
+   assert.ok(html.includes(days===0?'本日締切：':days>0&&days<=30?'締切'+days+'日前：':days<0?'12月16日 締切済':'1月17日 締切'));
    if(days<0)assert.ok(!html.includes('13:00'));
    assert.equal(JSON.stringify(event),saved);
   }

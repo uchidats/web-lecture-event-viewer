@@ -20,7 +20,7 @@ if(!process.argv.includes('--child')) {
       assert.ok(getAbstractSubmissionState(timed,at('2026-11-05T12:59:59'+offset)).isOpen);
       assert.equal(getAbstractSubmissionState(timed,at('2026-11-05T13:00:01'+offset)).status,'closed');
       const closed=renderAbstractSubmissionHtml(timed,at('2026-11-05T13:00:01'+offset));
-      assert.ok(closed.includes('2026年11月5日 締切済'));assert.ok(!closed.includes('13:00'));assert.ok(!closed.includes('<a'));assert.ok(!closed.includes('abstract-status-tag'));
+      assert.ok(closed.includes('11月5日 締切済'));assert.ok(!closed.includes('13:00'));assert.ok(!closed.includes('<a'));assert.ok(!closed.includes('abstract-status-tag'));
       assert.equal(getDaysUntilAbstractDeadline(event('2026-11-06',zone),at('2026-11-05T12:00:00'+offset)),1);
       assert.equal(getDaysUntilAbstractDeadline(event('2026-11-04',zone),at('2026-11-05T12:00:00'+offset)),-1);
       assert.ok(!matchesAbstractFilter(timed,'open',at('2026-11-05T13:00:01'+offset)));
@@ -43,7 +43,7 @@ if(!process.argv.includes('--child')) {
     assert.equal(renderAbstractSubmissionHtml({isConference:true,eventOfficialUrl:'javascript:alert(1)',abstractSubmission:{status:'unknown',url:'javascript:alert(2)'}},now),'<span class="abstract-unknown">情報未確認</span>');
     for(const legacy of ['受付終了','演題募集終了','締切済','2026年11月5日 13:00 受付終了','2026-11-05 13:00 演題募集終了']) {
       const source={isConference:true,abstractDeadline:legacy},snapshot=JSON.stringify(source),html=renderAbstractSubmissionHtml(source,now);
-      assert.ok(html.includes(legacy.includes('2026')?'2026年11月5日 締切済':'>締切済<'));assert.ok(!html.includes('13:00'));assert.ok(!html.includes('受付終了'));assert.ok(!html.includes('演題募集終了'));assert.ok(!html.includes('<a'));assert.equal(JSON.stringify(source),snapshot);
+      assert.ok(html.includes(legacy.includes('2026')?'11月5日 締切済':'>締切済<'));assert.ok(!html.includes('13:00'));assert.ok(!html.includes('受付終了'));assert.ok(!html.includes('演題募集終了'));assert.ok(!html.includes('<a'));assert.equal(JSON.stringify(source),snapshot);
     }
     const fallback=event('2026-11-05');delete fallback.timeZone;fallback.registration={timeZone:'America/Los_Angeles'};
     assert.ok(getAbstractSubmissionState(fallback,at('2026-11-06T06:00:00Z')).isOpen);

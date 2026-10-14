@@ -12,7 +12,7 @@ vm.runInContext(`
  ]}};
  assert.equal(getRegistrationState(event,'2027-03-31T23:59:59+09:00').next.label,'Early Bird');
  assert.equal(getRegistrationState(event,'2027-04-01T00:00:00+09:00').next.label,'Regular');
- assert.ok(renderRegistrationHtml(event,'2027-04-01T00:00:00+09:00').includes('2027年4月10日 12:00開始／2027年6月30日 17:00締切'));
+ assert.ok(renderRegistrationHtml(event,'2027-04-01T00:00:00+09:00').includes('4月10日 12:00開始／6月30日 17:00締切'));
  assert.equal(getRegistrationState(event,'2027-06-30T16:59:00+09:00').next.label,'Regular');
  assert.equal(getRegistrationState(event,'2027-06-30T17:01:00+09:00').next,null);
  assert.equal(getRegistrationState(event,'2027-06-30T08:01:00Z').next,null,'Offset-independent expiry');

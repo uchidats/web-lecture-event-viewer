@@ -1115,11 +1115,27 @@ function getAbstractTimeZone(event) {
 // deadline remains the accepted baseline; currentDeadline supports future extension records.
 function getCurrentAbstractDeadline(sub) { return sub?.deadline ?? sub?.currentDeadline ?? null; }
 
-function formatAbstractDeadline(value, { showTime = true } = {}) {
+function formatAbstractDeadline(value, { showTime = true, showYear = false } = {}) {
   const date = parseAbstractDate(value);
   if (!date) return null;
   const time = showTime && typeof value === 'string' && value.match(/[ T](\d{2}):(\d{2})/);
-  return `${date.year}年${date.month}月${date.day}日${time ? ` ${time[1]}:${time[2]}` : ''}`;
+  return `${showYear ? `${date.year}年` : ''}${date.month}月${date.day}日${time ? ` ${time[1]}:${time[2]}` : ''}`;
+}
+
+function formatCardDeadline(value, event, { showTime = true, rangeStart, rangeEnd } = {}) {
+  const date = parseAbstractDate(value), eventDate = parseAbstractDate(event.date);
+  const start = parseAbstractDate(rangeStart), end = parseAbstractDate(rangeEnd);
+  // Keep years for a displayed range crossing years or a deadline more than a year
+  // away from the event year. Ordinary advance deadlines need no year suffix.
+  const showYear = Boolean(start && end && start.year !== end.year || date && eventDate && Math.abs(date.year - eventDate.year) > 1);
+  return formatAbstractDeadline(value, { showTime, showYear });
+}
+
+function formatLegacyCardDeadline(text, event, { showTime = true } = {}) {
+  return text.replace(/(\d{4})年(\d{1,2})月(\d{1,2})日(?:\s+(\d{2}:\d{2}))?|\d{4}-\d{2}-\d{2}(?:[ T]\d{2}:\d{2})?/g, (match, year, month, day, time) => {
+    const value = year ? `${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}${time ? ` ${time}` : ''}` : match;
+    return formatCardDeadline(value, event, { showTime }) || match;
+  });
 }
 
 // 日時付きの既存データも、締切日の暦日として比較する。
@@ -1203,27 +1219,28 @@ function renderRegistrationHtml(event, today = new Date()) {
   const registrationState = getRegistrationState(event, today);
   const periods = registrationState.display ? [registrationState.display] : null;
   const rows = periods ? periods.map(period => {
+    const formatDeadline = (value, options = {}) => formatCardDeadline(value, event, { ...options, rangeStart: period.startTimestamp > registrationState.now ? period.start : undefined, rangeEnd: period.deadline });
     const label = defaultLabel;
     const deadline = parseAbstractDate(period.deadline);
     const start = parseAbstractDate(period.start);
     const closed = period.deadlineTimestamp !== null && period.deadlineTimestamp < registrationState.now;
     let value = '未定', prefix = '';
     if (closed) {
-      value = `${formatAbstractDeadline(period.deadline, {showTime:false})} 締切済`;
+      value = `${formatDeadline(period.deadline, {showTime:false})} 締切済`;
     } else if (start && period.startTimestamp > registrationState.now) {
-      value = `${formatAbstractDeadline(period.start)}開始${deadline ? `／${formatAbstractDeadline(period.deadline)}締切` : ''}`;
+      value = `${formatDeadline(period.start)}開始${deadline ? `／${formatDeadline(period.deadline)}締切` : ''}`;
     } else if (deadline) {
       const days = getDaysUntilAbstractDeadline({isConference:true,timeZone:event.registration?.timeZone||'Asia/Tokyo',abstractSubmission:{deadline:period.deadline}},new Date(registrationState.now));
       if (days !== null && days >= 0 && days <= 30 && registrationState.next === period) {
         prefix = days === 0 ? '本日締切：' : `締切${days}日前：`;
-        value = formatAbstractDeadline(period.deadline);
-      } else value = `${formatAbstractDeadline(period.deadline)}まで`;
+        value = `${formatDeadline(period.deadline)} 締切`;
+      } else value = `${formatDeadline(period.deadline)} 締切`;
     } else if (start) {
-      value = `${formatAbstractDeadline(period.start, { showTime: false })}開始`;
+      value = `${formatDeadline(period.start, { showTime: false })}開始`;
     }
     if (!registrationState.next && registrationState.expired && !closed) value += '（事前登録終了）';
     return { label, value, closed, prefix };
-  }) : [{ label: defaultLabel, value: legacy && !/^(要確認|未確認)$/.test(legacy) ? legacy : '未定', closed: /締切済|受付終了/.test(legacy || '') }];
+  }) : [{ label: defaultLabel, value: legacy && !/^(要確認|未確認)$/.test(legacy) ? formatLegacyCardDeadline(legacy, event, {showTime: !/締切済|受付終了/.test(legacy)}) : '未定', closed: /締切済|受付終了/.test(legacy || '') }];
   return rows.map(({ label, value, closed, prefix }) => `<div class="conf-item conf-registration-period"><span class="conf-label">${escapeHtml(label)}：</span><span class="conf-val registration-deadline${closed ? ' closed' : ''}">${prefix ? `<span class="registration-deadline-prefix">${escapeHtml(prefix)}</span>` : ''}${escapeHtml(value)}</span></div>`).join('');
 }
 
@@ -1268,17 +1285,17 @@ function renderAbstractSubmissionHtml(event, baseDate = new Date()) {
     const legacy = event.abstractDeadline || '要確認';
     if (/受付終了|演題募集終了|締切済/.test(legacy)) {
       const rawDate = legacy.match(/\d{4}-\d{2}-\d{2}/)?.[0] || legacy.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/)?.slice(1).map((v,i)=>i?v.padStart(2,'0'):v).join('-');
-      const date = formatAbstractDeadline(rawDate, {showTime:false});
+      const date = formatCardDeadline(rawDate, event, {showTime:false});
       return `<span class="deadline-highlight closed">${date ? escapeHtml(date) + ' ' : ''}締切済</span>`;
     }
     if (/未定|未確認|不明|要確認/.test(legacy)) return renderAbstractUnknownHtml(event);
-    return `<span class="deadline-highlight">${escapeHtml(legacy)}</span>`;
+    return `<span class="deadline-highlight">${escapeHtml(formatLegacyCardDeadline(legacy, event))}</span>`;
   }
   const info = getAbstractSubmissionState(event, baseDate);
   const labels = { open: "受付中", upcoming: "演題募集予定", closed: "締切済" };
   const isClosed = info.status === "closed";
   const displayStatus = isClosed ? "closed" : info.status;
-  const deadlineLabel = formatAbstractDeadline(getCurrentAbstractDeadline(sub), {showTime: !isClosed});
+  const deadlineLabel = formatCardDeadline(getCurrentAbstractDeadline(sub), event, {showTime: !isClosed});
   const extensionLabel = sub.extended === true ? '（延長）' : '';
   const parts = [];
   if (isClosed) return `<span class="deadline-highlight closed">${deadlineLabel ? escapeHtml(deadlineLabel) + ' 締切済' + extensionLabel : '締切済'}</span>`;

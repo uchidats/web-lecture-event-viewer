@@ -34,7 +34,7 @@ vm.runInContext(`
   }
   for (const [status, label] of [
     ['open', '受付中'], ['upcoming', '演題募集予定'],
-    ['closed', '2026年11月5日 締切済'], ['unknown', '公式']
+    ['closed', '11月5日 締切済'], ['unknown', '公式']
   ]) {
     const event = make(status, status === 'unknown' ? null : '2026-11-05');
     assert.ok(createEventCardHtml(event).includes(label));
@@ -45,14 +45,14 @@ vm.runInContext(`
     else {assert.ok(linked.includes('target="_blank" rel="noopener noreferrer"'));assert.ok(linked.includes('https://example.com/abstract?a=1&amp;b=2'));}
     if(status!=='unknown')assert.ok(!renderAbstractSubmissionHtml(event).includes('<a '));
   }
-  assert.ok(renderAbstractSubmissionHtml(make('open', '2026-11-05')).includes('2026年11月5日 締切'));
-  assert.ok(renderAbstractSubmissionHtml(make('open', '2027-01-05')).includes('2027年1月5日 締切'));
+  assert.ok(renderAbstractSubmissionHtml(make('open', '2026-11-05')).includes('11月5日 締切'));
+  assert.ok(renderAbstractSubmissionHtml(make('open', '2027-01-05')).includes('1月5日 締切'));
   assert.equal(getDaysUntilAbstractDeadline(make('open', '2026-10-04'), new Date('2026-10-04T23:59:00+09:00')), 0);
   for (const deadline of [null, '', 'invalid', '2026-02-30']) {
     assert.equal(getDaysUntilAbstractDeadline(make('open', deadline)), null);
     assert.ok(!renderAbstractSubmissionHtml(make('open', deadline)).includes('NaN'));
   }
-  assert.ok(renderAbstractSubmissionHtml(make('unknown', '2026-11-05')).includes('2026年11月5日 締切'));
+  assert.ok(renderAbstractSubmissionHtml(make('unknown', '2026-11-05')).includes('11月5日 締切'));
   for (const [status, deadline] of [
     ['closed', '2026-06-30'], ['closed', '2026-11-05'], ['closed', null],
     ['open', '2026-10-03'], ['upcoming', '2026-10-03'], ['unknown', '2026-10-03']
@@ -71,17 +71,17 @@ vm.runInContext(`
   }
   for (const status of ['open', 'upcoming']) {
     const html = renderAbstractSubmissionHtml(make(status, '2026-11-05', 'https://example.com/abstract'));
-    assert.ok(html.includes('2026年11月5日 締切'));
+    assert.ok(html.includes('11月5日 締切'));
     assert.ok(!html.includes('abstract-submit-link-closed'));
   }
   assert.ok(renderAbstractSubmissionHtml(make('open', '2026-10-04')).includes('abstract-deadline urgent'));
   const historical = make('closed', '2026-05-21 12:00');
   const savedHistorical = JSON.stringify(historical);
-  assert.ok(renderAbstractSubmissionHtml(historical).includes('2026年5月21日 締切済'));
+  assert.ok(renderAbstractSubmissionHtml(historical).includes('5月21日 締切済'));
   getAbstractSubmissionState(historical); getDaysUntilAbstractDeadline(historical);
   assert.equal(JSON.stringify(historical), savedHistorical, 'closed rendering never removes deadline');
-  assert.equal(formatAbstractDeadline('2026-05-21 12:00', {showTime:false}), '2026年5月21日');
-  for (const [status, expected] of [['closed', '2026年6月1日 締切済（延長）'], ['open', '2026年6月1日 締切（延長）']]) {
+  assert.equal(formatAbstractDeadline('2026-05-21 12:00', {showTime:false}), '5月21日');
+  for (const [status, expected] of [['closed', '6月1日 締切済（延長）'], ['open', '6月1日 締切（延長）']]) {
     const extended = make(status, '2026-06-01');
     extended.abstractSubmission = {...extended.abstractSubmission, originalDeadline:'2026-05-21', currentDeadline:'2026-06-01', extended:true};
     assert.ok(renderAbstractSubmissionHtml(extended, '2026-05-25').includes(expected));
