@@ -53,7 +53,8 @@ async function main() {
 
 
     await evaluate("getTodayString=()=> '2026-10-05'; state.filters.abstractStatus.clear();");
-    for (const width of [1280,390,320]) {
+    const requestedWidth=Number(process.argv.find(arg=>arg.startsWith('--width='))?.split('=')[1]);
+    for (const width of requestedWidth ? [requestedWidth] : [1280,390,320]) {
       await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});
       await evaluate("localStorage.removeItem(CONFERENCE_REGISTRATION_KEY); localStorage.setItem(ATTENDING_CONFERENCES_KEY,'[]'); localStorage.setItem(HIDDEN_CONFERENCES_KEY,'[]'); conferenceRegistrations={};state.attendingConferences.clear();state.hiddenConferences.clear();attendanceEditing.clear();renderEvents();");
       const check = async expression => assert.equal(await evaluate(expression),true,width+'px '+expression);
@@ -63,10 +64,20 @@ async function main() {
       await layout();
       await check('[...document.querySelectorAll(\'[data-id="oph-001"] .conf-choice-btn\')].every(label=>{const radio=label.querySelector("input").getBoundingClientRect(),text=label.querySelector("span").getBoundingClientRect();return Math.abs(radio.top+radio.height/2-text.top-text.height/2)<1 && radio.width===16 && getComputedStyle(label).borderTopWidth==="0px"})');
       await click('yes');
-      await check('(()=>{const card=document.querySelector(\'[data-id="oph-001"]\'),style=getComputedStyle(card);return !card.querySelector(".conf-attending-badge") && style.borderTopWidth==="2px" && style.borderTopColor==="rgb(96, 165, 250)" && style.backgroundColor==="rgb(245, 249, 255)" && card.scrollWidth<=card.clientWidth+1;})()');
+      const comparison=await evaluate('(()=>{const event=state.events.find(e=>e.id==="oph-001"),host=document.createElement("div");host.id="attendance-surface-comparison";host.style.cssText="position:absolute;top:0;left:0;width:100%;padding:16px;box-sizing:border-box;background:#f8fafc;z-index:9999;display:grid;gap:16px";state.attendingConferences.delete(event.id);const normal=createEventCardHtml(event);state.attendingConferences.add(event.id);host.innerHTML=normal+createEventCardHtml(event);document.body.append(host);scrollTo(0,0);return [...host.children].map(card=>{const s=getComputedStyle(card);return {background:s.backgroundColor,border:s.borderTopColor,width:s.borderTopWidth,radius:s.borderRadius,padding:s.padding,shadow:s.boxShadow,color:s.color,fits:card.scrollWidth<=card.clientWidth+1};});})()');
+      assert.notEqual(comparison[0].background,comparison[1].background);
+      for(const property of ['width','radius','padding','shadow','color'])assert.equal(comparison[0][property],comparison[1][property],property+' same as normal card');
+      assert.ok(comparison.every(card=>card.fits));
+      if(process.argv.includes('--screenshots')) {
+        const clip=await evaluate('(()=>{const r=document.getElementById("attendance-surface-comparison").getBoundingClientRect();return {x:0,y:0,width:r.width,height:Math.min(innerHeight,Math.ceil(r.height)),scale:1};})()');
+        const screenshot=await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false,clip});
+        const screenshotPath=path.join(profile,'attendance-surface-'+width+'.png');fs.writeFileSync(screenshotPath,Buffer.from(screenshot.data,'base64'));console.log(screenshotPath);
+      }
+      await evaluate('document.getElementById("attendance-surface-comparison").remove();renderEvents()');
+      await check('(()=>{const card=document.querySelector(\'[data-id="oph-001"]\'),style=getComputedStyle(card);return !card.querySelector(".conf-attending-badge") && style.borderTopWidth==="1px" && style.borderTopColor==="rgb(212, 223, 235)" && style.backgroundColor==="rgb(244, 247, 251)" && card.scrollWidth<=card.clientWidth+1;})()');
       await check('state.attendingConferences.has("oph-001") && !!document.querySelector(\'[data-id="oph-001-s2"]\') && document.querySelector(\'[data-id="oph-001"] [data-choice="yes"]\').checked');
       await click('registered');
-      await check('(()=>{const card=document.querySelector(\'[data-id="oph-001"]\'),style=getComputedStyle(card);return !card.querySelector(".conf-attending-badge") && style.borderTopWidth==="2px" && style.borderTopColor==="rgb(96, 165, 250)" && style.backgroundColor==="rgb(245, 249, 255)" && card.scrollWidth<=card.clientWidth+1;})()');
+      await check('(()=>{const card=document.querySelector(\'[data-id="oph-001"]\'),style=getComputedStyle(card);return !card.querySelector(".conf-attending-badge") && style.borderTopWidth==="1px" && style.borderTopColor==="rgb(212, 223, 235)" && style.backgroundColor==="rgb(244, 247, 251)" && card.scrollWidth<=card.clientWidth+1;})()');
       await check('document.querySelectorAll(\'[data-id="oph-001"] [data-action="attend-choice"]\').length===1 && !!document.querySelector(\'[data-id="oph-001-s2"]\')');
       await check('(()=>{const group=document.querySelector(\'[data-id="oph-001"] .conf-planned-choice-group\'),radio=group.querySelector(".conf-choice-btn").getBoundingClientRect(),date=group.querySelector("input[type=date]").getBoundingClientRect();return !group.textContent.includes("登録日：") && (Math.abs(radio.top+radio.height/2-date.top-date.height/2)<1 || innerWidth===320 && date.top>=radio.bottom);})()');
       await check('(()=>{const label=document.querySelector(\'[data-id="oph-001"] .conf-registration-date\'),input=label.querySelector("input"),l=label.getBoundingClientRect(),r=input.getBoundingClientRect();return Math.abs(l.top+l.height/2-r.top-r.height/2)<1 && input.type==="date"})()');

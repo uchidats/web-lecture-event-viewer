@@ -1784,14 +1784,14 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
 
 /* 参加予定設定中の学会カードハイライト */
 .event-card.card-attending-conference {
-  border: 2px solid #60a5fa;
-  background: #f5f9ff;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+  border: 1px solid #d4dfeb;
+  background: #f4f7fb;
+  box-shadow: var(--shadow-card);
 }
 
 .event-card.card-attending-conference:hover {
-  border-color: #3b82f6;
-  background: #eff6ff;
+  border-color: #bdcddd;
+  background: #f4f7fb;
 }
 
 /* 参加記録ありの学会カードハイライト */
