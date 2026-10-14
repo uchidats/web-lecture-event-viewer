@@ -176,17 +176,19 @@
     let monthTransition = null;
     function finishMonthTransition() {
       if (!monthTransition) return;
-      const { incoming, snapshot, animations } = monthTransition;
+      const { incoming, snapshot, animations, frame, timer } = monthTransition;
       monthTransition = null;
+      if (frame !== null) window.cancelAnimationFrame(frame);
+      if (timer !== null) window.clearTimeout(timer);
       animations.forEach(animation => animation.cancel());
       snapshot.remove();
       incoming.replaceWith(...incoming.childNodes);
       calendarElement.classList.remove('calendar-sliding');
       calendarElement.removeAttribute('aria-busy');
     }
-    function slideMonth(forward) {
+    function animateCalendarMonthChange(forward) {
       if (monthTransition) return;
-      if (reducedMotion.matches || typeof calendarElement.animate !== 'function') {
+      if (reducedMotion.matches) {
         if (forward) calendar.next(); else calendar.prev();
         return;
       }
@@ -207,16 +209,33 @@
       calendarElement.setAttribute('aria-busy', 'true');
       const direction = forward ? -1 : 1;
       const options = { duration: 200, easing: 'ease-out', fill: 'both' };
-      const animations = [
-        snapshot.animate([{ transform: 'translateX(0)' }, { transform: `translateX(${direction * 100}%)` }], options),
-        incoming.animate([{ transform: `translateX(${-direction * 100}%)` }, { transform: 'translateX(0)' }], options)
-      ];
-      const transition = { incoming, snapshot, animations };
+      // Establish both visible layers before starting motion on the next frame.
+      // This also covers browsers without Element.animate instead of silently
+      // degrading PC wheel navigation to an instantaneous month replacement.
+      snapshot.style.transform = 'translateX(0)';
+      incoming.style.transform = `translateX(${-direction * 100}%)`;
+      const transition = { incoming, snapshot, animations: [], frame: null, timer: null };
       monthTransition = transition;
-      Promise.all(animations.map(animation => animation.finished)).then(() => {
-        if (monthTransition === transition) finishMonthTransition();
-      }).catch(() => {
-        if (monthTransition === transition) finishMonthTransition();
+      void incoming.offsetWidth;
+      transition.frame = window.requestAnimationFrame(() => {
+        transition.frame = null;
+        if (monthTransition !== transition) return;
+        if (typeof snapshot.animate === 'function') {
+          transition.animations = [
+            snapshot.animate([{ transform: 'translateX(0)' }, { transform: `translateX(${direction * 100}%)` }], options),
+            incoming.animate([{ transform: `translateX(${-direction * 100}%)` }, { transform: 'translateX(0)' }], options)
+          ];
+          Promise.all(transition.animations.map(animation => animation.finished)).then(() => {
+            if (monthTransition === transition) finishMonthTransition();
+          }).catch(() => { if (monthTransition === transition) finishMonthTransition(); });
+        } else {
+          snapshot.style.transition = incoming.style.transition = 'transform 200ms ease-out';
+          snapshot.style.transform = `translateX(${direction * 100}%)`;
+          incoming.style.transform = 'translateX(0)';
+          transition.timer = window.setTimeout(() => {
+            if (monthTransition === transition) finishMonthTransition();
+          }, 220);
+        }
       });
     }
     window.addEventListener('resize', finishMonthTransition);
@@ -232,7 +251,7 @@
       const intent = wheelGesture({deltaX:event.deltaX,deltaY:event.deltaY,deltaMode:event.deltaMode,ctrlKey:event.ctrlKey,now:window.performance.now()});
       if (!intent) return;
       event.preventDefault();
-      if (intent.forward !== null && !monthTransition) slideMonth(intent.forward);
+      if (intent.forward !== null && !monthTransition) animateCalendarMonthChange(intent.forward);
     }, { passive: false });
     calendarElement.addEventListener('pointerdown', event => {
       if (monthTransition) { swipe = null; return; }
@@ -262,7 +281,7 @@
       if (Math.abs(dx) < 60 || Math.abs(dx) < dy * 1.5) return;
       suppressClickUntil = window.performance.now() + 400;
       // Navigate once at release, using datesSet's existing URL synchronization.
-      slideMonth(dx < 0);
+      animateCalendarMonthChange(dx < 0);
     }, { passive: true });
     calendarElement.addEventListener('click', event => {
       if (monthTransition) {
