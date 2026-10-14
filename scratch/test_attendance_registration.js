@@ -15,6 +15,8 @@ assert.equal(conferenceAttendanceStatus('legacy-no'),'no');
 assert.equal(conferenceAttendanceStatus('unselected'),'none');
 assert.ok(renderPlannedAttendance(event).includes('未登録'));
 setConferenceAttendance(id,'registered');
+assert.ok(!renderPlannedAttendance(event).includes('登録日：'));
+assert.ok(renderPlannedAttendance(event).includes('aria-label="登録日"'));
 assert.ok(state.attendingConferences.has(id));assert.ok(!state.hiddenConferences.has(id));
 assert.equal((renderPlannedAttendance(event).match(/type="radio"/g)||[]).length,1);
 conferenceRegistrations[id].date='2026-10-14';saveConferenceRegistrations();

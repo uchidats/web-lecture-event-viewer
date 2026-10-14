@@ -294,7 +294,7 @@ function renderPlannedAttendance(event) {
           <input type="radio" class="choice-dot" name="attendance-${escapeHtml(event.id)}" value="${choice}" data-action="attend-choice" data-choice="${choice}" data-conference-id="${escapeHtml(event.id)}" ${status === choice ? 'checked' : ''}>
           <span class="choice-text">${label}</span>
         </label>`).join('')}
-      ${status === 'registered' ? `<label class="conf-registration-date">登録日：<input type="date" data-action="registration-date" aria-label="登録日" value="${escapeHtml(date)}"></label>` : ''}
+      ${status === 'registered' ? `<label class="conf-registration-date"><input type="date" data-action="registration-date" aria-label="登録日" value="${escapeHtml(date)}"></label>` : ''}
     </div>
   </div>`;
 }

@@ -66,6 +66,7 @@ async function main() {
       await check('state.attendingConferences.has("oph-001") && !!document.querySelector(\'[data-id="oph-001-s2"]\') && document.querySelector(\'[data-id="oph-001"] [data-choice="yes"]\').checked');
       await click('registered');
       await check('document.querySelectorAll(\'[data-id="oph-001"] [data-action="attend-choice"]\').length===1 && !!document.querySelector(\'[data-id="oph-001-s2"]\')');
+      await check('(()=>{const group=document.querySelector(\'[data-id="oph-001"] .conf-planned-choice-group\'),radio=group.querySelector(".conf-choice-btn").getBoundingClientRect(),date=group.querySelector("input[type=date]").getBoundingClientRect();return !group.textContent.includes("登録日：") && (Math.abs(radio.top+radio.height/2-date.top-date.height/2)<1 || innerWidth===320 && date.top>=radio.bottom);})()');
       await check('(()=>{const label=document.querySelector(\'[data-id="oph-001"] .conf-registration-date\'),input=label.querySelector("input"),l=label.getBoundingClientRect(),r=input.getBoundingClientRect();return Math.abs(l.top+l.height/2-r.top-r.height/2)<1 && input.type==="date"})()');
       await layout();
       for (const date of ['2026-10-14','2026-10-15']) {
