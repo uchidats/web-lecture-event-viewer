@@ -1582,6 +1582,28 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
   white-space: nowrap;
 }
 
+.conf-registration-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  color: #334155;
+  max-width: 100%;
+}
+
+.conf-registration-date input {
+  box-sizing: border-box;
+  min-width: 0;
+  width: 128px;
+  height: 32px;
+  padding: 3px 4px;
+  border: 1px solid #dbe4ee;
+  border-radius: 4px;
+  font: inherit;
+  color: inherit;
+  background: #fff;
+}
+
 .conf-planned-choice-group .conf-choice-btn {
   min-height: 36px;
   gap: 6px;

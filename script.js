@@ -265,8 +265,43 @@ function migrateLegacyStorage() {
  */
 const ATTENDING_CONFERENCES_KEY = "ophthalconf_attending_conferences";
 const HIDDEN_CONFERENCES_KEY = "ophthalconf_hidden_conferences";
+const CONFERENCE_REGISTRATION_KEY = "ophthalconf_conference_registration_v1";
+let conferenceRegistrations = {};
+const attendanceEditing = new Set();
+
+function saveConferenceRegistrations() {
+  try { localStorage.setItem(CONFERENCE_REGISTRATION_KEY, JSON.stringify(conferenceRegistrations)); }
+  catch (error) { console.warn('Failed to save conference registrations:', error); }
+}
+
+function conferenceAttendanceStatus(id) {
+  if (state.hiddenConferences.has(id)) return 'no';
+  if (!state.attendingConferences.has(id)) return 'none';
+  return conferenceRegistrations[id]?.status === 'registered' ? 'registered' : 'yes';
+}
+
+function renderPlannedAttendance(event) {
+  const status = conferenceAttendanceStatus(event.id);
+  const collapsed = status === 'registered' && !attendanceEditing.has(event.id);
+  const date = conferenceRegistrations[event.id]?.date || '';
+  return `<div class="conf-attendance-bar conf-planned-attendance-bar ${state.attendingConferences.has(event.id) ? 'attending' : ''}">
+    <div class="conf-choice-group conf-planned-choice-group" role="radiogroup" aria-label="参加予定の選択">
+      <span class="conf-attendance-main-text">参加予定：</span>
+      ${[['registered','登録済'],['yes','未登録'],['no','なし']].filter(([choice]) => !collapsed || choice === 'registered').map(([choice,label]) => `
+        <label class="conf-choice-btn choice-${choice} ${status === choice ? 'active' : ''}" ${choice === 'registered' ? 'title="選択済みの登録済を再タップして状態を変更"' : ''}>
+          <input type="radio" class="choice-dot" name="attendance-${escapeHtml(event.id)}" value="${choice}" data-action="attend-choice" data-choice="${choice}" data-conference-id="${escapeHtml(event.id)}" ${status === choice ? 'checked' : ''}>
+          <span class="choice-text">${label}</span>
+        </label>`).join('')}
+      ${status === 'registered' ? `<label class="conf-registration-date">登録日：<input type="date" data-action="registration-date" aria-label="登録日" value="${escapeHtml(date)}"></label>` : ''}
+    </div>
+  </div>`;
+}
 
 function loadAttendingConferences() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CONFERENCE_REGISTRATION_KEY) || '{}');
+    if (saved && typeof saved === 'object' && !Array.isArray(saved)) conferenceRegistrations = saved;
+  } catch (error) { console.warn('Failed to load conference registrations:', error); }
   try {
     const saved = localStorage.getItem(ATTENDING_CONFERENCES_KEY);
     if (saved) {
@@ -322,15 +357,20 @@ function updateHiddenConferencesBadge() {
 }
 
 /**
- * 学会の参加ステータスを変更（あり・なし・未選択）
+ * 学会の参加ステータスを変更（登録済・未登録・なし・未選択）
  * @param {string} conferenceId
- * @param {"yes"|"no"|"none"} choice - "yes": 参加あり, "no": 参加なし(非表示), "none": 未選択
+ * @param {"registered"|"yes"|"no"|"none"} choice - yesは旧参加あり互換の未登録
  */
 function setConferenceAttendance(conferenceId, choice) {
+  if (!['registered', 'yes', 'no', 'none'].includes(choice)) return;
+  const previous = conferenceRegistrations[conferenceId] || {};
+  conferenceRegistrations[conferenceId] = { ...previous, status: choice };
+  attendanceEditing.delete(conferenceId);
+  saveConferenceRegistrations();
   const conf = state.events.find(e => e.id === conferenceId);
   const confTitle = conf ? conf.title : "学会";
 
-  if (choice === "yes") {
+  if (choice === "yes" || choice === "registered") {
     // あり: 参加予定ON、非表示OFF
     state.attendingConferences.add(conferenceId);
     state.hiddenConferences.delete(conferenceId);
@@ -2372,20 +2412,7 @@ function createEventCardHtml(event) {
           </div>
           <div class="conf-registration-list">${renderRegistrationHtml(event)}</div>
         </div>
-        ${!isConferenceEndedEvent ? `
-        <div class="conf-attendance-bar conf-planned-attendance-bar ${isConferenceAttending ? 'attending' : ''}">
-          <div class="conf-choice-group conf-planned-choice-group" role="radiogroup" aria-label="参加予定の選択">
-            <span class="conf-attendance-main-text">参加予定：</span>
-            <label class="conf-choice-btn choice-yes ${isConferenceAttending ? 'active' : ''}" title="参加予定にする（関連セミナーを表示）">
-              <input type="radio" class="choice-dot" name="attendance-${escapeHtml(event.id)}" value="yes" data-action="attend-choice" data-choice="yes" data-conference-id="${escapeHtml(event.id)}" ${isConferenceAttending ? 'checked' : ''}>
-              <span class="choice-text">あり</span>
-            </label>
-            <label class="conf-choice-btn choice-no ${isConferenceHidden ? 'active' : ''}" title="参加しない（一覧から非表示にする）">
-              <input type="radio" class="choice-dot" name="attendance-${escapeHtml(event.id)}" value="no" data-action="attend-choice" data-choice="no" data-conference-id="${escapeHtml(event.id)}" ${isConferenceHidden ? 'checked' : ''}>
-              <span class="choice-text">なし（非表示）</span>
-            </label>
-          </div>
-        </div>` : ''}
+        ${!isConferenceEndedEvent ? renderPlannedAttendance(event) : ''}
       </div>
     `;
   }
@@ -2556,21 +2583,36 @@ function attachCardActionListeners(container = elements.eventList) {
       calBtn.addEventListener("click", () => addToCalendar(event));
     }
 
-    // 学会カードの「参加予定（あり・なし）」排他ラジオ選択
+    // 学会カードの参加予定3状態（yesは旧参加あり互換）
     const choiceButtons = card.querySelectorAll('[data-action="attend-choice"]');
     choiceButtons.forEach(btn => {
       btn.addEventListener("click", () => {
         const choice = btn.getAttribute("data-choice");
-        const isCurrentlyYes = state.attendingConferences.has(event.id);
+        const status = conferenceAttendanceStatus(event.id);
+
+        if (choice === 'registered' && status === 'registered') {
+          attendanceEditing.has(event.id) ? attendanceEditing.delete(event.id) : attendanceEditing.add(event.id);
+          renderEvents();
+          return;
+        }
 
         if (choice === "yes") {
           // すでに「あり」なら未選択に戻す、そうでなければ「あり」へ設定
-          setConferenceAttendance(event.id, isCurrentlyYes ? "none" : "yes");
+          setConferenceAttendance(event.id, status === 'yes' ? "none" : "yes");
+        } else if (choice === 'registered') {
+          setConferenceAttendance(event.id, 'registered');
         } else if (choice === "no") {
           // 「なし」へ設定（一覧から非表示）
           setConferenceAttendance(event.id, "no");
         }
       });
+    });
+
+    card.querySelector('[data-action="registration-date"]')?.addEventListener('change', eventChange => {
+      const date = eventChange.target.value;
+      if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+      conferenceRegistrations[event.id] = { ...conferenceRegistrations[event.id], date };
+      saveConferenceRegistrations();
     });
 
     // 学会カードの「参加しましたか？（参加した・参加しなかった）」排他2択ボタン

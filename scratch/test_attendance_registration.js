@@ -1,0 +1,30 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
+const memory = new Map();
+const context = vm.createContext({assert, console, localStorage:{getItem:key=>memory.get(key)||null,setItem:(key,value)=>memory.set(key,value)},
+  document:{getElementById:()=>null,addEventListener:()=>{}}});
+for (const file of ['venues.js','companies.js','events.js','script.js']) vm.runInContext(fs.readFileSync(path.join(__dirname,'..',file),'utf8'),context);
+vm.runInContext(`
+renderEvents=()=>{};showToast=()=>{};
+const id='oph-001', event=sampleEvents.find(e=>e.id===id);
+localStorage.setItem(ATTENDING_CONFERENCES_KEY,JSON.stringify([id]));
+localStorage.setItem(HIDDEN_CONFERENCES_KEY,JSON.stringify(['legacy-no']));
+loadAttendingConferences();loadHiddenConferences();
+assert.equal(conferenceAttendanceStatus(id),'yes');
+assert.equal(conferenceAttendanceStatus('legacy-no'),'no');
+assert.equal(conferenceAttendanceStatus('unselected'),'none');
+assert.ok(renderPlannedAttendance(event).includes('未登録'));
+setConferenceAttendance(id,'registered');
+assert.ok(state.attendingConferences.has(id));assert.ok(!state.hiddenConferences.has(id));
+assert.equal((renderPlannedAttendance(event).match(/type="radio"/g)||[]).length,1);
+conferenceRegistrations[id].date='2026-10-14';saveConferenceRegistrations();
+setConferenceAttendance(id,'yes');assert.equal(conferenceRegistrations[id].date,'2026-10-14');
+setConferenceAttendance(id,'registered');assert.ok(renderPlannedAttendance(event).includes('2026-10-14'));
+conferenceRegistrations={};state.attendingConferences.clear();loadAttendingConferences();
+assert.equal(conferenceAttendanceStatus(id),'registered');assert.equal(conferenceRegistrations[id].date,'2026-10-14');
+attendanceEditing.add(id);assert.equal((renderPlannedAttendance(event).match(/type="radio"/g)||[]).length,3);
+setConferenceAttendance(id,'no');assert.ok(state.hiddenConferences.has(id));assert.ok(!state.attendingConferences.has(id));
+assert.equal(conferenceRegistrations[id].date,'2026-10-14');
+setConferenceAttendance(id,'none');assert.equal(conferenceAttendanceStatus(id),'none');
+`,context);
+console.log('PASS: legacy attendance compatibility, 3 states, exclusivity, date retention/restoration and editing');

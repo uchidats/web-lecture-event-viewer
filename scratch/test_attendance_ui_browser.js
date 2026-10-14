@@ -51,60 +51,42 @@ async function main() {
 
 
 
-    const oldScript = spawnSync('git',['show','c38e0f7:script.js'],{cwd:root,encoding:'utf8'});
-    const oldCss = spawnSync('git',['show','c38e0f7:style.css'],{cwd:root,encoding:'utf8'});
-    assert.equal(oldScript.status,0); assert.equal(oldCss.status,0);
-    const oldCard = oldScript.stdout.slice(oldScript.stdout.indexOf('function createEventCardHtml('), oldScript.stdout.indexOf('function attachCardActionListeners('));
-    const currentCss = fs.readFileSync(path.join(root,'style.css'),'utf8');
-    await evaluate(`getTodayString = () => '2026-10-05'; state.attendingConferences.clear(); state.hiddenConferences.clear(); state.filters.abstractStatus.clear(); const attendanceTemplate = sampleEvents.find(e=>e.id==='oph-001'); const baselineCard = (` + oldCard + `); document.querySelector('link[href="style.css"]').disabled=true; const attendanceStyle=document.createElement('style'); document.head.appendChild(attendanceStyle);`);
-    const measurements=[];
-    for(const width of [320,360,480,1280]) {
+
+    await evaluate("getTodayString=()=> '2026-10-05'; state.filters.abstractStatus.clear();");
+    for (const width of [1280,390,320]) {
       await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});
-      await evaluate('attendanceStyle.textContent = '+JSON.stringify(oldCss.stdout)+'; elements.eventList.innerHTML=baselineCard(attendanceTemplate);');
-      const before=await evaluate('({bar:document.querySelector(".conf-attendance-bar").getBoundingClientRect().height,card:document.querySelector(".event-card").getBoundingClientRect().height})');
-      await evaluate('attendanceStyle.textContent = '+JSON.stringify(currentCss)+'; elements.eventList.innerHTML=createEventCardHtml(attendanceTemplate);');
-      const after=await evaluate(`(() => {
-        const bar=document.querySelector('.conf-attendance-bar'); const group=bar.querySelector('.conf-choice-group'); const label=group.firstElementChild; const buttons=[...group.querySelectorAll('button')];
-        return {bar:bar.getBoundingClientRect().height,card:document.querySelector('.event-card').getBoundingClientRect().height,
-          noOverflow:group.scrollWidth<=group.clientWidth+1 && document.documentElement.scrollWidth<=innerWidth+1,
-          labelFirst: label.classList.contains('conf-attendance-main-text'),
-          sameRow: buttons.every(b=>Math.abs(b.getBoundingClientRect().top-label.getBoundingClientRect().top)<15),
-          yesText: buttons[0].querySelector('.choice-text').innerText,
-          noText: buttons[1].querySelector('.choice-text').innerText,
-          touch:buttons.every(b=>b.getBoundingClientRect().height>=36),
-          unselected:buttons.every(b=>b.getAttribute('aria-pressed')==='false'),
-          hints:bar.querySelectorAll('.conf-attendance-hint,.conf-attending-active-tag').length};
-      })()`);
-      assert.equal(after.noOverflow,true,width+'px overflow'); assert.equal(after.labelFirst,true); assert.equal(after.touch,true); assert.equal(after.unselected,true); assert.equal(after.hints,0);
-      assert.equal(after.sameRow,true,width+'px single row');
-      assert.equal(after.yesText, width <= 480 ? 'あり' : 'あり（関連セミナー表示）');
-      assert.equal(after.noText, 'なし（非表示）');
-      assert.ok(after.bar<before.bar,width+'px bar height '+JSON.stringify({before,after}));
-      assert.ok(after.card<before.card,width+'px card height');
-      measurements.push({width,before:before.bar,after:after.bar});
+      await evaluate("localStorage.removeItem(CONFERENCE_REGISTRATION_KEY); localStorage.setItem(ATTENDING_CONFERENCES_KEY,'[]'); localStorage.setItem(HIDDEN_CONFERENCES_KEY,'[]'); conferenceRegistrations={};state.attendingConferences.clear();state.hiddenConferences.clear();attendanceEditing.clear();renderEvents();");
+      const check = async expression => assert.equal(await evaluate(expression),true,width+'px '+expression);
+      const click = async choice => evaluate('document.querySelector(\'[data-id="oph-001"] [data-choice="'+choice+'"]\').closest("label").querySelector(".choice-text").click()');
+      const layout = async () => check('document.documentElement.scrollWidth<=innerWidth && [...document.querySelectorAll(".conf-planned-choice-group")].every(g=>g.scrollWidth<=g.clientWidth+1)');
+      await check('document.querySelectorAll(\'[data-id="oph-001"] [data-action="attend-choice"]\').length===3 && !document.querySelector(\'[data-id="oph-001"] input:checked\')');
+      await layout();
+      await check('[...document.querySelectorAll(\'[data-id="oph-001"] .conf-choice-btn\')].every(label=>{const radio=label.querySelector("input").getBoundingClientRect(),text=label.querySelector("span").getBoundingClientRect();return Math.abs(radio.top+radio.height/2-text.top-text.height/2)<1 && radio.width===16 && getComputedStyle(label).borderTopWidth==="0px"})');
+      await click('yes');
+      await check('state.attendingConferences.has("oph-001") && !!document.querySelector(\'[data-id="oph-001-s2"]\') && document.querySelector(\'[data-id="oph-001"] [data-choice="yes"]\').checked');
+      await click('registered');
+      await check('document.querySelectorAll(\'[data-id="oph-001"] [data-action="attend-choice"]\').length===1 && !!document.querySelector(\'[data-id="oph-001-s2"]\')');
+      await check('(()=>{const label=document.querySelector(\'[data-id="oph-001"] .conf-registration-date\'),input=label.querySelector("input"),l=label.getBoundingClientRect(),r=input.getBoundingClientRect();return Math.abs(l.top+l.height/2-r.top-r.height/2)<1 && input.type==="date"})()');
+      await layout();
+      for (const date of ['2026-10-14','2026-10-15']) {
+        await evaluate('(()=>{const dateInput=document.querySelector(\'[data-id="oph-001"] input[type="date"]\');dateInput.value='+JSON.stringify(date)+';dateInput.dispatchEvent(new Event("change",{bubbles:true}));})()');
+        await check('JSON.parse(localStorage.getItem(CONFERENCE_REGISTRATION_KEY))["oph-001"].date==='+JSON.stringify(date));
+      }
+      await call('Page.reload');
+      for(let i=0;i<100;i++){if(await evaluate('typeof createEventCardHtml==="function"'))break;await delay(100);}
+      await evaluate("getTodayString=()=> '2026-10-05';renderEvents();");
+      await check('conferenceAttendanceStatus("oph-001")==="registered" && document.querySelector(\'[data-id="oph-001"] input[type="date"]\').value==="2026-10-15"');
+      await click('registered');
+      await check('document.querySelectorAll(\'[data-id="oph-001"] [data-action="attend-choice"]\').length===3');
+      await click('yes');await click('registered');
+      await check('document.querySelector(\'[data-id="oph-001"] input[type="date"]\').value==="2026-10-15"');
+      await click('registered');await click('no');
+      await check('state.hiddenConferences.has("oph-001") && !document.querySelector(\'[data-id="oph-001"]\') && !document.querySelector(\'[data-id="oph-001-s2"]\')');
+      await evaluate('conferenceRegistrations={};localStorage.removeItem(CONFERENCE_REGISTRATION_KEY);localStorage.setItem(ATTENDING_CONFERENCES_KEY,JSON.stringify(["oph-001"]));localStorage.setItem(HIDDEN_CONFERENCES_KEY,JSON.stringify(["legacy-no"]));state.attendingConferences.clear();state.hiddenConferences.clear();loadAttendingConferences();loadHiddenConferences();renderEvents();');
+      await check('conferenceAttendanceStatus("oph-001")==="yes" && conferenceAttendanceStatus("legacy-no")==="no" && conferenceAttendanceStatus("unset")==="none"');
+      await layout();
+      console.log('PASS: '+width+'px initial/registered/unregistered/none, related seminars, date edit/reload/restoration, legacy migration, overflow');
     }
-    const behavior=await evaluate(`(() => {
-      renderEvents();
-      const button=choice=>document.querySelector('[data-id="oph-001"] [data-choice="'+choice+'"]');
-      const child=()=>!!document.querySelector('[data-id="oph-001-s2"]');
-      const initial=!child() && button('yes').getAttribute('aria-pressed')==='false' && button('no').getAttribute('aria-pressed')==='false';
-      const labels=[button('yes').closest('.conf-choice-group').firstElementChild.textContent, button('yes').querySelector('.choice-text').textContent, button('no').querySelector('.choice-text').textContent];
-      button('yes').querySelector('.choice-text').click();
-      const yes=child() && button('yes').getAttribute('aria-pressed')==='true' && button('no').getAttribute('aria-pressed')==='false' && !state.hiddenConferences.has('oph-001');
-      const savedYes=JSON.parse(localStorage.getItem(ATTENDING_CONFERENCES_KEY)).includes('oph-001');
-      state.attendingConferences.clear(); loadAttendingConferences(); const restoredYes=state.attendingConferences.has('oph-001');
-      button('yes').click(); const cleared=!child() && !state.attendingConferences.has('oph-001');
-      button('yes').click(); button('no').querySelector('.choice-text').click();
-      const no=!document.querySelector('[data-id="oph-001"]') && !child() && !state.attendingConferences.has('oph-001') && state.hiddenConferences.has('oph-001');
-      const savedNo=JSON.parse(localStorage.getItem(HIDDEN_CONFERENCES_KEY)).includes('oph-001') && !JSON.parse(localStorage.getItem(ATTENDING_CONFERENCES_KEY)).includes('oph-001');
-      state.hiddenConferences.clear(); loadHiddenConferences(); const restoredNo=state.hiddenConferences.has('oph-001');
-      unhideConference('oph-001');
-      return {initial,yes,savedYes,restoredYes,cleared,no,savedNo,restoredNo,labels};
-    })()`);
-    assert.deepEqual(behavior.labels, ['参加予定：', 'あり（関連セミナー表示）', 'なし（非表示）']);
-    for(const [key,value] of Object.entries(behavior)) if(key!=='labels') assert.equal(value,true,key);
-    console.log('PASS: compact attendance label/chips, no overflow, smaller bars/cards at 320/360/480/1280px, initial/yes/no/exclusivity, child visibility, storage save/load');
-    console.log(JSON.stringify(measurements));
     await call('Browser.close');
   } finally {if(socket) socket.close();if(browser.exitCode===null) browser.kill();}
 }
