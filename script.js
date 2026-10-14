@@ -1224,24 +1224,22 @@ function renderRegistrationHtml(event, today = new Date()) {
     const deadline = parseAbstractDate(period.deadline);
     const start = parseAbstractDate(period.start);
     const closed = period.deadlineTimestamp !== null && period.deadlineTimestamp < registrationState.now;
-    let value = '未定', prefix = '';
+    let value = '未定', urgent = false;
     if (closed) {
       value = `${formatDeadline(period.deadline, {showTime:false})} 締切済`;
     } else if (start && period.startTimestamp > registrationState.now) {
       value = `${formatDeadline(period.start)}開始${deadline ? `／${formatDeadline(period.deadline)}締切` : ''}`;
     } else if (deadline) {
       const days = getDaysUntilAbstractDeadline({isConference:true,timeZone:event.registration?.timeZone||'Asia/Tokyo',abstractSubmission:{deadline:period.deadline}},new Date(registrationState.now));
-      if (days !== null && days >= 0 && days <= 30 && registrationState.next === period) {
-        prefix = days === 0 ? '本日締切：' : `締切${days}日前：`;
-        value = `${formatDeadline(period.deadline)} 締切`;
-      } else value = `${formatDeadline(period.deadline)} 締切`;
+      urgent = days !== null && days >= 0 && days <= 30 && registrationState.next === period;
+      value = `${formatDeadline(period.deadline)} 締切`;
     } else if (start) {
       value = `${formatDeadline(period.start, { showTime: false })}開始`;
     }
     if (!registrationState.next && registrationState.expired && !closed) value += '（事前登録終了）';
-    return { label, value, closed, prefix };
+    return { label, value, closed, urgent };
   }) : [{ label: defaultLabel, value: legacy && !/^(要確認|未確認)$/.test(legacy) ? formatLegacyCardDeadline(legacy, event, {showTime: !/締切済|受付終了/.test(legacy)}) : '未定', closed: /締切済|受付終了/.test(legacy || '') }];
-  return rows.map(({ label, value, closed, prefix }) => `<div class="conf-item conf-registration-period"><span class="conf-label">${escapeHtml(label)}：</span><span class="conf-val registration-deadline${closed ? ' closed' : ''}">${prefix ? `<span class="registration-deadline-prefix">${escapeHtml(prefix)}</span>` : ''}${escapeHtml(value)}</span></div>`).join('');
+  return rows.map(({ label, value, closed, urgent }) => `<div class="conf-item conf-registration-period"><span class="conf-label">${escapeHtml(label)}：</span><span class="conf-val registration-deadline${closed ? ' closed' : urgent ? ' urgent' : ''}">${escapeHtml(value)}</span></div>`).join('');
 }
 
 function getAbstractSubmissionState(event, baseDate = new Date()) {

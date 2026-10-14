@@ -18,11 +18,11 @@ vm.runInContext(`
   getTodayString = () => '2026-10-07';
   const event = sampleEvents.find(e => e.id === 'conf-jp-jrvs-2026');
   const html = renderRegistrationHtml(event);
-  assert.ok(html.includes('事前参加登録：</span>'));assert.ok(html.includes('締切9日前：</span>10月16日'));
+  assert.ok(html.includes('事前参加登録：</span>'));assert.ok(html.includes('registration-deadline urgent">10月16日 締切'));assert.ok(!html.includes('日前'));
   assert.ok(!html.includes('直前・当日登録'), 'Only next advance phase is shown');
   assert.ok(!html.includes('締切済'));
   assert.ok(!createEventCardHtml(event).includes('早期登録締切'));
-  assert.ok(renderRegistrationHtml(event, '2026-10-16').includes('本日締切：</span>10月16日'));
+  assert.ok(renderRegistrationHtml(event, '2026-10-16').includes('registration-deadline urgent">10月16日 締切'));
   assert.ok(renderRegistrationHtml(event, '2026-10-17').includes('事前登録終了'));
   const pastDeadline = renderRegistrationHtml(event, '2026-10-17');
   assert.ok(pastDeadline.includes('事前登録終了'));

@@ -1905,7 +1905,7 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
 .abstract-deadline.urgent { color: #b91c1c; font-weight: 600; }
 .registration-deadline { color: #0f172a; }
 .registration-deadline.closed { color: #64748b; }
-.registration-deadline-prefix { color: #b91c1c; font-weight: 600; }
+.registration-deadline.urgent { color: #b91c1c; }
 
 .abstract-status-tag.soon {
   background: #fffbeb;
