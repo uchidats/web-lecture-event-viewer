@@ -1248,7 +1248,7 @@ function renderAbstractSubmissionHtml(event, baseDate = new Date()) {
     parts.push(`<span class="abstract-deadline${urgent ? ' urgent' : ''}">${escapeHtml(deadlineLabel)} 締切${extensionLabel}</span>`);
   }
   if (!isClosed && info.status === "upcoming" && sub.startDate) parts.push(`<span class="abstract-start-date">募集開始予定 ${escapeHtml(sub.startDate)}</span>`);
-  if (!info.isOpen && sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link"><span>演題募集詳細</span>${renderExternalLinkIconHtml()}</a>`);
+  if (!info.isOpen && sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link"><span>詳細</span>${renderExternalLinkIconHtml()}</a>`);
   return parts.join(" ") || renderAbstractUnknownHtml(event);
 }
 
