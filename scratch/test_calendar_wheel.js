@@ -1,0 +1,16 @@
+const assert=require('node:assert/strict');
+const {createWheelMonthGesture}=require('../calendar-view');
+const gesture=createWheelMonthGesture();
+const send=(deltaX,now,deltaY=0,deltaMode=0,ctrlKey=false)=>gesture({deltaX,deltaY,now,deltaMode,ctrlKey});
+assert.equal(send(0,0,100),null);
+assert.equal(send(40,0,35),null);
+assert.equal(send(100,0,0,0,true),null);
+assert.equal(send(20,0).forward,null);
+assert.equal(send(25,20).forward,null);
+assert.equal(send(40,40).forward,true);
+for(let t=60;t<2000;t+=20)assert.equal(send(100,t).forward,null,'continuous inertia moves once');
+assert.equal(send(-90,2500).forward,false);
+assert.equal(send(100,2700).forward,null);
+assert.equal(send(100,3400).forward,true);
+const lines=createWheelMonthGesture();assert.equal(lines({deltaX:-6,deltaY:0,deltaMode:1,now:0}).forward,false);
+console.log('PASS: horizontal intent, pixel/line deltas, left/right, threshold, long inertia, cooldown, vertical and zoom');

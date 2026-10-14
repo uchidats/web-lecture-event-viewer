@@ -141,6 +141,23 @@
       extendedProps: { originalEvent: event, isCompactSingleDay: true }
     };
   }
+  function createWheelMonthGesture() {
+    let last = -Infinity, lockedUntil = -Infinity, total = 0, fired = false;
+    return event => {
+      const { deltaX, deltaY, deltaMode = 0, now, ctrlKey } = event;
+      if (ctrlKey || !Number.isFinite(deltaX) || !Number.isFinite(deltaY) || Math.abs(deltaX) <= Math.abs(deltaY) * 1.5) return null;
+      if (now - last >= 400) { total = 0; fired = false; }
+      last = now;
+      if (fired || now < lockedUntil) return { forward: null };
+      const amount = deltaX * (deltaMode === 1 ? 16 : deltaMode === 2 ? 800 : 1);
+      if (Math.sign(amount) !== Math.sign(total)) total = 0;
+      total += amount;
+      if (Math.abs(total) < 80) return { forward: null };
+      fired = true; lockedUntil = now + 600;
+      return { forward: total > 0 };
+    };
+  }
+
   function createView(document, window, dependencies) {
     const panel = document.getElementById('calendar-panel');
     const list = document.getElementById('event-list');
@@ -209,6 +226,14 @@
       if (calendar) calendar.setOption('dayMaxEvents', desktopGrid.matches ? false : 3);
     });
     let swipe = null, suppressClickUntil = 0;
+    const wheelGesture = createWheelMonthGesture();
+    calendarElement.addEventListener('wheel', event => {
+      if (mode !== 'calendar' || !calendar || !window.matchMedia('(any-pointer: fine)').matches) return;
+      const intent = wheelGesture({deltaX:event.deltaX,deltaY:event.deltaY,deltaMode:event.deltaMode,ctrlKey:event.ctrlKey,now:window.performance.now()});
+      if (!intent) return;
+      event.preventDefault();
+      if (intent.forward !== null && !monthTransition) slideMonth(intent.forward);
+    }, { passive: false });
     calendarElement.addEventListener('pointerdown', event => {
       if (monthTransition) { swipe = null; return; }
       // A new deliberate tap/click must never be swallowed after a swipe.
@@ -541,7 +566,8 @@
     formatCompactDate,
     formatCompactHeading,
     eventDurationDays,
-    compareCompactEvents
+    compareCompactEvents,
+    createWheelMonthGesture
   };
   let view;
   api.init = dependencies => { view = createView(root.document, root, dependencies); };
