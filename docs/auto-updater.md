@@ -128,7 +128,7 @@ applyコマンド自体はGit commit/pushを行わない。安全な適用後の
 
 ## GitHub Actions
 
-`.github/workflows/update-conferences.yml` は毎日06:17 JSTと手動実行。mainだけが対象。最初に回帰テストを実行し、取得・判定後にも回帰テストを行う。Node.js 24を使い、依存インストール不要。
+`.github/workflows/update-conferences.yml` は必要時の手動実行のみ。cronによる定期実行は行わず、scheduled updaterはGemini Conference Monitor（毎日06:15 JST）に一本化する。mainだけが対象。最初に回帰テストを実行し、取得・判定後にも回帰テストを行う。Node.js 24を使い、依存インストール不要。
 
 既定はdry-run。`CONFERENCE_AUTO_APPLY=true` というrepository variableを設定すると、上限内・日付正常・テスト成功の実行だけ、データと履歴／例外キューを自動commitしてmainへ通常pushする。毎回の承認は不要。pushが競合した場合はforce pushや自動マージをせず失敗させる。ブランチ保護がbotのpushを禁止する場合も失敗となる。
 
@@ -136,7 +136,7 @@ applyコマンド自体はGit commit/pushを行わない。安全な適用後の
 
 ## 緊急停止と復元
 
-1. Actionsのrepository variable `CONFERENCE_AUTO_UPDATE_DISABLED=true` で定期／手動jobを停止する。実行中の場合はそのrunをキャンセルする。
+1. Actionsのrepository variable `CONFERENCE_AUTO_UPDATE_DISABLED=true` で手動jobも停止する。実行中の場合はそのrunをキャンセルする。
 2. 本番反映だけを止めて観測を続けるには `CONFERENCE_AUTO_APPLY` をfalseに戻す。
 3. ローカルは `AUTO_UPDATE_DISABLED=1`、全体設定は `conference-sources.js` の `enabled: false`、学会単位は `autoUpdateEnabled: false`。
 4. 適用済みコミットは `git revert <自動更新コミット>` で復元できる。コミット前はbackupディレクトリのevents.jsを戻す。必要なら同じbackupのメタデータ／履歴も戻す。元々存在しなかった管理ファイルは削除対象になるので、historyとreportを見て作業する。

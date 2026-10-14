@@ -1,8 +1,6 @@
 name: Conference Auto Updater v1
 
 on:
-  schedule:
-    - cron: '17 21 * * *' # 06:17 JST daily
   workflow_dispatch:
 
 concurrency:
