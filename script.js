@@ -282,10 +282,16 @@ function conferenceAttendanceStatus(id) {
   return conferenceRegistrations[id]?.status === 'registered' ? 'registered' : 'yes';
 }
 
+function formatConferenceRegistrationDate(date) {
+  const parsed = parseAbstractDate(date);
+  return parsed ? `${parsed.month}月${parsed.day}日` : '';
+}
+
 function renderPlannedAttendance(event) {
   const status = conferenceAttendanceStatus(event.id);
   const collapsed = status === 'registered' && !attendanceEditing.has(event.id);
   const date = conferenceRegistrations[event.id]?.date || '';
+  const dateLabel = formatConferenceRegistrationDate(date);
   return `<div class="conf-attendance-bar conf-planned-attendance-bar ${state.attendingConferences.has(event.id) ? 'attending' : ''}">
     <div class="conf-choice-group conf-planned-choice-group" role="radiogroup" aria-label="参加予定の選択">
       <span class="conf-attendance-main-text">参加予定：</span>
@@ -294,7 +300,7 @@ function renderPlannedAttendance(event) {
           <input type="radio" class="choice-dot" name="attendance-${escapeHtml(event.id)}" value="${choice}" data-action="attend-choice" data-choice="${choice}" data-conference-id="${escapeHtml(event.id)}" ${status === choice ? 'checked' : ''}>
           <span class="choice-text">${label}</span>
         </label>`).join('')}
-      ${status === 'registered' ? `<label class="conf-registration-date"><input type="date" data-action="registration-date" aria-label="登録日" value="${escapeHtml(date)}"></label>` : ''}
+      ${status === 'registered' ? `<span class="conf-registration-date${dateLabel ? ' has-date' : ''}">${dateLabel ? `<button type="button" class="conf-registration-date-text" data-action="edit-registration-date" aria-label="登録日 ${escapeHtml(dateLabel)}を変更">${escapeHtml(dateLabel)}</button>` : ''}<input type="date" data-action="registration-date" aria-label="登録日" value="${escapeHtml(date)}" ${dateLabel ? 'tabindex="-1"' : ''}></span>` : ''}
     </div>
   </div>`;
 }
@@ -2630,6 +2636,18 @@ function attachCardActionListeners(container = elements.eventList) {
       if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
       conferenceRegistrations[event.id] = { ...conferenceRegistrations[event.id], date };
       saveConferenceRegistrations();
+      renderEvents();
+    });
+
+    card.querySelector('[data-action="edit-registration-date"]')?.addEventListener('click', () => {
+      const input = card.querySelector('[data-action="registration-date"]');
+      try {
+        if (typeof input.showPicker === 'function') { input.showPicker(); return; }
+      } catch (_) { /* Older browsers can edit the same native input directly. */ }
+      input.closest('.conf-registration-date').classList.remove('has-date');
+      card.querySelector('[data-action="edit-registration-date"]').hidden = true;
+      input.focus();
+      input.click();
     });
 
     // 学会カードの「参加しましたか？（参加した・参加しなかった）」排他2択ボタン

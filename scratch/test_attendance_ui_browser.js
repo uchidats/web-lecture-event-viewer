@@ -37,7 +37,7 @@ async function main() {
       pending.set(id, { resolve, reject, timeout }); socket.send(JSON.stringify({ id, method, params }));
     });
     const evaluate = async expression => {
-      const result = await call('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true });
+      const result = await call('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true, userGesture: true });
       if (result.exceptionDetails) throw new Error(JSON.stringify(result.exceptionDetails));
       return result.result.value;
     };
@@ -72,6 +72,10 @@ async function main() {
       for (const date of ['2026-10-14','2026-10-15']) {
         await evaluate('(()=>{const dateInput=document.querySelector(\'[data-id="oph-001"] input[type="date"]\');dateInput.value='+JSON.stringify(date)+';dateInput.dispatchEvent(new Event("change",{bubbles:true}));})()');
         await check('JSON.parse(localStorage.getItem(CONFERENCE_REGISTRATION_KEY))["oph-001"].date==='+JSON.stringify(date));
+        await check('(()=>{const group=document.querySelector(\'[data-id="oph-001"] .conf-planned-choice-group\'),text=group.querySelector(".conf-registration-date-text"),input=group.querySelector("input[type=date]"),radio=group.querySelector(".conf-choice-btn").getBoundingClientRect(),r=text.getBoundingClientRect();return text.textContent==="10月'+date.slice(-2)+'日" && getComputedStyle(input).opacity==="0" && Math.abs(radio.top+radio.height/2-r.top-r.height/2)<1;})()');
+        await check('(()=>{const card=document.querySelector(\'[data-id="oph-001"]\'),input=card.querySelector("input[type=date]");let opened=false;input.showPicker=()=>{HTMLInputElement.prototype.showPicker.call(input);opened=true;};card.querySelector(".conf-registration-date-text").click();return opened;})()');
+        await call('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});
+        await call('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});
       }
       await call('Page.reload');
       for(let i=0;i<100;i++){if(await evaluate('typeof createEventCardHtml==="function"'))break;await delay(100);}

@@ -1583,12 +1583,40 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
 }
 
 .conf-registration-date {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 4px;
   font-size: 0.78rem;
   color: #334155;
   max-width: 100%;
+}
+
+.conf-registration-date-text {
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: #cbd5e1;
+  text-underline-offset: 3px;
+}
+
+.conf-registration-date-text:hover {
+  color: #1d4ed8;
+  text-decoration-color: currentColor;
+}
+
+.conf-registration-date.has-date input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .conf-registration-date input {
