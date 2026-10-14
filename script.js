@@ -1209,6 +1209,17 @@ function renderExternalLinkIconHtml() {
   return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>`;
 }
 
+function renderAbstractUnknownHtml(event) {
+  for (const value of [event.abstractSubmission?.url, event.eventOfficialUrl]) {
+    try {
+      const url = new URL(value);
+      if (!['https:', 'http:'].includes(url.protocol) || url.username || url.password) continue;
+      return `<a href="${escapeHtml(value)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link"><span>公式サイトで確認</span>${renderExternalLinkIconHtml()}</a>`;
+    } catch {}
+  }
+  return '<span class="abstract-unknown">情報未確認</span>';
+}
+
 function renderAbstractSubmissionHtml(event, baseDate = new Date()) {
   const sub = event.abstractSubmission;
   if (!sub) {
@@ -1218,6 +1229,7 @@ function renderAbstractSubmissionHtml(event, baseDate = new Date()) {
       const date = formatAbstractDeadline(rawDate, {showTime:false});
       return `<span class="deadline-highlight closed">${date ? escapeHtml(date) + ' ' : ''}締切済</span>`;
     }
+    if (/未定|未確認|不明|要確認/.test(legacy)) return renderAbstractUnknownHtml(event);
     return `<span class="deadline-highlight">${escapeHtml(legacy)}</span>`;
   }
   const info = getAbstractSubmissionState(event, baseDate);
@@ -1228,6 +1240,7 @@ function renderAbstractSubmissionHtml(event, baseDate = new Date()) {
   const extensionLabel = sub.extended === true ? '（延長）' : '';
   const parts = [];
   if (isClosed) return `<span class="deadline-highlight closed">${deadlineLabel ? escapeHtml(deadlineLabel) + ' 締切済' + extensionLabel : '締切済'}</span>`;
+  if (info.status === 'unknown' && !deadlineLabel) return renderAbstractUnknownHtml(event);
   if (info.isOpen && sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link abstract-open-link"><span>受付中</span>${renderExternalLinkIconHtml()}</a>`);
   else if (labels[displayStatus]) parts.push(`<span class="abstract-status-tag ${displayStatus}">${labels[displayStatus]}</span>`);
   if (deadlineLabel) {
@@ -1236,7 +1249,7 @@ function renderAbstractSubmissionHtml(event, baseDate = new Date()) {
   }
   if (!isClosed && info.status === "upcoming" && sub.startDate) parts.push(`<span class="abstract-start-date">募集開始予定 ${escapeHtml(sub.startDate)}</span>`);
   if (!info.isOpen && sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link"><span>演題募集詳細</span>${renderExternalLinkIconHtml()}</a>`);
-  return parts.join(" ") || '<span class="abstract-unknown">演題募集情報未確認</span>';
+  return parts.join(" ") || renderAbstractUnknownHtml(event);
 }
 
 /**

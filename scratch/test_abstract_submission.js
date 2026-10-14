@@ -6,7 +6,7 @@ const read = file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
 const fixedNow=Date.parse('2026-10-04T00:00:00+09:00');
 class FixedDate extends Date {constructor(...args){super(...(args.length?args:[fixedNow]));}static now(){return fixedNow;}}
 const context = vm.createContext({
-  assert, console, Date:FixedDate, setTimeout, clearTimeout,
+  assert, console, URL, Date:FixedDate, setTimeout, clearTimeout,
   document: { getElementById: () => null, addEventListener: () => {} }
 });
 for (const file of ['venues.js', 'companies.js', 'events.js', 'script.js']) vm.runInContext(read(file), context);
@@ -34,7 +34,7 @@ vm.runInContext(`
   }
   for (const [status, label] of [
     ['open', '受付中'], ['upcoming', '演題募集予定'],
-    ['closed', '2026年11月5日 締切済'], ['unknown', '演題募集情報未確認']
+    ['closed', '2026年11月5日 締切済'], ['unknown', '公式サイトで確認']
   ]) {
     const event = make(status, status === 'unknown' ? null : '2026-11-05');
     assert.ok(createEventCardHtml(event).includes(label));
@@ -43,7 +43,7 @@ vm.runInContext(`
     }});
     if(status==='closed')assert.ok(!linked.includes('<a '));
     else {assert.ok(linked.includes('target="_blank" rel="noopener noreferrer"'));assert.ok(linked.includes('https://example.com/abstract?a=1&amp;b=2'));}
-    assert.ok(!renderAbstractSubmissionHtml(event).includes('<a '));
+    if(status!=='unknown')assert.ok(!renderAbstractSubmissionHtml(event).includes('<a '));
   }
   assert.ok(renderAbstractSubmissionHtml(make('open', '2026-11-05')).includes('2026年11月5日 締切'));
   assert.ok(renderAbstractSubmissionHtml(make('open', '2027-01-05')).includes('2027年1月5日 締切'));
