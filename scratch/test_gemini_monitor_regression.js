@@ -18,7 +18,7 @@ async function testAll() {
   const root = path.resolve(__dirname, '..');
   const dataset = loadEvents(root);
   const events = dataset.events;
-  assert.equal(events.length, 95, 'Dataset must contain 95 events');
+  assert.equal(events.length, 94, 'Dataset must contain 94 events');
   const pharmacology=events.find(e=>e.id==='conf-jp-pharmacology-2026');
   assert.equal(pharmacology.title,'第46回 日本眼薬理学会');
   const official={same_event:true,source_quality:SOURCE_QUALITY.OFFICIAL_EVENT_PAGE,confidence:.98,official_title:'第46回日本眼薬理学会',venue:'じゅうろくプラザ',recommended_action:RECOMMENDED_ACTIONS.SAFE_AUTO_UPDATE};

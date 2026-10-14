@@ -3,7 +3,7 @@ const {loadEvents}=require('../scripts/auto-updater/storage');
 const audit=require('../reports/event-metadata-audit-2026-10-09.json');
 const corrections=require('../reports/event-metadata-high-priority-fixes-2026-10-09.json');
 const events=loadEvents(path.resolve(__dirname,'..')).events;
-assert.equal(events.length,95);assert.equal(corrections.results.length,14);
+assert.equal(events.length,94);assert.equal(corrections.results.length,14);
 assert.equal(corrections.results.filter(r=>r.status==='corrected').length,13);
 assert.equal(corrections.results.filter(r=>r.status==='held').length,1);
 for(const [i,r] of audit.records.entries()){

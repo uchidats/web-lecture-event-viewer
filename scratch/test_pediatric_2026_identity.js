@@ -3,7 +3,7 @@ const path = require('node:path');
 const { loadEvents, validateEvents } = require('../scripts/auto-updater/storage');
 const { auditConferenceIdentities } = require('../scripts/conference-identity');
 const events = loadEvents(path.resolve(__dirname, '..')).events;
-assert.equal(events.length, 95);
+assert.equal(events.length, 94);
 assert.ok(!events.some(e => e.id === 'oph-003'));
 const pediatric = events.find(e => e.id === 'conf-jp-pediatric-2026');
 const strabismus = events.find(e => e.id === 'conf-jp-strabismus-2026');

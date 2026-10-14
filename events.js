@@ -608,43 +608,6 @@ const sampleEvents = [
     "isConference": true
   },
   {
-    "id": "oph-002",
-    "title": "緑内障薬物治療Update 〜配合点眼薬とSLTのポジショニング〜",
-    "subtitle": "目標眼圧達成率の向上とアドヒアランス改善を目指す最新エビデンス",
-    "date": "2026-10-15",
-    "endDate": "2026-10-15",
-    "time": "19:00 - 20:30",
-    "region": "全国Web",
-    "venue": "Zoomウェビナー（オンラインライブ配信）",
-    "specialty": "緑内障",
-    "eventType": "講演会・勉強会",
-    "format": "Web",
-    "sponsor": "日本緑内障先端治療研究会 / 眼科メディカルファーマ",
-    "credits": "日本眼科学会生涯教育 1単位",
-    "creditUnits": 1,
-    "calendarStatus": {
-      "google": {
-        "status": "free",
-        "conflicts": []
-      },
-      "icloud": {
-        "status": "free",
-        "conflicts": []
-      },
-      "isAdded": false
-    },
-    "officialUrl": "https://example.com/glaucoma-webinar-oct",
-    "pdfUrl": "glaucoma_update_2026.pdf",
-    "tags": [
-      "点眼指導",
-      "SLT",
-      "Webセミナー",
-      "専門医単位"
-    ],
-    "description": "早期〜中期緑内障における第一選択薬の使い分けと、防腐剤フリー点眼薬の角膜上皮への影響、SLT導入のベストタイミングを検証。",
-    "isConference": false
-  },
-  {
     "id": "oph-001",
     "eventOfficialUrl": "https://convention.jtbcom.co.jp/80ringan/index.html",
     "societyUrl": "https://www.nichigan.or.jp/",
