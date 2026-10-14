@@ -56,7 +56,7 @@ async function main() {
     const requestedWidth=Number(process.argv.find(arg=>arg.startsWith('--width='))?.split('=')[1]);
     for (const width of requestedWidth ? [requestedWidth] : [1280,390,320]) {
       await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});
-      await evaluate("localStorage.removeItem(CONFERENCE_REGISTRATION_KEY); localStorage.setItem(ATTENDING_CONFERENCES_KEY,'[]'); localStorage.setItem(HIDDEN_CONFERENCES_KEY,'[]'); conferenceRegistrations={};state.attendingConferences.clear();state.hiddenConferences.clear();attendanceEditing.clear();renderEvents();");
+      await evaluate("localStorage.removeItem(CONFERENCE_REGISTRATION_KEY); localStorage.setItem(ATTENDING_CONFERENCES_KEY,'[]'); localStorage.setItem(HIDDEN_CONFERENCES_KEY,'[]'); conferenceRegistrations={};state.attendingConferences.clear();state.hiddenConferences.clear();renderEvents();");
       const check = async expression => assert.equal(await evaluate(expression),true,width+'px '+expression);
       const click = async choice => evaluate('document.querySelector(\'[data-id="oph-001"] [data-choice="'+choice+'"]\').closest("label").querySelector(".choice-text").click()');
       const layout = async () => check('document.documentElement.scrollWidth<=innerWidth && [...document.querySelectorAll(".conf-planned-choice-group")].every(g=>g.scrollWidth<=g.clientWidth+1)');
@@ -96,8 +96,13 @@ async function main() {
       await check('conferenceAttendanceStatus("oph-001")==="registered" && document.querySelector(\'[data-id="oph-001"] input[type="date"]\').value==="2026-10-15"');
       await click('registered');
       await check('document.querySelectorAll(\'[data-id="oph-001"] [data-action="attend-choice"]\').length===3');
-      await click('yes');await click('registered');
+      await check('conferenceAttendanceStatus("oph-001")==="none" && !document.querySelector(\'[data-id="oph-001"] [data-action="registration-date"]\') && !document.querySelector(\'[data-id="oph-001"] input:checked\') && !document.querySelector(\'[data-id="oph-001"]\').classList.contains("card-attending-conference") && !document.querySelector(\'[data-id="oph-001-s2"]\') && JSON.parse(localStorage.getItem(CONFERENCE_REGISTRATION_KEY))["oph-001"].date==="2026-10-15"');
+      await click('registered');
       await check('document.querySelector(\'[data-id="oph-001"] input[type="date"]\').value==="2026-10-15"');
+      await check('document.querySelector(\'[data-id="oph-001"] [data-choice="registered"]\').checked && !!document.querySelector(\'[data-id="oph-001-s2"]\')');
+      await click('registered');await click('yes');
+      await check('conferenceAttendanceStatus("oph-001")==="yes" && !document.querySelector(\'[data-id="oph-001"] [data-action="registration-date"]\')');
+      await click('registered');
       await click('registered');await click('no');
       await check('state.hiddenConferences.has("oph-001") && !document.querySelector(\'[data-id="oph-001"]\') && !document.querySelector(\'[data-id="oph-001-s2"]\')');
       await evaluate('conferenceRegistrations={};localStorage.removeItem(CONFERENCE_REGISTRATION_KEY);localStorage.setItem(ATTENDING_CONFERENCES_KEY,JSON.stringify(["oph-001"]));localStorage.setItem(HIDDEN_CONFERENCES_KEY,JSON.stringify(["legacy-no"]));state.attendingConferences.clear();state.hiddenConferences.clear();loadAttendingConferences();loadHiddenConferences();renderEvents();');

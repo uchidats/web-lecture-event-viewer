@@ -269,7 +269,6 @@ const ATTENDING_CONFERENCES_KEY = "ophthalconf_attending_conferences";
 const HIDDEN_CONFERENCES_KEY = "ophthalconf_hidden_conferences";
 const CONFERENCE_REGISTRATION_KEY = "ophthalconf_conference_registration_v1";
 let conferenceRegistrations = {};
-const attendanceEditing = new Set();
 
 function saveConferenceRegistrations() {
   try { localStorage.setItem(CONFERENCE_REGISTRATION_KEY, JSON.stringify(conferenceRegistrations)); }
@@ -289,14 +288,14 @@ function formatConferenceRegistrationDate(date) {
 
 function renderPlannedAttendance(event) {
   const status = conferenceAttendanceStatus(event.id);
-  const collapsed = status === 'registered' && !attendanceEditing.has(event.id);
+  const collapsed = status === 'registered';
   const date = conferenceRegistrations[event.id]?.date || '';
   const dateLabel = formatConferenceRegistrationDate(date);
   return `<div class="conf-attendance-bar conf-planned-attendance-bar ${state.attendingConferences.has(event.id) ? 'attending' : ''}">
     <div class="conf-choice-group conf-planned-choice-group" role="radiogroup" aria-label="参加予定の選択">
       <span class="conf-attendance-main-text">参加予定：</span>
       ${[['registered','登録済'],['yes','未登録'],['no','なし']].filter(([choice]) => !collapsed || choice === 'registered').map(([choice,label]) => `
-        <label class="conf-choice-btn choice-${choice} ${status === choice ? 'active' : ''}" ${choice === 'registered' ? 'title="選択済みの登録済を再タップして状態を変更"' : ''}>
+        <label class="conf-choice-btn choice-${choice} ${status === choice ? 'active' : ''}" ${choice === 'registered' ? 'title="選択済みの登録済を再タップして解除"' : ''}>
           <input type="radio" class="choice-dot" name="attendance-${escapeHtml(event.id)}" value="${choice}" data-action="attend-choice" data-choice="${choice}" data-conference-id="${escapeHtml(event.id)}" ${status === choice ? 'checked' : ''}>
           <span class="choice-text">${label}</span>
         </label>`).join('')}
@@ -373,7 +372,6 @@ function setConferenceAttendance(conferenceId, choice) {
   if (!['registered', 'yes', 'no', 'none'].includes(choice)) return;
   const previous = conferenceRegistrations[conferenceId] || {};
   conferenceRegistrations[conferenceId] = { ...previous, status: choice };
-  attendanceEditing.delete(conferenceId);
   saveConferenceRegistrations();
   const conf = state.events.find(e => e.id === conferenceId);
   const confTitle = conf ? conf.title : "学会";
@@ -2612,8 +2610,7 @@ function attachCardActionListeners(container = elements.eventList) {
         const status = conferenceAttendanceStatus(event.id);
 
         if (choice === 'registered' && status === 'registered') {
-          attendanceEditing.has(event.id) ? attendanceEditing.delete(event.id) : attendanceEditing.add(event.id);
-          renderEvents();
+          setConferenceAttendance(event.id, 'none');
           return;
         }
 
