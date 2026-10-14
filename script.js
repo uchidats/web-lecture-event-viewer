@@ -1210,11 +1210,11 @@ function renderExternalLinkIconHtml() {
 }
 
 function renderAbstractUnknownHtml(event) {
-  for (const value of [event.abstractSubmission?.url, event.eventOfficialUrl]) {
+  for (const [value, label] of [[event.abstractSubmission?.url, '詳細'], [event.eventOfficialUrl, '公式サイト']]) {
     try {
       const url = new URL(value);
       if (!['https:', 'http:'].includes(url.protocol) || url.username || url.password) continue;
-      return `<a href="${escapeHtml(value)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link"><span>公式サイトで確認</span>${renderExternalLinkIconHtml()}</a>`;
+      return `<a href="${escapeHtml(value)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link"><span>${label}</span>${renderExternalLinkIconHtml()}</a>`;
     } catch {}
   }
   return '<span class="abstract-unknown">情報未確認</span>';

@@ -34,7 +34,7 @@ vm.runInContext(`
   }
   for (const [status, label] of [
     ['open', '受付中'], ['upcoming', '演題募集予定'],
-    ['closed', '2026年11月5日 締切済'], ['unknown', '公式サイトで確認']
+    ['closed', '2026年11月5日 締切済'], ['unknown', '公式サイト']
   ]) {
     const event = make(status, status === 'unknown' ? null : '2026-11-05');
     assert.ok(createEventCardHtml(event).includes(label));

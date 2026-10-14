@@ -35,11 +35,11 @@ if(!process.argv.includes('--child')) {
     assert.equal(renderAbstractSubmissionHtml(event(null,'Asia/Tokyo','closed'),now),'<span class="deadline-highlight closed">締切済</span>');
     for(const sub of [undefined,{status:'unknown',deadline:null,url:null}]) {
       const source={isConference:true,abstractSubmission:sub,eventOfficialUrl:'https://official.example/congress',abstractDeadline:'未定'},saved=JSON.stringify(source);
-      const html=renderAbstractSubmissionHtml(source,now);assert.ok(html.includes('公式サイトで確認'));assert.ok(html.includes(source.eventOfficialUrl));assert.ok(html.includes(renderExternalLinkIconHtml()));assert.ok(!html.includes('演題募集情報未確認'));assert.equal(JSON.stringify(source),saved);
+      const html=renderAbstractSubmissionHtml(source,now);assert.ok(html.includes('<span>公式サイト</span>'));assert.ok(html.includes(source.eventOfficialUrl));assert.ok(html.includes(renderExternalLinkIconHtml()));assert.ok(!html.includes('演題募集情報未確認'));assert.equal(JSON.stringify(source),saved);
       const none=renderAbstractSubmissionHtml({...source,eventOfficialUrl:undefined},now);assert.equal(none,'<span class="abstract-unknown">情報未確認</span>');
     }
     const dedicated={isConference:true,eventOfficialUrl:'https://official.example/',abstractSubmission:{status:'unknown',url:'https://official.example/abstract?a=1&b=2'}};
-    const dedicatedHtml=renderAbstractSubmissionHtml(dedicated,now);assert.ok(dedicatedHtml.includes('href="https://official.example/abstract?a=1&amp;b=2"'));assert.ok(!dedicatedHtml.includes('href="https://official.example/"'));assert.ok(dedicatedHtml.includes('target="_blank" rel="noopener noreferrer"'));
+    const dedicatedHtml=renderAbstractSubmissionHtml(dedicated,now);assert.ok(dedicatedHtml.includes('<span>詳細</span>'));assert.ok(!dedicatedHtml.includes('公式サイト'));assert.ok(dedicatedHtml.includes('href="https://official.example/abstract?a=1&amp;b=2"'));assert.ok(!dedicatedHtml.includes('href="https://official.example/"'));assert.ok(dedicatedHtml.includes('target="_blank" rel="noopener noreferrer"'));
     assert.equal(renderAbstractSubmissionHtml({isConference:true,eventOfficialUrl:'javascript:alert(1)',abstractSubmission:{status:'unknown',url:'javascript:alert(2)'}},now),'<span class="abstract-unknown">情報未確認</span>');
     for(const legacy of ['受付終了','演題募集終了','締切済','2026年11月5日 13:00 受付終了','2026-11-05 13:00 演題募集終了']) {
       const source={isConference:true,abstractDeadline:legacy},snapshot=JSON.stringify(source),html=renderAbstractSubmissionHtml(source,now);
