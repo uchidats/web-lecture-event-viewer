@@ -146,6 +146,8 @@ applyコマンド自体はGit commit/pushを行わない。安全な適用後の
 
 複数会場の登録・巡回・表示は [multiple-venues.md](multiple-venues.md) の方針に従う。公式に確認できる複数会場は `venues[]` の独立要素として抽出し、既存 `venue` は保持する。
 
+タグの新規追加は [event-tags.md](event-tags.md) の方針に従う。検索に役立つ略称・疾患・手術領域・併催情報を優先し、他の項目と重複する状態・形式・規模などのタグは積極的に追加しない。現在の自動更新対象にタグは含めない。
+
 空欄のイベント公式URLは、既存開催回の監視とは別に `conference-discovery-sources.js` の公式一覧を入口に探索し、管理レビューへ送る。探索条件、20件の整合性保留、HTTPログとテストは [event-url-discovery.md](event-url-discovery.md) を参照。探索結果からURLを自動反映しない。
 
 対象はregistryに安定ID・開催回・year・公式URL・許可ホスト・概要／演題ページを追加する。HTMLレイアウトが共通ならadapterコードを増やさない。JSON-LD、PDFなど追加の抽出器は `adapters` のインターフェース `{ candidates, issues, fingerprint }` を実装し、候補ごとにfield/value/confidence/method/url/evidenceを返す。methodのconfidence上限もpolicyへ登録する。

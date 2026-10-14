@@ -183,7 +183,7 @@ function initApp() {
   updateHistoryBadgeCount();
   setupEventListeners();
   if (typeof OphthalCalendarView !== "undefined") OphthalCalendarView.init({
-    renderCard: createEventCardHtml,
+    renderCard: event => createEventCardHtml(event, { showConferenceTags: true }),
     bindActions: attachCardActionListeners,
     getToday: getTodayString,
     getSelectedYears: () => [...state.filters.year],
@@ -2282,7 +2282,7 @@ function getConferenceChairDisplayLabel(event) {
   return chairs.sort((a, b) => a.position - b.position).map(chair => chair.label).join('・');
 }
 
-function createEventCardHtml(event) {
+function createEventCardHtml(event, { showConferenceTags = false } = {}) {
   const creditLabel = getEventCreditLabel(event);
   const dateBadgeInfo = formatEventDateBadge(event);
   const effective = computeEffectiveScheduleStatus(event);
@@ -2521,9 +2521,9 @@ function createEventCardHtml(event) {
       </div>
 
       <!-- タグ一覧 -->
-      <div class="card-tags-list">
+      ${!event.isConference || showConferenceTags ? `<div class="card-tags-list">
         ${event.tags.map(t => `<span class="tag-item">#${escapeHtml(t)}</span>`).join("")}
-      </div>
+      </div>` : ''}
 
       <!-- 下段: 3つの操作ボタン (カレンダーに追加 / 案内PDF / 公式申込ページ) -->
       <div class="card-actions-row">
