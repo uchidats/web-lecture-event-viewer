@@ -1205,6 +1205,10 @@ function matchesAbstractFilter(event, condition, baseDate = new Date()) {
   return limit !== null && info.days !== null && info.days >= 0 && info.days <= limit;
 }
 
+function renderExternalLinkIconHtml() {
+  return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>`;
+}
+
 function renderAbstractSubmissionHtml(event, baseDate = new Date()) {
   const sub = event.abstractSubmission;
   if (!sub) {
@@ -1224,14 +1228,14 @@ function renderAbstractSubmissionHtml(event, baseDate = new Date()) {
   const extensionLabel = sub.extended === true ? '（延長）' : '';
   const parts = [];
   if (isClosed) return `<span class="deadline-highlight closed">${deadlineLabel ? escapeHtml(deadlineLabel) + ' 締切済' + extensionLabel : '締切済'}</span>`;
-  if (info.isOpen && sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-status-tag open abstract-open-link">受付中 ↗</a>`);
+  if (info.isOpen && sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link abstract-open-link"><span>受付中</span>${renderExternalLinkIconHtml()}</a>`);
   else if (labels[displayStatus]) parts.push(`<span class="abstract-status-tag ${displayStatus}">${labels[displayStatus]}</span>`);
   if (deadlineLabel) {
     const urgent = info.isOpen && info.days !== null && info.days <= 30;
     parts.push(`<span class="abstract-deadline${urgent ? ' urgent' : ''}">${escapeHtml(deadlineLabel)} 締切${extensionLabel}</span>`);
   }
   if (!isClosed && info.status === "upcoming" && sub.startDate) parts.push(`<span class="abstract-start-date">募集開始予定 ${escapeHtml(sub.startDate)}</span>`);
-  if (!info.isOpen && sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link">演題募集詳細 ↗</a>`);
+  if (!info.isOpen && sub.url) parts.push(`<a href="${escapeHtml(sub.url)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link"><span>演題募集詳細</span>${renderExternalLinkIconHtml()}</a>`);
   return parts.join(" ") || '<span class="abstract-unknown">演題募集情報未確認</span>';
 }
 
@@ -2509,11 +2513,7 @@ function createEventCardHtml(event) {
 
         <!-- 3. 公式申込ページ (別タブで開く) -->
         <a href="${escapeHtml(event.officialUrl || '#')}" target="_blank" rel="noopener noreferrer" class="btn btn-official" title="公式サイト・事前参加登録ページへ">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-            <polyline points="15 3 21 3 21 9"></polyline>
-            <line x1="10" y1="14" x2="21" y2="3"></line>
-          </svg>
+          ${renderExternalLinkIconHtml()}
           <span class="card-action-full">公式申込ページ</span><span class="card-action-mobile">申込</span>
         </a>
         `}

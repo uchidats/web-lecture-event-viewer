@@ -28,7 +28,7 @@ if(!process.argv.includes('--child')) {
     const now=at('2026-10-14T12:00:00+09:00');
     for(const [date,days] of [['2026-11-05 13:00',22],['2026-11-13',30],['2026-11-14',31],['2026-10-14 13:00',0]]) {
       const html=renderAbstractSubmissionHtml(event(date),now);
-      assert.equal((html.match(/<a /g)||[]).length,1);assert.ok(html.includes('受付中 ↗'));assert.ok(!html.includes('演題登録'));assert.ok(!html.includes('注意・'));assert.ok(!html.includes('abstract-submit-link'));
+      assert.equal((html.match(/<a /g)||[]).length,1);assert.ok(html.includes('受付中</span>'));assert.ok(!html.includes('↗'));assert.ok(html.includes(renderExternalLinkIconHtml()));assert.ok(!html.includes('演題登録'));assert.ok(!html.includes('注意・'));assert.ok(html.includes('abstract-submit-link'));
       assert.ok(!html.includes('日前'));assert.ok(!html.includes('本日締切'));assert.ok(html.includes(' 締切</span>'));
       assert.equal(html.includes('abstract-deadline urgent'),days<=30);
     }

@@ -1872,9 +1872,9 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
 }
 
 .abstract-status-tag.open {
-  background: #ecfdf5;
-  color: #047857;
-  border: 1px solid #a7f3d0;
+  background: #eff6ff;
+  color: var(--primary);
+  border: 1px solid #bfdbfe;
 }
 
 .abstract-open-link { text-decoration: underline; }
@@ -1898,6 +1898,7 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
 }
 
 .abstract-submit-link {
+  gap: 6px;
   font-size: 0.72rem;
   font-weight: 600;
   color: var(--primary);
@@ -1916,7 +1917,10 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
   outline-offset: 2px;
 }
 
+.abstract-submit-link svg { flex-shrink: 0; }
+
 @media (max-width: 480px) {
+  .abstract-submit-link { gap: 4px; }
   .conf-abstract-deadline-val {
     width: 100%;
     gap: 8px;
