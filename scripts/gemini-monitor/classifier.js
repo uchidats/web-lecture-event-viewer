@@ -1,6 +1,6 @@
 const { THRESHOLDS, SEVERITY, RECOMMENDED_ACTIONS, SOURCE_QUALITY, LEARNING_FLAGS } = require('./constants');
 const { diffDays } = require('./scheduler');
-const { normalizeConferenceTitle } = require('../auto-updater/titles');
+const { normalizeConferenceTitle, isFormatOnlyTitleChange } = require('../auto-updater/titles');
 const {validVenues,venueKey}=require('../auto-updater/venues');
 
 /**
@@ -112,7 +112,8 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
   }
 
   // 7. Title / Edition
-  if (geminiResult.official_title && geminiResult.official_title !== currentEvent.title) {
+  if (geminiResult.official_title && geminiResult.official_title !== currentEvent.title &&
+      !isFormatOnlyTitleChange(currentEvent.title, geminiResult.official_title)) {
     const titleSevere = geminiResult.edition && !currentEvent.title.includes(String(geminiResult.edition));
     fieldChanges.push({
       field: 'title',

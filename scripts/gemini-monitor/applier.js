@@ -1,5 +1,5 @@
 const path = require('node:path');
-const { normalizeConferenceTitle } = require('../auto-updater/titles');
+const { normalizeConferenceTitle, isFormatOnlyTitleChange } = require('../auto-updater/titles');
 const { loadEvents, atomicWrite } = require('../auto-updater/storage');
 const { THRESHOLDS } = require('./constants');
 const {validVenues}=require('../auto-updater/venues');
@@ -13,6 +13,8 @@ function applyFieldChangesToEvent(event, fieldChanges) {
   for (const change of fieldChanges) {
     const { field } = change;
     const after = field === 'title' ? normalizeConferenceTitle(change.after) : change.after;
+    // Also guard cached/previously classified batches at the write boundary.
+    if (field === 'title' && isFormatOnlyTitleChange(event.title, after)) continue;
     if(field==='venues'&&!validVenues(after))throw new Error('Invalid venues');
     if(field==='venue'&&(event.venues?.length||fieldChanges.some(c=>c.field==='venues')))continue; // Preserve the legacy value when adding structured venues.
     if (field.includes('.')) {
@@ -128,11 +130,12 @@ function applyBatchUpdates(root, updateBatches = [], options = {}) {
     }
 
     const appliedFields = applyFieldChangesToEvent(event, batch.fieldChanges);
+    if (!appliedFields.length) continue;
     appliedSummary.push({
       eventId: batch.eventId,
       eventName: event.title,
       appliedFields,
-      fieldChanges: batch.fieldChanges,
+      fieldChanges: batch.fieldChanges.filter(change=>appliedFields.includes(change.field)),
       source: batch.source || 'auto_update'
     });
   }
@@ -143,7 +146,7 @@ function applyBatchUpdates(root, updateBatches = [], options = {}) {
   const isDryRun = options.dryRun !== false;
 
   // 4. Atomic write if real apply mode
-  if (!isDryRun) {
+  if (!isDryRun && appliedSummary.length) {
     const serialized = dataset.serialize(dataset.events);
     atomicWrite(dataset.file, serialized);
   }

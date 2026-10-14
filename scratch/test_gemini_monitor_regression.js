@@ -11,12 +11,38 @@ const { classifyDecision, prioritizeAdminReviewItems } = require('../scripts/gem
 const { recordSnapshot, executeRollback, loadRollbackHistory, saveRollbackHistory } = require('../scripts/gemini-monitor/rollback-manager');
 const { runGeminiMonitor } = require('../scripts/gemini-monitor/monitor');
 const { RECOMMENDED_ACTIONS, SEVERITY, SOURCE_QUALITY } = require('../scripts/gemini-monitor/constants');
+const {isFormatOnlyTitleChange}=require('../scripts/auto-updater/titles');
+const {applyFieldChangesToEvent}=require('../scripts/gemini-monitor/applier');
 
 async function testAll() {
   const root = path.resolve(__dirname, '..');
   const dataset = loadEvents(root);
   const events = dataset.events;
   assert.equal(events.length, 95, 'Dataset must contain 95 events');
+  const pharmacology=events.find(e=>e.id==='conf-jp-pharmacology-2026');
+  assert.equal(pharmacology.title,'第46回 日本眼薬理学会');
+  const official={same_event:true,source_quality:SOURCE_QUALITY.OFFICIAL_EVENT_PAGE,confidence:.98,official_title:'第46回日本眼薬理学会',venue:'じゅうろくプラザ',recommended_action:RECOMMENDED_ACTIONS.SAFE_AUTO_UPDATE};
+  const actual=classifyDecision(pharmacology,official,{sourceUrl:'https://square.umin.ac.jp/jsop46/'});
+  assert.ok(!actual.fieldChanges.some(c=>c.field==='title'));assert.ok(actual.fieldChanges.some(c=>c.field==='venue'),'Other real changes are still classified');
+  for(const [before,after] of [
+    [pharmacology.title,'第46回日本眼薬理学会'],[pharmacology.title,'第46回　日本眼薬理学会'],
+    ['Annual Meeting (2027)','Annual Meeting（2027）'],['学会：研究会、総会。','学会 研究会 総会'],
+    ['第４６回 日本眼薬理学会','第46回日本眼薬理学会']
+  ]) {
+    assert.ok(isFormatOnlyTitleChange(before,after));
+    const event={...pharmacology,title:before};
+    const decision=classifyDecision(event,{...official,official_title:after,venue:null});
+    assert.ok(!decision.fieldChanges.some(c=>c.field==='title'));assert.equal(decision.action,RECOMMENDED_ACTIONS.NO_CHANGE);
+    assert.deepEqual(applyFieldChangesToEvent(event,[{field:'title',after}]),[]);assert.equal(event.title,before);
+  }
+  for(const after of ['第47回 日本眼薬理学会','第46回 日本神経眼科学会','第46回 日本眼薬理学会（2027）']) {
+    assert.ok(!isFormatOnlyTitleChange(pharmacology.title,after));
+    assert.ok(classifyDecision(pharmacology,{...official,official_title:after,venue:null}).fieldChanges.some(c=>c.field==='title'));
+  }
+  assert.ok(!isFormatOnlyTitleChange('Congress 2026','Congress 2027'));
+  assert.ok(!isFormatOnlyTitleChange('学会（大阪）','学会（東京）'));
+  assert.ok(!isFormatOnlyTitleChange('', ' '));
+  console.log('PASS: official JSOP46 formatting proposal ignored; spacing/width/punctuation preserved, substantive names/editions/years retained');
 
   console.log('--- Test Suite 1: Schedule Tiers & Focus Fields (Requirement 5 & 6) ---');
   // 1.1 < 6 months (< 180 days) -> Daily

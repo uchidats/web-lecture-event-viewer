@@ -1,6 +1,8 @@
 const assert = require('node:assert');
 const path = require('node:path');
 const fs = require('node:fs');
+const os = require('node:os');
+const {loadEvents}=require('../scripts/auto-updater/storage');
 const {
   SCHEDULE_TIERS,
   FOCUS_FIELDS,
@@ -26,6 +28,21 @@ const { composeEmail } = require('../scripts/gemini-monitor/notifier');
 const root = path.resolve(__dirname, '..');
 
 async function testAll() {
+  // Reproduce the scheduled JSOP46 proposal through the real write boundary.
+  const original=loadEvents(root),isolated=fs.mkdtempSync(path.join(os.tmpdir(),'gemini-format-title-'));
+  fs.writeFileSync(path.join(isolated,'events.js'),original.original);
+  const id='conf-jp-pharmacology-2026',current=original.events.find(e=>e.id===id);
+  assert.strictEqual(current.title,'第46回 日本眼薬理学会');
+  const format={field:'title',before:current.title,after:'第46回日本眼薬理学会'};
+  const ignored=applyBatchUpdates(isolated,[{eventId:id,fieldChanges:[format]}],{dryRun:false});
+  assert.strictEqual(ignored.appliedCount,0);assert.strictEqual(fs.readFileSync(path.join(isolated,'events.js'),'utf8'),original.original);
+  const mixed=applyBatchUpdates(isolated,[{eventId:id,fieldChanges:[format,{field:'venue',after:'確認済み会場'}]}],{dryRun:false});
+  assert.strictEqual(mixed.appliedCount,1);assert.deepStrictEqual(mixed.appliedEvents[0].appliedFields,['venue']);assert.deepStrictEqual(mixed.appliedEvents[0].fieldChanges.map(c=>c.field),['venue']);
+  assert.strictEqual(loadEvents(isolated).events.find(e=>e.id===id).title,current.title);
+  const substantive=applyBatchUpdates(isolated,[{eventId:id,fieldChanges:[{field:'title',after:'第47回 日本眼薬理学会'}]}],{dryRun:false});
+  assert.strictEqual(substantive.appliedCount,1);assert.strictEqual(loadEvents(isolated).events.find(e=>e.id===id).title,'第47回 日本眼薬理学会');
+  assert.strictEqual(fs.readFileSync(path.join(root,'events.js'),'utf8'),original.original);
+  console.log('PASS: stale formatting batches do not write/count changes; mixed updates preserve title; substantive edition updates remain possible');
   console.log('=== Test Suite 1: Ended Event Exclusion & Evidence Reference (Requirements 5, 24) ===');
 
   // Ended event with endDate in the past
