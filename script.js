@@ -1250,7 +1250,7 @@ function renderExternalLinkIconHtml() {
 }
 
 function renderAbstractUnknownHtml(event) {
-  for (const [value, label] of [[event.abstractSubmission?.url, '詳細'], [event.eventOfficialUrl, '公式サイト']]) {
+  for (const [value, label] of [[event.abstractSubmission?.url, '詳細'], [event.eventOfficialUrl, '公式']]) {
     try {
       const url = new URL(value);
       if (!['https:', 'http:'].includes(url.protocol) || url.username || url.password) continue;
