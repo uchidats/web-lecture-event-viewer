@@ -159,9 +159,11 @@ function getEventSpecialties(event) {
   return Array.isArray(event.specialty) ? [...new Set(event.specialty)] : (event.specialty ? [event.specialty] : []);
 }
 
-// 学会分類表示を「国際学会」に統一し、既存のデータ・フィルタ内部値は維持する。
+// 表示ラベルのみ短縮し、既存のデータ・フィルタ内部値は維持する。
 function getEventTypeDisplayLabel(value) {
-  return value === "海外学会" ? "国際学会" : value;
+  if (value === '国内学会') return '国内';
+  if (value === '海外学会' || value === '国際学会') return '国際';
+  return value;
 }
 
 /**
@@ -717,12 +719,12 @@ function renderConferenceHistoryModal() {
       </div>
       <div class="history-summary-divider"></div>
       <div class="history-summary-stat">
-        <span class="summary-stat-label">国内学会</span>
+        <span class="summary-stat-label">国内</span>
         <span class="summary-stat-value">${grandDomestic} <small>学会</small></span>
       </div>
       <div class="history-summary-divider"></div>
       <div class="history-summary-stat">
-        <span class="summary-stat-label">国際学会</span>
+        <span class="summary-stat-label">国際</span>
         <span class="summary-stat-value">${grandInternational} <small>学会</small></span>
       </div>
     </div>
@@ -792,7 +794,7 @@ function renderConferenceHistoryModal() {
             <div class="history-conf-info">
               <div class="history-conf-badges">
                 <span class="conf-category-badge region ${conf.conferenceRegion === 'international' ? 'international' : 'domestic'}">
-                  ${conf.conferenceRegion === 'international' ? '国際学会' : '国内学会'}
+                  ${getEventTypeDisplayLabel(conf.conferenceRegion === 'international' ? '海外学会' : '国内学会')}
                 </span>
                 ${conf.conferenceCategory ? `<span class="conf-category-badge category">${escapeHtml(getConferenceCategoryDisplayLabel(conf.conferenceCategory))}</span>` : ''}
               </div>
@@ -1982,7 +1984,7 @@ function renderActiveFilterChips() {
 
   ["specialty", "eventType", "format", "region"].forEach(group => {
     state.filters[group].forEach(val => {
-      chips.push({ group, label: group === 'specialty' ? getSpecialtyDisplayLabel(val) : val, value: val });
+      chips.push({ group, label: group === 'specialty' ? getSpecialtyDisplayLabel(val) : group === 'eventType' ? getEventTypeDisplayLabel(val) : val, value: val });
     });
   });
 
@@ -2396,7 +2398,7 @@ function createEventCardHtml(event) {
         <div class="conf-item conf-item-full">
           <span class="conf-label">学会分類:</span>
           <span class="conf-val conf-classification-val">
-            <span class="conf-category-badge region">${event.conferenceRegion === 'international' ? '国際学会' : '国内学会'}</span>
+            <span class="conf-category-badge region">${getEventTypeDisplayLabel(event.conferenceRegion === 'international' ? '海外学会' : '国内学会')}</span>
             ${event.conferenceCategory ? `<span class="conf-category-badge category">${escapeHtml(getConferenceCategoryDisplayLabel(event.conferenceCategory))}</span>` : ''}
             ${getEventSpecialties(event).filter(value => getSpecialtyDisplayLabel(value) !== getConferenceCategoryDisplayLabel(event.conferenceCategory)).map(value => `<span class="conf-category-badge specialty">${escapeHtml(getSpecialtyDisplayLabel(value))}</span>`).join('')}
             ${shouldDisplayEventFormat(event) ? `<span class="format-badge ${formatClass}">${escapeHtml(event.format)}</span>` : ''}
