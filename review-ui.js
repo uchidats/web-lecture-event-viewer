@@ -34,9 +34,9 @@
   function render() {
     if (!reviewerId) return;
     const latest = item => store.latest(item, reviewerId);
-    const pending = items.filter(item => !item.blocked && !['approved', 'rejected'].includes(latest(item)?.decision));
+    const pending = model.pendingItems(items, store, reviewerId, typeof sampleEvents !== 'undefined' ? sampleEvents : []);
     entry.textContent = `更新確認 ${pending.length}件`;
-    doc.getElementById('review-summary').textContent = `要確認 ${items.filter(i => !i.blocked).length}件・停止候補 ${items.filter(i => i.blocked).length}件・未判断／保留 ${pending.length}件`;
+    doc.getElementById('review-summary').textContent = `要確認 ${pending.length}件・停止候補 ${items.filter(i => i.blocked).length}件・既読／判断済みを含む候補 ${items.length}件`;
     const visible = items.filter(item => filter.value === 'all' || (filter.value === 'blocked' ? item.blocked : !item.blocked && (filter.value !== 'pending' || pending.includes(item))));
     list.innerHTML = visible.map(item => {
       const event = typeof sampleEvents !== 'undefined' ? sampleEvents.find(e => e.id === item.eventId) : null;
@@ -49,7 +49,7 @@
         <dl><dt>根拠</dt><dd>${escape(item.evidence || '根拠テキストなし')}</dd><dt>信頼度</dt><dd>${Number.isFinite(item.confidence) ? Math.round(item.confidence * 100) + '%' : '不明'}</dd><dt>確認理由</dt><dd>${escape(model.reasonLabels[item.reason] || '自動更新条件を満たさないため、確認が必要です')}</dd><dt>情報源URL</dt><dd>${url ? `<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${escape(url)}</a>` : '有効なHTTPS情報源URLなし'}</dd>${model.safeUrl(item.candidateUrl) ? `<dt>発見した候補URL</dt><dd><a href="${escape(model.safeUrl(item.candidateUrl))}" target="_blank" rel="noopener noreferrer">${escape(item.candidateUrl)}</a></dd>` : ''}</dl>
         ${item.fetchFailure ? `<dl>${verificationHtml(item)}</dl>` : ''}
         ${auditHtml(item)}
-        <p class="review-decision">${decision ? `${decisions[decision.decision]} · ${escape(new Date(decision.decidedAt).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }))}` : '未判断'}</p>
+        <p class="review-decision">${decision ? `${decisions[decision.decision]} · ${escape(new Date(decision.decidedAt).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }))}` : item.read ? '既読（件数リセット対象）' : '未判断'}</p>
         ${item.riskLevel === 'low' && !item.audit ? `<label class="review-automation"><input type="checkbox" ${decision?.automationCandidate ? 'checked' : ''}> 今後、この種類の変更は自動承認候補にする（検討用）</label>` : ''}
         <div class="review-actions"><button type="button" class="btn btn-primary" data-decision="approved" ${!item.actionable ? 'disabled' : ''} aria-pressed="${decision?.decision === 'approved'}">採用</button><button type="button" class="btn btn-secondary" data-decision="rejected" aria-pressed="${decision?.decision === 'rejected'}">変更しない</button><button type="button" class="btn btn-secondary" data-decision="deferred" aria-pressed="${decision?.decision === 'deferred'}">保留</button>${url ? `<a class="btn btn-secondary" href="${escape(url)}" target="_blank" rel="noopener noreferrer">公式サイトを見る</a>` : ''}</div>
       </article>`;

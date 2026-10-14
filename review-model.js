@@ -76,6 +76,16 @@
             Array.isArray(item.value.periods) && item.value.periods.length > 0 && item.value.periods.every(p => p && typeof p.label === 'string' && !!p.label && (p.start || p.deadline))) };
     });
   }
+  function pendingItems(items, store, reviewerId, events = []) {
+    return items.filter(item => {
+      if (item.blocked || item.read || !['needs-review', undefined].includes(item.status)) return false;
+      const decision = store.latest(item, reviewerId)?.decision;
+      if (decision && decision !== 'deferred') return false;
+      const event = events.find(event => event.id === item.eventId);
+      const current = item.field?.split('.').reduce((value, key) => value?.[key], event);
+      return !event || !item.field || JSON.stringify(current) !== JSON.stringify(item.value);
+    });
+  }
   function createStore(storage) {
     function read() {
       const raw = storage.getItem(storageKey);
@@ -126,7 +136,7 @@
     const local = developmentMode === true && ['localhost', '127.0.0.1', '[::1]'].includes(hostname) && new URLSearchParams(search).get('adminReview') === '1';
     return { reviewerId(user) { return user?.uid && authorizeUser(user) === true ? user.uid : local ? 'local-admin' : null; } };
   }
-  const api = { storageKey, fieldLabels, reasonLabels, safeUrl, riskLevel, formatValue, normalize, createStore, createAccess, isAdminUser };
+  const api = { storageKey, fieldLabels, reasonLabels, safeUrl, riskLevel, formatValue, normalize, pendingItems, createStore, createAccess, isAdminUser };
   root.OphthalReviewModel = api;
   if (typeof module !== 'undefined') module.exports = api;
 })(globalThis);

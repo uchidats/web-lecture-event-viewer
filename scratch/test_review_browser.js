@@ -8,6 +8,7 @@ const root = path.resolve(__dirname, '..');
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 async function main() {
   let developmentMode = false;
+  let productionQueue = false;
   const server = http.createServer((request, response) => {
     const name = new URL(request.url, 'http://localhost').pathname;
     const file = path.resolve(root, '.' + (name === '/' ? '/index.html' : name));
@@ -16,7 +17,9 @@ async function main() {
       let data = fs.readFileSync(file);
       if (file.endsWith('index.html')) data = Buffer.from(data.toString().replace(/<link[^>]*https:[^>]*>/g, '').replace(/<script[^>]*https:[^>]*><\/script>/g, ''));
       if (file.endsWith('firebase-config.js')) data = Buffer.from('const FIREBASE_CONFIG = {};');
-      if (file.endsWith('review-config.js')) data = Buffer.from(`globalThis.OphthalReviewConfig = Object.freeze({developmentMode:${developmentMode},reviewDataUrl:'scratch/fixtures/review/auto-update-review.json'});`);
+      if (file.endsWith('review-config.js')) data = productionQueue
+        ? Buffer.from(data.toString().replace('developmentMode: false', 'developmentMode: true'))
+        : Buffer.from(`globalThis.OphthalReviewConfig = Object.freeze({developmentMode:${developmentMode},reviewDataUrl:'scratch/fixtures/review/auto-update-review.json'});`);
       response.setHeader('Content-Type', file.endsWith('.js') ? 'text/javascript' : file.endsWith('.css') ? 'text/css' : file.endsWith('.json') ? 'application/json' : 'text/html');
       response.end(data);
     } catch { response.writeHead(404).end(); }
@@ -70,21 +73,21 @@ async function main() {
         assert.equal(await evaluate('document.getElementById("review-dialog").open'), false);
       }
       await evaluate(`adminObserver({user:{uid:'admin',email:'uchidats@gmail.com',emailVerified:true}});`);
-      for (let i = 0; i < 50; i++) { if (await evaluate('document.getElementById("review-entry").textContent === "更新確認 9件"')) break; await delay(100); }
+      for (let i = 0; i < 50; i++) { if (await evaluate('document.getElementById("review-entry").textContent === "更新確認 8件"')) break; await delay(100); }
       assert.equal(await evaluate('document.getElementById("review-entry").hidden'), false);
       await evaluate('document.getElementById("review-entry").click()');
       assert.equal(await evaluate('document.getElementById("review-dialog").open'), true);
-      assert.equal(await evaluate('document.querySelectorAll(".review-card").length'), 9);
-      await evaluate(`document.querySelector('[data-review-index="0"] [data-decision="deferred"]').click()`);
+      assert.equal(await evaluate('document.querySelectorAll(".review-card").length'), 8);
+      await evaluate(`document.querySelector('[data-review-index="1"] [data-decision="deferred"]').click()`);
       assert.equal(await evaluate('JSON.parse(localStorage.getItem(OphthalReviewModel.storageKey)).history.at(-1).reviewerId'), 'admin');
       await evaluate('adminObserver({user:null})');
       assert.equal(await evaluate('document.getElementById("review-dialog").open'), false);
       assert.equal(await evaluate('document.querySelectorAll(".review-card").length'), 0);
     }
     developmentMode = true;
-    await navigate(origin + '/?adminReview=1', 'document.getElementById("review-entry")?.textContent === "更新確認 9件"');
+    await navigate(origin + '/?adminReview=1', 'document.getElementById("review-entry")?.textContent === "更新確認 8件"');
     await evaluate('document.getElementById("review-entry").click()');
-    assert.equal(await evaluate('document.querySelectorAll(".review-card").length'), 9);
+    assert.equal(await evaluate('document.querySelectorAll(".review-card").length'), 8);
     for (const width of [1280, 768, 390, 320]) {
       await call('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 500 });
       assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'), true, 'page overflow ' + width);
@@ -93,11 +96,11 @@ async function main() {
       assert.equal(await evaluate('[...document.querySelectorAll(".review-actions button")].every(b=>b.getBoundingClientRect().height>=44)'), true);
     }
     for (const decision of ['approved', 'rejected', 'deferred']) {
-      await evaluate(`document.querySelector('[data-review-index="0"] [data-decision="${decision}"]').click()`);
+      await evaluate(`document.querySelector('[data-review-index="1"] [data-decision="${decision}"]').click()`);
       assert.equal(await evaluate('JSON.parse(localStorage.getItem(OphthalReviewModel.storageKey)).history.at(-1).decision'), decision);
       if (decision !== 'deferred') await evaluate('document.getElementById("review-filter").value="review"; document.getElementById("review-filter").dispatchEvent(new Event("change"))');
     }
-    await navigate(origin + '/?adminReview=1', 'document.getElementById("review-entry")?.textContent === "更新確認 9件"');
+    await navigate(origin + '/?adminReview=1', 'document.getElementById("review-entry")?.textContent === "更新確認 8件"');
     await evaluate('document.getElementById("review-entry").click()');
     assert.equal(await evaluate('document.querySelector(".review-decision").textContent.includes("保留中")'), true);
     await evaluate('document.getElementById("review-filter").value="blocked"; document.getElementById("review-filter").dispatchEvent(new Event("change"))');
@@ -146,6 +149,18 @@ async function main() {
     assert.equal(await evaluate('document.getElementById("calendar-settings-modal").open'), true);
     assert.equal(await evaluate('OphthalAuth.snapshot().phase'), 'unconfigured');
     console.log('PASS: PC/mobile 1280/768/390/320px; verified email admin only, wrong/unverified/logged-out denial, logout closes dialog, query denied without development mode; decisions/reload, blocked separation, checkbox, XSS, high risk, Calendar and event UI');
+    productionQueue = true;
+    await navigate(origin + '/?adminReview=1', 'document.getElementById("review-entry")?.textContent === "更新確認 0件"');
+    for (const width of [1280,390,320]) {
+      await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});
+      assert.equal(await evaluate('document.getElementById("review-entry").textContent'), '更新確認 0件');
+      await evaluate('document.getElementById("review-entry").click()');
+      assert.equal(await evaluate('document.querySelectorAll(".review-card").length'), 0);
+      await evaluate('document.getElementById("review-filter").value="all";document.getElementById("review-filter").dispatchEvent(new Event("change"))');
+      assert.ok(await evaluate('document.querySelectorAll(".review-card").length > 0'), 'history remains accessible');
+      await evaluate('document.getElementById("review-filter").value="pending";document.getElementById("review-filter").dispatchEvent(new Event("change"));document.getElementById("review-close").click()');
+    }
+    console.log('PASS: production backlog reset to 0 at 1280/390/320px; historical candidates retained');
     await call('Browser.close');
   } finally { socket?.close(); if (browser.exitCode === null) browser.kill(); await new Promise(resolve => server.close(resolve)); }
 }

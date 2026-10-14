@@ -1,7 +1,7 @@
 # 管理者向け更新レビュー（ローカル試作）
 
 通常モードはFirebase Authenticationの現在ユーザーが `email === 'uchidats@gmail.com'` かつ `emailVerified === true` のときだけ有効。
-ヘッダーの「更新確認 9件」からレビュー画面へ進む。未ログイン・別メール・未確認メールは入口もデータ取得も無効。
+ヘッダーの「更新確認 N件」からレビュー画面へ進む。未ログイン・別メール・未確認メールは入口もデータ取得も無効。
 ログアウトやユーザー変更時には開いている画面と候補をクリアする。判断操作も現在の管理者状態を確認する。
 
 ローカル検証で認証を省略する場合のみ、ローカルコピーの `review-config.js` を `developmentMode: true` に設定する。
@@ -20,6 +20,11 @@ fixtureは今回の `reports/auto-update-review.json` の固定コピー（20件
 元レポートやevents.jsは変更しない。最新artifactの自動取得・配信は実装していない。
 
 ## 保存と拡張
+
+ヘッダーは未確認候補のみを数える。停止候補、解決済み・旧候補、採用／却下／確認済みの判断、実データへ同じ値が反映済みの候補は除外する。
+2026年10月14日の件数リセットでは、現在の145候補のsignatureのSHA-256を `review-config.js` の `readBaseline` に保存した。
+該当候補は全ブラウザ・両公開パスで既読扱いとし、レポート・判断履歴・rollback・monitor stateは変更しない。「全候補・判断済み」では引き続き閲覧・判断できる。
+新しい候補内容は未確認になるが、lastSeenやoccurrencesだけの増加は再通知しない。通常の巡回ではこの既読基準を作り直さない。
 
 - `review-data.js`: `load()` を持つ読み取り専用provider。現在は固定JSONを取得する。将来artifact、認可済みbackend API、Firestoreのproviderへ差し替える。
 - `review-model.js`: 正規化、リスク分類、管理者判定、判断履歴。`isAdminUser(user)` は確認済みの指定メールとUIDの存在を検証する。`createAccess` の `authorizeUser(user)` を将来の管理者判定に差し替えられる。Firebase Authの既存subscribeからemailVerifiedを含む現在ユーザーを渡す。本番UIDは固定しない。

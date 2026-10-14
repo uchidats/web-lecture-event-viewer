@@ -48,6 +48,32 @@ async function main() {
   assert.equal(requestedUrl, 'reports/auto-update-review.json');
   await assert.rejects(createProvider({ fetchImpl: async () => ({ ok: false }) }).load());
   await assert.rejects(createProvider({ fetchImpl: async () => ({ ok: true, json: async () => ({ items: [] }) }) }).load());
+  require('../review-config');
+  const baseline = globalThis.OphthalReviewConfig.readBaseline;
+  const production = require('../reports/auto-update-review.json');
+  const historyBefore = JSON.stringify(store.read());
+  const loadQueue = data => createProvider({ readBaseline: baseline,
+    fetchImpl: async () => ({ ok: true, json: async () => structuredClone(data) }) }).load();
+  const resetItems = model.normalize(await loadQueue(production));
+  assert.equal(model.pendingItems(resetItems, store, 'local-admin').length, 0);
+  assert.equal(JSON.stringify(store.read()), historyBefore, 'reset preserves decisions/history');
+  const fresh = { ...production.items.find(i => i.status === 'needs-review' && i.reason !== 'mass-change-limit'),
+    id: 'new-candidate', value: 'new confirmed source value', lastSeen: '2030-01-01' };
+  const newItems = model.normalize(await loadQueue({ version: 1, items: [...production.items, fresh] }));
+  assert.equal(model.pendingItems(newItems, store, 'local-admin').length, 1);
+  const changed = { ...fresh, id: production.items[0].id };
+  assert.equal(model.pendingItems(model.normalize(await loadQueue({version:1,items:[changed]})), store, 'local-admin').length, 1);
+  const repeated = structuredClone(production);
+  repeated.items.forEach(i => { i.lastSeen = '2030-01-01'; i.occurrences = 1000; });
+  assert.equal(model.pendingItems(model.normalize(await loadQueue(repeated)), store, 'local-admin').length, 0);
+  for (const status of ['resolved', 'superseded', 'acknowledged', 'auto_applied', 'applied', 'manually_applied', 'rejected']) {
+    assert.equal(model.pendingItems(model.normalize({items:[{...fresh,status}]}), store, 'local-admin').length, 0);
+  }
+  const candidate = newItems.find(i => i.id === fresh.id);
+  assert.equal(model.pendingItems([candidate], store, 'local-admin', [{id:candidate.eventId,
+    abstractSubmission:{deadline:candidate.value}}]).length, 0, 'already applied candidate excluded');
+  store.decide(candidate, 'rejected', {reviewerId:'local-admin'});
+  assert.equal(model.pendingItems([candidate], store, 'local-admin').length, 0);
   console.log('PASS: review fixture separation, risks, access, decisions, persistence, history, conflicts, safe URLs, storage errors and provider');
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });
