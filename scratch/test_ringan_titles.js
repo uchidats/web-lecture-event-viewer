@@ -5,6 +5,9 @@ const {setField,assess}=require('../scripts/auto-updater/policy');
 const {classifyDecision}=require('../scripts/gemini-monitor/classifier');
 const {applyFieldChangesToEvent}=require('../scripts/gemini-monitor/applier');
 const {extractFacts}=require('../scripts/audit-event-metadata');
+for(const [edition,year] of [[80,2026],[81,2027],[82,2028],[83,2029],[100,2046]]) {
+  for(const suffix of [` (臨眼 ${year})`,`（臨眼${year}）`])assert.equal(normalize(`第${edition}回 日本臨床眼科学会${suffix}`),`第${edition}回 日本臨床眼科学会`);
+}
 for(const suffix of ['（臨眼 2027）','(臨眼2027)',' （ 臨眼 2027 ）','( 臨眼　2027 )']) {
   const title='第81回 日本臨床眼科学会'+suffix,expected='第81回 日本臨床眼科学会';
   assert.equal(normalize(title),expected);assert.equal(normalize(normalize(title)),expected);

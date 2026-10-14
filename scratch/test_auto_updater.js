@@ -6,6 +6,7 @@ const vm = require('node:vm');
 const { spawnSync } = require('node:child_process');
 const config = { ...require('../conference-sources'), discovery: { enabled: false } }; // Pinned-source fixtures; discovery has separate tests.
 const { extractOfficialHtml, normalizeDate, normalizeVenue, dateRanges } = require('../scripts/auto-updater/extract');
+const {normalizeConferenceTitle}=require('../scripts/auto-updater/titles');
 const { assess, applyChanges, setField } = require('../scripts/auto-updater/policy');
 const { runUpdater } = require('../scripts/auto-updater/pipeline');
 const { evaluateMassChanges } = require('../scripts/auto-updater/mass-change');
@@ -20,7 +21,10 @@ async function main() {
   const dataset = loadEvents(root);
   const baselinePilots = JSON.parse(fs.readFileSync(path.join(fixtureDir, 'baseline-pilots.json'), 'utf8'));
   // Preserve independently reviewed URL fields while restoring updater pilot values.
-  dataset.events = dataset.events.map(e => baselinePilots[e.id] ? { ...e, ...baselinePilots[e.id] } : e);
+  dataset.events = dataset.events.map(e => {
+    const merged=baselinePilots[e.id]?{...e,...baselinePilots[e.id]}:e;
+    return {...merged,title:normalizeConferenceTitle(merged.title)};
+  });
   const source = config.sources.find(s => s.id === 'conf-jp-surgery-2027');
   const event = dataset.events.find(e => e.id === source.id);
   const candidate = (field, value, confidence = 0.98) => ({ field, value, confidence, method: 'labeled-html',

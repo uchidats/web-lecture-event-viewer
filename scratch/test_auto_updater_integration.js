@@ -6,6 +6,7 @@ const path = require('node:path');
 const { runUpdater } = require('../scripts/auto-updater/pipeline');
 const { loadEvents } = require('../scripts/auto-updater/storage');
 const registry = require('../conference-sources');
+const {normalizeConferenceTitle}=require('../scripts/auto-updater/titles');
 async function main() {
   const root = path.resolve(__dirname, '..');
   const original = fs.readFileSync(path.join(root, 'events.js'), 'utf8');
@@ -19,7 +20,15 @@ async function main() {
   const data = loadEvents(isolated);
   const baselines = JSON.parse(fs.readFileSync(path.join(root, 'scratch/fixtures/auto-updater/baseline-pilots.json'), 'utf8'));
   // Restore updater pilot values while retaining newer, unrelated fields such as registration.
-  const isolatedBaseline = data.serialize(data.events.map(e => baselines[e.id] ? { ...e, ...baselines[e.id] } : e));
+  for(const seed of Object.values(baselines))assert.equal(seed.title,normalizeConferenceTitle(seed.title),'Pilot snapshot must contain the official title');
+  const seededEvents=data.events.map(e=>{
+    const merged=baselines[e.id]?{...e,...baselines[e.id]}:e;
+    return {...merged,title:normalizeConferenceTitle(merged.title)};
+  });
+  const ringan=seededEvents.filter(e=>/^第\d+回 日本臨床眼科学会$/.test(e.title));
+  assert.equal(ringan.length,3);
+  for(const event of ringan)assert.equal(event.title,data.events.find(e=>e.id===event.id).title,'Seeding preserves the curated official title');
+  const isolatedBaseline = data.serialize(seededEvents);
   fs.writeFileSync(path.join(isolated, 'events.js'), isolatedBaseline);
   const source = registry.sources.find(s => s.id === 'conf-jp-surgery-2027');
   const result = await runUpdater({
@@ -31,6 +40,7 @@ async function main() {
   assert.ok(result.tests.passed);
   assert.ok(result.tests.results.every(t => t.passed));
   assert.equal(loadEvents(isolated).events.length, 95);
+  for(const event of ringan)assert.equal(loadEvents(isolated).events.find(e=>e.id===event.id).title,event.title,'Apply does not restore the abbreviation');
   assert.equal(fs.readFileSync(path.join(isolated, result.backup, 'events.js'), 'utf8'), isolatedBaseline);
   assert.equal(fs.readFileSync(path.join(root, 'events.js'), 'utf8'), original);
   console.log(`PASS: isolated real apply (${result.autoChanges.length} fields) + all ${result.tests.results.length} syntax/regression gates; original main dataset unchanged`);
