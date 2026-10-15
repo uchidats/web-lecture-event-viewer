@@ -1339,6 +1339,10 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
   letter-spacing: -0.015em;
 }
 .card-title-row { display: flex; align-items: center; gap: 8px; }
+.joint-conference-title-break { display: none; }
+@media (max-width: 480px) {
+  .joint-conference-title-break { display: initial; }
+}
 .card-title-row .card-title { flex: 0 1 auto; min-width: 0; overflow-wrap: anywhere; }
 .conf-classification-val .format-badge {
   display: inline-flex;

@@ -2301,6 +2301,12 @@ function getConferenceChairDisplayLabel(event) {
   return chairs.sort((a, b) => a.position - b.position).map(chair => chair.label).join('・');
 }
 
+function renderConferenceTitleHtml(event) {
+  const title = escapeHtml(event.title);
+  if (!event.isConference || !/^第\s*[0-9０-９]+\s*回/.test(event.title)) return title;
+  return title.replace(/・(?=\s*第\s*[0-9０-９]+\s*回)/g, '・<br class="joint-conference-title-break">');
+}
+
 function createEventCardHtml(event, { showConferenceTags = false } = {}) {
   const creditLabel = getEventCreditLabel(event);
   const dateBadgeInfo = formatEventDateBadge(event);
@@ -2504,7 +2510,7 @@ function createEventCardHtml(event, { showConferenceTags = false } = {}) {
       <div class="card-content-block">
         ${parentConferenceBadgeHtml}
         <div class="card-title-row">
-          <h3 class="card-title">${hasConferenceTitleLink ? `<a class="conference-title-link" href="${escapeHtml(event.eventOfficialUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}</h3>
+          <h3 class="card-title">${hasConferenceTitleLink ? `<a class="conference-title-link" href="${escapeHtml(event.eventOfficialUrl)}" target="_blank" rel="noopener noreferrer">${renderConferenceTitleHtml(event)}</a>` : renderConferenceTitleHtml(event)}</h3>
         </div>
         <p class="card-subtitle">${escapeHtml(event.subtitle)}</p>
         ${event.isConference && event.conferenceRegion !== 'international' && event.eventType !== '海外学会' ? '' : `<p class="card-desc">${escapeHtml(getEventDescriptionDisplayText(event))}</p>`}
