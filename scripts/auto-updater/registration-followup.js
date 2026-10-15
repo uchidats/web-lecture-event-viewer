@@ -2,13 +2,14 @@
 const {text,blocks,registrationPeriods,normalizeDate,dateRanges}=require('./extract');
 const {validRegistration,registrationKey}=require('./registration');
 const MAX_REGISTRATION_PAGES=2;
-function registrationLinks(html,baseUrl) {
+function registrationLinks(html,baseUrl,role='registration') {
   const base=new URL(baseUrl),directory=new URL('.',base).pathname;
   const links=[];
   const clean=html.replace(/<!--[\s\S]*?-->|<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi,'');
   for(const m of clean.matchAll(/<a\b[^>]*href\s*=\s*["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
     const label=text(m[2].replace(/<img\b[^>]*alt=["']([^"']*)["'][^>]*>/gi,'$1')).replace(/\s|NEW|更新|[!！]/gi,'');
-    if(!/^(?:参加登録|事前参加登録|参加申込|参加者の皆様へ|Registration|Register)$/i.test(label))continue;
+    const matches=role==='abstract'?/^(?:演題募集|抄録募集|演題登録|Abstracts?|CallforAbstracts)$/i:/^(?:参加登録|事前参加登録|参加申込|参加者の皆様へ|Registration|Register)$/i;
+    if(!matches.test(label))continue;
     try {
       const url=new URL(m[1].replace(/&amp;/g,'&'),base);url.hash='';
       if(url.protocol!=='https:'||url.origin!==base.origin||url.username||url.password||!url.pathname.startsWith(directory)||url.href===base.href)continue;

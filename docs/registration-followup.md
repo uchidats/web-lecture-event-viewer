@@ -1,5 +1,7 @@
 # 公式参加登録ページの1階層取得
 
+演題募集も含む現在の共通取得上限・review方針は [important-page-followup.md](important-page-followup.md) を参照。参加登録2ページに演題募集2ページを加え、合計最大4ページまでとしている。
+
 Gemini Monitorと旧Auto Updaterで共通の `registration-followup.js` を使用する。トップにある参加登録／事前参加登録／参加申込／Registration／Register／参加者の皆様へに一致するリンクのみ、最大2ページを追加取得する。子ページのリンクは辿らない。重複・アンカー・外部ドメイン・同一ホストの別大会ディレクトリは除外する。HTTP取得は既存のtimeout・サイズ・リダイレクト検証を利用する。
 
 子ページのタイトルと現在の大会名・回次が一致し、期間の日付・カテゴリー・タイムゾーンが明確な場合だけ、公式ラベルとsourceUrlを保持した `registration.version=2 / periods[]` を生成する。早期はearly、事前参加登録・通常はregular、直前・当日はonsiteとし、onsiteはadvanceEligible=false。第1次／第2次など意味が不明な区分や、年の省略、不正日付、期間の一部不明、ページ間の矛盾、国際学会で不明なタイムゾーンはreviewへ回す。phaseを推測で生成しない。

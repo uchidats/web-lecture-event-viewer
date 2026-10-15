@@ -93,7 +93,11 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
   }
 
   // 5. Abstract deadline
-  if (geminiResult.abstract_deadline && geminiResult.abstract_deadline !== currentEvent.abstractSubmission?.deadline) {
+  const abstractReviewChanges=(options.abstractIssues||[]).map(issue=>({field:'abstractSubmission',before:currentEvent.abstractSubmission||null,after:null,sourceUrl:issue.url,validationReason:issue.reason}));
+  if(options.officialAbstract&&!abstractReviewChanges.length) {
+    const value={...options.officialAbstract,status:require('../auto-updater/important-followup').abstractStatus(options.officialAbstract,options.todayStr)};
+    for(const [key,after] of Object.entries(value))if(after!==currentEvent.abstractSubmission?.[key])fieldChanges.push({field:'abstractSubmission.'+key,before:currentEvent.abstractSubmission?.[key]??null,after,severity:SEVERITY.MEDIUM});
+  } else if (!abstractReviewChanges.length&&geminiResult.abstract_deadline && geminiResult.abstract_deadline !== currentEvent.abstractSubmission?.deadline) {
     fieldChanges.push({
       field: 'abstractSubmission.deadline',
       before: currentEvent.abstractSubmission?.deadline || null,
@@ -159,6 +163,7 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
       structuredReason: { code: 'suppressed_by_rollback', detail: 'Previously rolled back by administrator' },
       fieldChanges: [],
       registrationReviewChanges,
+      abstractReviewChanges,
       priorityScore: 0,
       daysUntil: diffDays(currentEvent.date || currentEvent.endDate, todayStr),
       isAutoApplicable: false
@@ -260,10 +265,11 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
   const urgencyWeight = Math.max(0, 100 - Math.min(100, daysUntil));
   const priorityScore = severityWeight + confidenceWeight + urgencyWeight;
 
-  const registrationOnlyReview=!activeChanges.length&&registrationReviewChanges.length>0;
+  const supplementalReview=[...registrationReviewChanges,...abstractReviewChanges];
+  const registrationOnlyReview=!activeChanges.length&&supplementalReview.length>0;
   if (registrationOnlyReview) {
     finalAction=RECOMMENDED_ACTIONS.NEEDS_REVIEW;
-    structuredReason={code:'invalid_registration_change',detail:registrationReviewChanges.map(c=>c.validationReason).join('; ')};
+    structuredReason={code:abstractReviewChanges.length?'unconfirmed_abstract_change':'invalid_registration_change',detail:supplementalReview.map(c=>c.validationReason).join('; ')};
   }
 
   return {
@@ -273,8 +279,9 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
     sourceQuality: geminiResult.source_quality,
     reason: registrationOnlyReview ? structuredReason.detail : geminiResult.reason || structuredReason.detail,
     structuredReason,
-    fieldChanges: registrationOnlyReview?registrationReviewChanges:activeChanges,
+    fieldChanges: registrationOnlyReview?supplementalReview:activeChanges,
     registrationReviewChanges,
+    abstractReviewChanges,
     priorityScore,
     daysUntil,
     isAutoApplicable: finalAction === RECOMMENDED_ACTIONS.SAFE_AUTO_UPDATE

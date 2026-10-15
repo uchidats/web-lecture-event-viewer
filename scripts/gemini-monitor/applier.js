@@ -17,6 +17,10 @@ function applyFieldChangesToEvent(event, fieldChanges, rejectedChanges = []) {
     const registration=checkRegistrationChange(event,change);
     if (registration?.reason) { rejectedChanges.push({...change,validationReason:registration.reason});continue; }
     if (registration) { event.registration=registration.value;appliedFields.push(field);continue; }
+    // Missing evidence is a review marker, never an instruction to erase the stored abstract.
+    if(field==='abstractSubmission'&&(!after||typeof after!=='object')) {
+      rejectedChanges.push({...change,validationReason:'Unconfirmed abstract cannot replace stored information'});continue;
+    }
     // Also guard cached/previously classified batches at the write boundary.
     if (field === 'title' && isFormatOnlyTitleChange(event.title, after)) continue;
     if(field==='venues'&&!validVenues(after))throw new Error('Invalid venues');

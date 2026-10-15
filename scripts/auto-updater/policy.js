@@ -5,7 +5,7 @@ const { validRegistration, registrationKey } = require('./registration');
 const {validVenues,venueKey}=require('./venues');
 const { eventSourceUrl, eventUrlReviewReason } = require('./event-urls');
 const fields = new Set(['title', 'date', 'endDate', 'venue', 'venues', 'city', 'country', 'officialUrl', 'eventOfficialUrl', 'societyUrl', 'registration',
-  'abstractSubmission.startDate', 'abstractSubmission.deadline', 'abstractSubmission.status', 'abstractSubmission.url']);
+  'abstractSubmission.startDate', 'abstractSubmission.deadline', 'abstractSubmission.status', 'abstractSubmission.url', 'abstractSubmission.timeZone']);
 const dateFields = new Set(['date', 'endDate', 'abstractSubmission.startDate', 'abstractSubmission.deadline']);
 const countryAliases = { JP: '日本', Japan: '日本', US: '米国', USA: '米国', 'United States': '米国', AT: 'オーストリア', Austria: 'オーストリア', SG: 'シンガポール', Singapore: 'シンガポール', 'シンガポール共和国': 'シンガポール' };
 function location(event) {
@@ -144,7 +144,7 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
     if (!trustedUrl(candidate.url, source, candidate.field === 'societyUrl' && candidate.method === 'official-society-page' ? 'society' : 'event')) { reject(candidate, 'untrusted-evidence-url'); continue; }
     const methodCaps = { 'official-title': 0.96, 'pinned-official-url': 0.99, 'pinned-event-url': 0.99, 'pinned-society-url': 0.99, 'official-society-page': 0.98, 'official-canonical-url': 0.98, 'labeled-html': 0.98,
       'venue-address': 0.96, 'curated-venue-geography': 0.96, 'official-abstract-page': 0.98, 'json-ld': 0.99, 'validated-period-state': 0.98,
-      pdf: 0.8, 'surrounding-text': 0.7, ai: 0.4 };
+      'one-hop-abstract':0.99, pdf: 0.8, 'surrounding-text': 0.7, ai: 0.4 };
     if (!Object.hasOwn(methodCaps, candidate.method) || confidence > methodCaps[candidate.method]) { reject(candidate, 'unsupported-confidence'); continue; }
     if (field === 'eventOfficialUrl') {
       const reason = Number(event.date?.slice(0, 4)) !== source.year ? 'event-url-year-mismatch' : eventUrlReviewReason(candidate, source);
@@ -197,6 +197,7 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
     if (['city', 'country'].includes(field) && !isPlaceholder(previous) && canonical(field, previous) !== canonical(field, value)) { reject(candidate, 'location-contradiction'); continue; }
     if (field === 'country' && (event.conferenceRegion === 'domestic') !== (canonical(field, value) === '日本')) { reject(candidate, 'region-country-contradiction'); continue; }
     if (field === 'abstractSubmission.status' && !['open', 'upcoming', 'closed', 'unknown'].includes(value)) { reject(candidate, 'invalid-status'); continue; }
+    if(field==='abstractSubmission.timeZone') {try {new Intl.DateTimeFormat('en',{timeZone:value});}catch{reject(candidate,'invalid-time-zone');continue;}}
     if (field === 'venue' && (String(value).length > 300 || /未定|不明|要確認|〒|運営事務局/.test(value))) { reject(candidate, 'invalid-venue'); continue; }
     if (field === 'venue' && !isUnknownVenue(previous) && canonical(field, previous) !== canonical(field, value)) {
       reject(candidate, 'existing-venue-change-needs-review'); continue;

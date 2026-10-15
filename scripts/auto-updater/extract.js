@@ -32,7 +32,7 @@ function normalizeDate(value, inherited = {}) {
   const d = new Date(Date.UTC(year, month - 1, day));
   if (!year || !month || d.getUTCFullYear() !== year || d.getUTCMonth() !== month - 1 || d.getUTCDate() !== day) return null;
   const date = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-  const time = clean.match(/(?:\s|T)(\d{1,2}):(\d{2})/) || clean.match(/(\d{1,2})時(?:(\d{2})分)?/) || (clean.includes('正午') ? ['', '12', '00'] : null);
+  const time = clean.match(/(?:\s|T|日)(\d{1,2}):(\d{2})/) || clean.match(/(\d{1,2})時(?:(\d{2})分)?/) || (clean.includes('正午') ? ['', '12', '00'] : null);
   if (time && !time[2]) time[2] = '00';
   if (time && (Number(time[1]) > 23 || Number(time[2]) > 59)) return null;
   return date + (time ? ` ${time[1].padStart(2, '0')}:${time[2]}` : '');

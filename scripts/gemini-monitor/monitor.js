@@ -255,10 +255,10 @@ async function runGeminiMonitor(options = {}) {
 
     // 6. Content changed -> extract compact structured facts (Requirement 8)
     const context = extractMonitoringContext(fetchResult.rawHtml, event);
-    const registrationFollowup=fetchResult.registrationFollowup;
+    const registrationFollowup=fetchResult.importantFollowup||fetchResult.registrationFollowup;
     if(registrationFollowup?.pages.length) {
-      context.registrationPages=registrationFollowup.pages.map(p=>({url:p.url,registrationText:extractMonitoringContext(p.html,event).registrationText}));
-      context.summaryPromptText+='\nOfficial one-hop registration pages:\n'+JSON.stringify(context.registrationPages);
+      context.registrationPages=registrationFollowup.pages.map(p=>{const c=extractMonitoringContext(p.html,event);return {url:p.url,registrationText:c.registrationText,abstractText:c.abstractText};});
+      context.summaryPromptText+='\nOfficial one-hop registration/abstract pages:\n'+JSON.stringify(context.registrationPages);
     }
     context.adoptedUrlVerification = adoptedUrlVerification;
 
@@ -277,7 +277,9 @@ async function runGeminiMonitor(options = {}) {
       todayStr,
       sourceUrl: targetUrl,
       officialRegistration:registrationFollowup?.registration?.value,
-      registrationIssues:registrationFollowup?.issues,
+      registrationIssues:registrationFollowup?.registrationIssues||registrationFollowup?.issues,
+      officialAbstract:registrationFollowup?.abstractSubmission?.value,
+      abstractIssues:registrationFollowup?.abstractIssues,
       officialVenues: context.multipleVenueCandidates?.length === 1 ? context.multipleVenueCandidates[0] : null,
       venueCountUnconfirmed: context.venueCountUnconfirmed || context.multipleVenueCandidates?.length > 1
     });
@@ -310,12 +312,13 @@ async function runGeminiMonitor(options = {}) {
       timestamp: now.toISOString()
     };
 
-    if (classification.registrationReviewChanges?.length && !classification.fieldChanges.some(change=>change.validationReason)) {
+    const supplementalReview=[...(classification.registrationReviewChanges||[]),...(classification.abstractReviewChanges||[])];
+    if (supplementalReview.length && !classification.fieldChanges.some(change=>change.validationReason)) {
       metrics.needsReview++;
       reviewPool.push({...evaluatedItem,action:RECOMMENDED_ACTIONS.NEEDS_REVIEW,
-        fieldChanges:classification.registrationReviewChanges,
-        reason:classification.registrationReviewChanges.map(change=>change.validationReason).join('; '),
-        structuredReason:{code:'invalid_registration_change',detail:'Registration field withheld; other safe fields may continue.'}});
+        fieldChanges:supplementalReview,
+        reason:supplementalReview.map(change=>change.validationReason).join('; '),
+        structuredReason:{code:classification.abstractReviewChanges?.length?'unconfirmed_abstract_change':'invalid_registration_change',detail:'Unconfirmed field withheld; other safe fields may continue.'}});
     }
 
     if (classification.action === RECOMMENDED_ACTIONS.NO_CHANGE) {

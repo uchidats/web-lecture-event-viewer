@@ -109,12 +109,14 @@ async function main() {
           await evaluate('document.querySelector(".fc-event[data-event-id=conf-jp-diabetic-2027]").click()');
         }
         const selector=mode==='list'?'#event-list [data-id="conf-jp-diabetic-2027"]':'#calendar-event-detail .event-card';
-        const result=await evaluate('(()=>{const card=document.querySelector('+JSON.stringify(selector)+'),row=card.querySelector(".conf-registration-list");return {text:row.textContent,fits:card.scrollWidth<=card.clientWidth+1,pageFits:document.documentElement.scrollWidth<=innerWidth+1};})()');
+        const result=await evaluate('(()=>{const card=document.querySelector('+JSON.stringify(selector)+'),row=card.querySelector(".conf-registration-list"),abstract=card.querySelector(".conf-abstract-deadline-val");return {text:row.textContent,abstract:abstract.textContent,abstractUrl:abstract.querySelector("a")?.href,fits:card.scrollWidth<=card.clientWidth+1,pageFits:document.documentElement.scrollWidth<=innerWidth+1};})()');
         assert.ok(result.text.includes('2月2日')&&result.text.includes('締切')&&!result.text.includes('未定')&&!result.text.includes('3月13日'));
+        assert.ok(result.abstract.includes('11月11日 12:00')&&result.abstract.includes('受付中')&&!result.abstract.includes('公式'));
+        assert.equal(result.abstractUrl,'https://convention.jtbcom.co.jp/jsod33/abstract/index.html');
         assert.ok(result.fits&&result.pageFits);
         if(mode!=='list') await evaluate('new Promise(resolve=>{const d=document.getElementById("calendar-event-dialog");d.addEventListener("close",resolve,{once:true});d.close();})');
       }
-      console.log('PASS '+width+'px: JSOD33 list/calendar/compact registration deadline, single result and no overflow');
+      console.log('PASS '+width+'px: JSOD33 list/calendar/compact registration + abstract deadlines/URL, single result and no overflow');
     }
     await call('Browser.close');
   } finally {socket?.close();if(browser.exitCode===null)browser.kill();await new Promise(resolve=>server.close(resolve));}

@@ -1489,10 +1489,11 @@ const sampleEvents = [
     "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
     "note": "",
     "abstractSubmission": {
-      "status": "unknown",
-      "startDate": null,
-      "deadline": null,
-      "url": null
+      "status": "open",
+      "startDate": "2026-09-09",
+      "deadline": "2026-11-11T12:00",
+      "url": "https://convention.jtbcom.co.jp/jsod33/abstract/index.html",
+      "timeZone": "Asia/Tokyo"
     },
     "calendarStatus": {
       "google": {
