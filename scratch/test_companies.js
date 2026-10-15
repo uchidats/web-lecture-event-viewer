@@ -56,14 +56,14 @@ vm.runInContext(`
   assert.ok(ids().split(',').includes('bayer'));
   assert.ok(!ids().split(',').includes('none'));
   state.attendingConferences.add('parent');
-  assert.ok(ids().split(',').includes('child'));
+  assert.ok(!ids().split(',').includes('child'));
   state.filters.region.add('関西'); state.filters.year.add('2026');
   state.filters.specialty.add('網膜・硝子体'); state.filters.abstractStatus.add('open');
   assert.equal(ids(), 'bayer,joint,parent,single');
   state.filters.company.delete('bayer');
   assert.equal(ids(), 'joint,parent,single');
   state.filters.abstractStatus.clear();
-  assert.equal(ids(), 'child,closed,joint,parent,single');
+  assert.equal(ids(), 'closed,joint,parent,single');
   state.events = state.events.filter(e => e.id !== 'closed');
   state.hiddenConferences.add('parent');
   assert.ok(!ids().split(',').includes('parent'));
@@ -74,7 +74,7 @@ vm.runInContext(`
   state.attendingConferences.add('parent');
   assert.equal(ids(), 'joint,single');
   state.filters.includeEndedConferences = true;
-  assert.equal(ids(), 'child,joint,parent,single');
+  assert.equal(ids(), 'joint,parent,single');
   const options = getCoSponsorCompanyOptions(state.events);
   assert.equal(options.find(c => c.id === 'santen').count, 6);
   assert.equal(options.find(c => c.id === 'bayer').count, 2);

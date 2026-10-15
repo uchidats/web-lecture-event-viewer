@@ -67,14 +67,14 @@ async function main() {
       santen.click(); container.querySelector('input[value="novartis"]').click();
       const multiple = state.filters.company.size === 2;
       state.attendingConferences.add('oph-001'); renderEvents();
-      const seminarVisible = getFilteredEvents().some(e => e.id === 'oph-001-s2');
+      const seminarStillHidden = !getFilteredEvents().some(e => e.id === 'oph-001-s2');
       elements.resetFilterBtn.click();
       const reset = state.filters.company.size === 0 && [...container.querySelectorAll('input')].every(input => !input.checked);
-      return {options, order, parentFound, seminarHidden, activeLabel, removed, multiple, seminarVisible, reset};
+      return {options, order, parentFound, seminarHidden, activeLabel, removed, multiple, seminarStillHidden, reset};
     })()`);
     assert.deepEqual(result.options.map(o => o.id), ['santen', 'novartis']);
     for (const option of result.options) assert.ok(option.label.includes('(1)'));
-    for (const key of ['order', 'parentFound', 'seminarHidden', 'activeLabel', 'removed', 'multiple', 'seminarVisible', 'reset']) assert.equal(result[key], true, key);
+    for (const key of ['order', 'parentFound', 'seminarHidden', 'activeLabel', 'removed', 'multiple', 'seminarStillHidden', 'reset']) assert.equal(result[key], true, key);
     for (const width of [320, 360, 390, 480, 1280]) {
       await call('Emulation.setDeviceMetricsOverride', {width, height: 900, deviceScaleFactor: 1, mobile: width < 500});
       const layout = await evaluate(`(() => {

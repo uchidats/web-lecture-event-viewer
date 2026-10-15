@@ -3,6 +3,9 @@
  * 即時絞り込み・カレンダー重複表示・ICS連携・学会詳細メタ情報
  */
 
+// 一時運用方針: 関連セミナーは保存したまま公開を停止。再開時は従来の参加予定連動を利用する。
+const RELATED_SEMINARS_ENABLED = false;
+
 // アプリケーションの状態管理
 let state = {
   events: [...sampleEvents], // sampleEvents from events.js
@@ -384,7 +387,7 @@ function setConferenceAttendance(conferenceId, choice) {
     saveHiddenConferences();
     updateHiddenConferencesBadge();
     renderEvents();
-    showToast(`✓ 「${confTitle}」を参加予定に設定しました（関連セミナーを表示中）`);
+    showToast(`✓ 「${confTitle}」を参加予定に設定しました`);
   } else if (choice === "no") {
     // なし: 非表示ON、参加予定OFF
     state.attendingConferences.delete(conferenceId);
@@ -1848,6 +1851,8 @@ function getFilteredEvents(ignoreCalendar = false, viewMode = typeof OphthalCale
     // 学会関連セミナー（ランチョン・モーニング・共催等）の表示制御:
     // parentConferenceId が設定されている場合、対応する学会が「参加予定」でなければ一覧から除外
     if (event.parentConferenceId) {
+      // 関連セミナーの公開を一時停止。データと従来の参加予定連動処理は再開用に保持する。
+      if (!RELATED_SEMINARS_ENABLED) return false;
       if (!state.attendingConferences.has(event.parentConferenceId)) {
         return false;
       }

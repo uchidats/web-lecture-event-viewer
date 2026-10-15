@@ -75,10 +75,10 @@ async function main() {
       }
       await evaluate('document.getElementById("attendance-surface-comparison").remove();renderEvents()');
       await check('(()=>{const card=document.querySelector(\'[data-id="oph-001"]\'),style=getComputedStyle(card);return !card.querySelector(".conf-attending-badge") && style.borderTopWidth==="1px" && style.borderTopColor==="rgb(201, 184, 244)" && style.backgroundColor==="rgb(247, 243, 255)" && card.scrollWidth<=card.clientWidth+1;})()');
-      await check('state.attendingConferences.has("oph-001") && !!document.querySelector(\'[data-id="oph-001-s2"]\') && document.querySelector(\'[data-id="oph-001"] [data-choice="yes"]\').checked');
+      await check('state.attendingConferences.has("oph-001") && !document.querySelector(\'[data-id="oph-001-s2"]\') && document.querySelector(\'[data-id="oph-001"] [data-choice="yes"]\').checked');
       await click('registered');
       await check('(()=>{const card=document.querySelector(\'[data-id="oph-001"]\'),style=getComputedStyle(card);return !card.querySelector(".conf-attending-badge") && style.borderTopWidth==="1px" && style.borderTopColor==="rgb(201, 184, 244)" && style.backgroundColor==="rgb(247, 243, 255)" && card.scrollWidth<=card.clientWidth+1;})()');
-      await check('document.querySelectorAll(\'[data-id="oph-001"] [data-action="attend-choice"]\').length===1 && !!document.querySelector(\'[data-id="oph-001-s2"]\')');
+      await check('document.querySelectorAll(\'[data-id="oph-001"] [data-action="attend-choice"]\').length===1 && !document.querySelector(\'[data-id="oph-001-s2"]\')');
       await check('(()=>{const group=document.querySelector(\'[data-id="oph-001"] .conf-planned-choice-group\'),radio=group.querySelector(".conf-choice-btn").getBoundingClientRect(),date=group.querySelector("input[type=date]").getBoundingClientRect();return !group.textContent.includes("登録日：") && (Math.abs(radio.top+radio.height/2-date.top-date.height/2)<1 || innerWidth===320 && date.top>=radio.bottom);})()');
       await check('(()=>{const label=document.querySelector(\'[data-id="oph-001"] .conf-registration-date\'),input=label.querySelector("input"),l=label.getBoundingClientRect(),r=input.getBoundingClientRect();return Math.abs(l.top+l.height/2-r.top-r.height/2)<1 && input.type==="date"})()');
       await layout();
@@ -99,7 +99,7 @@ async function main() {
       await check('conferenceAttendanceStatus("oph-001")==="none" && !document.querySelector(\'[data-id="oph-001"] [data-action="registration-date"]\') && !document.querySelector(\'[data-id="oph-001"] input:checked\') && !document.querySelector(\'[data-id="oph-001"]\').classList.contains("card-attending-conference") && !document.querySelector(\'[data-id="oph-001-s2"]\') && JSON.parse(localStorage.getItem(CONFERENCE_REGISTRATION_KEY))["oph-001"].date==="2026-10-15"');
       await click('registered');
       await check('document.querySelector(\'[data-id="oph-001"] input[type="date"]\').value==="2026-10-15"');
-      await check('document.querySelector(\'[data-id="oph-001"] [data-choice="registered"]\').checked && !!document.querySelector(\'[data-id="oph-001-s2"]\')');
+      await check('document.querySelector(\'[data-id="oph-001"] [data-choice="registered"]\').checked && !document.querySelector(\'[data-id="oph-001-s2"]\')');
       await click('registered');await click('yes');
       await check('conferenceAttendanceStatus("oph-001")==="yes" && !document.querySelector(\'[data-id="oph-001"] [data-action="registration-date"]\')');
       await click('registered');
@@ -108,7 +108,7 @@ async function main() {
       await evaluate('conferenceRegistrations={};localStorage.removeItem(CONFERENCE_REGISTRATION_KEY);localStorage.setItem(ATTENDING_CONFERENCES_KEY,JSON.stringify(["oph-001"]));localStorage.setItem(HIDDEN_CONFERENCES_KEY,JSON.stringify(["legacy-no"]));state.attendingConferences.clear();state.hiddenConferences.clear();loadAttendingConferences();loadHiddenConferences();renderEvents();');
       await check('conferenceAttendanceStatus("oph-001")==="yes" && conferenceAttendanceStatus("legacy-no")==="no" && conferenceAttendanceStatus("unset")==="none"');
       await layout();
-      console.log('PASS: '+width+'px initial/registered/unregistered/none, related seminars, date edit/reload/restoration, legacy migration, overflow');
+      console.log('PASS: '+width+'px initial/registered/unregistered/none, related seminars paused, date edit/reload/restoration, legacy migration, overflow');
     }
     await call('Browser.close');
   } finally {if(socket) socket.close();if(browser.exitCode===null) browser.kill();}

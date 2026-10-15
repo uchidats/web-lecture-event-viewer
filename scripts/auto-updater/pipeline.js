@@ -60,6 +60,8 @@ async function runPipeline({ root, config, apply = false, getPage = fetchOfficia
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(checkedAt));
   for (const source of config.sources) {
     const event = dataset.events.find(e => e.id === source.id);
+    // 関連セミナーの収集は一時停止。既存レコードは変更・削除しない。
+    if (event.parentConferenceId) continue;
     const candidates = [], issues = [], documents = [];
     for (const page of source.pages) {
       try {

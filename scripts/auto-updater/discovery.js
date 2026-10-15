@@ -179,7 +179,7 @@ async function discoverMissingEventUrls({ events, config, getPage = fetchOfficia
     })());
     return cache.get(cacheKey);
   };
-  for (const event of events.filter(e => e.isConference && ['国内学会', '海外学会'].includes(e.eventType) && !e.eventOfficialUrl)) {
+  for (const event of events.filter(e => e.isConference && !e.parentConferenceId && ['国内学会', '海外学会'].includes(e.eventType) && !e.eventOfficialUrl)) {
     const expected = identity(event);
     const entry = settings.entries.find(e => e.eventId === event.id);
     const indexUrls = entry?.indexUrls || (event.societyUrl ? [event.societyUrl] : []);

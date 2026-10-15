@@ -130,7 +130,7 @@ async function main() {
       for(const choice of attendance.choices){assert.equal(choice.border,'0px');assert.equal(choice.background,'rgba(0, 0, 0, 0)');assert.equal(choice.size,16);assert.ok(choice.center<1);assert.ok(choice.height>=36);}
       await evaluate('document.querySelector("[data-id=oph-001] .choice-yes .choice-text").click()');
       const selected=await evaluate('(() => {const parent=state.events.find(e=>e.id==="oph-001"),children=state.events.filter(e=>e.parentConferenceId===parent.id),filtered=getFilteredEvents();return {yes:state.attendingConferences.has(parent.id),no:state.hiddenConferences.has(parent.id),checked:document.querySelector("[data-id=oph-001] input[value=yes]").checked,children:children.length,shown:children.every(e=>filtered.some(f=>f.id===e.id))};})()');
-      assert.ok(selected.yes);assert.ok(!selected.no);assert.ok(selected.checked);assert.ok(selected.children>0);assert.ok(selected.shown);
+      assert.ok(selected.yes);assert.ok(!selected.no);assert.ok(selected.checked);assert.ok(selected.children>0);assert.ok(!selected.shown);
       await evaluate('document.querySelector("[data-id=oph-001] .choice-yes .choice-text").click()');
       assert.equal(await evaluate('state.attendingConferences.has("oph-001")'),false);
       await evaluate('document.querySelector("[data-id=oph-001] .choice-no .choice-text").click()');

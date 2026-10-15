@@ -31,6 +31,18 @@ vm.runInContext(`
  const parent=sampleEvents.find(e=>e.id==='oph-001');
  const child={...sampleEvents.find(e=>e.parentConferenceId===parent.id),date:parent.date,endDate:parent.endDate};
  state.events=[parent,child];state.attendingConferences.add(parent.id);
- assert.equal(ids('calendar').length,2);assert.equal(ids('compact').length,0);assert.equal(ids('list').length,0);
+ assert.equal(ids('calendar').length,1);assert.equal(ids('compact').length,0);assert.equal(ids('list').length,0);
+ const futureParent={...parent,date:'2099-10-01',endDate:'2099-10-02'};
+ state.events=[futureParent,{...child,date:futureParent.date,endDate:futureParent.endDate}];
+ for(const choice of ['registered','yes','no','none']) {
+   state.attendingConferences.clear();state.hiddenConferences.clear();
+   if(choice==='registered'||choice==='yes') state.attendingConferences.add(parent.id);
+   if(choice==='no') state.hiddenConferences.add(parent.id);
+   for(const mode of ['list','compact','calendar']) {
+     assert.ok(!getFilteredEvents(false,mode).some(e=>e.parentConferenceId),'Related seminars stay hidden: '+choice+'/'+mode);
+     assert.equal(getFilteredEvents(false,mode).some(e=>e.id===parent.id),choice!=='no');
+   }
+ }
+ assert.equal(state.events.length,2,'Hidden seminar data is retained');
 `,context);
 console.log('PASS: per-mode ended visibility, October cutoff, AAO real data, checkbox, date boundaries, other filters and related seminars');
