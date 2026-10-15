@@ -953,43 +953,6 @@ const sampleEvents = [
     "conferenceChair": "嶋澤 雅光（岐阜薬科大学）"
   },
   {
-    "id": "oph-005",
-    "title": "プレミアムIOL徹底攻略：老視矯正と乱視軸合わせの極意",
-    "subtitle": "3焦点・EDOFレンズの適応判断とAngle Kappa・角膜高次収差の評価",
-    "date": "2026-11-07",
-    "endDate": "2026-11-07",
-    "time": "15:00 - 18:00",
-    "region": "中部",
-    "venue": "名古屋ミッドランドスクエア 会議室 / ライブ配信",
-    "specialty": "白内障",
-    "eventType": "講演会・勉強会",
-    "format": "ハイブリッド",
-    "sponsor": "中部屈折矯正白内障手術懇話会",
-    "credits": "日本眼科学会生涯教育 1.5単位",
-    "creditUnits": 1.5,
-    "calendarStatus": {
-      "google": {
-        "status": "free",
-        "conflicts": []
-      },
-      "icloud": {
-        "status": "free",
-        "conflicts": []
-      },
-      "isAdded": true
-    },
-    "officialUrl": "https://example.com/premium-iol-nagoya",
-    "pdfUrl": "iol_masterclass_2026.pdf",
-    "tags": [
-      "多焦点眼内レンズ",
-      "屈折矯正",
-      "乱視矯正",
-      "カレンダー登録済"
-    ],
-    "description": "白内障手術における術後不満足を防ぐ術前カウセリング術。EDOF/多焦点IOLの光学特性比較とトーリック軸補正の実際。",
-    "isConference": false
-  },
-  {
     "id": "oph-006",
     "title": "第37回 関西角膜・ドライアイ臨床研究会",
     "subtitle": "マイボーム腺機能不全(MGD)の新規治療と角膜移植(DMEK/DSAEK)の最前線",

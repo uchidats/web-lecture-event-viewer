@@ -39,7 +39,7 @@ async function main() {
   assert.equal(result.outcome, 'applied', JSON.stringify({ stopReason: result.stopReason, tests: result.tests }));
   assert.ok(result.tests.passed);
   assert.ok(result.tests.results.every(t => t.passed));
-  assert.equal(loadEvents(isolated).events.length, 94);
+  assert.equal(loadEvents(isolated).events.length, 93);
   for(const event of ringan)assert.equal(loadEvents(isolated).events.find(e=>e.id===event.id).title,event.title,'Apply does not restore the abbreviation');
   assert.equal(fs.readFileSync(path.join(isolated, result.backup, 'events.js'), 'utf8'), isolatedBaseline);
   assert.equal(fs.readFileSync(path.join(root, 'events.js'), 'utf8'), original);

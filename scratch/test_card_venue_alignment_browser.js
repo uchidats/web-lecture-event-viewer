@@ -96,7 +96,7 @@ async function main() {
 
     for(const width of [1280,900,768,390,320]) {
       await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});await navigate('/');
-      await evaluate('elements.eventList.innerHTML=[sampleEvents.find(e=>e.id==="conf-jp-pharmacology-2026"),sampleEvents.find(e=>e.id==="oph-005")].map(createEventCardHtml).join("")');
+      await evaluate('elements.eventList.innerHTML=[sampleEvents.find(e=>e.id==="conf-jp-pharmacology-2026"),sampleEvents.find(e=>e.id==="oph-007")].map(createEventCardHtml).join("")');
       const data=await evaluate(`Array.from(elements.eventList.querySelectorAll('.event-card'),card=>{
         const date=card.querySelector('.date-badge').getBoundingClientRect(),region=card.querySelector('.time-and-region').getBoundingClientRect(),time=card.querySelector('.time-text'),venue=card.querySelector('.location-text'),link=venue.querySelector('a');
         return {id:card.dataset.id,centerDelta:Math.abs(date.top+date.height/2-region.top-region.height/2),hasTime:!!time,clock:!!time?.querySelector('svg'),stacked:!!time&&time.getBoundingClientRect().top<venue.getBoundingClientRect().top,alignment:getComputedStyle(card.querySelector('.date-time-block')).alignItems,venue:venue.textContent,href:link?.href,fits:card.scrollWidth<=card.clientWidth+1&&document.documentElement.scrollWidth<=innerWidth+1};

@@ -101,12 +101,12 @@ async function main() {
       await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});
       for(const route of ['/', '/ophthalconf/']) {
         await navigate(route);
-        assert.equal(await evaluate('state.events.length'),94);
-        assert.ok(await evaluate('!state.events.some(e=>e.id==="oph-002"||e.sponsor?.includes("眼科メディカルファーマ"))'));
+        assert.equal(await evaluate('state.events.length'),93);
+        assert.ok(await evaluate('!state.events.some(e=>["oph-002","oph-005"].includes(e.id)||e.sponsor?.includes("眼科メディカルファーマ"))'));
         for(const mode of ['list','calendar','compact']) {
           await evaluate('document.getElementById("view-'+mode+'").click()');
           const result=await evaluate('({ids:getFilteredEvents().map(e=>e.id),count:Number(elements.eventCount.textContent),cards:[...document.querySelectorAll("#event-list .event-card")].map(e=>e.dataset.id),calendar:OphthalCalendarView.getCalendar()?.getEvents().map(e=>e.id)||[],overflow:document.documentElement.scrollWidth>innerWidth})');
-          assert.ok(!result.ids.includes('oph-002'));assert.equal(result.count,result.ids.length);assert.ok(!result.overflow);
+          assert.ok(!result.ids.includes('oph-002'));assert.ok(!result.ids.includes('oph-005'));assert.equal(result.count,result.ids.length);assert.ok(!result.overflow);
           assert.deepEqual((mode==='list'?result.cards:result.calendar).sort(),result.ids.sort());
         }
         await evaluate('document.getElementById("view-list").click();state.filters.keyword="眼科メディカルファーマ";renderEvents()');assert.equal(await evaluate('getFilteredEvents().length'),0);
