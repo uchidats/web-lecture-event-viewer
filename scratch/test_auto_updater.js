@@ -59,7 +59,7 @@ async function main() {
   assert.ok(actual.accepted.some(c => c.field === 'abstractSubmission.deadline' && c.value === '2026-08-31'));
   assert.equal(actual.accepted.find(c => c.field === 'abstractSubmission.deadline').oldValue, null);
   const updated = applyChanges(dataset.events, actual.accepted.map(c => ({ ...c, eventId: source.id })));
-  assert.equal(updated.length, 93);
+  assert.equal(updated.length, 91);
   assert.equal(updated.find(e => e.id === source.id).abstractSubmission.status, 'closed');
   assert.equal(updated.find(e => e.id === source.id).abstractDeadline, '2026-08-31');
   const saved = updated.find(e => e.id === source.id);
@@ -199,7 +199,7 @@ async function main() {
   assert.equal(fs.readFileSync(path.join(tmp, 'events.js'), 'utf8'), baseline);
   assert.equal(fs.existsSync(path.join(tmp, 'reports/auto-update-history.json')), false);
   const applied = await runUpdater({ ...options, config: single, apply: true, check: () => ({ passed: true, results: [] }) });
-  assert.equal(applied.outcome, 'applied'); assert.equal(loadEvents(tmp).events.length, 93);
+  assert.equal(applied.outcome, 'applied'); assert.equal(loadEvents(tmp).events.length, 91);
   const history = JSON.parse(fs.readFileSync(path.join(tmp, 'reports/auto-update-history.json')));
   assert.ok(history.changes.every(c => 'oldValue' in c && 'newValue' in c && c.changedAt && c.url && c.confidence >= 0.95));
   assert.equal(fs.readFileSync(path.join(tmp, applied.backup, 'events.js'), 'utf8'), baseline);
@@ -223,7 +223,7 @@ async function main() {
   assert.equal(fs.readFileSync(path.join(root, 'events.js'), 'utf8'), dataset.original);
   const webContext = { document: { getElementById: () => null, addEventListener: () => {} }, console, setTimeout, clearTimeout };
   for (const file of ['venues.js', 'companies.js', 'events.js', 'script.js']) vm.runInNewContext(fs.readFileSync(path.join(root, file), 'utf8'), webContext);
-  assert.equal(vm.runInNewContext('sampleEvents.filter(e => typeof createEventCardHtml(e) === "string").length', webContext), 93);
-  console.log('PASS: 5 official HTML pilots; normalization; abstract updates; confidence; exceptions; mass stop; fetch failure; redirects; dry-run; apply/rollback/backups; IDs; 93 cards');
+  assert.equal(vm.runInNewContext('sampleEvents.filter(e => typeof createEventCardHtml(e) === "string").length', webContext), 91);
+  console.log('PASS: 5 official HTML pilots; normalization; abstract updates; confidence; exceptions; mass stop; fetch failure; redirects; dry-run; apply/rollback/backups; IDs; 91 cards');
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

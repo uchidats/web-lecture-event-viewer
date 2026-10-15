@@ -92,7 +92,7 @@ vm.runInContext(`
   for (const key of FILTER_SET_KEYS) state.filters[key].clear();
   state.filters.includeEndedConferences = true;
   state.filters.specialty = new Set(['小児・斜視弱視']);
-  assert.equal(getFilteredEvents().length, 5, 'Pediatric specialty filter count is unchanged');
+  assert.equal(getFilteredEvents().length, 4, 'Pediatric specialty excludes the removed demo lecture');
   assert.equal(pediatricConferences.length, 4, 'Internal conference category remains unchanged');
   state.filters.specialty.clear();
   for (const [labels, expected] of [[['眼炎症感染'], 3], [['その他'], 14], [['眼炎症感染', 'その他'], 16]]) {

@@ -26,8 +26,8 @@ async function main(){
   assert.equal(compareEvent({...event,eventOfficialUrl:url},complete,url).category,'verified');
   const bad=extractFacts('<html><h1>第4回日本老視学会学術総会</h1><h3>会期</h3><p>2027年2月29日～30日</p></html>',event,url);assert.equal(bad.facts.date,undefined);
   const report=JSON.parse(fs.readFileSync(path.join(root,'reports/event-metadata-audit-2026-10-09.json')));
-  assert.equal(report.records.length,93);assert.equal(new Set(report.records.map(r=>r.eventId)).size,93);
-  assert.equal(Object.values(report.summary).reduce((a,b)=>a+b,0),93);
+  assert.equal(report.records.length,91);assert.equal(new Set(report.records.map(r=>r.eventId)).size,91);
+  assert.equal(Object.values(report.summary).reduce((a,b)=>a+b,0),91);
   assert.ok(report.records.every(r=>CATEGORIES.includes(r.category)&&r.comparisons.length===12));
   const temp=fs.mkdtempSync(path.join(os.tmpdir(),'metadata-review-test-'));const fixtureData=loadEvents(root);fixtureData.events[fixtureData.events.findIndex(e=>e.id===event.id)]=event;fs.writeFileSync(path.join(temp,'events.js'),fixtureData.serialize(fixtureData.events));fs.mkdirSync(path.join(temp,'reports'));
   const value=Object.fromEntries(record.differences.filter(c=>!['year','edition'].includes(c.field)).map(c=>[c.field,c.official]));
@@ -54,6 +54,6 @@ async function main(){
   applyReviewedMetadata({root:geoTemp,approvals:store.exportMetadataApprovals(geoItems,'human'),apply:true});
   const geoUpdated=loadEvents(geoTemp).events.find(e=>e.id===event.id);assert.equal(geoUpdated.venueId,undefined);assert.equal(geoUpdated.timeZone,undefined);
   assert.equal(fs.readFileSync(path.join(root,'events.js'),'utf8'),original);
-  console.log('PASS: JPS4 seven differences (title/year/two dates/venue/theme/URL), notation vs misinformation, scope guards, 93-record coverage, no automatic mutation, human-only atomic metadata apply, stale approval rejection and ID preservation');
+  console.log('PASS: JPS4 seven differences (title/year/two dates/venue/theme/URL), notation vs misinformation, scope guards, 91-record coverage, no automatic mutation, human-only atomic metadata apply, stale approval rejection and ID preservation');
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});

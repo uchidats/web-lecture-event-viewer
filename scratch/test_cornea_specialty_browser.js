@@ -1,4 +1,4 @@
-﻿// Real local HTTP pages, real Edge layout/storage; Firebase and Google APIs are mocked only in this test server.
+// Real local HTTP pages, real Edge layout/storage; Firebase and Google APIs are mocked only in this test server.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -85,7 +85,7 @@ async function main() {
     };
 
 
-    const expectedIds=['conf-jp-cornea-2026','oph-006','conf-jp-cornea-2027','conf-jp-cornea-2028'].sort();
+    const expectedIds=['conf-jp-cornea-2026','conf-jp-cornea-2027','conf-jp-cornea-2028'].sort();
     const category=String.fromCharCode(35282,33180),other=String.fromCharCode(12381,12398,20182);
     for(const width of [1280,390,320]) {
       await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});await navigate('/');
@@ -93,14 +93,16 @@ async function main() {
       await evaluate('document.getElementById("reset-filter-btn").click();state.filters.includeEndedConferences=true;syncCheckboxesWithState();renderEvents()');
       const data=await evaluate('({optics:state.events.filter(e=>e.specialty==='+JSON.stringify(category)+').map(e=>e.id).sort(),other:state.events.filter(e=>getEventSpecialties(e).includes('+JSON.stringify(other)+')).length})');assert.deepEqual(data.optics,expectedIds);assert.equal(data.other,14);
       await evaluate(`[...document.querySelectorAll('#filter-specialty input')].find(e=>e.value===`+JSON.stringify(category)+`).click()`);
-      assert.equal(await evaluate(`[...document.querySelectorAll('#filter-specialty input')].find(e=>e.value===`+JSON.stringify(category)+`).nextElementSibling.querySelector('.chip-count').textContent`),'(4)');
+      assert.equal(await evaluate(`[...document.querySelectorAll('#filter-specialty input')].find(e=>e.value===`+JSON.stringify(category)+`).nextElementSibling.querySelector('.chip-count').textContent`),'(3)');
       for(const mode of ['list','calendar','compact']) {
         await evaluate('document.getElementById("view-'+mode+'").click()');
-        assert.deepEqual(await evaluate('getFilteredEvents().map(e=>e.id).sort()'),expectedIds);
+        const modeIds=mode==='calendar'?expectedIds.filter(id=>id!=='conf-jp-cornea-2026'):expectedIds;
+        // Monthly calendar excludes events before October 2026; list/compact honor the history checkbox.
+        assert.deepEqual(await evaluate('getFilteredEvents().map(e=>e.id).sort()'),modeIds);
         if(mode==='list') {
           assert.deepEqual(await evaluate('[...elements.eventList.querySelectorAll(".event-card")].map(e=>e.dataset.id).sort()'),expectedIds);
-          assert.ok(await evaluate(`[...elements.eventList.querySelectorAll('.card-meta-item strong, .conf-classification-val .category, .conf-classification-val .specialty')].filter(e=>e.textContent===`+JSON.stringify(category)+`).length===4`));
-        } else assert.deepEqual(await evaluate('OphthalCalendarView.getCalendar().getEvents().map(e=>e.id).sort()'),expectedIds);
+          assert.ok(await evaluate(`[...elements.eventList.querySelectorAll('.card-meta-item strong, .conf-classification-val .category, .conf-classification-val .specialty')].filter(e=>e.textContent===`+JSON.stringify(category)+`).length===3`));
+        } else assert.deepEqual(await evaluate('OphthalCalendarView.getCalendar().getEvents().map(e=>e.id).sort()'),modeIds);
         assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth+1'));
       }
       await evaluate('document.getElementById("view-list").click()');
@@ -109,7 +111,7 @@ async function main() {
       assert.ok(await evaluate('getFilteredEvents().every(e=>!'+JSON.stringify(expectedIds)+'.includes(e.id))'));
       assert.equal(await evaluate(`[...document.querySelectorAll('#filter-specialty input')].find(e=>e.value===`+JSON.stringify(other)+`).nextElementSibling.querySelector('.chip-count').textContent`),'(14)');
       if(width<500){await evaluate('document.getElementById("mobile-filter-btn").click()');await delay(350);assert.ok(await evaluate('document.querySelector(".sidebar-body").scrollWidth<=document.querySelector(".sidebar-body").clientWidth+1'));await evaluate('document.getElementById("close-mobile-filter").click()');}
-      console.log('PASS '+width+'px: cornea 4, other 14, all card labels, list/calendar/compact filters and no overflow');
+      console.log('PASS '+width+'px: cornea 3, other 14, all card labels, list/calendar/compact filters and no overflow');
     }
     await call('Browser.close');
   } finally {socket?.close();if(browser.exitCode===null)browser.kill();await new Promise(resolve=>server.close(resolve));}
