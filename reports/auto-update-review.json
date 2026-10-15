@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-15T13:23:26.387Z",
+  "updatedAt": "2026-10-15T13:48:37.257Z",
   "items": [
     {
       "field": "abstractSubmission.deadline",
@@ -73103,10 +73103,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "88e94adc3b4fe06a789701b1cbe472f42e1f0389b78711c496aa30ee7c027d7b",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73178,10 +73180,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "860d075ad80ae515455ce1ad2a64256e56eca65917ae547ba0fd168cd415f1c5",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "abstractSubmission",
@@ -73197,10 +73201,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "8d547a4a5c54ee3f2a0b39a7c58bae4a856d3d4ecf1dcc67805a7c1b8c51a46d",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73256,10 +73262,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "0b18ad19bbe696a83fcd06368e502c8582d37dd9708c686f77ce421268a4dad2",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73337,10 +73345,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "db99af05fd80dfd5e58bdf6509bbd4f0107a4bc9f1c636bfafd191f88ccfeef5",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "abstractSubmission",
@@ -73356,10 +73366,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "7c3245e87637c0c90596ffbbed310bcbf095d9d496d37f4d2eda2dca01749cc6",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73371,10 +73383,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "e8f43ac1b17f2c61a86d827d6ae43b6968a15daab1a2c76ed7e3cea4b087c7d1",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "abstractSubmission",
@@ -73390,10 +73404,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "de28f8ad30cb904ed75fede0f1865f08fc9f4d95476db35be4c14b5238d83f91",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73405,10 +73421,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "1b0beb0263b972a17fa86711ce9d8591730ba5486ca516f1f7ca9e21e8ff7397",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "abstractSubmission",
@@ -73424,10 +73442,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "4558b6bfe9fbb7ff24eb4927a3a2e9db4b0c2710d2642237e76f5f832c3fd591",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73439,10 +73459,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "372ba907002e49193356dd4b881fc72493e8670e24c7305439ecae241ee739c4",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "both",
@@ -73453,10 +73475,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "dad562ca428b6282438b6d84c223ff6bae22b61c9cef51547bf57cd82460f317",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "abstractSubmission",
@@ -73472,10 +73496,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "a87bcaf564d44296600592a853afa2d2e4d5f9288ac48952778cdc014c91af9e",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73531,10 +73557,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "9ed6c99716b1398b50f55bb7eb084765c7c3fc5315a8c235d5b40bb3635da738",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "abstractSubmission",
@@ -73550,10 +73578,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "09ef30bcec79a64eb155551b80ec4ea17327b15d01740492f2cdc7f270137dda",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73609,10 +73639,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "0b6ee4b2e0e2de5d6fde146736216f65a63b2241105ad57b35e63f7709ba66cd",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "abstractSubmission",
@@ -73628,10 +73660,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "5734fa358bac9dadca6d4b9277749fc253fd317be04cea554ac3ec6d48014bd1",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73643,10 +73677,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "71cdde83d489f93d248c3d9addc8273fd4e883211bddfb30f03eccb710aea193",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "both",
@@ -73657,10 +73693,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "942ed97e9a4b0263624598c24a13e36d0d1acbac3339c77571b06873f99bf762",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73672,10 +73710,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "57dea963b332a45ecde99df771258396503bef6c9df12fbfb605a420ac301437",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "abstractSubmission",
@@ -73691,10 +73731,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "4246b3083117fa509a43a6beff9ba20b827b523b442b5f3ac0a792122722bd0c",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73706,10 +73748,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "40be9fad4cf9d1a67c6aec74a384ed0396a74c5e59d09ccb9ff653336ac62005",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "abstractSubmission",
@@ -73726,10 +73770,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "4c9f4b872e76f499dfaaa3a6d589b4332ddd10eaa067cf9532ab52eca846b393",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73741,10 +73787,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "754bce6076d9e492ca521a8c0055ba4cf34a7a5cfabca26fa61d31f6d14e11ee",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73755,10 +73803,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "011d1a91ec9bd21379bda8dd2cf2d285399415e422b570676209980abc7a763c",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "abstractSubmission",
@@ -73774,10 +73824,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "57ad69447ab67d71ad66cd6f755575106fa42774bf1aaeb302e3bb0b37f6ec51",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "abstractSubmission",
@@ -73793,10 +73845,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "fb1fca8a7968302f73e57d9172a98de41e0b647af63b710d0478862d863e362b",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73808,10 +73862,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "11402ecd0ab5da7fedd341276247c9c80a961e2142c68f2c907d675a14592b2f",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "abstractSubmission",
@@ -73827,10 +73883,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "05a771ad5fe24845361f214ab175a1065f3c4b43312229e53596c4740f5b25a0",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73842,10 +73900,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "46ef020e5447e12c51d111227701e99f14bed10e84c66441d9e66209338006bc",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "abstractSubmission",
@@ -73861,10 +73921,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "ab699e916d2173e5d39bc4b37a844ab6273fb1e533ca3a4996f87a84b17f25fe",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73876,10 +73938,12 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "6d8f365661030150a130b54cbfcfe1a9b03b55cfc15dbf64c53713c1265e6ea7",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "abstractSubmission",
@@ -73895,10 +73959,12 @@
       },
       "method": "official-one-hop-h1-audit",
       "id": "db43a4c9201d95b4a8234051949e57d17a5bc14a5c193db4fd98db3f1afb4d92",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
     },
     {
       "field": "registration",
@@ -73910,10 +73976,177 @@
       "oldValue": null,
       "method": "official-one-hop-h1-audit",
       "id": "b25518de80fff1eb517d24372baa8563fa0948b6832ee4e295603c977b214736",
-      "status": "needs-review",
+      "status": "reclassified",
       "firstSeen": "2026-10-15T13:23:26.387Z",
       "lastSeen": "2026-10-15T13:23:26.387Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "resolvedAt": "2026-10-15T13:48:37.257Z",
+      "resolution": "deadline-policy-v2; see scoped audit report"
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://worldglaucomacongress.org/abstracts/",
+      "reason": "abstract-conflicting-timezones",
+      "eventId": "conf-int-wgc-2027",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": null
+      },
+      "method": "official-one-hop-h1-audit-v2",
+      "id": "25c091e838f6b2181ee2468c63142eaf988d6ff6c25aa2b83030521f968e578b",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:48:37.257Z",
+      "lastSeen": "2026-10-15T13:48:37.257Z",
+      "occurrences": 1,
+      "evidence": "Abstract submission deadline: October 19, 2026 (23:59 CEST).\nOctober 19, 2026 – Abstract submission deadline (23:59 CET)"
+    },
+    {
+      "field": "registration",
+      "url": "https://worldglaucomacongress.org/registration/",
+      "reason": "registration-conflicting-deadlines",
+      "proposed": null,
+      "eventId": "conf-int-wgc-2027",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit-v2",
+      "id": "138d75d83db52e32ebda8c2b75af52c7c2ce293d9b7af2f51f75d72a19dd1f57",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:48:37.257Z",
+      "lastSeen": "2026-10-15T13:48:37.257Z",
+      "occurrences": 1,
+      "evidence": "[{\"label\":\"Early bird fee\",\"deadline\":\"2027-01-18\",\"category\":\"early\",\"advanceEligible\":true,\"sourceUrl\":\"https://worldglaucomacongress.org/registration/\"},{\"label\":\"Early bird registration\",\"deadline\":\"2026-01-18\",\"category\":\"early\",\"advanceEligible\":true,\"sourceUrl\":\"https://worldglaucomacongress.org/registration/\"}]"
+    },
+    {
+      "field": "registration",
+      "url": "https://soe2027.soevision.org/registration/",
+      "reason": "registration-ambiguous-boundary",
+      "proposed": null,
+      "eventId": "conf-int-soe-2027",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit-v2",
+      "id": "4a8f8be59f73bc95a0e62626567d73798d748fd8a6bf2dbe5afc576c8d3e68bf",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:48:37.257Z",
+      "lastSeen": "2026-10-15T13:48:37.257Z",
+      "occurrences": 1,
+      "evidence": "[{\"label\":\"Early Bird\",\"deadline\":\"2027-03-24\",\"category\":\"early\",\"advanceEligible\":true,\"sourceUrl\":\"https://soe2027.soevision.org/registration/\"},{\"label\":\"Standard\",\"start\":\"2027-03-24\",\"deadline\":\"2027-05-05\",\"category\":\"regular\",\"advanceEligible\":null,\"sourceUrl\":\"https://soe2027.soevision.org/registration/\"}]"
+    }
+  ],
+  "observations": [
+    {
+      "field": "registration",
+      "url": "https://www.congre.co.jp/73jscev/registration.html",
+      "reason": "registration-not-published",
+      "proposed": null,
+      "category": "unpublished",
+      "eventId": "conf-jp-iscev-2027",
+      "checkedAt": "2026-10-15T13:48:37.257Z"
+    },
+    {
+      "field": "both",
+      "reason": "bot-protected",
+      "url": "https://annualmeeting.ascrs.org/",
+      "category": "unavailable",
+      "eventId": "conf-int-ascrs-2027",
+      "checkedAt": "2026-10-15T13:48:37.257Z"
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://site2.convention.co.jp/jgs2027/endai/",
+      "reason": "abstract-not-applicable",
+      "category": "not-applicable",
+      "eventId": "oph-014",
+      "checkedAt": "2026-10-15T13:48:37.257Z"
+    },
+    {
+      "field": "both",
+      "reason": "bot-protected",
+      "url": "https://www.arvo.org/annual-meeting",
+      "category": "unavailable",
+      "eventId": "oph-012",
+      "checkedAt": "2026-10-15T13:48:37.257Z"
+    },
+    {
+      "field": "registration",
+      "url": "https://www.ganki.jp/lowvision2027/registration.html",
+      "reason": "registration-fetch-failed",
+      "error": "http-404",
+      "category": "unavailable",
+      "eventId": "conf-jp-lowvision-2027",
+      "checkedAt": "2026-10-15T13:48:37.257Z"
+    },
+    {
+      "field": "registration",
+      "url": "https://apacrs2027.org/registration/",
+      "reason": "registration-extraction-failed",
+      "proposed": null,
+      "category": "extraction-failed",
+      "eventId": "conf-int-apacrs-2027",
+      "checkedAt": "2026-10-15T13:48:37.257Z"
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://www.ganki.jp/jips2027/abstracts.html",
+      "reason": "abstract-fetch-failed",
+      "error": "http-404",
+      "category": "unavailable",
+      "eventId": "conf-jp-perimetry-2027",
+      "checkedAt": "2026-10-15T13:48:37.257Z"
+    },
+    {
+      "field": "registration",
+      "url": "https://www.ganki.jp/jips2027/participants.html",
+      "reason": "registration-fetch-failed",
+      "error": "http-404",
+      "category": "unavailable",
+      "eventId": "conf-jp-perimetry-2027",
+      "checkedAt": "2026-10-15T13:48:37.257Z"
+    },
+    {
+      "field": "registration",
+      "url": "https://orbit-cs.net/jsoprs2027/",
+      "reason": "registration-link-not-found",
+      "category": "link-not-found",
+      "eventId": "conf-jp-jsoprs-2027",
+      "checkedAt": "2026-10-15T13:48:37.257Z"
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://jasa-japo2027.jp/endai.html",
+      "reason": "abstract-not-published",
+      "category": "unpublished",
+      "eventId": "conf-jp-pediatric-2027",
+      "checkedAt": "2026-10-15T13:48:37.257Z"
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://www.kwcs.jp/42jscrs/theme.html",
+      "reason": "abstract-not-published",
+      "category": "unpublished",
+      "eventId": "oph-013",
+      "checkedAt": "2026-10-15T13:48:37.257Z"
+    },
+    {
+      "field": "registration",
+      "url": "https://www.kwcs.jp/42jscrs/reg.html",
+      "reason": "registration-not-published",
+      "proposed": null,
+      "category": "unpublished",
+      "eventId": "oph-013",
+      "checkedAt": "2026-10-15T13:48:37.257Z"
+    },
+    {
+      "field": "registration",
+      "url": "https://www.rousi.jp/event-details/nipponroshigakkaidai5kaigakujutsusokai",
+      "reason": "registration-not-published",
+      "proposed": null,
+      "category": "unpublished",
+      "eventId": "conf-jp-presbyopia-2028",
+      "checkedAt": "2026-10-15T13:48:37.257Z"
     }
   ]
 }

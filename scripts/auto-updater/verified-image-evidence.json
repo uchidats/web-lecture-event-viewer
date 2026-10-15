@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "images": [
+    {
+      "url": "https://i0.wp.com/soe2027.soevision.org/wp-content/uploads/sites/8/2026/09/Reg-fees-formated-as-per-the-PAAG-002.png?resize=1024%2C690",
+      "sha256": "dc4e96ded065683e84d2905e24662a2c1c313d15385262775ef7efef1190a12f",
+      "verifiedAt": "2026-10-15",
+      "method": "visually-verified-transcription",
+      "text": "Early Bird\nPaid before 24 March 2027\nStandard\nPaid from 24 March until 5 May 2027\nLate\nPaid from 5 May onwards"
+    }
+  ]
+}

@@ -228,15 +228,27 @@ async function runGeminiMonitor(options = {}) {
 
     if (!fetchResult.success) {
       metrics.fetchErrors = (metrics.fetchErrors || 0) + 1;
+      metrics.deadlineStatuses ||= {unavailable:0,unpublished:0,'link-not-found':0,'extraction-failed':0};
+      metrics.deadlineStatuses.unavailable++;
       state.sources[event.id] = {
         ...state.sources[event.id],
         lastChecked: todayStr,
         lastHttpStatus: fetchResult.httpStatus,
         lastError: fetchResult.error,
+        deadlineObservations:[{category:'unavailable',reason:fetchResult.error,url:targetUrl}],
         nextCheckDate: nextCheck
       };
       continue;
     }
+
+    const registrationFollowup=fetchResult.importantFollowup||fetchResult.registrationFollowup;
+    const deadlineObservations=require('../auto-updater/deadline-evidence').partitionIssues([
+      ...(registrationFollowup?.registrationIssues||[]).map(i=>({...i,field:'registration'})),
+      ...(registrationFollowup?.abstractIssues||[]).map(i=>({...i,field:'abstractSubmission'}))
+    ]).observations;
+    state.sources[event.id]={...state.sources[event.id],deadlineObservations};
+    metrics.deadlineStatuses ||= {unavailable:0,unpublished:0,'link-not-found':0,'extraction-failed':0};
+    for(const observation of deadlineObservations)metrics.deadlineStatuses[observation.category]=(metrics.deadlineStatuses[observation.category]||0)+1;
 
     // 5. Hash unchanged check -> skip Gemini! (Requirement 9)
     if (fetchResult.unchanged && item.lastHash) {
@@ -255,7 +267,6 @@ async function runGeminiMonitor(options = {}) {
 
     // 6. Content changed -> extract compact structured facts (Requirement 8)
     const context = extractMonitoringContext(fetchResult.rawHtml, event);
-    const registrationFollowup=fetchResult.importantFollowup||fetchResult.registrationFollowup;
     if(registrationFollowup?.pages.length) {
       context.registrationPages=registrationFollowup.pages.map(p=>{const c=extractMonitoringContext(p.html,event);return {url:p.url,registrationText:c.registrationText,abstractText:c.abstractText};});
       context.summaryPromptText+='\nOfficial one-hop registration/abstract pages:\n'+JSON.stringify(context.registrationPages);

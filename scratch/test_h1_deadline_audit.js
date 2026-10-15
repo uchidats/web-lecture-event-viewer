@@ -5,7 +5,7 @@ const report=require('../reports/deadline-audit-2027-h1-2026-10-15.json');
 const {events}=loadEvents(require('node:path').resolve(__dirname,'..'));
 const fs=require('node:fs'),vm=require('node:vm'),context=vm.createContext({console,URL,Intl,document:{getElementById:()=>null,addEventListener:()=>{}}});
 for(const file of ['venues.js','companies.js','events.js','script.js'])vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'..',file),'utf8'),context);
-assert.ok(vm.runInContext('renderAbstractSubmissionHtml(sampleEvents.find(e=>e.id==="conf-jp-surgery-2027"))',context).includes('公式</span>'));
+assert.ok(vm.runInContext('(()=>{const e=sampleEvents.find(e=>e.id==="conf-jp-surgery-2027");return renderAbstractSubmissionHtml({...e,abstractSubmission:{status:"unknown",url:e.eventOfficialUrl}});})()',context).includes('公式</span>'));
 assert.ok(vm.runInContext('renderAbstractUnknownHtml({...sampleEvents.find(e=>e.id==="conf-jp-lowvision-2027"),abstractSubmission:{url:"https://www.ganki.jp/lowvision2027/abstracts.html"}})',context).includes('詳細</span>'));
 assert.equal(events.filter(inScope).length,20);
 assert.deepEqual(report.records.map(r=>r.eventId),events.filter(inScope).map(e=>e.id));

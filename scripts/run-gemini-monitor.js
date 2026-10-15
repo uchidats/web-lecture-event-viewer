@@ -97,6 +97,7 @@ Options:
   console.log(`  Admin Acknowledged Applied: ${result.metrics.adminAppliedCount}`);
   console.log(`  Rollbacks:                  ${result.metrics.rollbackCount}`);
   console.log(`  Needs Review:               ${result.metrics.needsReview}`);
+  console.log(`  Acquisition States (not review): ${JSON.stringify(result.metrics.deadlineStatuses || {})}`);
   console.log(`  Insufficient Evidence:      ${result.metrics.insufficientEvidence}`);
   console.log(`  Admin Visible Items:        ${result.metrics.adminVisibleCount} (Max 5)`);
 

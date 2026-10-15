@@ -9,6 +9,7 @@ async function main() {
   const result = await runUpdater({ root: path.resolve(__dirname, '..'), config: require('../conference-sources'), apply: args.includes('--apply') });
   console.log(JSON.stringify({ outcome: result.outcome, mode: result.mode, sources: result.sourceCount,
     autoChanges: result.autoChanges.length, needsReview: result.needsReview.length,
+    acquisitionStates: result.observationCounts || {},
     missingUrlDiscovery: result.discovery ? { events: result.discovery.records.length,
       highConfidence: result.discovery.review.filter(r => r.reason === 'discovery-single-high-confidence').length,
       reviewItems: result.discovery.review.length } : null,

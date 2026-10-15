@@ -76,7 +76,7 @@ async function fetchAndCheckHash(url, previousHash = null, options = {}) {
     const followup=options.event?await followImportantPages({document:{...document,html:rawHtml,url:document.url||url},event:options.event,getPage}):{pages:[],issues:[],registration:null,registrationIssues:[],abstractIssues:[]};
     const normalized = normalizeContentForHash(rawHtml);
     // Include child-page content before the unchanged check; preserve deadline times in its hash.
-    const hash = sha256(normalized+followup.pages.map(p=>'\n'+p.url+'\n'+require('../auto-updater/extract').text(p.html)).join('')+JSON.stringify(followup.issues));
+    const hash = sha256(normalized+followup.pages.map(p=>'\n'+p.url+'\n'+require('../auto-updater/deadline-evidence').plain(p.html)+'\n'+(p.fingerprint||'')).join('')+JSON.stringify(followup.issues));
 
     const isUnchanged = Boolean(previousHash && previousHash === hash);
 

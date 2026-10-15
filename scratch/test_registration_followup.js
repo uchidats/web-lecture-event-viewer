@@ -24,8 +24,8 @@ async function main(){
  const abroad={...event,registration:undefined,title:'Example Congress 2027',conferenceRegion:'international',timeZone:'Europe/Paris'};
  const english='<html><title>Registration | Example Congress 2027</title><dl><dt>Early Bird</dt><dd>2026-10-01 ~ 2027-01-01</dd><dt>Regular</dt><dd>2027-01-02 ~ 2027-03-01</dd><dt>Onsite</dt><dd>2027-03-12 ~ 2027-03-13</dd></dl></html>';
  const foreign=extractRegistrationPage({html:english,url:child},abroad);assert.deepEqual(foreign.value.periods.map(p=>p.category),['early','regular','onsite']);assert.equal(foreign.value.periods[2].advanceEligible,false);
- assert.ok(extractRegistrationPage({html:english,url:child},{...abroad,timeZone:null}).issue);
- assert.ok(extractRegistrationPage({html:english.replaceAll('Regular','Late'),url:child},abroad).issue);
+ assert.ok(extractRegistrationPage({html:english,url:child},{...abroad,timeZone:null}).value,'Date-only periods need no inferred timezone');
+ assert.ok(extractRegistrationPage({html:english.replaceAll('Regular','Late'),url:child},abroad).value);
  const document={html:top,url},calls=[];
  const getPage=async p=>{calls.push(p.url);assert.equal(p.url,child);return {url:child,html:html+'<a href="deeper/">Register</a>',httpStatus:200};};
  const follow=await followRegistrationPages({document,event,getPage});assert.deepEqual(calls,[child]);assert.deepEqual(follow.registration.value,expected);
@@ -33,7 +33,7 @@ async function main(){
  for(const replacement of ['2027年2月30日','2026年2月2日','未定']) {
   const bad=extractRegistrationPage({url:child,html:html.replaceAll('2027年2月2日',replacement)},event);assert.ok(bad.issue,replacement);
  }
- const ambiguous=extractRegistrationPage({url:child,html:html.replaceAll('2026年9月9日','9月9日')},event);assert.ok(ambiguous.issue);
+ const ambiguous=extractRegistrationPage({url:child,html:html.replaceAll('2026年9月9日','9月9日')},event);assert.ok(ambiguous.value);
  const redirected=await followRegistrationPages({document,event,getPage:async()=>({url:'https://evil.test/',html})});assert.equal(redirected.registration,null);
  const failing=await followRegistrationPages({document,event,getPage:async()=>{throw Error('404');}});assert.ok(failing.issues.length);assert.equal(failing.registration,null);
  let childHtml=html;const fetcher=async p=>({url:p.url,html:p.role==='overview'?top:childHtml});

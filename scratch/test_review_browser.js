@@ -73,11 +73,11 @@ async function main() {
         assert.equal(await evaluate('document.getElementById("review-dialog").open'), false);
       }
       await evaluate(`adminObserver({user:{uid:'admin',email:'uchidats@gmail.com',emailVerified:true}});`);
-      for (let i = 0; i < 50; i++) { if (await evaluate('document.getElementById("review-entry").textContent === "更新確認 8件"')) break; await delay(100); }
+      for (let i = 0; i < 50; i++) { if (await evaluate('document.getElementById("review-entry").textContent === "更新確認 6件"')) break; await delay(100); }
       assert.equal(await evaluate('document.getElementById("review-entry").hidden'), false);
       await evaluate('document.getElementById("review-entry").click()');
       assert.equal(await evaluate('document.getElementById("review-dialog").open'), true);
-      assert.equal(await evaluate('document.querySelectorAll(".review-card").length'), 8);
+      assert.equal(await evaluate('document.querySelectorAll(".review-card").length'), 6);
       await evaluate(`document.querySelector('[data-review-index="1"] [data-decision="deferred"]').click()`);
       assert.equal(await evaluate('JSON.parse(localStorage.getItem(OphthalReviewModel.storageKey)).history.at(-1).reviewerId'), 'admin');
       await evaluate('adminObserver({user:null})');
@@ -85,9 +85,9 @@ async function main() {
       assert.equal(await evaluate('document.querySelectorAll(".review-card").length'), 0);
     }
     developmentMode = true;
-    await navigate(origin + '/?adminReview=1', 'document.getElementById("review-entry")?.textContent === "更新確認 8件"');
+    await navigate(origin + '/?adminReview=1', 'document.getElementById("review-entry")?.textContent === "更新確認 6件"');
     await evaluate('document.getElementById("review-entry").click()');
-    assert.equal(await evaluate('document.querySelectorAll(".review-card").length'), 8);
+    assert.equal(await evaluate('document.querySelectorAll(".review-card").length'), 6);
     for (const width of [1280, 768, 390, 320]) {
       await call('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 500 });
       assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'), true, 'page overflow ' + width);
@@ -100,7 +100,7 @@ async function main() {
       assert.equal(await evaluate('JSON.parse(localStorage.getItem(OphthalReviewModel.storageKey)).history.at(-1).decision'), decision);
       if (decision !== 'deferred') await evaluate('document.getElementById("review-filter").value="review"; document.getElementById("review-filter").dispatchEvent(new Event("change"))');
     }
-    await navigate(origin + '/?adminReview=1', 'document.getElementById("review-entry")?.textContent === "更新確認 8件"');
+    await navigate(origin + '/?adminReview=1', 'document.getElementById("review-entry")?.textContent === "更新確認 6件"');
     await evaluate('document.getElementById("review-entry").click()');
     assert.equal(await evaluate('document.querySelector(".review-decision").textContent.includes("保留中")'), true);
     await evaluate('document.getElementById("review-filter").value="blocked"; document.getElementById("review-filter").dispatchEvent(new Event("change"))');
@@ -150,17 +150,19 @@ async function main() {
     assert.equal(await evaluate('OphthalAuth.snapshot().phase'), 'unconfigured');
     console.log('PASS: PC/mobile 1280/768/390/320px; verified email admin only, wrong/unverified/logged-out denial, logout closes dialog, query denied without development mode; decisions/reload, blocked separation, checkbox, XSS, high risk, Calendar and event UI');
     productionQueue = true;
-    await navigate(origin + '/?adminReview=1', 'document.getElementById("review-entry")?.textContent === "更新確認 0件"');
+    await navigate(origin + '/?adminReview=1', 'document.getElementById("review-entry")?.textContent === "更新確認 3件"');
     for (const width of [1280,390,320]) {
       await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<500});
-      assert.equal(await evaluate('document.getElementById("review-entry").textContent'), '更新確認 0件');
+      assert.equal(await evaluate('document.getElementById("review-entry").textContent'), '更新確認 3件');
       await evaluate('document.getElementById("review-entry").click()');
-      assert.equal(await evaluate('document.querySelectorAll(".review-card").length'), 0);
+      assert.equal(await evaluate('document.querySelectorAll(".review-card").length'), 3);
       await evaluate('document.getElementById("review-filter").value="all";document.getElementById("review-filter").dispatchEvent(new Event("change"))');
       assert.ok(await evaluate('document.querySelectorAll(".review-card").length > 0'), 'history remains accessible');
       await evaluate('document.getElementById("review-filter").value="pending";document.getElementById("review-filter").dispatchEvent(new Event("change"));document.getElementById("review-close").click()');
     }
-    console.log('PASS: production backlog reset to 0 at 1280/390/320px; historical candidates retained');
+    assert.ok(await evaluate('document.getElementById("review-summary").textContent.includes("取得不能 5件")&&document.getElementById("review-summary").textContent.includes("未公開 5件")&&document.getElementById("review-summary").textContent.includes("抽出失敗 1件")'));
+    assert.ok(await evaluate('document.getElementById("deadline-acquisition-status").textContent.includes("人間判断の要確認件数には含みません")'));
+    console.log('PASS: production deadline queue has 3 semantic reviews at 1280/390/320px; historical candidates retained');
     await call('Browser.close');
   } finally { socket?.close(); if (browser.exitCode === null) browser.kill(); await new Promise(resolve => server.close(resolve)); }
 }

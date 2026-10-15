@@ -3,7 +3,7 @@
   const storageKey = 'ophthalconf.review-decisions.v1';
   const fieldLabels = { eventMetadata: '公式情報との整合性監査（まとめて確認）', subtitle: 'テーマ／サブタイトル', sponsor: '主催学会', edition: '回次', year: '開催年', cityCountry: '開催地', eventOfficialUrl: '開催回のイベント公式URL', societyUrl: '学会本体URL', registration: '参加登録期間', title: '学会名', date: '開催開始日', endDate: '開催終了日', venue: '開催会場', city: '開催都市', country: '開催国', officialUrl: '公式サイトURL（旧項目）',
     'abstractSubmission.startDate': '演題募集開始', 'abstractSubmission.deadline': '演題締切', 'abstractSubmission.status': '演題募集状況', 'abstractSubmission.url': '演題募集URL' };
-  const reasonLabels = { 'multiple-candidates': '公式サイトに複数の候補があります', 'related-field-needs-review': '関連する情報に確認が必要です',
+  const reasonLabels = { 'abstract-conflicting-timezones':'公式の演題締切に異なるタイムゾーンが記載されています', 'registration-conflicting-deadlines':'公式の参加登録期限に異なる日付・年が記載されています', 'registration-ambiguous-boundary':'参加登録の期間境界が重なり、適用される区分を確定できません', 'multiple-candidates': '公式サイトに複数の候補があります', 'related-field-needs-review': '関連する情報に確認が必要です',
     'discovery-single-high-confidence': '開催年・開催回・学会名が一致する公式URLを発見しました（追加前の確認）',
     'discovery-card-integrity-needs-review': 'URL追加の前にカードの開催回・年・日程を確認してください',
     'discovery-fetch-failed': '公式URLの探索中に取得に失敗しました',
@@ -83,7 +83,8 @@
       if (decision && decision !== 'deferred') return false;
       const event = events.find(event => event.id === item.eventId);
       const current = item.field?.split('.').reduce((value, key) => value?.[key], event);
-      return !event || !item.field || JSON.stringify(current) !== JSON.stringify(item.value);
+      const comparable=value=>typeof value!=='string'?JSON.stringify(value):item.field==='title'?value.normalize('NFKC').replace(/[\p{White_Space}\p{Punctuation}]/gu,''):/(?:startDate|deadline)$/.test(item.field||'')?value.replace(/^(\d{4}-\d{2}-\d{2}) /,'$1T'):value;
+      return !event || !item.field || comparable(current) !== comparable(item.value);
     });
   }
   function createStore(storage) {

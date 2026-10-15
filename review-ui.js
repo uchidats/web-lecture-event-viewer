@@ -7,7 +7,7 @@
   const provider = root.OphthalReviewData.createProvider();
   const access = model.createAccess({ hostname: root.location.hostname, search: root.location.search,
     developmentMode: root.OphthalReviewConfig?.developmentMode === true });
-  let store, items = [], reviewerId = null, loading = false, loaded = false;
+  let store, items = [], reviewerId = null, loading = false, loaded = false, deadlineObservations = [];
   const list = doc.getElementById('review-list'), message = doc.getElementById('review-message'), filter = doc.getElementById('review-filter');
   const labels = { low: '低リスク', medium: '中リスク', high: '高リスク' };
   const decisions = { approved: '採用済み', rejected: '変更しない', deferred: '保留中' };
@@ -36,7 +36,12 @@
     const latest = item => store.latest(item, reviewerId);
     const pending = model.pendingItems(items, store, reviewerId, typeof sampleEvents !== 'undefined' ? sampleEvents : []);
     entry.textContent = `更新確認 ${pending.length}件`;
-    doc.getElementById('review-summary').textContent = `要確認 ${pending.length}件・停止候補 ${items.filter(i => i.blocked).length}件・既読／判断済みを含む候補 ${items.length}件`;
+    const acquisitionLabels={unavailable:'取得不能',unpublished:'未公開','link-not-found':'リンク未検出','extraction-failed':'抽出失敗','not-applicable':'募集対象外'};
+    const acquisitionSummary=Object.entries(acquisitionLabels).map(([category,label])=>`${label} ${deadlineObservations.filter(i=>i.category===category).length}件`).join('・');
+    doc.getElementById('review-summary').textContent = `要確認 ${pending.length}件・停止候補 ${items.filter(i => i.blocked).length}件・既読／判断済みを含む候補 ${items.length}件／${acquisitionSummary}`;
+    let acquisition=doc.getElementById('deadline-acquisition-status');
+    if(!acquisition){acquisition=doc.createElement('details');acquisition.id='deadline-acquisition-status';list.before(acquisition);}
+    acquisition.innerHTML=`<summary>取得・抽出状態（人間判断の要確認件数には含みません）</summary><ul>${deadlineObservations.map(i=>`<li>${escape(typeof sampleEvents!=='undefined'?sampleEvents.find(e=>e.id===i.eventId)?.title||i.eventId:i.eventId)}：${escape(acquisitionLabels[i.category]||i.category)}／${escape(i.reason)} ${model.safeUrl(i.url)?`<a href="${escape(model.safeUrl(i.url))}" target="_blank" rel="noopener noreferrer">公式情報</a>`:''}</li>`).join('')}</ul>`;
     const visible = items.filter(item => filter.value === 'all' || (filter.value === 'blocked' ? item.blocked : !item.blocked && (filter.value !== 'pending' || pending.includes(item))));
     list.innerHTML = visible.map(item => {
       const event = typeof sampleEvents !== 'undefined' ? sampleEvents.find(e => e.id === item.eventId) : null;
@@ -62,6 +67,7 @@
       const data = await provider.load();
       if (!reviewerId) return;
       store = model.createStore(root.localStorage); store.read();
+      deadlineObservations = Array.isArray(data.observations) ? data.observations : [];
       items = model.normalize(data); loaded = true; render(); announce('');
     } catch (error) { announce(`${error.message} 「再読み込み」で再試行できます。`); }
     finally { loading = false; }
@@ -72,7 +78,7 @@
     entry.hidden = !reviewerId;
     if (previousReviewerId !== reviewerId) {
       if (dialog.open) dialog.close();
-      list.replaceChildren(); items = []; loaded = false;
+      list.replaceChildren(); items = []; loaded = false; deadlineObservations=[];doc.getElementById('deadline-acquisition-status')?.remove();
       entry.textContent = '更新確認';
       doc.getElementById('review-summary').textContent = '';
       announce('');

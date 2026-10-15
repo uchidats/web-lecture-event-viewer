@@ -33,6 +33,8 @@ function checkRegistrationChange(event, change) {
     parent[parts.at(-1)]=structuredClone(change.after);
   }
   const reason=registrationProblem(value);
-  return reason?{reason}:{value};
+  if(reason)return {reason};
+  const merged=require('../auto-updater/deadline-evidence').mergeRegistration(event.registration,value);
+  return merged.issue?{reason:merged.issue}:{value:merged.value};
 }
 module.exports={registrationProblem,checkRegistrationChange};

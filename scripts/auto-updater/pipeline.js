@@ -45,9 +45,12 @@ async function runPipeline({ root, config, apply = false, getPage = fetchOfficia
   const previousHistory = readJson(historyFile, { version: 1, changes: [] });
   if (!previousState.sources || !Array.isArray(previousHistory.changes)) throw new Error('Invalid metadata/history JSON');
   const summary = { version: 1, checkedAt, mode: apply ? 'apply' : 'dry-run', outcome: 'dry-run',
-  sourceCount: config.sources.length, autoChanges: [], needsReview: [], blockedAutoChanges: [], sources: [], requests: [], stopped: false, stopReason: null, tests: null };
+  sourceCount: config.sources.length, autoChanges: [], needsReview: [], observations: [], blockedAutoChanges: [], sources: [], requests: [], stopped: false, stopReason: null, tests: null };
   const finish = () => {
-    writeJson(reviewFile, mergeReview(previousQueue, summary.needsReview, checkedAt));
+    const queue=mergeReview(previousQueue, summary.needsReview, checkedAt);
+    queue.observations=[...(queue.observations||[]).filter(i=>!config.sources.some(s=>s.id===i.eventId)),...summary.observations];
+    summary.observationCounts=summary.observations.reduce((counts,item)=>({...counts,[item.category]:(counts[item.category]||0)+1}),{});
+    writeJson(reviewFile, queue);
     writeJson(summaryFile, summary);
     return summary;
   };
@@ -83,13 +86,11 @@ async function runPipeline({ root, config, apply = false, getPage = fetchOfficia
             const found=followup.abstractSubmission,value={...found.value,status:require('./important-followup').abstractStatus(found.value,today)};
             for(const [key,valuePart] of Object.entries(value))candidates.push({field:'abstractSubmission.'+key,value:valuePart,url:found.value.url,confidence:0.99,method:'one-hop-abstract',evidence:found.evidence});
           }
-          for(const issue of followup.registrationIssues)summary.needsReview.push({eventId:source.id,field:'registration',url:issue.url,reason:issue.reason,value:issue.proposed||null});
-          for(const issue of followup.abstractIssues)summary.needsReview.push({eventId:source.id,field:'abstractSubmission',url:issue.url,reason:issue.reason});
+          for(const [field,list] of [['registration',followup.registrationIssues],['abstractSubmission',followup.abstractIssues]])for(const issue of list){const category=require('./deadline-evidence').issueCategory(issue);(category==='review'?summary.needsReview:summary.observations).push({eventId:source.id,field,...issue,category});}
         }
       } catch (error) {
-        summary.needsReview.push({ eventId: source.id, field: null, oldValue: null, url: page.url,
-          confidence: 0, reason: 'fetch-failed', error: error.message });
-        issues.push(`fetch-failed:${page.role}`);
+        summary.observations.push({ eventId: source.id, field: null, url: page.url,
+          category:'unavailable', reason: 'fetch-failed', error: error.message });
       }
     }
     const decision = assess(event, source, candidates, [...new Set(issues)], config.defaults, { today, venues: venueContext.venues });

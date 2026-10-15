@@ -93,11 +93,14 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
   }
 
   // 5. Abstract deadline
-  const abstractReviewChanges=(options.abstractIssues||[]).map(issue=>({field:'abstractSubmission',before:currentEvent.abstractSubmission||null,after:null,sourceUrl:issue.url,validationReason:issue.reason}));
+  const {issueCategory}=require('../auto-updater/deadline-evidence');
+  const abstractReviewChanges=(options.abstractIssues||[]).filter(issue=>issueCategory(issue)==='review').map(issue=>({field:'abstractSubmission',before:currentEvent.abstractSubmission||null,after:null,sourceUrl:issue.url,validationReason:issue.reason}));
   if(options.officialAbstract&&!abstractReviewChanges.length) {
-    const value={...options.officialAbstract,status:require('../auto-updater/important-followup').abstractStatus(options.officialAbstract,options.todayStr)};
-    for(const [key,after] of Object.entries(value))if(after!==currentEvent.abstractSubmission?.[key])fieldChanges.push({field:'abstractSubmission.'+key,before:currentEvent.abstractSubmission?.[key]??null,after,severity:SEVERITY.MEDIUM});
-  } else if (!abstractReviewChanges.length&&geminiResult.abstract_deadline && geminiResult.abstract_deadline !== currentEvent.abstractSubmission?.deadline) {
+    const projected={...currentEvent.abstractSubmission,...options.officialAbstract};
+    if(options.officialAbstract.status==='unknown'&&currentEvent.abstractSubmission?.status&&!options.officialAbstract.startDate)projected.status=currentEvent.abstractSubmission.status;
+    const value={...options.officialAbstract,status:require('../auto-updater/important-followup').abstractStatus(projected,options.todayStr)};
+    for(const [key,raw] of Object.entries(value)){const after=require('../auto-updater/deadline-evidence').preserveDatePrecision(currentEvent.abstractSubmission?.[key],raw);if(after!==currentEvent.abstractSubmission?.[key])fieldChanges.push({field:'abstractSubmission.'+key,before:currentEvent.abstractSubmission?.[key]??null,after,severity:SEVERITY.MEDIUM});}
+  } else if (!options.abstractIssues?.length&&geminiResult.abstract_deadline && geminiResult.abstract_deadline !== currentEvent.abstractSubmission?.deadline) {
     fieldChanges.push({
       field: 'abstractSubmission.deadline',
       before: currentEvent.abstractSubmission?.deadline || null,
@@ -109,8 +112,10 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
   // 6. Registration deadline
   if (options.officialRegistration) {
     const {registrationKey}=require('../auto-updater/registration');
-    if(registrationKey(currentEvent.registration)!==registrationKey(options.officialRegistration))fieldChanges.push({field:'registration',before:currentEvent.registration||null,after:options.officialRegistration,severity:SEVERITY.MEDIUM});
-  } else if (geminiResult.registration_deadline && geminiResult.registration_deadline !== currentEvent.registration?.deadline) {
+    const merged=require('../auto-updater/deadline-evidence').mergeRegistration(currentEvent.registration,options.officialRegistration);
+    if(merged.issue){options={...options,registrationIssues:[...(options.registrationIssues||[]),{reason:merged.issue,url:sourceUrl}]};}
+    else if(registrationKey(currentEvent.registration)!==registrationKey(merged.value))fieldChanges.push({field:'registration',before:currentEvent.registration||null,after:merged.value,severity:SEVERITY.MEDIUM});
+  } else if (!options.registrationIssues?.length&&geminiResult.registration_deadline && geminiResult.registration_deadline !== currentEvent.registration?.deadline) {
     fieldChanges.push({
       field: 'registration.deadline',
       before: currentEvent.registration?.deadline || null,
@@ -132,7 +137,7 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
   }
 
   const registrationReviewChanges=[];
-  for(const issue of options.registrationIssues||[])registrationReviewChanges.push({field:'registration',before:currentEvent.registration||null,after:issue.proposed||null,sourceUrl:issue.url,validationReason:issue.reason});
+  for(const issue of options.registrationIssues||[])if(issueCategory(issue)==='review')registrationReviewChanges.push({field:'registration',before:currentEvent.registration||null,after:issue.proposed||null,sourceUrl:issue.url,validationReason:issue.reason});
   for (let index=fieldChanges.length-1;index>=0;index--) {
     const validation=checkRegistrationChange(currentEvent,fieldChanges[index]);
     if (validation?.reason) registrationReviewChanges.unshift({...fieldChanges.splice(index,1)[0],validationReason:validation.reason});

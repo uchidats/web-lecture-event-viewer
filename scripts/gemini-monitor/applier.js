@@ -10,10 +10,15 @@ const {validVenues}=require('../auto-updater/venues');
  */
 function applyFieldChangesToEvent(event, fieldChanges, rejectedChanges = []) {
   const appliedFields = [];
+  const projectedAbstract={...event.abstractSubmission};
+  for(const c of fieldChanges)if(c.field.startsWith('abstractSubmission.'))projectedAbstract[c.field.split('.')[1]]=c.after;
+  const abstractValid=!fieldChanges.some(c=>c.field.startsWith('abstractSubmission.'))||require('../auto-updater/deadline-evidence').validAbstract(projectedAbstract,event);
 
   for (const change of fieldChanges) {
     const { field } = change;
-    const after = field === 'title' ? normalizeConferenceTitle(change.after) : change.after;
+    if(field.startsWith('abstractSubmission.')&&!abstractValid){rejectedChanges.push({...change,validationReason:'Invalid abstract evidence at save boundary'});continue;}
+    const after = field === 'title' ? normalizeConferenceTitle(change.after) : field.startsWith('abstractSubmission.') ? require('../auto-updater/deadline-evidence').preserveDatePrecision(event.abstractSubmission?.[field.split('.')[1]],change.after) : change.after;
+    if(field.startsWith('abstractSubmission.')&&after==null&&event.abstractSubmission?.[field.split('.')[1]]!=null){rejectedChanges.push({...change,validationReason:'Missing evidence must not erase an accepted abstract value'});continue;}
     const registration=checkRegistrationChange(event,change);
     if (registration?.reason) { rejectedChanges.push({...change,validationReason:registration.reason});continue; }
     if (registration) { event.registration=registration.value;appliedFields.push(field);continue; }

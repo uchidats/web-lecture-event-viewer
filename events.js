@@ -1262,10 +1262,11 @@ const sampleEvents = [
     "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
     "note": "",
     "abstractSubmission": {
-      "status": "unknown",
-      "startDate": null,
-      "deadline": null,
-      "url": "https://50.jsos.jp/"
+      "status": "closed",
+      "startDate": "2026-06-01",
+      "deadline": "2026-08-31",
+      "url": "https://50.jsos.jp/abstract",
+      "timeZone": "Asia/Tokyo"
     },
     "calendarStatus": {
       "google": {
@@ -1287,7 +1288,38 @@ const sampleEvents = [
     ],
     "description": "白内障・網膜・緑内障・角膜・眼形成まで全領域の手術手技が集う年次学術集会。",
     "isConference": true,
-    "conferenceChair": "稲富 勉（国立長寿医療研究センター/京都府立医科大学）"
+    "conferenceChair": "稲富 勉（国立長寿医療研究センター/京都府立医科大学）",
+    "registration": {
+      "version": 2,
+      "type": "domestic",
+      "timeZone": "Asia/Tokyo",
+      "periods": [
+        {
+          "label": "事前早期登録",
+          "start": "2026-06-01",
+          "deadline": "2026-08-20",
+          "category": "early",
+          "advanceEligible": true,
+          "sourceUrl": "https://50.jsos.jp/registration"
+        },
+        {
+          "label": "事前通常登録",
+          "start": "2026-08-21",
+          "deadline": "2026-11-12",
+          "category": "regular",
+          "advanceEligible": true,
+          "sourceUrl": "https://50.jsos.jp/registration"
+        },
+        {
+          "label": "当日登録",
+          "start": "2027-01-29",
+          "deadline": "2027-01-31",
+          "category": "onsite",
+          "advanceEligible": false,
+          "sourceUrl": "https://50.jsos.jp/registration"
+        }
+      ]
+    }
   },
   {
     "id": "conf-jp-cornea-2027",
@@ -1315,10 +1347,11 @@ const sampleEvents = [
     "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
     "note": "第51回日本角膜学会総会・第43回日本角膜移植学会",
     "abstractSubmission": {
-      "status": "unknown",
-      "startDate": null,
-      "deadline": null,
-      "url": null
+      "status": "open",
+      "startDate": "2026-08-21",
+      "deadline": "2026-11-04T17:00",
+      "url": "https://www.okinawa-congre.co.jp/cornea2027/cfa/index.html",
+      "timeZone": "Asia/Tokyo"
     },
     "calendarStatus": {
       "google": {
@@ -1339,7 +1372,30 @@ const sampleEvents = [
     ],
     "description": "角膜移植手技、角膜内皮再生医療、重症ドライアイの最前線。",
     "isConference": true,
-    "conferenceChair": "臼井 智彦（国際医療福祉大学）"
+    "conferenceChair": "臼井 智彦（国際医療福祉大学）",
+    "registration": {
+      "version": 2,
+      "type": "domestic",
+      "timeZone": "Asia/Tokyo",
+      "periods": [
+        {
+          "label": "前期参加登録",
+          "start": "2026-12-01",
+          "deadline": "2027-01-14",
+          "category": "early",
+          "advanceEligible": true,
+          "sourceUrl": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html"
+        },
+        {
+          "label": "後期参加登録",
+          "start": "2027-01-15",
+          "deadline": "2027-02-13",
+          "category": "regular",
+          "advanceEligible": null,
+          "sourceUrl": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html"
+        }
+      ]
+    }
   },
   {
     "id": "conf-jp-eyelid-2027",
@@ -1517,10 +1573,11 @@ const sampleEvents = [
     "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
     "note": "",
     "abstractSubmission": {
-      "status": "unknown",
-      "startDate": null,
-      "deadline": null,
-      "url": null
+      "status": "open",
+      "startDate": "2026-08-03",
+      "deadline": "2026-10-28",
+      "url": "https://www.congre.co.jp/73jscev/cfa.html",
+      "timeZone": "Asia/Tokyo"
     },
     "calendarStatus": {
       "google": {
@@ -1572,10 +1629,11 @@ const sampleEvents = [
     "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
     "note": "",
     "abstractSubmission": {
-      "status": "unknown",
+      "status": "closed",
       "startDate": null,
-      "deadline": null,
-      "url": null
+      "deadline": "2026-09-23T23:59",
+      "url": "https://2027.apaophth.org/abstract-submission/",
+      "timeZone": "Asia/Singapore"
     },
     "calendarStatus": {
       "google": {
@@ -1594,7 +1652,37 @@ const sampleEvents = [
       "国際学会"
     ],
     "description": "アジア太平洋地域最大の眼科学術コングレス。",
-    "isConference": true
+    "isConference": true,
+    "registration": {
+      "version": 2,
+      "type": "international",
+      "timeZone": "Asia/Singapore",
+      "periods": [
+        {
+          "label": "Early Bird Rate",
+          "deadline": "2026-10-12",
+          "category": "early",
+          "advanceEligible": true,
+          "sourceUrl": "https://2027.apaophth.org/registration/"
+        },
+        {
+          "label": "Advance Rate",
+          "start": "2026-10-13",
+          "deadline": "2027-02-25",
+          "category": "regular",
+          "advanceEligible": true,
+          "sourceUrl": "https://2027.apaophth.org/registration/"
+        },
+        {
+          "label": "Standard Rate",
+          "start": "2027-02-26",
+          "deadline": "2027-03-21",
+          "category": "regular",
+          "advanceEligible": null,
+          "sourceUrl": "https://2027.apaophth.org/registration/"
+        }
+      ]
+    }
   },
   {
     "id": "conf-int-fujiretina-2027",
@@ -1623,10 +1711,11 @@ const sampleEvents = [
     "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
     "note": "日本開催の国際網膜カンファレンス",
     "abstractSubmission": {
-      "status": "unknown",
-      "startDate": null,
-      "deadline": null,
-      "url": null
+      "status": "open",
+      "startDate": "2026-10-06",
+      "deadline": "2026-12-15",
+      "url": "https://convention.jtbcom.co.jp/fujiretina/abstracts/index.html",
+      "timeZone": "Asia/Tokyo"
     },
     "calendarStatus": {
       "google": {
@@ -1645,7 +1734,30 @@ const sampleEvents = [
       "日本開催"
     ],
     "description": "世界のトップサージョン・研究者が東京に集う国際網膜シンポジウム。",
-    "isConference": true
+    "isConference": true,
+    "registration": {
+      "version": 2,
+      "type": "international",
+      "timeZone": "Asia/Tokyo",
+      "periods": [
+        {
+          "label": "Early-Bird Registration",
+          "start": "2026-10-06T12:00",
+          "deadline": "2027-03-08",
+          "category": "early",
+          "advanceEligible": true,
+          "sourceUrl": "https://convention.jtbcom.co.jp/fujiretina/registration/index.html"
+        },
+        {
+          "label": "Late Registration",
+          "start": "2027-03-12T12:00",
+          "deadline": "2027-05-28",
+          "category": "regular",
+          "advanceEligible": null,
+          "sourceUrl": "https://convention.jtbcom.co.jp/fujiretina/registration/index.html"
+        }
+      ]
+    }
   },
   {
     "id": "conf-int-ascrs-2027",
@@ -1727,9 +1839,10 @@ const sampleEvents = [
     "note": "総会長: 石田 晋 教授（北海道大学）",
     "abstractSubmission": {
       "status": "open",
-      "startDate": "2026-10-01",
-      "deadline": "2026-11-05 13:00",
-      "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html"
+      "startDate": "2026-10-01T10:00",
+      "deadline": "2026-11-05T13:00",
+      "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html",
+      "timeZone": "Asia/Tokyo"
     },
     "calendarStatus": {
       "google": {
@@ -1765,7 +1878,30 @@ const sampleEvents = [
         "name": "札幌市教育文化会館",
         "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%9C%AD%E5%B9%8C%E5%B8%82%E6%95%99%E8%82%B2%E6%96%87%E5%8C%96%E4%BC%9A%E9%A4%A8%20%E6%9C%AD%E5%B9%8C"
       }
-    ]
+    ],
+    "registration": {
+      "version": 2,
+      "type": "domestic",
+      "timeZone": "Asia/Tokyo",
+      "periods": [
+        {
+          "label": "事前参加登録",
+          "start": "2026-10-01T12:00",
+          "deadline": "2027-02-12",
+          "category": "regular",
+          "advanceEligible": true,
+          "sourceUrl": "https://convention.jtbcom.co.jp/131jos/join/index.html"
+        },
+        {
+          "label": "後期参加登録",
+          "start": "2027-02-16T12:00",
+          "deadline": "2027-04-18",
+          "category": "regular",
+          "advanceEligible": null,
+          "sourceUrl": "https://convention.jtbcom.co.jp/131jos/join/index.html"
+        }
+      ]
+    }
   },
   {
     "id": "oph-014",
@@ -1818,7 +1954,30 @@ const sampleEvents = [
     "description": "世界緑内障コングレス(WGC)と併催される歴史的学術集会。",
     "isConference": true,
     "eventOfficialUrl": "https://site2.convention.co.jp/jgs2027/",
-    "conferenceChair": "森 和彦（バプテスト眼科長岡京クリニック/京都府立医科大学）"
+    "conferenceChair": "森 和彦（バプテスト眼科長岡京クリニック/京都府立医科大学）",
+    "registration": {
+      "version": 2,
+      "type": "domestic",
+      "timeZone": "Asia/Tokyo",
+      "periods": [
+        {
+          "label": "前期参加登録",
+          "start": "2026-10-06T12:00",
+          "deadline": "2027-03-15T12:00",
+          "category": "early",
+          "advanceEligible": true,
+          "sourceUrl": "https://site2.convention.co.jp/jgs2027/resitration/"
+        },
+        {
+          "label": "後期参加登録",
+          "start": "2027-03-15T12:00",
+          "deadline": "2027-04-23",
+          "category": "regular",
+          "advanceEligible": null,
+          "sourceUrl": "https://site2.convention.co.jp/jgs2027/resitration/"
+        }
+      ]
+    }
   },
   {
     "id": "conf-int-wgc-2027",
@@ -2004,10 +2163,11 @@ const sampleEvents = [
     "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
     "note": "",
     "abstractSubmission": {
-      "status": "unknown",
-      "startDate": null,
-      "deadline": null,
-      "url": null
+      "status": "open",
+      "startDate": "2026-08-05T00:00",
+      "deadline": "2027-01-05T23:59",
+      "url": "https://apacrs2027.org/guidelines-for-abstract-submission-2027/",
+      "timeZone": "Asia/Singapore"
     },
     "calendarStatus": {
       "google": {
@@ -2106,10 +2266,11 @@ const sampleEvents = [
     "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
     "note": "",
     "abstractSubmission": {
-      "status": "unknown",
-      "startDate": null,
-      "deadline": null,
-      "url": "http://www.jsoprs.jp/"
+      "status": "upcoming",
+      "startDate": "2027-01-05",
+      "deadline": "2027-02-19",
+      "url": "https://orbit-cs.net/jsoprs2027/abstracts.html",
+      "timeZone": "Asia/Tokyo"
     },
     "calendarStatus": {
       "google": {
@@ -2182,7 +2343,38 @@ const sampleEvents = [
     ],
     "description": "小児眼疾患、斜視手術、弱視訓練、近視進行抑制の最新知見。",
     "isConference": true,
-    "conferenceChair": "第83回日本弱視斜視学会総会: 林 思音（山形大学）／第52回日本小児眼科学会総会: 彦谷 明子（浜松医科大学）"
+    "conferenceChair": "第83回日本弱視斜視学会総会: 林 思音（山形大学）／第52回日本小児眼科学会総会: 彦谷 明子（浜松医科大学）",
+    "registration": {
+      "version": 2,
+      "type": "domestic",
+      "timeZone": "Asia/Tokyo",
+      "periods": [
+        {
+          "label": "早期登録",
+          "start": "2026-07-27",
+          "deadline": "2027-01-04",
+          "category": "early",
+          "advanceEligible": true,
+          "sourceUrl": "https://jasa-japo2027.jp/sanka.html"
+        },
+        {
+          "label": "事前登録",
+          "start": "2027-01-05",
+          "deadline": "2027-05-20",
+          "category": "regular",
+          "advanceEligible": true,
+          "sourceUrl": "https://jasa-japo2027.jp/sanka.html"
+        },
+        {
+          "label": "当日登録",
+          "start": "2027-05-21",
+          "deadline": "2027-06-19",
+          "category": "onsite",
+          "advanceEligible": false,
+          "sourceUrl": "https://jasa-japo2027.jp/sanka.html"
+        }
+      ]
+    }
   },
   {
     "id": "conf-int-soe-2027",
@@ -2210,10 +2402,11 @@ const sampleEvents = [
     "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
     "note": "",
     "abstractSubmission": {
-      "status": "unknown",
+      "status": "open",
       "startDate": null,
-      "deadline": null,
-      "url": null
+      "deadline": "2027-01-19T23:59",
+      "url": "https://soe2027.soevision.org/abstract-submission/",
+      "timeZone": "Etc/UTC"
     },
     "calendarStatus": {
       "google": {
@@ -3190,8 +3383,9 @@ const sampleEvents = [
     "abstractSubmission": {
       "status": "unknown",
       "startDate": null,
-      "deadline": null,
-      "url": null
+      "deadline": "2026-10-20T12:00",
+      "url": "https://www.rousi.jp/jps5-abstract",
+      "timeZone": "Asia/Tokyo"
     },
     "calendarStatus": {
       "google": {

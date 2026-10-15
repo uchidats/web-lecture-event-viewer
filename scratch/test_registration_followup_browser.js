@@ -122,7 +122,7 @@ async function main() {
       assert.equal(lowvision.url,'https://www.ganki.jp/lowvision2027/abstracts.html');assert.ok(lowvision.fits&&lowvision.pageFits);
       const closed=await evaluate('renderAbstractSubmissionHtml(state.events.find(e=>e.id==="conf-jp-lowvision-2027"),new Date("2027-01-08T00:00:00+09:00"))');
       assert.ok(closed.includes('1月7日 締切済')&&!closed.includes('受付中'));
-      assert.ok((await evaluate('renderAbstractSubmissionHtml(state.events.find(e=>e.id==="conf-jp-surgery-2027"))')).includes('公式</span>'));
+      assert.ok((await evaluate('(()=>{const e=state.events.find(e=>e.id==="conf-jp-surgery-2027");return renderAbstractSubmissionHtml({...e,abstractSubmission:{status:"unknown",url:e.eventOfficialUrl}});})()')).includes('公式</span>'));
       console.log('PASS '+width+'px: JSOD33 list/calendar/compact phases and abstract noon; audited lowvision deadline/dedicated URL/closed state; no overflow');
     }
     await call('Browser.close');

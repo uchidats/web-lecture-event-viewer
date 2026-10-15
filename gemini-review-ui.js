@@ -207,6 +207,7 @@
         </div>
         <p class="gemini-monitor-meta">
           監視日: ${escape(report.date)} ｜ 監視対象: ${metrics.monitoredToday}件 / 全${metrics.totalEvents}件 ｜ Gemini呼出: ${metrics.geminiCalls}件
+          <br>取得状態（要確認とは別）：取得不能 ${metrics.deadlineStatuses?.unavailable||0}件・未公開 ${metrics.deadlineStatuses?.unpublished||0}件・リンク未検出 ${metrics.deadlineStatuses?.['link-not-found']||0}件・抽出失敗 ${metrics.deadlineStatuses?.['extraction-failed']||0}件
         </p>
     `;
 

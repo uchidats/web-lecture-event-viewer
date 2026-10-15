@@ -1,0 +1,1581 @@
+{
+  "checkedAt": "2026-10-15",
+  "mode": "applied",
+  "scope": {
+    "from": "2027-01-01",
+    "through": "2027-06-30",
+    "fields": [
+      "abstractSubmission",
+      "registration"
+    ],
+    "maxDepth": 1,
+    "maxAdditionalPages": 4
+  },
+  "summary": {
+    "targetConferences": 20,
+    "abstractNewlyConfirmed": 9,
+    "abstractChanged": 10,
+    "registrationNewlyConfirmed": 7,
+    "registrationChanged": 7,
+    "reviewConferences": 2,
+    "reviewItems": 3,
+    "unchangedConferences": 8,
+    "unchangedWithoutReview": 7,
+    "autoConfirmedItems": 17,
+    "observationCounts": {
+      "unavailable": 5,
+      "unpublished": 5,
+      "link-not-found": 1,
+      "extraction-failed": 1,
+      "not-applicable": 1
+    },
+    "unchangedItems": 5
+  },
+  "records": [
+    {
+      "eventId": "conf-jp-surgery-2027",
+      "title": "第50回 日本眼科手術学会学術総会",
+      "date": "2027-01-29",
+      "topUrl": "https://50.jsos.jp/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://50.jsos.jp/",
+          "role": "overview",
+          "fingerprint": "e4401c1ee5b78e1fa6c0f7fddb774e998551d3719cf98ad823c14ee930f15c1f"
+        },
+        {
+          "url": "https://50.jsos.jp/registration",
+          "role": "registration",
+          "fingerprint": "39b45222c6f0232e6edb997ffedcf2d22b67e9313650ccef45b3020cafc87276"
+        },
+        {
+          "url": "https://50.jsos.jp/abstract",
+          "role": "abstract",
+          "fingerprint": "b3e7a7298544a81f7e86fc88b514ca83aa611650b8be0b746f5e913f97fec91f"
+        }
+      ],
+      "review": [],
+      "changes": [
+        {
+          "field": "abstractSubmission.startDate",
+          "before": null,
+          "after": "2026-06-01",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2026-08-31",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": "https://50.jsos.jp/",
+          "after": "https://50.jsos.jp/abstract",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.status",
+          "before": "unknown",
+          "after": "closed",
+          "severity": "medium"
+        },
+        {
+          "field": "registration",
+          "before": null,
+          "after": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "事前早期登録",
+                "start": "2026-06-01",
+                "deadline": "2026-08-20",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://50.jsos.jp/registration"
+              },
+              {
+                "label": "事前通常登録",
+                "start": "2026-08-21",
+                "deadline": "2026-11-12",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://50.jsos.jp/registration"
+              },
+              {
+                "label": "当日登録",
+                "start": "2027-01-29",
+                "deadline": "2027-01-31",
+                "category": "onsite",
+                "advanceEligible": false,
+                "sourceUrl": "https://50.jsos.jp/registration"
+              }
+            ]
+          },
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "startDate": "2026-06-01",
+            "deadline": "2026-08-31",
+            "url": "https://50.jsos.jp/abstract",
+            "timeZone": "Asia/Tokyo"
+          },
+          "evidence": "一般演題登録期間\n2026年6月1日(月)〜8月31日(月)\n一般演題登録は終了しました。\n発表形式\n一般講演:発表はPCプレゼンテーションに限ります。"
+        },
+        "registration": {
+          "value": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "事前早期登録",
+                "start": "2026-06-01",
+                "deadline": "2026-08-20",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://50.jsos.jp/registration"
+              },
+              {
+                "label": "事前通常登録",
+                "start": "2026-08-21",
+                "deadline": "2026-11-12",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://50.jsos.jp/registration"
+              },
+              {
+                "label": "当日登録",
+                "start": "2027-01-29",
+                "deadline": "2027-01-31",
+                "category": "onsite",
+                "advanceEligible": false,
+                "sourceUrl": "https://50.jsos.jp/registration"
+              }
+            ]
+          },
+          "evidence": "事前参加登録 | 第50回日本眼科手術学会学術総会\nメインコンテンツに移動\n第50回 日本眼科手術学会学術総会\nTHE 50TH ANNUAL MEETING OF JAPANESE SOCIETY OF OPHTHALMIC SURGERY\nトップページ\nお知らせ\nご挨拶\n参加者へのご案内\nインストラクションコース\n一般演題登録\n指定演題登録\n事前参加登録\nプログラム\nシラバス\n日程表\n講演規定\n会場・交通案内\n宿泊案内\n託児室のご案内\nアプリのご案内\n市民公開講座\n企業の皆様へ\nリンク\n日本眼科手術学会\n事前参加登録\n参加登録期間\n事前早期登録\n2026年6月1日(月)〜8月20日(木)※事前早期登録期間は終了しました。多くのご登録、ありがとうございました。\n事前通常登録\n2026年8月21日(金)〜11月12日(木)\n当日登録\n2027年1月29日(金)〜1月31日(日)\n参加登録費\n参加区分\n事前早期登録\n事前通常登録\n当日登録\n会員\n10,000円\n15,000円\n20,000円\n非会員\n10,000円\n20,000円\n25,000円\n大学院生・後期研修医\n5,000円\n8,000円\n10,000円\nコメディカル\n2,000円\n3,000円\n5,000円\nコメディカルサンデーパス(1月31日のみ参加)\n—\n—\n3,000円\n初期研修医・学生・留学生\n—\n—\n無料\n企業\n—\n—\n5,000円※\n※企業展示会場のみ入場可能です。講演会場への入場は会員又は非会員でのご登録が必要となります。\n※参加登録費はすべて課税対象です。\n登録方法\n本会の参加登録手続きは、インターネットからのオンライン登録のみとなります。\n(当日申込も原則オンライン登録のみ受け付けます。現地会場での登録は行いません。事前にオンライン登録をお済ませの上、会場へお越しください。)\n事前参加登録はこちら(マイページ)\n注意事項\nご登録後、登録完了のメールの送付はございません。決済手続完了のメールをもって、登録完了とさせていただきます。\n参加者1名につき1回のご登録をお願いいたします。\n大学院生、後期研修医、コメディカルの方は、主任教授もしくは所属長からの署名・捺印が必要です。「登録区分証明書」をダウンロードの上、必要事項を記入してオンライン登録時にデータをアップロードしてください。\n▶ 登録区分証明書(事前)ダウンロード\n支払方法\nお支払方法は、クレジットカードオンライン決済とコンビニ決済の2通りです。\n※便利で簡単なクレジットカード決済のご利用をおすすめします。\n※参加登録費支払後の取消・払戻はできません。二重登録にご注意ください。\nクレジットカードオンライン決済\nオンライン登録の際に決済のお手続きをお願いいたします。手数料は発生いたしません。\nコンビニ決済\nコンビニ支払を希望される場合は、メールにて振込に関する内容をお送り致しますので、メールアドレスのご登録をお願いします。支払い期限は、登録日から10日以内です。手数料は発生いたしません。期限を過ぎるとお支払いを受付することができなくなり、事前参加登録が無効となりますのでご注意ください。期日を過ぎた場合は、再登録をお願いいたします。\n参加証(ネームカード)・領収書について\n参加証(ネームカード)、領収書の事前郵送対応は行いません。\n参加証\n参加証(ネームカード)はマイページからダウンロードし、A4サイズでカラー印刷してご持参ください。(参加証のダウンロードは後日可能になりますのでお待ちください)\n領収書\n決済完了後にマイページから領収書をダウンロードできます。\n参加登録のキャンセル・住所変更について\n参加登録後のキャンセルおよび返金は如何なる理由においてもお受けしておりませんので予めご了承ください。\n二重登録された場合もご返金はできませんので十分ご注意ください。\n住所変更などは必ずE-mailにて運営事務局へご連絡ください。\n会員の方で登録情報(住所など)を変更する方は、日本眼科手術学会のウェブサイトから変更するか、日本眼科手術学会事務局までご連絡ください。\nお問い合わせ先\n第50回日本眼科手術学会学術総会 運営事務局\n株式会社JTBコミュニケーションデザイン コンベンション事業局内\nE-mail: jsos50-reg@jtbcom.co.jp\n<受付時間:平日 10:00〜17:00(休:土・日・祝日)>\n※運営事務局はテレワークを実施しております。E-mailでお問い合わせいただきますようご協力をお願いいたします。\n第50回日本眼科手術学会学術総会 運営事務局\n株式会社JTBコミュニケーションデザイン コンベンション事業局内\n〒530-0004 大阪府大阪市北区堂島浜1-1-27 大阪堂島浜タワー5階\nE-mail:jsos50@jtbcom.co.jp\n&copy; 2026-2027 The 50th Annual Meeting of Japanese Society of Ophthalmic Surgery. All Rights Reserved.\n▲",
+          "url": "https://50.jsos.jp/registration"
+        }
+      },
+      "observations": []
+    },
+    {
+      "eventId": "conf-jp-cornea-2027",
+      "title": "角膜カンファランス2027",
+      "date": "2027-02-11",
+      "topUrl": "https://www.okinawa-congre.co.jp/cornea2027/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://www.okinawa-congre.co.jp/cornea2027/",
+          "role": "overview",
+          "fingerprint": "cb174fbcbffe2279afd65eca4b2fff551da3410a5a4699ac245fa7b660b0798b"
+        },
+        {
+          "url": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html",
+          "role": "registration",
+          "fingerprint": "149921ec4fa3fad5fe6b4edbfc12296af989f57e901cce5f953e9c206cdec51a"
+        },
+        {
+          "url": "https://www.okinawa-congre.co.jp/cornea2027/cfa/index.html",
+          "role": "abstract",
+          "fingerprint": "aa6a78ac90142dd24fc744c4446a30ae5247fd06483f160ed8fa42d0d7eed171"
+        }
+      ],
+      "review": [],
+      "changes": [
+        {
+          "field": "abstractSubmission.startDate",
+          "before": null,
+          "after": "2026-08-21",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2026-11-04T17:00",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": null,
+          "after": "https://www.okinawa-congre.co.jp/cornea2027/cfa/index.html",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.status",
+          "before": "unknown",
+          "after": "open",
+          "severity": "medium"
+        },
+        {
+          "field": "registration",
+          "before": null,
+          "after": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "前期参加登録",
+                "start": "2026-12-01",
+                "deadline": "2027-01-14",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html"
+              },
+              {
+                "label": "後期参加登録",
+                "start": "2027-01-15",
+                "deadline": "2027-02-13",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html"
+              }
+            ]
+          },
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "startDate": "2026-08-21",
+            "deadline": "2026-11-04T17:00",
+            "url": "https://www.okinawa-congre.co.jp/cornea2027/cfa/index.html",
+            "timeZone": "Asia/Tokyo"
+          },
+          "evidence": "演題募集期間\n2026年8月21日(金)~ 11月4日(水)17:00\n※演題募集期間の延長は予定しておりませんので、必ず期限内のご登録をお願いいたします。\nUMINネットワークサービスの保守作業に伴い、下記の日程におきまして演題登録システムを含むUMINセンターの全サービスにアクセスできなくなります。予めご了承ください。\n◎停止日時"
+        },
+        "registration": {
+          "value": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "前期参加登録",
+                "start": "2026-12-01",
+                "deadline": "2027-01-14",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html"
+              },
+              {
+                "label": "後期参加登録",
+                "start": "2027-01-15",
+                "deadline": "2027-02-13",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html"
+              }
+            ]
+          },
+          "evidence": "参加登録|角膜カンファランス2027\n運営事務局\n株式会社コングレ\n〒103-8276\n東京都中央区日本橋3-10-5\nオンワードパークビルディング\nTEL:03-3510-3701\nFAX:03-3510-3702\nEmail:cornea2027@m.congre.co.jp\n参加登録\n参加登録期間\n前期参加登録:2026年12月1日(火)~2027年1月14日(木)\n後期参加登録:2027年1月15日(金)~2027年2月13日(土)\n参加登録費\n参加区分\n前期参加登録\n後期参加登録\n会員\n16,000円\n21,000円\n非会員\n18,000円\n23,000円\n研修医※1\n留学生、コメディカル※2\n8,000円\n13,000円\n※1 研修医は、研修医新臨床研修医制度3年目(後期研修1年目)までといたします。\n※2 研修医、留学生、コメディカルの方は、主任教授または所属長の証明書が必要(学生証等コピー不可)です。「研修医、留学生、コメディカル」区分でご登録の場合、オンライン登録時に登録区分証明書のアップロードが必要です。事前に下記登録区分証明書を印刷いただき、必要事項をご記入の上、コピーデータ(PDFもしくはJPG)をご準備ください。\n※3 本学会は不課税につき、インボイス制度対象外となります。\n登録区分証明書 (事前登録者用) PDF\n登録方法\nオンライン登録(クレジット決済)にて参加登録を受付いたします。\n郵便払込用紙による登録は受け付けておりません。\nクレジット決済\n・参加登録の完了と同時に、オンラインクレジットカード決済にてお支払いが完了します。\n・ご利用いただけるカードの種類:JCB / VISA / Master Card / American Express / Diners\n・クレジットカード番号等、決済に必要な情報はクレジット決済センターに暗号化送信し、当データベース上には登録者のカード番号は一切残りませんのでご安心ください。\n・クレジット決済が完了時に「参加登録完了のご連絡」というメールがご登録のE-mailアドレスに自動送信されます。\n・メールが届かない場合は運営事務局までお問合せください。\nキャンセル及び修正\n※ ご入金が確認された時点で、参加登録が完了となります。\n※ 登録完了後のキャンセルおよび返金はできません。事前に十分ご確認のうえ、登録してください。\n※ 二重登録をしないようにご注意ください。\n登録内容を修正する場合は、修正内容を運営事務局(cornea2027@m.congre.co.jp)へお知らせください。\n参加登録はこちらから\n抄録集の送付について\n日本角膜学会会員の方には、参加登録の有無に関わらず、学会事務局に登録されている住所へ、1月下旬頃に発送いたします。送付先に関するお問い合わせは、日本角膜学会事務局までお願いいたします。\n非会員、研修医、留学生、コメディカル枠で事前参加登録された方にも、登録の住所へ1月下旬頃に発送いたします。\nネームカード・領収書・参加証明書の送付について\n前期参加登録:ご登録の住所へ、1月下旬頃に発送いたします。\n後期参加登録:現地の受付にてお渡しいたします。(事前送付はありません)\n「後期参加登録完了のご連絡」メールをスクリーンショット、プリントアウトするなどし、受付にてご提示ください。\n個人情報保護について\n本会の参加登録の際にお預かり致しました内容は、本会運営準備に関する目的以外では使用致しません。また、ご登録いただいた個人情報は、必要なセキュリティ対策を講じ、厳重に管理致します。\n参加登録についてのお問い合わせ先\n角膜カンファランス2027 運営事務局\n株式会社コングレ内\nE-mail:cornea2027@m.congre.co.jp\nPAGE\nTOP\nCopyright © Japan Cornea Conference2027. All Rights Reserved.",
+          "url": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html"
+        }
+      },
+      "observations": []
+    },
+    {
+      "eventId": "conf-jp-eyelid-2027",
+      "title": "第38回 日本眼瞼義眼床手術学会",
+      "date": "2027-02-20",
+      "topUrl": "https://convention.jtbcom.co.jp/gigan38/index.html",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://convention.jtbcom.co.jp/gigan38/index.html",
+          "role": "overview",
+          "fingerprint": "7fde877731675e843a5d54c91644770211575bc06af19d27434e520ad9f1e2ba"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/gigan38/join/index.html",
+          "role": "registration",
+          "fingerprint": "a3c0fadf46cab92063e697f4292494c66af1b920d49c08fa62b5fc11f6af6ac9"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/gigan38/abstract/index.html",
+          "role": "abstract",
+          "fingerprint": "4ae3363fe804352824cea2378ebb8c4ccb1bfae061cb646ad9ae362ca9569502"
+        }
+      ],
+      "review": [],
+      "changes": [],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "startDate": "2026-09-10",
+            "deadline": "2026-11-05T12:00",
+            "url": "https://convention.jtbcom.co.jp/gigan38/abstract/index.html",
+            "timeZone": "Asia/Tokyo"
+          },
+          "evidence": "演題登録期間\n2026年9月10日(木)~2026年11月5日(木)正午\n発表形式\n演題は一般口演のみとなります。\n応募資格"
+        },
+        "registration": {
+          "value": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "事前登録",
+                "start": "2026-10-08T12:00",
+                "deadline": "2027-01-08",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://convention.jtbcom.co.jp/gigan38/join/index.html"
+              },
+              {
+                "label": "追加登録",
+                "start": "2027-01-15T12:00",
+                "deadline": "2027-02-20",
+                "category": null,
+                "advanceEligible": null,
+                "sourceUrl": "https://convention.jtbcom.co.jp/gigan38/join/index.html"
+              }
+            ]
+          },
+          "evidence": "参加登録 | 第38回日本眼瞼義眼床手術学会\n参加登録\n参加登録受付期間\n事前登録:\n2026年10月8日(木)正午~2027年1月8日(金)\n追加登録:\n2027年1月15日(金)正午~2027年2月20日(土)\n※参加登録費のご入金をもって登録完了となります。上記期間内にお支払いください。\n参加登録方法、支払方法\n本会の参加登録は、オンライン登録のみ受け付けます。\n本ページ下部の「参加登録はこちら」ボタンを押して参加登録システムよりお申込みください。\n(当日のお申込みもオンライン登録のみ受け付けます。現地会場での登録受付は行いません。事前にオンライン登録をお済ませの上、会場へお越しください。)\nお支払方法は、クレジットカード決済のみとなります。\n(クレジットカードでの決済ができない方は、参加登録デスクまでご連絡ください)\n※決済後は、いかなる理由においても返金はいたしかねますのでご注意ください。\nご本人による二重登録、ご自身の都合により参加できなくなった場合なども含め返金には一切応じられませんので、十分確認のうえ、ご登録ください。\n<ご注意ください>\n携帯電話用のメールアドレスについて\n参加登録での利用はご遠慮ください。\n迷惑メール対策設定により、システムからの通知メールが受信できないという不具合が生じます。\nフリーメール(Gmail、Yahooメール、Hotmailなど)をご利用される場合\n通知メール送信アドレスの「@mail.jtbcom.co.jp」ドメインのメールを受信できるよう設定をお願いいたします。\nフリーメール(Gmail、Yahooメール、Hotmailなど)をご利用の場合、迷惑メールフィルタリング機能により、配信メールが迷惑メール(スパムメール)として扱われる場合があります。メールが届かない場合は、「迷惑メール」フォルダや「削除(ゴミ箱)」フォルダ等をご確認ください。\n※フリーメールの種類や設定によっては、振り分けられたメールが数日後に自動削除される場合がございます。\n参加登録費\n参加区分\n事前登録\n追加登録\n税区分\n会員*1\n8,000円\n10,000円\n不課税\n非会員\n10,000円\n12,000円\n不課税\n*1:会員(日本眼瞼義眼床手術学会 会員)の方は参加登録の際に会員番号の入力が必要です。\n会員番号をお忘れの場合は日本眼瞼義眼床手術学会事務局までお問い合わせください。\n懇親会\n懇親会を開催いたします。\n参加を希望される方は、参加登録時にあわせてお申込みください。(参加登録完了後のお申込みも可能です。)\n日 時:\n2027年2月20日(土)19:00~20:30(予定)\n会 場:\n青蓮会館 2F 201号室 大広間\n(〒602-0855 京都市上京区西三本木通り荒神口下ル上生洲町197-1)\n参加費:\n5,000円(税込)\n定 員:\n着席での懇親会のため、先着70名とさせていただきます。\n(定員に達した時点で締切とさせていただきます)\nネームカード、抄録集、領収書、参加証明書について\n事前登録\n追加登録\nネームカード\n期日までに参加登録費の入金が完了した方には、参加登録の際にご入力いただいた住所宛に事前送付いたします。(1月下旬予定)\n当日はお忘れの無いよう必ずご持参ください。\nネームカードの事前送付はございません。\n当日、総合受付にてネームカードをお渡しいたします。\n<受取方法>\n参加登録システムからクレジットカード決済完了後に配信されます「登録費決済完了のお知らせ」のメールを受付にご提示ください。(スマートフォン、タブレット端末でのキャプチャ可)\n抄録集\n(冊子)\n抄録集(冊子)の事前送付はございません。\n当日、現地会場にて抄録集(冊子)をお渡しいたします。\n抄録集\n(PDF)\n参加登録をされた方は、抄録集(PDF)を閲覧いただけます。(2027年2月上旬公開予定)\n※会員(日本眼瞼義眼床手術学会 会員)の方へは、参加登録の有無にかかわらず、パスワードをご案内いたします。\n領収書\n参加証明書\n領収書・参加証明書は、参加登録システムのメインメニュー画面より各自でダウンロードしてください。\n<ダウンロード期限>\n・領収書:\nクレジットカード決済完了後 ~ 会期終了1ヶ月後(2027年3月20日(土))\n・参加証明書:\n会期初日(2027年2月20日(土))~ 会期終了1ヶ月後(2027年3月20日(土))\n※上記期限以降はダウンロードできなくなりますのでご注意ください。\n※デジタル版のみの発行となります。紙媒体での発行や郵送はいたしかねますのでご了承ください。\nオンライン参加登録の流れについて\nSTEP1\n連絡先情報の登録\nSTEP2\n参加内容登録\nSTEP3\nお申込金額の決済\n領収書、参加証明書\nダウンロード\nオンラインシステムの動作環境\n推奨OS/ブラウザ:Windows 11、Microsoft Edge最新版、Google Chrome 最新版\n※JavaScriptが有効な状態でご利用ください。\n※上記以外の組み合わせやMacintosh、携帯電話、スマートフォン等の場合、画面が正しく表示されない、もしくは正しく機能しないことがあります。その場合、上記推奨の環境で再度操作願います。\nSTEP1 連絡先情報の登録\n名前、連絡先、ログインIDを登録し、申込番号・パスワードを取得してください。\nすでに一般演題の投稿がお済みの場合は、共通のログインID・パスワードで参加登録が可能です。このSTEP1をスキップし、演題登録時のIDとパスワードを用いて参加登録システムにログインして、STEP2よりお手続きください。\n1)本ページ下部の「参加登録はこちらから」ボタンよりご登録ください。\n2)新規申込ボタンをクリックしてください。\n3)「個人情報のお取り扱いについて」をご確認の上、規約への同意を行い、新規申込画面へ進むボタンをクリックしてください。\n4)お名前、ご連絡先、メールアドレスなどの連絡先情報を入力し、希望のログインIDをご自身で決定の上、登録内容の確認画面へボタンをクリックすると、確認画面に進みます。\n<ご注意ください>\n携帯電話用のメールアドレスについて\n参加登録での利用はご遠慮ください。\n迷惑メール対策設定により、システムからの通知メールが受信できないという不具合が生じます。\nフリーメール(Gmail、Yahooメール、Hotmailなど)をご利用される場合\n通知メール送信アドレスの「@mail.jtbcom.co.jp」ドメインのメールを受信できるよう設定をお願いいたします。\nフリーメール(Gmail、Yahooメール、Hotmailなど)をご利用の場合、迷惑メールフィルタリング機能により、配信メールが迷惑メール(スパムメール)として扱われる場合があります。メールが届かない場合は、「迷惑メール」フォルダや「削除(ゴミ箱)」フォルダ等をご確認ください。\n※フリーメールの種類や設定によっては、振り分けられたメールが数日後に自動削除される場合がございます。\n5)内容にお間違いないか確認の上、確定するボタンをクリックしてください。\n6)確定後、入力されたメールアドレス宛に通知メールが届きます。パスワード(システムから自動発行)が掲載されていますので、大切に保管してください。\n7)続けて、参加者を登録するボタンをクリックして参加内容登録画面に進んでください。\nSTEP2 参加内容登録\n「参加区分」などを選択してください。\n1)参加内容登録画面への進み方\n(A) STEP1からそのまま作業を継続する場合\nSTEP1の完了後に表示される参加者を登録するボタンをクリックしてください。\n(B) 一般演題登録している場合、またはSTEP1後、作業を中断している場合\n1ログイン画面右側の「申込確認・変更」に、一般演題登録時、STEP1で取得したログインIDとパスワードを入力してログインボタンをクリックしてください。\n2メインメニュー画面上部、参加内容の登録ボタンから、参加者登録画面に進んでください。\n2)参加区分などを選択し、登録内容の確認画面へボタンをクリックすると、確認画面に進みます。\n・会員番号入力\n・懇親会申込\n3)内容にお間違いないか確認の上、確定するボタンをクリックしてください。\n4)確定後、申込内容の記載された通知メールが届きます。\n5)続けて、参加費を決済するボタンをクリックして参加費決済手続きに進んでください。\nSTEP3 お申込金額の決済<クレジットカード決済>\n決済に使用されるクレジットカードをお手元にご用意ください。\n決済が完了したお申込みにつきましては、如何なる理由においてもキャンセルとそれに伴う返金ができません。\n決済確定前に、今一度お申込み内容に相違がないかご確認ください。\n1)決済画面への進み方\n(A) STEP2からそのまま作業を継続する場合\nSTEP2の完了後に表示される参加費を決済するボタンをクリックしてください。\n(B) STEP2終了後、作業を中断している場合\n1ログイン画面右側の「申込確認・変更」に、STEP1で取得したログインIDとパスワードを入力してログインボタンをクリックしてください。\n2メインメニュー上部の『決済』をクリックし、決済画面にすすんでください。\n2)「クレジットカード決済」を選択し、次へ進むボタンをクリックしてください。決済には、以下のカードがご利用いただけます。\n3)クレジットカード番号、有効期限、カード保有者名、セキュリティコードを入力し、確認画面へ進むボタンをクリックします。\nセキュリティコードは、カード表面の4桁もしくは、カード裏面の3桁です。カードによって印字されている面・桁数が異なりますので、お持ちのクレジットカードをご確認ください。\nカード表面に印字されている場合\n(クレジットカード番号の右上\nまたは左上に印字された4桁)\nカード裏面に印字されている場合\n(ご署名欄に印字された数字の末尾3桁)\n4)内容を確認の上、認証画面へ進むボタンを選択し、クレジットカード決済処理を行ってください。\n※ご使用のカードの設定によってはクレジットカード会社の本人認証サービスのページに移行しますので、認証パスワードを入力してください。\n5)決済完了後、決済通知メールが届きます。\n※引き落とし明細には、「JTBコミュニケーションデザイン参加登録」と表示されます。\n6)「メインメニュー」の「領収書」タブより領収書のダウンロードが可能となります。(※決済完了後、ダウンロード可能)\n個人情報保護について\n本会の参加登録の際にお預かりいたしました内容は、本会運営準備に関する目的以外では使用いたしません。\nまた、ご登録いただいた個人情報は、必要なセキュリティ対策を講じ、厳重に管理いたします。\n参加登録に関するお問い合わせ先\n第38回日本眼瞼義眼床手術学会 参加登録デスク\n株式会社JTBコミュニケーションデザイン コンベンション事業局内\nE-mail: gigan38-reg@jtbcom.co.jp TEL: 050-1732-4593\n<受付時間:平日 10:00~17:00(休:土・日・祝日)>\n※参加登録デスクはテレワークを実施しております。\n原則E-mailでお問合せいただきますようご協力をお願いいたします。\n参加登録はこちらから\nページトップへ戻る\n運営事務局\n株式会社JTBコミュニケーションデザイン コンベンション事業局内\n〒530-0004 大阪市北区堂島浜1-1-27 大阪堂島浜タワー5階 E-mail:gigan38@jtbcom.co.jp\n&copy;第38回日本眼瞼義眼床手術学会",
+          "url": "https://convention.jtbcom.co.jp/gigan38/join/index.html"
+        }
+      },
+      "observations": []
+    },
+    {
+      "eventId": "conf-jp-diabetic-2027",
+      "title": "第33回 日本糖尿病眼学会総会",
+      "date": "2027-03-12",
+      "topUrl": "https://convention.jtbcom.co.jp/jsod33/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://convention.jtbcom.co.jp/jsod33/",
+          "role": "overview",
+          "fingerprint": "254634eafb1c46f878a083cf1507eec0d23cbb8fd2724c6b25c65a4bd45e645e"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/jsod33/join/index.html",
+          "role": "registration",
+          "fingerprint": "bd3881d489a85ab816dca4e2ffd6d09f174a777fabba83b89cf8fa34c4db7e56"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/jsod33/abstract/index.html",
+          "role": "abstract",
+          "fingerprint": "58451be9db9eed3d9d9b40809557af6478d6a4abd33fa07ebb5ec403638f5328"
+        }
+      ],
+      "review": [],
+      "changes": [],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "startDate": "2026-09-09",
+            "deadline": "2026-11-11T12:00",
+            "url": "https://convention.jtbcom.co.jp/jsod33/abstract/index.html",
+            "timeZone": "Asia/Tokyo"
+          },
+          "evidence": "演題募集期間\n2026年9月9日(水)~2026年11月11日(水)正午まで\n募集演題/発表形式\n一般講演(口演)\n学術展示(ポスター)"
+        },
+        "registration": {
+          "value": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "事前参加登録",
+                "start": "2026-09-09T12:00",
+                "deadline": "2027-02-02",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://convention.jtbcom.co.jp/jsod33/join/index.html"
+              },
+              {
+                "label": "直前・当日参加登録",
+                "start": "2027-02-23T12:00",
+                "deadline": "2027-03-13",
+                "category": "onsite",
+                "advanceEligible": false,
+                "sourceUrl": "https://convention.jtbcom.co.jp/jsod33/join/index.html"
+              }
+            ]
+          },
+          "evidence": "参加登録|第33回日本糖尿病眼学会総会\n参加登録\n参加登録受付期間\n事前参加登録\n2026年9月9日(水)正午~2027年2月2日(火) <入金締切日:2月2日(火)>\n直前・当日参加登録\n2027年2月23日(火)正午~2027年3月13日(土) <入金締切日:3月13日(土)>\n参加登録方法、支払方法\n本会の参加登録はオンライン登録のみとさせていただきます。\n本ページ下部の「参加登録はこちら」ボタンを押して参加登録システムよりお申込みください。\n(当日申込もオンライン登録のみの受付となります。現地での登録は行いませんので、事前にオンライン登録をお済ませの上、会場へお越しください。)\nお支払い方法は、クレジットカード決済のみとなります。\n(クレジットカードでの決済ができない方は、参加登録デスクまでご連絡ください)\n※決済後は、いかなる理由においても返金はいたしかねますのでご注意ください。\nご本人による二重登録、ご自身の都合により参加できなくなった場合なども含めて返金には一切応じられませんので、\n十分確認の上、ご登録ください。\n<ご注意ください>\n携帯電話用のメールアドレスについて\n参加登録でのご利用はご遠慮ください。\n迷惑メール対策設定により、システムからの通知メールが受信できないという不具合が生じます。\nフリーメール(Gmail、Yahooメール、Hotmailなど)をご利用される場合\n通知メール送信アドレスの「@mail.jtbcom.co.jp」ドメインのメールを受信できるよう設定をお願いいたします。\nフリーメール(Gmail、Yahooメール、Hotmailなど)をご利用の場合、迷惑メールフィルタリング機能により、配信メールが迷惑メール(スパムメール)として扱われる場合があります。メールが届かない場合は、「迷惑メール」フォルダや「削除(ゴミ箱)」フォルダ等をご確認ください。\n※フリーメールの種類や設定によっては、振り分けられたメールが数日後に自動削除される場合がございます。\n参加登録費\n参加区分\n事前登録\n直前・当日登録\n税区分\n医師(会員)※1\n¥12,000\n¥15,000\n不課税\n医師(非会員)\n¥15,000\n¥18,000\n課税\nメディカルスタッフ(会員)※1 ※2\n¥6,000\n¥6,000\n不課税\nメディカルスタッフ(非会員)※2\n¥6,000\n¥6,000\n課税\n一般(医師、メディカルスタッフ以外)\n¥15,000\n¥18,000\n課税\n初期研修医 ※2 ※4\n無料\n無料\n-\n学生(医療系学部生・大学院生)※3 ※4\n無料\n無料\n-\n※1会員(日本糖尿病眼学会)の方は参加登録の際、会員番号の入力が必要になります。\n会員番号をお忘れの場合は日本糖尿病眼学会事務局までお問い合わせください。\n※2「メディカルスタッフ」「初期研修医」の方は、所属長の証明が必要です。\n参加登録時に登録区分証明書【PDF】をダウンロードし、必要事項を記入、所属長の署名・捺印後、アップロードしてください。\n※3「学生(医療系学部生・大学院生)」の方は、学生証の写しまたは、所属長の証明が必要です。\n参加登録時に、学生証の写しまたは必要事項を記入した登録区分証明書【PDF】をアップロードしてください。\n社会人大学院生は除く。\n※4初期研修医ならびに学生は、参加費のみ免除となりますので、プログラム抄録集が必要な方はご購入ください。\n領収証、参加証明書、ネームカードについて\n参加登録システム(メインメニュー画面)より各自でダウンロードしてください。\n※紙媒体での発行や郵送はいたしかねますのでご了承ください。\n領収書\n<ダウンロード期間>\nクレジットカード決済完了後 ~ 会期1ヶ月後(2027年4月13日(火))\n参加証明書\n<ダウンロ―ド期間>\n会期初日(2027年3月12日(金))~ 会期1ヶ月後(2027年4月13日(火))\nネームカード\nカラー印刷してご持参ください。ご協力をおねがいします。\nダウンロード期間につきましては、後日ホームページ上でご案内いたします。\nプログラム・抄録集について\nプログラム・抄録集の事前発送はございません。\n参加登録された方は、参加登録システム(メインメニュー画面)で「PDF版」を閲覧・ダウンロードできます。\n(2月下旬頃予定)なお、「冊子版」は現地来場者に対して配布いたします。\n参加登録の流れ\nオンラインでの事前参加登録は、以下の流れとなります。\nSTEP1\n個人情報の登録\nSTEP2\n参加内容登録\nSTEP3\n参加費決済\n領収書、参加証明書、\nネームカード ダウンロード\nオンラインシステムの動作環境\n推奨OS/ブラウザ:Windows 11、Microsoft Edge最新版、Google chrome 最新版\n※JavaScriptが有効な状態でご利用ください。\n※上記以外の組み合わせやMacintosh、携帯電話、スマートフォン等の場合、画面が正しく表示されない、\nもしくは正しく機能しないことがあります。\nその場合、上記推奨の環境で再度操作願います。\nSTEP1 個人情報の登録\n名前と連絡先を登録し、申込番号・ログインID・パスワードを取得してください。\n1)本ページ下部の「参加登録はこちらから」ボタンよりご登録ください。\n2)新規申込ボタンをクリックしてください。\n3)「個人情報のお取り扱いについて」をご確認の上、規約への同意を行い、新規申込画面へ進むをクリックしてください。\n4)お名前、ご連絡先、メールアドレスを入力し、希望のログインIDをご自身で決定の上、登録内容の確認画面へをクリックすると、確認画面に進みます。\n<ご注意ください>\n携帯電話用のメールアドレスについて\n参加登録でのご利用はご遠慮ください。\n迷惑メール対策設定により、システムからの通知メールが受信できないという不具合が生じます。\nフリーメール(Gmail、Yahooメール、Hotmailなど)をご利用される場合\n通知メール送信アドレスの「@mail.jtbcom.co.jp」ドメインのメールを受信できるよう設定をお願いいたします。\nフリーメール(Gmail、Yahooメール、Hotmailなど)をご利用の場合、迷惑メールフィルタリング機能により、配信メールが迷惑メール(スパムメール)として扱われる場合があります。メールが届かない場合は、「迷惑メール」フォルダや「削除(ゴミ箱)」フォルダ等をご確認ください。\n※フリーメールの種類や設定によっては、振り分けられたメールが数日後に自動削除される場合がございます。\n5)内容にお間違いないか確認の上、確定するボタンをクリックしてください。\n6)確定後、入力されたメールアドレス宛に通知メールが届きます。パスワード(システムから自動発行)が掲載されていますので、大切に保管してください。\n7)続けて、参加者を登録するボタンをクリックして参加内容登録画面に進んでください。\nSTEP2 参加内容登録\n参加区分を決定してください。\n1)参加内容登録画面への進み方\n(A) STEP1からそのまま作業を継続する場合\n(B) STEP1終了後、作業を中断している場合\nSTEP1の完了後に表示される参加者を登録するをクリックしてください。\nログイン画面右側の「申込確認・変更」より、\nSTEP1で取得したログインIDとパスワードを使用してログインしてください。\n2)参加区分を選択し、登録内容の確認画面へをクリックすると、確認画面に進みます。\n3)内容にお間違いないか確認の上、確定するボタンをクリックしてください。\n4)確定後、申込内容の記載された通知メールが届きます。\nSTEP3 参加費決済 <クレジットカード決済>\nご使用のクレジットカードをご準備ください。\n決済が完了したお申込みにつきましては、如何なる理由においてもキャンセルとそれに伴う返金ができません。\n決済確定前に、今一度お申込み内容に相違がないかご確認ください。\n1)決済画面への進み方\n(A) STEP2からそのまま作業を継続する場合\n(B) STEP2終了後、作業を中断している場合\nSTEP2の完了後に表示される参加費を決済するをクリックしてください。\n1ログイン画面右側の「申込確認・変更」より、STEP1で取得したログインIDとパスワードを使用してログインしてください。\n2メインメニュー上部の「決済」をクリックし、決済画面に進んでください。\n2)「クレジットカード決済」を選択し、次へ進むをクリックしてください。\n決済には、以下のカードがご利用いただけます。\n3)クレジットカード番号、有効期限、セキュリティコードを入力し、確認画面へ進むをクリックします。\nセキュリティコードは、カード表面の4桁もしくは、カード裏面の3桁です。カードによって印字されている面・桁数が異なりますので、お持ちのクレジットカードをご確認ください。\nカード表面に印字されている場合\n(クレジットカード番号の右上または\n左上に印字された4桁)\nカード裏面に印字されている場合\n(ご署名欄に印字された数字の末尾3桁)\n4)内容を確認の上、認証画面へ進むボタンを選択し、クレジットカード決済処理を行ってください。\n※ご使用のカードの設定によってはクレジットカード会社の本人認証サービスのページに移行しますので、ご自身で設定された認証パスワードを入力してください。\n5)決済完了後、決済通知メールが届きます。\n※引き落とし明細には、「JTBコミュニケーションデザイン参加登録」と表示されます。\n個人情報保護について\n本会の参加登録の際にお預かりいたしました内容は、総会運営準備に関する目的以外では使用いたしません。\nまた、ご登録いただいた個人情報は、必要なセキュリティ対策を講じ、厳重に管理いたします。\n参加登録に関するお問い合わせ先\n第33回日本糖尿病眼学会総会 参加登録デスク\n株式会社JTBコミュニケーションデザイン コンベンション事業局内\nE-mail: jsod33-reg@jtbcom.co.jp TEL: 050-1732-4593\n<受付時間:平日 10:00~17:00(休:土・日・祝日)>\n※運営事務局ならびに参加登録デスクはテレワークを実施しております。\n原則E-mailでお問い合わせいただきますようご協力をお願いいたします。\n参加登録はこちらから\nページトップへ戻る\n運営事務局\n株式会社JTBコミュニケーションデザイン 〒530-0004 大阪市北区堂島浜 1-1-27 大阪堂島浜タワー5階\nTEL: 06-4964-8869 FAX: 06-4964-8804 E-mail: jsod33@jtbcom.co.jp\n&copy;第33回日本糖尿病眼学会総会",
+          "url": "https://convention.jtbcom.co.jp/jsod33/join/index.html"
+        }
+      },
+      "observations": []
+    },
+    {
+      "eventId": "conf-jp-iscev-2027",
+      "title": "第73回 日本臨床視覚電気生理学会",
+      "date": "2027-03-12",
+      "topUrl": "https://www.congre.co.jp/73jscev/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://www.congre.co.jp/73jscev/",
+          "role": "overview",
+          "fingerprint": "abb5bd14f144af82e24f2fc6a3ede87c7d09636cc1d54488338190dfde29c7a3"
+        },
+        {
+          "url": "https://www.congre.co.jp/73jscev/registration.html",
+          "role": "registration",
+          "fingerprint": "1dc42b6268409aa3a234b9d007a8584329130421c3827671237bd425a6232ac9"
+        },
+        {
+          "url": "https://www.congre.co.jp/73jscev/cfa.html",
+          "role": "abstract",
+          "fingerprint": "c2ed202f0a06e41da447bc51713034cff7b8aed6a661091dba346b542ea93e8f"
+        }
+      ],
+      "review": [],
+      "changes": [
+        {
+          "field": "abstractSubmission.startDate",
+          "before": null,
+          "after": "2026-08-03",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2026-10-28",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": null,
+          "after": "https://www.congre.co.jp/73jscev/cfa.html",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.status",
+          "before": "unknown",
+          "after": "open",
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "startDate": "2026-08-03",
+            "deadline": "2026-10-28",
+            "url": "https://www.congre.co.jp/73jscev/cfa.html",
+            "timeZone": "Asia/Tokyo"
+          },
+          "evidence": "1. 演題募集期間\n演題登録期間:8月3日(月)~ 演題募集期間を延⻑しました\n〜 10月28日(水)\n2. 応募資格\n筆頭演者は必ず日本臨床視覚電気生理学会の会員に限りますが、共同演者は会員以外の方を含めても差し支えございません。\n演題登録期間:8月3日(月)~ 演題募集期間を延⻑しました\n〜 10月28日(水)\n2. 応募資格\n筆頭演者は必ず日本臨床視覚電気生理学会の会員に限りますが、共同演者は会員以外の方を含めても差し支えございません。\n筆頭演者が現在会員ではない方は、日本臨床視覚電気生理学会事務局(株式会社エヌ・プラクティス内)へお問い合わせいただき、必ず入会手続きを行ってください。"
+        },
+        "registration": null
+      },
+      "observations": [
+        {
+          "field": "registration",
+          "url": "https://www.congre.co.jp/73jscev/registration.html",
+          "reason": "registration-not-published",
+          "proposed": null,
+          "category": "unpublished"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-int-apao-2027",
+      "title": "APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress)",
+      "date": "2027-03-18",
+      "topUrl": "https://2027.apaophth.org/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://2027.apaophth.org/",
+          "role": "overview",
+          "fingerprint": "a191a6ad36a226144456eb77f70b126d3474feb0f076c68b2de5e67366339f71"
+        },
+        {
+          "url": "https://2027.apaophth.org/registration/",
+          "role": "registration",
+          "fingerprint": "d71b0cc6da7c487bc8468defdb6efa952b7ebff03a1fe7435399f4ed9fb10d5e"
+        },
+        {
+          "url": "https://2027.apaophth.org/abstract-submission/",
+          "role": "abstract",
+          "fingerprint": "4fb87fc247add6d9ca4c3101a23a29c4ace9d6b97d4b9ccf79aa40d5a7c90843"
+        }
+      ],
+      "review": [],
+      "changes": [
+        {
+          "field": "abstractSubmission.status",
+          "before": "unknown",
+          "after": "closed",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2026-09-23T23:59",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": null,
+          "after": "https://2027.apaophth.org/abstract-submission/",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Singapore",
+          "severity": "medium"
+        },
+        {
+          "field": "registration",
+          "before": null,
+          "after": {
+            "version": 2,
+            "type": "international",
+            "timeZone": "Asia/Singapore",
+            "periods": [
+              {
+                "label": "Early Bird Rate",
+                "deadline": "2026-10-12",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://2027.apaophth.org/registration/"
+              },
+              {
+                "label": "Advance Rate",
+                "start": "2026-10-13",
+                "deadline": "2027-02-25",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://2027.apaophth.org/registration/"
+              },
+              {
+                "label": "Standard Rate",
+                "start": "2027-02-26",
+                "deadline": "2027-03-21",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://2027.apaophth.org/registration/"
+              }
+            ]
+          },
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "status": "unknown",
+            "deadline": "2026-09-23T23:59",
+            "url": "https://2027.apaophth.org/abstract-submission/",
+            "timeZone": "Asia/Singapore"
+          },
+          "evidence": "The portal’s abstract submission function closes upon the deadline: September 23, 2026 (23:59) (extended from the original September 7). Early submission is recommended to avoid last-minute system congestion. Late entries will NOT be allowed.\nYou may use the “Save Draft” function to save any work in progress. Once you click the “Submit” button, modifications will no longer be possible.\nUpon successful submission, you will receive an acknowledgment email within 24 hours. It contains an abstract number, which should be quoted in all future correspondence. In case you do not receive it, please contact submission@apaophth.org.\nThe Abstract Reviewing Committee will conduct a confidential peer review procedure, and its decision is final.\nThe submitter will be notified of the results by October 10, 2026."
+        },
+        "registration": {
+          "value": {
+            "version": 2,
+            "type": "international",
+            "timeZone": "Asia/Singapore",
+            "periods": [
+              {
+                "label": "Early Bird Rate",
+                "deadline": "2026-10-12",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://2027.apaophth.org/registration/"
+              },
+              {
+                "label": "Advance Rate",
+                "start": "2026-10-13",
+                "deadline": "2027-02-25",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://2027.apaophth.org/registration/"
+              },
+              {
+                "label": "Standard Rate",
+                "start": "2027-02-26",
+                "deadline": "2027-03-21",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://2027.apaophth.org/registration/"
+              }
+            ]
+          },
+          "evidence": "Registration – APAO 2027\nSkip to content\nCONGRESS INFORMATION\nSOCIAL PROGRAMS\nCONGRESS VENUE\nIMPORTANT DATES\nREGISTRATION\nSCIENTIFIC PROGRAM\nPROGRAM OVERVIEW\nINTERNATIONAL ADVISORY BOARD\nSCIENTIFIC PROGRAM COMMITTEE\nABSTRACT SUBMISSION\nSPONSORSHIP\nSPONSORSHIP PROSPECTUS\nEXHIBITOR MANUAL\nEXHIBITION TIMELINE\nEXHIBITION FLOOR PLAN\nORGANIZERS\nHOST\nCO-HOSTS\nLOCAL EXECUTIVE COMMITTEE\nCONGRESS INFORMATION\nSOCIAL PROGRAMS\nCONGRESS VENUE\nIMPORTANT DATES\nREGISTRATION\nSCIENTIFIC PROGRAM\nPROGRAM OVERVIEW\nINTERNATIONAL ADVISORY BOARD\nSCIENTIFIC PROGRAM COMMITTEE\nABSTRACT SUBMISSION\nSPONSORSHIP\nSPONSORSHIP PROSPECTUS\nEXHIBITOR MANUAL\nEXHIBITION TIMELINE\nEXHIBITION FLOOR PLAN\nORGANIZERS\nHOST\nCO-HOSTS\nLOCAL EXECUTIVE COMMITTEE\nRegistration\nThe 42nd Asia-Pacific Academy of Ophthamology Congress\nRegistration\nTrade delegates can be any exhibitor who wishes to attend the scientific sessions, where an exhibitor with a normal exhibitor badge would be denied access. Trade delegate badges can only be purchased via the Exhibitor Center.\nIncluding Optometrists/Opticians/Orthoptists/Nurses/Ophthalmic Photographers/ Technicians/Administrators/Eye Bank Personnel/Prevention of Blindness Organizations/Visual Scientists/Nonophthalmic Physicians, etc.\nExhibitors are only allowed to enter the Exhibition Hall. Exhibitors are NOT permitted to enter the session rooms to attend any Invited Programs or Submitted Programs. Please use a trade delegate badge for attending the Scientific Sessions.\nAn Accompanying Person refers to a family member or friend attending the Congress as a companion of a delegate. They cannot enter scientific sessions, but may visit the Exhibition Hall and join the Opening Ceremony.\nBadge Type\nRegistration Fee (in USD)\nEarly Bird Rate\nOn or before\nOct 12, 2026†\nAdvance Rate\nOct 13, 2026†–\nFeb 25, 2027†\nStandard Rate\nFeb 26-\nMar 21, 2027†\nOphthalmologists\nBand A\n(From economies with GDP per capita rankings 1-50)*\n$530\n$625\n$750\nBand B\n(From economies with GDP per capita rankings 51-100)*\n$265\n$310\n$375\nBand C\n(From economies with GDP per capita ranking 101 or below)*\n$135\n$160\n$190\nResidents/ TraineesΔ\nBand A\n(From economies with GDP per capita rankings 1-50)*\n$265\n$310\n$375\nBand B\n(From economies with GDP per capita rankings 51-100)*\n$135\n$160\n$190\nBand C\n(From economies with GDP per capita rankings 101 or below)*\n$96\n$120\n$145\nOthers\nTrade Delegates\n$450\n$500\n$600\nHealthcare Professionals/ Administrators\n$265\n$310\n$375\nExhibitors\n$135\n$160\n$190\nAccompanying Persons\n$100\n$150\n$200\nDay Pass\nN/A\n$330\nVisitors (Exhibition Hall Only)\n$220\n* To check which band you belong to, please refer to the document “APAO 2027: List of Economies Grouped by GDP Per Capita Ranking“. Rankings are based on GDP per capita data for 2025 published by the International Monetary Fund, retrieved from its website on February 12, 2026.\nΔ The trainee registration fee requires uploading either a trainee declaration form signed by the trainee’s mentor/supervisor or training proof issued by the educational institution at the time of registration.\n† All the times and dates mentioned on this page are in accordance with Singapore Time (GMT +8).\nGroup Registration\nFor groups with more than 5 delegates, please submit the request form here. Any inquiries, please contact us at registration@apaophth.org.\nPayment Methods\nCredit card\nOnline by Mastercard, Visa, American Express or UnionPay credit card\nNote: Due to service restrictions of our online payment platform, participants from Cuba, Iran, North Korea, Syria, and the regions of Crimea, Luhansk and Donetsk may only pay by cash on-site. For further details, please contact us at registration@apaophth.org. We apologize for any inconvenience caused.\nSecurity and Data Privacy\nThe Organizer does not collect any credit card information. All online transactions are processed by Stripe, with the protection of Secure Socket Layer (SSL) and the support of Verified by Credit Card secure code. Payment details are encrypted under the SSL protocol and transmitted directly to the relevant bank for payment approval and settlement.\nPersonal information collected through the system will be used solely for the APAO 2027 Congress. The Organizer will not disclose any personal data to third parties.\nThe Registration and Abstract Submission System has 128-bit SSL encryption on all pages that handle sensitive information.\nCancellation Policy\nTo cancel your registration, a written request stating your full name and the registered email address must be sent to the APAO 2027 Congress Secretariat by email at registration@apaophth.org.Please note our refund policy below:\nWritten cancellation requests received\nPolicy\nOn or before November 30, 2026†\nFull refund of registration fee\nBetween December 1, 2026 and February 15, 2027†(start and end dates inclusive)\nRefund of registration fee after deduction of a US$50 administration fee per person, per meeting\nOn or after February 16, 2027† / Non-attendance at the Congress\nNo refund\nImportant Notes\nKindly ensure the safety of your delegate badge. A US$20 fee will be charged for replacement printing in case of loss.\nTickets for Social Programs will not be reissued.\nCONGRESS ACCESS\n&copy; 2026 APAO 2027. Built using WordPress and the Highlight Theme",
+          "url": "https://2027.apaophth.org/registration/"
+        }
+      },
+      "observations": []
+    },
+    {
+      "eventId": "conf-int-fujiretina-2027",
+      "title": "FujiRetina 2027",
+      "date": "2027-03-26",
+      "topUrl": "https://convention.jtbcom.co.jp/fujiretina/index.html",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://convention.jtbcom.co.jp/fujiretina/index.html",
+          "role": "overview",
+          "fingerprint": "b7a6b0c3b3d36fbef06392aa55780bc8212f9f35009d5cffd5aafc0c7b83d76a"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/fujiretina/registration/index.html",
+          "role": "registration",
+          "fingerprint": "160165e66f4c833bd0bc8b66ef5bc4c282d0c18dee4413edd7e2a56a04822e1c"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/fujiretina/abstracts/index.html",
+          "role": "abstract",
+          "fingerprint": "a6ba33bff706ed22bb3980efce48f0d15b19c5f9f3dab5800a24e1c19bf3909a"
+        }
+      ],
+      "review": [],
+      "changes": [
+        {
+          "field": "abstractSubmission.startDate",
+          "before": null,
+          "after": "2026-10-06",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2026-12-15",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": null,
+          "after": "https://convention.jtbcom.co.jp/fujiretina/abstracts/index.html",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.status",
+          "before": "unknown",
+          "after": "open",
+          "severity": "medium"
+        },
+        {
+          "field": "registration",
+          "before": null,
+          "after": {
+            "version": 2,
+            "type": "international",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "Early-Bird Registration",
+                "start": "2026-10-06T12:00",
+                "deadline": "2027-03-08",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://convention.jtbcom.co.jp/fujiretina/registration/index.html"
+              },
+              {
+                "label": "Late Registration",
+                "start": "2027-03-12T12:00",
+                "deadline": "2027-05-28",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://convention.jtbcom.co.jp/fujiretina/registration/index.html"
+              }
+            ]
+          },
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "startDate": "2026-10-06",
+            "deadline": "2026-12-15",
+            "url": "https://convention.jtbcom.co.jp/fujiretina/abstracts/index.html",
+            "timeZone": "Asia/Tokyo"
+          },
+          "evidence": "Abstract Submission Period:\nTuesday, October 6, 2026 - Tuesday, December 15, 2026 (Japan Standard Time, UTC+9)\nLate submissions will not be accepted.\nAll abstracts must be submitted in English exclusively via the online abstract submission system.\nPresentation type"
+        },
+        "registration": {
+          "value": {
+            "version": 2,
+            "type": "international",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "Early-Bird Registration",
+                "start": "2026-10-06T12:00",
+                "deadline": "2027-03-08",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://convention.jtbcom.co.jp/fujiretina/registration/index.html"
+              },
+              {
+                "label": "Late Registration",
+                "start": "2027-03-12T12:00",
+                "deadline": "2027-05-28",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://convention.jtbcom.co.jp/fujiretina/registration/index.html"
+              }
+            ]
+          },
+          "evidence": "Registration|FUJI RETINA\nHOME\nINFORMATION\nWelcome Message\nAbout\nFaculty\nPROGRAM\nProgram\nSocial Events\nStamp Rally\nCALL FOR ABSTRACTS\nGUIDELINES\nInstructions for\nPresenters\nInstructions for\nParticipants\nREGISTRATION\nVISA INFORMATION\nVENUE\nCONTACT\nSPONSORSHIP\n専門医制度単位\n企業の皆様へ\nRegistration\n*All dates are in Japan Standard Time (JST/UTC+9)\nImportant Dates & Deadlines\nEarly-Bird Registration\n12:00 PM, Tuesday, October 6, 2026 - Monday, March 8, 2027\nLate Registration\n12:00 PM, Friday, March 12, 2027 - Friday, May 28, 2027\nRegistration Fees\n* All payment should be made only in Japanese yen.\n* Non-taxable / Not a qualified invoice issuer\nDelegate\nResidents and Fellows*1\nStudents\n(including postgraduate) *1, 2\nGala Party\nAccompanying person*3\nAccompanying person+Gala Party *4\nRegistration Fee Includes:\nEarly-Bird\n(Until Mar. 8, 2027)\n17,000JPY\n8,000JPY\nFree\n5,000JPY\n5,000JPY\n10,000JPY\n・Attendance in all scientific sessions and Exhibition\n・Luncheon Seminars with bento box\n・Morning Seminar with bento box\n・Afternoon Seminar with Snacks\n・Coffee break\n・Congress bag\n・Abstract book (provided on-site)\n・Abstract book (PDF)\n*2 Congress bag and Abstract book will not be provided for students (A PDF version of the abstracts is\navailable for viewing) .\n*3 Items included in accompanying person\ncategory are a name badge and coffee break only.\n*4 Items included in accompanying person\ncategory are a name badge, Gala Party and coffee break.\nLate\n(From Mar.12,\n2027)\n20,000JPY\n8,000JPY\nFree\n5,000JPY\n5,000JPY\n10,000JPY\n*1 Residents and Fellows, and Students (including postgraduate) must provide a certified document [PDF] to prove the personal status.\n*3 Registration only for accompanying person category is\nnot allowed. The representative must also register the accompanying person(s). Please\nsee here for\nregistration procedures.\nIf you have more than two accompanying persons, please contact the registration office\nby e-mail(fujiretina-reg@jtbcom.co.jp).\nOn-demand attendee\n*On-demand streaming period: 12:00PM, Monday, April 12, 2027 - Friday, May 28, 2027.\nNo live streaming available.\nFrom overseas\n(including Japanese nationals living overseas)\nFrom Japan\nRegistration Fee Includes:\nEarly-Bird\n(Until Mar.8,2027)\nFree\n10,000JPY\n・Online attendance in all scientific sessions which will be\ndelivered on-demand.\n・Abstract book (PDF)\nLate\n(From Mar.12,2027)\nFree\n10,000JPY\nPayment\nPlease note that NO refund will be given once payment is completed.\n- Payment should be made only in Japanese yen and by credit card.\n- The credit cards listed below can be used to make payments via\non-line.\n- The payment will be made in the name of \"JTB Comm Design\nRegistration\".\nReceipt / Certificate of Attendance\nReceipt and certificate of attendance can be downloaded from your registration account.\n<Download period>\n- Receipt: from immediately after the payment is completed until\none month after the end of\nthe\ncongress.\n- Certificate: from the first day of the congress (Mar. 26) until\none month after the end\nof the\ncongress.\nAbout Name Badge (For those who will attend the meeting onsite)\nName badge will be issued by scanning a QR code at the venue.\nThe QR code for name badge printing is attached to the email sent after payment\ncompletion. (It is also displayed on the main menu screen of the registration\nsystem.)\nPlease bring a printed copy of the QR code or have it ready to display on your\nsmartphone or tablet screen (screen capture is also acceptable).\n*To log in to the registration system, you need a login ID (your e-mail address) and a\npassword you used to for registration.\nIf you have forgotten your password, you can reissue them from \"Please click here if you\nforgot your password”.\nNotification to attendees after registration\n- After completing each step of the registration process, a\ntotal of three emails will be\nautomatically sent to the registered email address, including the login password of\nyour registered account.\n- Please be sure that your email account does not automatically\ndiscard the confirmation to the spam folder.\nEspecially for Free email providers (Gmail, Yahoo Mail, Hotmail, etc.) users,\nPlease be sure to check your \"Junk Mail\" folder, as notification e-mail may be\nautomatically sorted into this folder.\n- If you do not receive any confirmation emails within 24\nhours, please contact the Registration Office.\nChanges of Registration\nPlease revise your personal information by logging-in to your registration account.\nIf you would like to change your registration category, please contact the Registration\nOffice.\nCancellation Policy\nPlease note that we do not accept any cancellation requests.\nPrivacy Policy\nFujiRetina Secretariat recognizes the importance of personal information and the\nimportance of our responsibility to protect privacy.\nPlease note that personal information in the registration system will not be used for\npurposes other than the congress. Your information will be stored in controlled servers\nwith limited access.\nRegister Here\nFor any inquiries about registration, please\ncontact:\nFujiRetina Registration Office\nc/o JTB Communication Design, Inc.\nOsaka Dojimahama Tower. 5F, 1-1-27 Dojimahama, Kita-ku Osaka-shi, Osaka 530-0004, Japan\nE-mail: fujiretina-reg@jtbcom.co.jp\nページトップへ戻る",
+          "url": "https://convention.jtbcom.co.jp/fujiretina/registration/index.html"
+        }
+      },
+      "observations": []
+    },
+    {
+      "eventId": "conf-int-ascrs-2027",
+      "title": "ASCRS 2027 Annual Meeting",
+      "date": "2027-04-02",
+      "topUrl": "https://annualmeeting.ascrs.org/",
+      "requests": [],
+      "pages": [],
+      "review": [],
+      "changes": [],
+      "observations": [
+        {
+          "field": "both",
+          "reason": "bot-protected",
+          "url": "https://annualmeeting.ascrs.org/",
+          "category": "unavailable"
+        }
+      ]
+    },
+    {
+      "eventId": "oph-011",
+      "title": "第131回 日本眼科学会総会",
+      "date": "2027-04-15",
+      "topUrl": "https://convention.jtbcom.co.jp/131jos/index.html",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://convention.jtbcom.co.jp/131jos/index.html",
+          "role": "overview",
+          "fingerprint": "146aee4735db443aaa4346aa623965bbf2775e0e0f61229ba5d84cb689e52134"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/131jos/join/index.html",
+          "role": "registration",
+          "fingerprint": "4e27142916bd4bbaff465c00acafd951dfffa1f4bf7659f82a77e20e03ee59c3"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html",
+          "role": "abstract",
+          "fingerprint": "c18b39372ab6459475d8d046d87770604a98ac7e6de7b7d93613b6d0e9393dad"
+        }
+      ],
+      "review": [],
+      "changes": [
+        {
+          "field": "abstractSubmission.startDate",
+          "before": "2026-10-01",
+          "after": "2026-10-01T10:00",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": "2026-11-05 13:00",
+          "after": "2026-11-05T13:00",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        },
+        {
+          "field": "registration",
+          "before": null,
+          "after": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "事前参加登録",
+                "start": "2026-10-01T12:00",
+                "deadline": "2027-02-12",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://convention.jtbcom.co.jp/131jos/join/index.html"
+              },
+              {
+                "label": "後期参加登録",
+                "start": "2027-02-16T12:00",
+                "deadline": "2027-04-18",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://convention.jtbcom.co.jp/131jos/join/index.html"
+              }
+            ]
+          },
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "startDate": "2026-10-01T10:00",
+            "deadline": "2026-11-05T13:00",
+            "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html",
+            "timeZone": "Asia/Tokyo"
+          },
+          "evidence": "演題募集期間\n一般演題\n2026年10月1日(木)10時 ~11月5日(木)13時\n"
+        },
+        "registration": {
+          "value": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "事前参加登録",
+                "start": "2026-10-01T12:00",
+                "deadline": "2027-02-12",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://convention.jtbcom.co.jp/131jos/join/index.html"
+              },
+              {
+                "label": "後期参加登録",
+                "start": "2027-02-16T12:00",
+                "deadline": "2027-04-18",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://convention.jtbcom.co.jp/131jos/join/index.html"
+              }
+            ]
+          },
+          "evidence": "参加登録 | 第131回日本眼科学会総会\n参加登録\n参加登録受付期間\n事前参加登録:\n2026年10月1日(木)正午~2027年2月12日(金)\n後期参加登録:\n2027年2月16日(火)正午~会期終了\n※参加登録費のご入金をもって登録完了となります。上記期間内にお支払いください。\n参加登録方法、支払方法\n本会の参加登録は、オンライン登録のみ受け付けます。\n本ページ下部の「参加登録はこちら」ボタンを押して参加登録システムよりお申込ください。\n(当日申込もオンライン登録のみ受け付けます。現地会場での登録受付は行いません。事前にオンライン登録をお済ませの上、会場へお越しください。)\nお支払方法は、クレジットカード決済、コンビニ決済(12月下旬より可能、事前参加登録期間のみ)のいずれかをご選択いただけます。\n※決済後は、いかなる理由においても返金はいたしかねますのでご注意ください。\nご本人による二重登録、ご自身の都合により参加できなくなった場合なども含め返金には一切応じられませんので、十分確認の上、ご登録ください。\n<ご注意ください>\n携帯電話用のメールアドレスについて\n参加登録での利用はご遠慮ください。\n迷惑メール対策設定により、システムからの通知メールが受信できないという不具合が生じます。\nフリーメール(Gmail、Yahooメール、Hotmailなど)をご利用される場合\n通知メール送信アドレスの「@mail.jtbcom.co.jp」ドメインのメールを受信できるよう設定をお願いいたします。\nフリーメール(Gmail、Yahooメール、Hotmailなど)をご利用の場合、迷惑メールフィルタリング機能により、配信メールが迷惑メール(スパムメール)として扱われる場合があります。メールが届かない場合は、「迷惑メール」フォルダや「削除(ゴミ箱)」フォルダ等をご確認ください。\n※フリーメールの種類や設定によっては、振り分けられたメールが数日後に自動削除される場合がございます。\n参加登録費\n参加区分\n事前参加登録\n~ 2027年2月12日(金)\n後期参加登録\n2027年2月16日(火)正午~\n税区分\n会員:医師\n15,000円\n20,000円\n不課税\n会員:後期研修医・専攻医、大学院生、留学生、コ・メディカル等3)\n7,000円\n10,000円\n不課税\n非会員:医師、企業、民間研究員等\n20,000円\n25,000円\n課税\n非会員:後期研修医・専攻医、大学院生、留学生、コ・メディカル等3)\n10,000円\n14,000円\n課税\n医学部学生、初期臨床研修医、視能訓練士学校生3)\n-\n無料\n-\n※共催セミナー等の飲食費については、参加登録費には含みません。\n1)\n「会員」は日本眼科学会会員に限ります。\n2)\n「後期研修医」は新臨床研修医制度4年目/後期研修2年目までを指します。\n3)\n「後期研修医・専攻医、大学院生、留学生、コ・メディカル」および、「医学部学生、初期臨床研修医、視能訓練士学校生」(後期登録のみ)は、主任教授または所属長等によって登録者の区分証明が記載された書類(登録区分証明書)が必要です。\n登録時に登録区分証明書のアップロードが必要となります。下記ボタンより事前に登録区分証明書をダウンロードし、必要事項を記入の上、アップロード(ファイルの添付)ができるようご準備ください。\n登録区分証明書\n【公益社団法人日本視能訓練士協会会員の方へ】\n特定の職場に勤務していない等の理由で所属長の証明を取得できない方は、登録区分証明書にその旨と視能訓練士協会 会員番号をご記入ください。 勤務先がある方は所属長による証明書が必須です。\n※演題を提出し採択された海外からの参加登録者は、International Membership fee(3,000円)をお支払いの上、会員の区分でご登録ください。\n参加登録のみの海外からのご登録の方は、非会員の区分でご登録をお願いします。\nコングレスバッグ配布に関するご案内\n本学会では、SDGsへの取り組みの一環として、今回コングレスバッグの配布は行わないことといたしました。\nつきましては、ご来場の際は資料等をお持ち帰りいただくためのお鞄をご自身でご持参くださいますようお願いいたします。ご理解、ご協力のほど何卒よろしくお願い申し上げます。\nランチョンセミナー/フェアウェルセミナー事前予約について\nランチョンセミナー/フェアウェルセミナーは食品ロス削減のため事前予約制とさせていただきます。\n詳細につきましては、後日、本ホームページ上でご案内いたします。\nネームカード、抄録集、領収書、参加証明書について\n発行方法\nネームカード\nネームカードの事前送付はいたしません。現地参加の場合は、会場にてご自身で発券機にQRコードをかざし、ネームカードを発券していただきます。\nネームカード出力用のQRコードは決済完了後に配信されるメールに添付されております。(参加登録システムのメインメニュー画面にも表示されております。)\nQRコードを印刷してお持ちいただくか、お手持ちのスマートフォンやタブレットの画面に表示可能な状態(画面キャプチャでも可)でお越しください。\nプログラム・抄録集\n抄録集(紙媒体)は作成いたしません。\n抄録集は、日本眼科学会公式アプリの「JOS」からの閲覧及びPDFファイルでのご提供となります。(会期1か月前目安)\n領収書、\n参加証明書\n領収書・参加証明書は、参加登録システムのメインメニュー画面より各自でダウンロードしてください。\n<ダウンロード期限>\n・領 収 書:入金完了後 ~ 会期終了1ヶ月後\n・参加証明書:会期初日(2027年4月15日(木))~ 会期終了1ヶ月後\n※上記期限以降はダウンロードできなくなりますのでご注意ください。\n※デジタル版のみの発行となります。紙媒体での発行や郵送はいたしかねますのでご了承ください。\n※今回はコングレスバッグのご用意はございません。恐れ入りますが、各自でお手荷物をお持ちいただくためのバッグをご持参くださいますようお願いいたします。\n託児所について\n本会では、期間中、お子さまを同伴する参加者のために託児所を設置します。\n詳細につきましては、後日、本ホームページ上でご案内いたします。\nオンライン参加登録の流れについて\nSTEP1\n連絡先情報の登録\nSTEP2\n参加内容登録\nSTEP3\nお申込金額の決済\n領収書、参加証明書\nダウンロード\nオンラインシステムの動作環境\n推奨OS/ブラウザ:Windows 11、Microsoft Edge最新版、Google chrome 最新版\n※JavaScriptが有効な状態でご利用ください。\n※上記以外の組み合わせやMacintosh、携帯電話、スマートフォン等の場合、画面が正しく表示されない、もしくは正しく機能しないことがあります。その場合、上記推奨の環境で再度操作願います。\nSTEP1 連絡先情報の登録\n名前、連絡先、ログインIDを登録し、申込番号・パスワードを取得してください。\n1)本ページ下部の「参加登録はこちらから」ボタンよりご登録ください。\n2)「新規申込」ボタンをクリックしてください。\n3)「個人情報のお取り扱いについて」をご確認の上、規約への同意を行い、「新規申込画面へ進む」ボタンをクリックしてください。\n4)お名前、ご連絡先、メールアドレスなどの連絡先情報を入力し、希望のログインIDをご自身で決定の上、「登録内容の確認画面へ」ボタンをクリックすると、確認画面に進みます。\n【日本眼科学会 会員の方へ】\n日本眼科学会会員の方は、日本眼科学会[会員マイページ]の会員番号とパスワードをご入力いただき、「会員情報取得」をクリックすると、各個人データ入力が簡略化されます。\n表示された内容に修正が必要な場合は、画面上で情報を修正してください。なお、このページで修正された内容は131回総会のみで使用するため、日本眼科学会の会員登録情報には反映されませんのでご注意ください。\n※会員情報取得欄への入力は必須ではない為、非会員の方もしくは会員番号・パスワードが分からない場合には、入力の必要はございません。\n<ご注意ください>\n携帯電話用のメールアドレスについて\n参加登録での利用はご遠慮ください。\n迷惑メール対策設定により、システムからの通知メールが受信できないという不具合が生じます。\nフリーメール(Gmail、Yahooメール、Hotmailなど)をご利用される場合\n通知メール送信アドレスの「@mail.jtbcom.co.jp」ドメインのメールを受信できるよう設定をお願いいたします。\nフリーメール(Gmail、Yahooメール、Hotmailなど)をご利用の場合、迷惑メールフィルタリング機能により、配信メールが迷惑メール(スパムメール)として扱われる場合があります。メールが届かない場合は、「迷惑メール」フォルダや「削除(ゴミ箱)」フォルダ等をご確認ください。\n※フリーメールの種類や設定によっては、振り分けられたメールが数日後に自動削除される場合がございます。\n5)内容にお間違いないか確認の上、「確定する」ボタンをクリックしてください。\n6)確定後、入力されたメールアドレス宛に通知メールが届きます。パスワード(システムから自動発行)が掲載されていますので、大切に保管してください。\n7)続けて、「参加者を登録する」ボタンをクリックして参加内容登録画面に進んでください。\nSTEP2 参加内容登録\n「参加区分」などを決定してください。\n1)参加内容登録画面への進み方\n(A) STEP1からそのまま作業を継続する場合\n(B) STEP1終了後、作業を中断している場合\nSTEP1の完了後に表示される「参加者を登録する」ボタンをクリックしてください。\nログイン画面右側の「申込確認・変更」に、STEP1で取得したログインIDとパスワードを入力して「ログイン」ボタンをクリックしてください。\n2)参加区分などを選択し、「登録内容の確認画面へ」ボタンをクリックすると、確認画面に進みます。\n・会員番号入力\n・登録区分証明書アップロード\n・ランチョンセミナー/スポンサードセミナー事前予約(後日開始)\n3)内容にお間違いないか確認の上、「確定する」ボタンをクリックしてください。\n4)確定後、申込内容の記載された通知メールが届きます。\n5)続けて、「参加費を決済する」ボタンをクリックして参加費決済手続きに進んでください。\nSTEP3 参加費決済・入金\nクレジットカード決済、コンビニ決済(12月下旬より可能、事前参加登録期間のみ)のいずれかを選択し、\n入金手続きを行ってください\n決済が完了したお申込みにつきましては、如何なる理由においてもキャンセルとそれに伴う返金ができません。\n決済確定前に、今一度お申込み内容に相違がないかご確認ください。\n1)決済画面への進み方\n(A) STEP2からそのまま作業を継続する場合\n(B) STEP2終了後、作業を中断している場合\nSTEP2の完了後に表示される参加費を決済するボタンをクリックしてください。\n1ログイン画面右側の「申込確認・変更」に、STEP1で取得したログインIDとパスワードを入力してログインボタンをクリックしてください。\n2メインメニュー上部の『決済』をクリックし、決済画面にすすんでください。\n2)下記の「クレジットカード決済」、「コンビニ決済(12月下旬より可能、事前参加登録期間のみ)」のいずれかを選択してください。\n◆クレジットカード決済\n1.「クレジットカード決済」を選択し、「次へ進む」ボタンをクリックしてください。決済には、以下のカードがご利用いただけます。\n2.クレジットカード番号、有効期限、カード保有者名、セキュリティコードを入力し、「確認画面へ進む」ボタンをクリックします。\nセキュリティコードは、カード表面の4桁もしくは、カード裏面の3桁です。カードによって印字されている面・桁数が異なりますので、お持ちのクレジットカードをご確認ください。\nカード表面に印字されている場合\n(クレジットカード番号の右上または左上に印字された4桁)\nカード裏面に印字されている場合\n(ご署名欄に印字された数字の末尾3桁)\n3.内容を確認の上、「認証画面へ進む」ボタンを選択し、クレジットカード決済処理を行ってください。\n※ご使用のカードの設定によってはクレジットカード会社の本人認証サービスのページに移行しますので、認証パスワードを入力してください。\n4.決済完了後、決済通知メールが届きます。\n※引き落とし明細には、「JTBコミュニケーションデザイン参加登録」と表示されます。\n◆コンビニ決済の場合(12月下旬より可能、事前参加登録期間のみ)\n1.「コンビニ決済」を選択し、次へ進むをクリックしてください。\n2.コンビニを選択の上、確認画面へ進むをクリックします。\n3.確定後、支払方法が記載された通知メールが届きますので、入金期日までにお振込みください。\n【コンビニ決済のお支払有効期限について】\n※コンビニ決済のお支払有効期限については、システム上、決済後20日です。\n※有効期限内にお支払いいただけなかった場合は、一旦決済を取消しますので参加登録デスクまでご連絡ください。\n各コンビニエンスストアでのお支払方法については、以下をご参照ください。\n・ローソン・ミニストップ\n・ファミリーマート\n・デイリーヤマザキ\n・セイコーマート\n・セブンイレブン\n3)「メインメニュー」の「領収書」タブより領収書のダウンロードが可能となります。(※入金完了後、ダウンロード可能)\n個人情報保護について\n本会の参加登録の際にお預かりいたしました内容は、本会運営準備に関する目的以外では使用いたしません。\nまた、ご登録いただいた個人情報は、必要なセキュリティ対策を講じ、厳重に管理いたします。\n参加登録に関するお問い合わせ先\n第131回日本眼科学会総会 参加登録デスク\n株式会社JTBコミュニケーションデザイン コンベンション事業局内\nE-mail: 131jos-reg@jtbcom.co.jp TEL: 050-1732-4593\n<受付時間:平日 10:00~17:00(休:土・日・祝日)>\n※参加登録デスクはテレワークを実施しております。\n原則E-mailでお問い合わせいただきますようご協力をお願いいたします。\n参加登録はこちら\nページトップへ戻る\n主 管 校\n北海道大学大学院医学研究院眼科学教室\n事務局長:\n安藤 亮(診療准教授)\n副事務局長:\n鈴木 佳代(特任助教)\n福津 佳苗(助教)\n運営事務局\n株式会社JTBコミュニケーションデザイン コンベンション事業局内\n〒530-0004 大阪市北区堂島浜1丁目1-27 大阪堂島浜タワー5階\nTEL: 06-4964-8869 E-mail: 131jos@jtbcom.co.jp\n&copy;第131回日本眼科学会総会",
+          "url": "https://convention.jtbcom.co.jp/131jos/join/index.html"
+        }
+      },
+      "observations": []
+    },
+    {
+      "eventId": "oph-014",
+      "title": "第38回 日本緑内障学会",
+      "date": "2027-04-23",
+      "topUrl": "https://site2.convention.co.jp/jgs2027/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://site2.convention.co.jp/jgs2027/",
+          "role": "overview",
+          "fingerprint": "23803b43177f30f6dd1123313f7ef1608036cce390eadd9b8edc48d6ef575d0d"
+        },
+        {
+          "url": "https://site2.convention.co.jp/jgs2027/resitration/",
+          "role": "registration",
+          "fingerprint": "dcbc73a404ee1f2d4a8fb0441906dfec97961e561ea55f2aaa0fba7bd50da90c"
+        },
+        {
+          "url": "https://site2.convention.co.jp/jgs2027/endai/",
+          "role": "abstract",
+          "fingerprint": "2446ca08fff2b7852a7fdeef7ed47fb7caed9dcf0d7fca79a2582b078ca906ba"
+        }
+      ],
+      "review": [],
+      "changes": [
+        {
+          "field": "registration",
+          "before": null,
+          "after": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "前期参加登録",
+                "start": "2026-10-06T12:00",
+                "deadline": "2027-03-15T12:00",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://site2.convention.co.jp/jgs2027/resitration/"
+              },
+              {
+                "label": "後期参加登録",
+                "start": "2027-03-15T12:00",
+                "deadline": "2027-04-23",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://site2.convention.co.jp/jgs2027/resitration/"
+              }
+            ]
+          },
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "abstract": null,
+        "registration": {
+          "value": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "前期参加登録",
+                "start": "2026-10-06T12:00",
+                "deadline": "2027-03-15T12:00",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://site2.convention.co.jp/jgs2027/resitration/"
+              },
+              {
+                "label": "後期参加登録",
+                "start": "2027-03-15T12:00",
+                "deadline": "2027-04-23",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://site2.convention.co.jp/jgs2027/resitration/"
+              }
+            ]
+          },
+          "evidence": "参加登録 | 第38回日本緑内障学会 【 2027年4月23日(金) 国立京都国際会館 】\n主催事務局\n京都府立医科大学\n〒602-8566\n京都市上京区河原町通広小路上る梶井町465\n運営事務局\n第38回日本緑内障学会 運営事務局\n日本コンベンションサービス株式会社\n〒100-0013\n東京都千代田区霞ヶ関1-4-2 大同生命霞が関ビル14階\nE-mail:jgs2027[あ]convention[ど]co[ど]jp([あ] を @ に,[ど] を . に変えてください。)\n参加登録\n※日本緑内障学会 会員の方へ、100USDの割引コードが発行されております。詳細は、日本緑内障学会からのご案内をご確認ください。\n※第12回世界緑内障会議(WGC)へ参加登録いただいた方は、第38回日本緑内障学会へもご参加いただけます。\n第12回世界緑内障会議(WGC)\n参加登録はこちら\n第38回日本緑内障学会(4月23日(金))のみにご参加される方は、以下の概要にて参加登録を受け付けます。\n参加登録期間(予定)\n前期参加登録:\n2026年10月6日(火)正午~2027年3月15日(月)正午\n後期参加登録:\n2027年3月15日(月)正午~4月23日(金)\n登録費\n区分\n前期参加登録\n後期参加登録\n医師・教育研究機関研究員\n会員\n10,000円\n12,000円\n非会員\n13,000円\n15,000円\n企業職員\n15,000円\n17,000円\nメディカルスタッフ*\n会員\n4,000円\n6,000円\n非会員\n6,000円\n8,000円\n研修医*\n6,000円\n8,000円\n*学生(大学院生を除く)は無料です。現地の参加登録受付で学生証をご提示ください。\n*メディカルスタッフ・研修医の方は、所属長の証明が必要です。\n*研修医:新臨床研修医制度3年目(後期研修1年目)までとします。\n参加登録方法\n準備中\n主催事務局\n京都府立医科大学\n〒602-8566\n京都市上京区河原町通広小路上る梶井町465\n運営事務局\n第38回日本緑内障学会 運営事務局\n日本コンベンションサービス株式会社\n〒100-0013\n東京都千代田区霞ヶ関1-4-2 大同生命霞が関ビル14階\nE-mail:jgs2027[あ]convention[ど]co[ど]jp([あ] を @ に,[ど] を . に変えてください。)\nCopyright &copy; 第38回日本緑内障学会 All Rights Reserved.",
+          "url": "https://site2.convention.co.jp/jgs2027/resitration/"
+        }
+      },
+      "observations": [
+        {
+          "field": "abstractSubmission",
+          "url": "https://site2.convention.co.jp/jgs2027/endai/",
+          "reason": "abstract-not-applicable",
+          "category": "not-applicable"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-int-wgc-2027",
+      "title": "World Glaucoma Congress 2027 (WGC 2027)",
+      "date": "2027-04-20",
+      "topUrl": "https://worldglaucomacongress.org/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://worldglaucomacongress.org/",
+          "role": "overview",
+          "fingerprint": "764260a84e40ebbe76eaf35c0d72344cc23a2cc76614c95fcd3980e9c7e7d95d"
+        },
+        {
+          "url": "https://worldglaucomacongress.org/registration/",
+          "role": "registration",
+          "fingerprint": "dbb1a4dd2f462b07713f5a896768e8d596669a1b0357a0439b4e2e55d2553334"
+        },
+        {
+          "url": "https://worldglaucomacongress.org/abstracts/",
+          "role": "abstract",
+          "fingerprint": "328f23fe740ed613d1bb0b0cbaff1deb870d3d4c4362cf03e20cad95dc14fa15"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-int-wgc-2027-0",
+          "field": "abstractSubmission",
+          "url": "https://worldglaucomacongress.org/abstracts/",
+          "reason": "abstract-conflicting-timezones",
+          "evidence": "Abstract submission deadline: October 19, 2026 (23:59 CEST).\nOctober 19, 2026 – Abstract submission deadline (23:59 CET)"
+        },
+        {
+          "status": "needs-review",
+          "id": "conf-int-wgc-2027-1",
+          "field": "registration",
+          "url": "https://worldglaucomacongress.org/registration/",
+          "reason": "registration-conflicting-deadlines",
+          "proposed": null,
+          "evidence": "[{\"label\":\"Early bird fee\",\"deadline\":\"2027-01-18\",\"category\":\"early\",\"advanceEligible\":true,\"sourceUrl\":\"https://worldglaucomacongress.org/registration/\"},{\"label\":\"Early bird registration\",\"deadline\":\"2026-01-18\",\"category\":\"early\",\"advanceEligible\":true,\"sourceUrl\":\"https://worldglaucomacongress.org/registration/\"}]"
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      },
+      "observations": []
+    },
+    {
+      "eventId": "oph-012",
+      "title": "ARVO 2027 Annual Meeting",
+      "date": "2027-05-02",
+      "topUrl": "https://www.arvo.org/annual-meeting",
+      "requests": [],
+      "pages": [],
+      "review": [],
+      "changes": [],
+      "observations": [
+        {
+          "field": "both",
+          "reason": "bot-protected",
+          "url": "https://www.arvo.org/annual-meeting",
+          "category": "unavailable"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-lowvision-2027",
+      "title": "第28回 日本ロービジョン学会学術総会",
+      "date": "2027-05-22",
+      "topUrl": "https://www.ganki.jp/lowvision2027/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://www.ganki.jp/lowvision2027/",
+          "role": "overview",
+          "fingerprint": "c5ae7ece707246595ab8908b17d38780f10636316f05ed03da3a4108953dbc30"
+        },
+        {
+          "url": "https://www.ganki.jp/lowvision2027/abstracts.html",
+          "role": "abstract",
+          "fingerprint": "f81ff8110690db50bb59ac2451a91defcfaad81fb2dc21f37d87e6d91046d008"
+        }
+      ],
+      "review": [],
+      "changes": [],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "startDate": "2026-11-05T12:00",
+            "deadline": "2027-01-07",
+            "url": "https://www.ganki.jp/lowvision2027/abstracts.html",
+            "timeZone": "Asia/Tokyo"
+          },
+          "evidence": "演題募集期間\n2026年11月5日(木)正午~2027年1月7日(木)\n演題の採否通知について\n2027年2月中旬頃(予定)\n演題の採否および発表分野につきましては、会長にご一任ください。"
+        },
+        "registration": null
+      },
+      "observations": [
+        {
+          "field": "registration",
+          "url": "https://www.ganki.jp/lowvision2027/registration.html",
+          "reason": "registration-fetch-failed",
+          "error": "http-404",
+          "category": "unavailable"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-int-apacrs-2027",
+      "title": "APACRS 2027 Annual Meeting",
+      "date": "2027-06-03",
+      "topUrl": "https://apacrs2027.org/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://apacrs2027.org/",
+          "role": "overview",
+          "fingerprint": "28f4949ab374295f58a580151966a77bcdb20863f1ff616a6014c961be8e2e69"
+        },
+        {
+          "url": "https://apacrs2027.org/registration/",
+          "role": "registration",
+          "fingerprint": "af7f316434ddcbe231bff0701e94b46f471e9c76e90293fb80f61f2f458a1acd"
+        },
+        {
+          "url": "https://apacrs2027.org/guidelines-for-abstract-submission-2027/",
+          "role": "abstract",
+          "fingerprint": "4eb5cb189b2c93ce02e45fde584c2d63b3ed88d53ccaff07c04e43ba2afcebff"
+        }
+      ],
+      "review": [],
+      "changes": [
+        {
+          "field": "abstractSubmission.startDate",
+          "before": null,
+          "after": "2026-08-05T00:00",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2027-01-05T23:59",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": null,
+          "after": "https://apacrs2027.org/guidelines-for-abstract-submission-2027/",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Singapore",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.status",
+          "before": "unknown",
+          "after": "open",
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "startDate": "2026-08-05T00:00",
+            "deadline": "2027-01-05T23:59",
+            "url": "https://apacrs2027.org/guidelines-for-abstract-submission-2027/",
+            "timeZone": "Asia/Singapore"
+          },
+          "evidence": "Submission Commencement: Wednesday, 5 August 2026, 00:00hrs (UTC+8)\nSubmission Deadline: Tuesday, 5 January 2027, 23:59hrs (UTC+8)\nAbstracts submitted in hardcopy format will not be considered. The meeting organizers will not accept responsibility for any abstracts that have not been submitted according to the instructions.\nSubmitters must indicate whether they are submitting for presentation as a Free Paper, an ePoster or a Video for the Film Festival by choosing the appropriate presentation category.\n1) Free Paper & ePoster Presentation\nSubmission Deadline: Tuesday, 5 January 2027, 23:59hrs (UTC+8)\nAbstracts submitted in hardcopy format will not be considered. The meeting organizers will not accept responsibility for any abstracts that have not been submitted according to the instructions.\nSubmitters must indicate whether they are submitting for presentation as a Free Paper, an ePoster or a Video for the Film Festival by choosing the appropriate presentation category.\n1) Free Paper & ePoster Presentation\nCataract Surgery\nSubmission Deadline\nDeadline of abstract submission: 5 January 2027, 23:59hrs Singapore Time (UTC+8)\nNotification of abstract acceptance: 15 February 2027\nInstructions for Free Paper presentation will be provided in the Notification of Abstract Acceptance to be sent in February 2027.\nePOSTER PRESENTATION (click for details)\nDeadline of abstract submission: 5 January 2027, 23:59hrs Singapore Time (UTC+8)\nNotification of abstract acceptance: 15 February 2027\nInstructions for Free Paper presentation will be provided in the Notification of Abstract Acceptance to be sent in February 2027.\nePOSTER PRESENTATION (click for details)\nePoster Category\nSubmission Deadlines\nDeadline of abstract submission: 5 January 2027, 23:59hrs Singapore Time (UTC+8)\nNotification of abstract acceptance: 15 February 2027\nDeadline for submission of ePoster in PowerPoint format: 15 March 2027, 23:59hrs Singapore Time (UTC+8)\nSubmission Link:\nDeadline of abstract submission: 5 January 2027, 23:59hrs Singapore Time (UTC+8)\nNotification of abstract acceptance: 15 February 2027\nDeadline for submission of ePoster in PowerPoint format: 15 March 2027, 23:59hrs Singapore Time (UTC+8)\nSubmission Link:\nAll presenters must submit an abstract first as ePoster submission is conditional upon abstract acceptance. Instructions and submission links for ePosters (PowerPoint format) will be provided only in the Notification of Abstract Acceptance sent in February 2027. Late ePoster submissions will not be accepted.\nSubmission Deadlines\nDeadline of abstract submission: 5 January 2027, 23:59hrs Singapore Time (UTC+8)\nNotification of abstract acceptance: 15 February 2027\nDeadline of film submission: 15 March 2027, 23:59hrs Singapore Time (UTC+8)\nSubmission Link:\nDeadline of abstract submission: 5 January 2027, 23:59hrs Singapore Time (UTC+8)\nNotification of abstract acceptance: 15 February 2027\nDeadline of film submission: 15 March 2027, 23:59hrs Singapore Time (UTC+8)\nSubmission Link:\nAll presenters must submit an abstract first as film submission is conditional upon abstract acceptance. All films will have to be submitted via the APACRS Dropbox. Link to the APACRS Dropbox will be indicated in the abstract acceptance notification email to be sent in February 2027. Late submissions will not be accepted for judging."
+        },
+        "registration": null
+      },
+      "observations": [
+        {
+          "field": "registration",
+          "url": "https://apacrs2027.org/registration/",
+          "reason": "registration-extraction-failed",
+          "proposed": null,
+          "category": "extraction-failed"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-perimetry-2027",
+      "title": "第16回日本視野画像学会学術集会",
+      "date": "2027-06-05",
+      "topUrl": "https://www.ganki.jp/jips2027/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://www.ganki.jp/jips2027/",
+          "role": "overview",
+          "fingerprint": "6a5412509fd54e7d6179a0814aa4f619210571dd2fdd5e947b66f5721f2a0986"
+        }
+      ],
+      "review": [],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      },
+      "observations": [
+        {
+          "field": "abstractSubmission",
+          "url": "https://www.ganki.jp/jips2027/abstracts.html",
+          "reason": "abstract-fetch-failed",
+          "error": "http-404",
+          "category": "unavailable"
+        },
+        {
+          "field": "registration",
+          "url": "https://www.ganki.jp/jips2027/participants.html",
+          "reason": "registration-fetch-failed",
+          "error": "http-404",
+          "category": "unavailable"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-jsoprs-2027",
+      "title": "第14回 日本眼形成再建外科学会学術集会 (JSOPRS 2027)",
+      "date": "2027-06-12",
+      "topUrl": "https://orbit-cs.net/jsoprs2027/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://orbit-cs.net/jsoprs2027/",
+          "role": "overview",
+          "fingerprint": "14683767ac2edac3a399e8adaf431ce28b5795a708e62a2a0e3ed0e09b39fcae"
+        },
+        {
+          "url": "https://orbit-cs.net/jsoprs2027/abstracts.html",
+          "role": "abstract",
+          "fingerprint": "cdb15b4765b63b74c25b7c7f61dc0da3f517f2d6cca665e4322e6db269891917"
+        }
+      ],
+      "review": [],
+      "changes": [
+        {
+          "field": "abstractSubmission.startDate",
+          "before": null,
+          "after": "2027-01-05",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2027-02-19",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": "http://www.jsoprs.jp/",
+          "after": "https://orbit-cs.net/jsoprs2027/abstracts.html",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.status",
+          "before": "unknown",
+          "after": "upcoming",
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "startDate": "2027-01-05",
+            "deadline": "2027-02-19",
+            "url": "https://orbit-cs.net/jsoprs2027/abstracts.html",
+            "timeZone": "Asia/Tokyo"
+          },
+          "evidence": "演題登録期間\n2027年1月5日(火)〜2027年2月19日(金)"
+        },
+        "registration": null
+      },
+      "observations": [
+        {
+          "field": "registration",
+          "url": "https://orbit-cs.net/jsoprs2027/",
+          "reason": "registration-link-not-found",
+          "category": "link-not-found"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-pediatric-2027",
+      "title": "第83回 日本弱視斜視学会総会・第52回 日本小児眼科学会総会",
+      "date": "2027-06-18",
+      "topUrl": "https://jasa-japo2027.jp/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://jasa-japo2027.jp/",
+          "role": "overview",
+          "fingerprint": "43da64eb1db684d4e5665683489c5a68da28a680b7bae57c8553503dc4360355"
+        },
+        {
+          "url": "https://jasa-japo2027.jp/sanka.html",
+          "role": "registration",
+          "fingerprint": "f7f659ac4f1761fe115d41ae02a46832c1a6806be28d519ac094809cde6acb95"
+        },
+        {
+          "url": "https://jasa-japo2027.jp/endai.html",
+          "role": "abstract",
+          "fingerprint": "2e7d4c0f33650513f438489eaed46fbab334a7e6b87a4bba25f5ed6c2904af57"
+        }
+      ],
+      "review": [],
+      "changes": [
+        {
+          "field": "registration",
+          "before": null,
+          "after": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "早期登録",
+                "start": "2026-07-27",
+                "deadline": "2027-01-04",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://jasa-japo2027.jp/sanka.html"
+              },
+              {
+                "label": "事前登録",
+                "start": "2027-01-05",
+                "deadline": "2027-05-20",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://jasa-japo2027.jp/sanka.html"
+              },
+              {
+                "label": "当日登録",
+                "start": "2027-05-21",
+                "deadline": "2027-06-19",
+                "category": "onsite",
+                "advanceEligible": false,
+                "sourceUrl": "https://jasa-japo2027.jp/sanka.html"
+              }
+            ]
+          },
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "abstract": null,
+        "registration": {
+          "value": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "早期登録",
+                "start": "2026-07-27",
+                "deadline": "2027-01-04",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://jasa-japo2027.jp/sanka.html"
+              },
+              {
+                "label": "事前登録",
+                "start": "2027-01-05",
+                "deadline": "2027-05-20",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://jasa-japo2027.jp/sanka.html"
+              },
+              {
+                "label": "当日登録",
+                "start": "2027-05-21",
+                "deadline": "2027-06-19",
+                "category": "onsite",
+                "advanceEligible": false,
+                "sourceUrl": "https://jasa-japo2027.jp/sanka.html"
+              }
+            ]
+          },
+          "evidence": "参加登録|第83回日本弱視斜視学会総会/第52回日本小児眼科学会総会\n合同開催\n第83回日本弱視斜視学会総会\nThe 83rd Annual Meeting of Japanese Association for Strabismus and Amblyopia\n第52回日本小児眼科学会総会\nThe 52nd Annual Meeting of Japanese Association of Pediatric Ophthalmology\nJASA-JAPO-AAPOS Joint Symposium 2027\n参加登録▷ ページを更新する\n参加登録はこちらから\n参加登録期間\n早期登録:2026年7月27日(月)~2027年1月04日(月)\n事前登録:2027年1月05日(火)~2027年5月20日(木)\n当日登録:2027年5月21日(金)~2027年6月19日(土)\n参加費\n参加区分\n早期登録\n事前登録\n当日登録\n講習会\n申込み期間\n2026/7/27-2027/1/4\n2027/1/5-5/20\n2027/5/21-6/19\n通期\n医師\n(会員)\n15,000円\n(不課税)\n16,000円\n(不課税)\n18,000円\n(不課税)\n3,000円\n(不課税)\n(非会員)\n17,000円\n(内税1,545円)\n18,000円\n(内税1,636円)\n20,000円\n(内税1,818円)\n3,000円\n(内税272円)\nコメディカル\n(会員)\n8,000円\n(不課税)\n8,500円\n(不課税)\n10,000円\n(不課税)\n2,000円\n(不課税)\n(非会員)※1\n10,000円\n(内税909円)\n10,500円\n(内税954円)\n12,000円\n(内税1,090円)\n2,000円\n(内税181円)\n学生※2\n(医学生、視能訓練士学生、留学生)\n3,000円\n(内税272円)\n3,000円\n(内税272円)\n3,000円\n(内税272円)\n1,000円\n(内税90円)\n研修医(1~4年)、大学院生※3\n8,000円\n(内税727円)\n8,000円\n(内税727円)\n10,000円\n(内税909円)\n2,000円\n(内税181円)\n非医師、民間研究員\n17,000円\n(内税1,545円)\n18,000円\n(内税1,636円)\n20,000円\n(内税1,818円)\n3,000円\n(内税272円)\n※1 コメディカル(非会員)の方は、所属長の証明または(社)日本視能訓練士協会会員番号が必要です。\n※2 学生(医学生、視能訓練士学生、留学生)の方は、学生証の提示が必要です。\n※3 研修医(1~4年)、大学院生の方は、所属長等の証明が必要です。\n【登録区分別・提出書類ダウンロード(※1〜3 共通)】\nPDF\nWord\nご提出の際は、PDF 形式に変換のうえアップロードしてください。\nなお、※1〜3 に該当する区分でお申込みの場合は、所定書類(PDF)のアップロードが必須となります。書類が未添付の場合、申込は完了いたしませんのでご注意ください。お申込みの際は、必要書類をご準備のうえ申込サイトへお進みください。\n領収書\n領収書は、申込完了メール内のURLからダウンロードできます。お申込み後に届くメールをご確認ください。\n※本学会は適格請求書発行事業者ではないため、発行する領収書には登録番号の記載がなく、インボイス制度には対応しておりません。 (会員:不課税、非会員:税込10%)\nこのページは只今\n準備中です。\n開催会場\n天童ホテル\n〒994-0025\n山形県天童市鎌田本町2丁目1-3\n→アクセス(公式HP)\n運営事務局\nスタッフルームタケムラ(有)\n〒169-0075\n東京都新宿区高田馬場2-4-7\nTEL: 03-5287-3801\nE-mail:\njasa-japo2027@staffroom.jp\n&copy; 第83回日本弱視斜視学会総会/第52回日本小児眼科学会総会\nProduced by Secand Co Ltd\narrow_upward\nトップ\n&copy; 第83回日本弱視斜視学会総会/第52回日本小児眼科学会総会 | Produced by Secand Co Ltd\nmenu\nメニュー\nhome\nホーム",
+          "url": "https://jasa-japo2027.jp/sanka.html"
+        }
+      },
+      "observations": [
+        {
+          "field": "abstractSubmission",
+          "url": "https://jasa-japo2027.jp/endai.html",
+          "reason": "abstract-not-published",
+          "category": "unpublished"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-int-soe-2027",
+      "title": "SOE 2027 (European Society of Ophthalmology Congress)",
+      "date": "2027-06-18",
+      "topUrl": "https://soe2027.soevision.org/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://soe2027.soevision.org/",
+          "role": "overview",
+          "fingerprint": "a464e1be06c92365ee208ad26104f6bad7303959ff47b935c5350cd3ee4c1bab"
+        },
+        {
+          "url": "https://i0.wp.com/soe2027.soevision.org/wp-content/uploads/sites/8/2026/09/Reg-fees-formated-as-per-the-PAAG-002.png?resize=1024%2C690",
+          "role": "evidence-image",
+          "fingerprint": "dc4e96ded065683e84d2905e24662a2c1c313d15385262775ef7efef1190a12f"
+        },
+        {
+          "url": "https://soe2027.soevision.org/registration/",
+          "role": "registration",
+          "fingerprint": "51d0ec9a2609bfa7136f1e249448c85b2430292e9a4f27c4628798dde7d48faa"
+        },
+        {
+          "url": "https://soe2027.soevision.org/abstract-submission/",
+          "role": "abstract",
+          "fingerprint": "b9bfd8cb19fc89b5945eac309467d5a178aebda604983837f38f9656e6e4418d"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-int-soe-2027-0",
+          "field": "registration",
+          "url": "https://soe2027.soevision.org/registration/",
+          "reason": "registration-ambiguous-boundary",
+          "proposed": null,
+          "evidence": "[{\"label\":\"Early Bird\",\"deadline\":\"2027-03-24\",\"category\":\"early\",\"advanceEligible\":true,\"sourceUrl\":\"https://soe2027.soevision.org/registration/\"},{\"label\":\"Standard\",\"start\":\"2027-03-24\",\"deadline\":\"2027-05-05\",\"category\":\"regular\",\"advanceEligible\":null,\"sourceUrl\":\"https://soe2027.soevision.org/registration/\"}]"
+        }
+      ],
+      "changes": [
+        {
+          "field": "abstractSubmission.status",
+          "before": "unknown",
+          "after": "open",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2027-01-19T23:59",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": null,
+          "after": "https://soe2027.soevision.org/abstract-submission/",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Etc/UTC",
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "status": "open",
+            "deadline": "2027-01-19T23:59",
+            "url": "https://soe2027.soevision.org/abstract-submission/",
+            "timeZone": "Etc/UTC"
+          },
+          "evidence": "Deadline for abstract submission: 19 January 2027 (23:59hrs GMT)\nNotification on acceptance/rejection: 4 March 2026\nReview Process\nBy submitting an abstract, the authors thereby guarantee that the abstract submitted describes unpublished results; and human and experimental studies have been undertaken with the appropriate ethics approval and official permission from the proper authorities. The criteria for accepting abstracts will be based on the degree of originality. In order to make the reviewers work as efficient and the selection as objective as possible, the following instructions should be observed.\nAbstract Submission Instructions\nIf you do not complete the submission process, your information will be held in “draft” until you return later to complete your submission. Please note that your abstract must be fully submitted, before the deadline 19 January 2027 (23:59hrs GMT), to be considered for the Congress.\nChanges to the abstract are possible until 19 January 2027 through your “My Submissions” page, which can be accessed with the link included in the email acknowledgement of submission.\nEach author may serve as Presenting Author for a maximum of one oral abstract (Free Paper/Rapid Fire), however, there is no maximum limit for posters.\nFull presentation specification will be made available on the website and forwarded together with the abstract acceptance.\nUpon acceptance of the abstract, all presenting authors are expected to register and present their abstract in person at the Congress. Abstracts will be published in the Congress Book of Abstracts only if the presenting author has registered by 24 March 2027. Presenting authors not registered by 24 March 2027 may have their abstracts removed from the Book of Abstracts. If the abstract is not accepted, the registration fee is refundable."
+        },
+        "registration": null
+      },
+      "observations": []
+    },
+    {
+      "eventId": "oph-013",
+      "title": "第42回 JSCRS学術総会 (日本白内障屈折矯正手術学会)",
+      "date": "2027-06-25",
+      "topUrl": "https://www.kwcs.jp/42jscrs/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://www.kwcs.jp/42jscrs/",
+          "role": "overview",
+          "fingerprint": "d2e80c192153ad924dc31cb04247db21fae61e5c1c8893e383d5fe9205a4ca97"
+        },
+        {
+          "url": "https://www.kwcs.jp/42jscrs/reg.html",
+          "role": "registration",
+          "fingerprint": "b79264711098decdae1e9f62ea0dccde8a1528884b1c34fac03e4e135b006009"
+        },
+        {
+          "url": "https://www.kwcs.jp/42jscrs/theme.html",
+          "role": "abstract",
+          "fingerprint": "200dd5e8524d9dd9e1b662fbccddc1eee127a22797e514fecb1856e8f53bc623"
+        }
+      ],
+      "review": [],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      },
+      "observations": [
+        {
+          "field": "abstractSubmission",
+          "url": "https://www.kwcs.jp/42jscrs/theme.html",
+          "reason": "abstract-not-published",
+          "category": "unpublished"
+        },
+        {
+          "field": "registration",
+          "url": "https://www.kwcs.jp/42jscrs/reg.html",
+          "reason": "registration-not-published",
+          "proposed": null,
+          "category": "unpublished"
+        }
+      ]
+    },
+    {
+      "eventId": "conf-jp-presbyopia-2028",
+      "title": "日本老視学会 第5回学術総会",
+      "date": "2027-01-16",
+      "topUrl": "https://www.rousi.jp/jps5",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://www.rousi.jp/jps5",
+          "role": "overview",
+          "fingerprint": "ed51f349b0356508db0c3a05a205f60fb2afc1eaf4f0e50bf57f467bc61ab14e"
+        },
+        {
+          "url": "https://www.rousi.jp/event-details/nipponroshigakkaidai5kaigakujutsusokai",
+          "role": "registration",
+          "fingerprint": "23bd3a8cd93dff5a56a276386c3cf9bb8921b48355b639e29501e0a4ff939cdf"
+        },
+        {
+          "url": "https://www.rousi.jp/jps5-abstract",
+          "role": "abstract",
+          "fingerprint": "72e93b6c895fb4b0a8695b3a9cdc9cc78e901ed78134683a045147b12a53ffbd"
+        }
+      ],
+      "review": [],
+      "changes": [
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2026-10-20T12:00",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": null,
+          "after": "https://www.rousi.jp/jps5-abstract",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "status": "unknown",
+            "deadline": "2026-10-20T12:00",
+            "url": "https://www.rousi.jp/jps5-abstract",
+            "timeZone": "Asia/Tokyo"
+          },
+          "evidence": "一般演題の募集期間\n2026年 10月 20日(火)正午まで\n多数のご応募をお待ちいたしております。\n学会事務局の問い合わせ対応時間: 平日10:00 ~ 16:00\n※演題募集期間の延長はございませんので、期間内での登録をお願いします。"
+        },
+        "registration": null
+      },
+      "observations": [
+        {
+          "field": "registration",
+          "url": "https://www.rousi.jp/event-details/nipponroshigakkaidai5kaigakujutsusokai",
+          "reason": "registration-not-published",
+          "proposed": null,
+          "category": "unpublished"
+        }
+      ]
+    }
+  ]
+}

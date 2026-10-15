@@ -184,7 +184,8 @@ async function main() {
   assert.equal(fs.existsSync(path.join(tmp, 'reports/auto-update-source-state.json')), false);
   const failed = await runUpdater({ ...options, config: single, getPage: async () => { throw new Error('offline'); } });
   assert.equal(failed.autoChanges.length, 0);
-  assert.ok(failed.needsReview.some(r => r.reason === 'fetch-failed'));
+  assert.equal(failed.needsReview.length,0);
+  assert.ok(failed.observations.some(r => r.reason === 'fetch-failed' && r.category === 'unavailable'));
   assert.equal(fs.readFileSync(path.join(tmp, 'events.js'), 'utf8'), baseline);
   const malformed = await runUpdater({ ...options, config: single, getPage: async p => ({ ...p, html: '<html><title>error page</title></html>' }) });
   assert.equal(malformed.autoChanges.length, 0);

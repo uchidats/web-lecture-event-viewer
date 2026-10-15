@@ -84,3 +84,4 @@
   .gemini-monitor-header { flex-direction: column; align-items: flex-start; }
 }
 
+#deadline-acquisition-status { overflow-wrap: anywhere; margin: 1rem 0; }

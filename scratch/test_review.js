@@ -55,17 +55,19 @@ async function main() {
   const loadQueue = data => createProvider({ readBaseline: baseline,
     fetchImpl: async () => ({ ok: true, json: async () => structuredClone(data) }) }).load();
   const resetItems = model.normalize(await loadQueue(production));
-  assert.equal(model.pendingItems(resetItems, store, 'local-admin').length, 0);
+  const newDeadlineReviews=production.items.filter(i=>i.method==='official-one-hop-h1-audit-v2'&&i.status==='needs-review').length;
+  assert.equal(newDeadlineReviews,3);
+  assert.equal(model.pendingItems(resetItems, store, 'local-admin').length, newDeadlineReviews);
   assert.equal(JSON.stringify(store.read()), historyBefore, 'reset preserves decisions/history');
   const fresh = { ...production.items.find(i => i.status === 'needs-review' && i.reason !== 'mass-change-limit'),
     id: 'new-candidate', value: 'new confirmed source value', lastSeen: '2030-01-01' };
   const newItems = model.normalize(await loadQueue({ version: 1, items: [...production.items, fresh] }));
-  assert.equal(model.pendingItems(newItems, store, 'local-admin').length, 1);
+  assert.equal(model.pendingItems(newItems, store, 'local-admin').length, newDeadlineReviews+1);
   const changed = { ...fresh, id: production.items[0].id };
   assert.equal(model.pendingItems(model.normalize(await loadQueue({version:1,items:[changed]})), store, 'local-admin').length, 1);
   const repeated = structuredClone(production);
   repeated.items.forEach(i => { i.lastSeen = '2030-01-01'; i.occurrences = 1000; });
-  assert.equal(model.pendingItems(model.normalize(await loadQueue(repeated)), store, 'local-admin').length, 0);
+  assert.equal(model.pendingItems(model.normalize(await loadQueue(repeated)), store, 'local-admin').length, newDeadlineReviews);
   for (const status of ['resolved', 'superseded', 'acknowledged', 'auto_applied', 'applied', 'manually_applied', 'rejected']) {
     assert.equal(model.pendingItems(model.normalize({items:[{...fresh,status}]}), store, 'local-admin').length, 0);
   }

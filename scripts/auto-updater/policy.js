@@ -106,9 +106,8 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
       const duplicateLabels = new Set(periods.map(p => compact(p.label).toLowerCase())).size !== periods.length;
       if (multipleRegistrations || duplicateLabels) { reject(candidate, 'multiple-candidates'); continue; }
       if (event.registration && registrationKey(event.registration) === registrationKey(candidate.value)) continue;
-      // Only explicit, validated one-hop phases may fill an unknown value automatically.
-      // Existing structured or dated legacy registrations retain the review-on-change policy.
-      if(source.autoUpdateEnabled&&candidate.confidence>=limits.minConfidence&&safeRegistrationFill(event,candidate)) {
+      // Verified one-hop evidence may fill or update phases; other proposals require review.
+      if(source.autoUpdateEnabled&&candidate.confidence>=limits.minConfidence&&(safeRegistrationFill(event,candidate)||candidate.method==='one-hop-registration'&&candidate.confidence>=.99&&!!candidate.evidence)) {
         accepted.push({...candidate,oldValue:oldValue(event,'registration')});continue;
       }
       const legacy = normalizeDate(event.earlyRegistrationDeadline || event.earlyBirdDeadline || '');
@@ -170,7 +169,7 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
         reject(candidate, 'abnormal-date'); halt = true; continue;
       }
       if (previous && normalizeDate(previous)?.includes(' ') && !normalized.includes(' ')) { reject(candidate, 'deadline-time-would-be-lost'); continue; }
-      if (field === 'abstractSubmission.deadline' && previous && canonical(field, previous) !== canonical(field, value)) {
+      if (field === 'abstractSubmission.deadline' && previous && canonical(field, previous) !== canonical(field, value) && candidate.method!=='one-hop-abstract') {
         const stored = normalizeDate(previous);
         const extended = !!stored && normalized > stored &&
           (normalized.slice(0, 10) > stored.slice(0, 10) || (normalized.includes(' ') && stored.includes(' ')));
