@@ -31,6 +31,15 @@ function canonical(field, value) {
 }
 function day(value) { return Date.parse(String(value).slice(0, 10) + 'T00:00:00Z'); }
 function isPlaceholder(value) { return !value || /未定|不明|要確認|海外|欧州/.test(value); }
+function safeRegistrationFill(event,change) {
+  if(event.registration||normalizeDate(event.earlyRegistrationDeadline||event.earlyBirdDeadline||'')||
+      change.method!=='one-hop-registration'||change.confidence<0.99||!change.evidence||!validRegistration(change.value))return false;
+  try {
+    const base=new URL(event.eventOfficialUrl||event.officialUrl),url=new URL(change.url);
+    return url.protocol==='https:'&&url.origin===base.origin&&url.pathname.startsWith(new URL('.',base).pathname)&&
+      change.value.version===2&&!!change.value.timeZone&&change.value.periods.every(p=>p.sourceUrl===url.href&&p.start&&p.deadline&&p.category&&typeof p.advanceEligible==='boolean');
+  }catch{return false;}
+}
 function isUnknownVenue(value) { return !value || /^(未定|不明|要確認|海外|欧州|TBD|TBA)$/i.test(String(value).trim()); }
 
 function hasExplicitVenueEvidence(candidate) {
@@ -97,6 +106,11 @@ function assess(event, source, candidates, issues, limits, { today, venues = {} 
       const duplicateLabels = new Set(periods.map(p => compact(p.label).toLowerCase())).size !== periods.length;
       if (multipleRegistrations || duplicateLabels) { reject(candidate, 'multiple-candidates'); continue; }
       if (event.registration && registrationKey(event.registration) === registrationKey(candidate.value)) continue;
+      // Only explicit, validated one-hop phases may fill an unknown value automatically.
+      // Existing structured or dated legacy registrations retain the review-on-change policy.
+      if(source.autoUpdateEnabled&&candidate.confidence>=limits.minConfidence&&safeRegistrationFill(event,candidate)) {
+        accepted.push({...candidate,oldValue:oldValue(event,'registration')});continue;
+      }
       const legacy = normalizeDate(event.earlyRegistrationDeadline || event.earlyBirdDeadline || '');
       const stored = event.registration?.periods || (legacy ? [{ label: expectedType === 'domestic' ? '事前参加登録' : 'Early bird', deadline: legacy.replace(' ', 'T') }] : []);
       const changed = periods.filter(p => stored.some(old => compact(old.label).toLowerCase() === compact(p.label).toLowerCase() && old.deadline && p.deadline && old.deadline !== p.deadline));
@@ -244,7 +258,7 @@ function applyChanges(events, changes) {
     if (['eventOfficialUrl', 'societyUrl', 'officialUrl'].includes(change.field) && canonical(change.field, oldValue(event, change.field)) !== canonical(change.field, change.value)) {
       throw new Error('Official URL change requires manual review');
     }
-    if (change.field === 'registration' && canonical('registration', event.registration) !== canonical('registration', change.value)) {
+    if (change.field === 'registration' && canonical('registration', event.registration) !== canonical('registration', change.value)&&!safeRegistrationFill(event,change)) {
       throw new Error('Registration change requires manual review');
     }
     if (change.field === 'abstractSubmission.deadline' && oldValue(event, change.field) &&

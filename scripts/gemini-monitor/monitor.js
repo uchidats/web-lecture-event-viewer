@@ -221,6 +221,7 @@ async function runGeminiMonitor(options = {}) {
     // 4. Fetch and check normalized content hash (Requirement 9)
     metrics.httpFetched++;
     const fetchResult = await fetchAndCheckHash(targetUrl, item.lastHash, {
+      event,
       getPage: options.getPage,
       source: { id: event.id, allowedHosts: [new URL(targetUrl).hostname] }
     });
@@ -254,6 +255,11 @@ async function runGeminiMonitor(options = {}) {
 
     // 6. Content changed -> extract compact structured facts (Requirement 8)
     const context = extractMonitoringContext(fetchResult.rawHtml, event);
+    const registrationFollowup=fetchResult.registrationFollowup;
+    if(registrationFollowup?.pages.length) {
+      context.registrationPages=registrationFollowup.pages.map(p=>({url:p.url,registrationText:extractMonitoringContext(p.html,event).registrationText}));
+      context.summaryPromptText+='\nOfficial one-hop registration pages:\n'+JSON.stringify(context.registrationPages);
+    }
     context.adoptedUrlVerification = adoptedUrlVerification;
 
     // 7. Call Gemini 3.8 Flash for semantic validation (Requirement 10)
@@ -270,6 +276,8 @@ async function runGeminiMonitor(options = {}) {
       sourceLearningMeta: rollbackHistory.sourceLearningMeta,
       todayStr,
       sourceUrl: targetUrl,
+      officialRegistration:registrationFollowup?.registration?.value,
+      registrationIssues:registrationFollowup?.issues,
       officialVenues: context.multipleVenueCandidates?.length === 1 ? context.multipleVenueCandidates[0] : null,
       venueCountUnconfirmed: context.venueCountUnconfirmed || context.multipleVenueCandidates?.length > 1
     });

@@ -1,5 +1,6 @@
 const crypto = require('node:crypto');
 const { fetchOfficialPage } = require('../auto-updater/fetch');
+const {followRegistrationPages}=require('../auto-updater/registration-followup');
 
 /**
  * Compute SHA-256 hash of a string.
@@ -67,13 +68,15 @@ function normalizeContentForHash(html) {
  * @param {Object} options - Fetch options and overrides
  */
 async function fetchAndCheckHash(url, previousHash = null, options = {}) {
-  const getPage = options.getPage || (async page => fetchOfficialPage(page, options.source || { id: 'temp', allowedHosts: [new URL(url).hostname] }, { timeoutMs: 15000 }));
+  const getPage = options.getPage || (async page => fetchOfficialPage(page, { ...(options.source||{}), allowedHosts: [new URL(url).hostname] }, { timeoutMs: 15000, maxResponseBytes: 2_000_000 }));
 
   try {
     const document = await getPage({ url, role: 'overview' });
-    const rawHtml = document.html || '';
+    const rawHtml = document.html || (typeof document.body==='string'?document.body:'');
+    const followup=options.event?await followRegistrationPages({document:{...document,html:rawHtml,url:document.url||url},event:options.event,getPage}):{pages:[],issues:[],registration:null};
     const normalized = normalizeContentForHash(rawHtml);
-    const hash = sha256(normalized);
+    // Include child-page content before the unchanged check; preserve deadline times in its hash.
+    const hash = sha256(normalized+followup.pages.map(p=>'\n'+p.url+'\n'+require('../auto-updater/extract').text(p.html)).join('')+JSON.stringify(followup.issues));
 
     const isUnchanged = Boolean(previousHash && previousHash === hash);
 
@@ -82,6 +85,7 @@ async function fetchAndCheckHash(url, previousHash = null, options = {}) {
       url,
       httpStatus: document.httpStatus || 200,
       rawHtml,
+      registrationFollowup:followup,
       normalizedLength: normalized.length,
       hash,
       unchanged: isUnchanged,

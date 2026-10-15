@@ -103,7 +103,10 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
   }
 
   // 6. Registration deadline
-  if (geminiResult.registration_deadline && geminiResult.registration_deadline !== currentEvent.registration?.deadline) {
+  if (options.officialRegistration) {
+    const {registrationKey}=require('../auto-updater/registration');
+    if(registrationKey(currentEvent.registration)!==registrationKey(options.officialRegistration))fieldChanges.push({field:'registration',before:currentEvent.registration||null,after:options.officialRegistration,severity:SEVERITY.MEDIUM});
+  } else if (geminiResult.registration_deadline && geminiResult.registration_deadline !== currentEvent.registration?.deadline) {
     fieldChanges.push({
       field: 'registration.deadline',
       before: currentEvent.registration?.deadline || null,
@@ -125,6 +128,7 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
   }
 
   const registrationReviewChanges=[];
+  for(const issue of options.registrationIssues||[])registrationReviewChanges.push({field:'registration',before:currentEvent.registration||null,after:issue.proposed||null,sourceUrl:issue.url,validationReason:issue.reason});
   for (let index=fieldChanges.length-1;index>=0;index--) {
     const validation=checkRegistrationChange(currentEvent,fieldChanges[index]);
     if (validation?.reason) registrationReviewChanges.unshift({...fieldChanges.splice(index,1)[0],validationReason:validation.reason});

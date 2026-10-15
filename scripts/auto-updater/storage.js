@@ -85,7 +85,7 @@ const checks = [
   ['scratch/test_abstract_submission.js'], ['scratch/test_abstract_deadline_boundaries.js'], ['scratch/test_auto_updater.js'],
   ['scratch/test_brand_storage.js'], ['scratch/test_companies.js'], ['scratch/test_time_zones.js'],
   ['scratch/test_venue_update_policy.js'], ['scratch/test_registration.js'], ['scratch/test_registration_phases.js'], ['scratch/test_registration_sort.js'], ['scratch/test_registration_timezones.js'], ['scratch/test_filter_state.js'], ['scratch/test_event_urls.js'], ['scratch/test_event_url_discovery.js'], ['scratch/test_bot_protected_event_urls.js'], ['scratch/test_ascrs_2027_official.js'],
-  ['scratch/test_gemini_monitor_regression.js'],
+  ['scratch/test_gemini_monitor_regression.js'], ['scratch/test_registration_followup.js'],
   ['scratch/test_gemini_notifications_and_acknowledgements.js'],
   ['scratch/test_gemini_staged_auto_updater.js'],
   ['scratch/test_google_url_discovery.js'],

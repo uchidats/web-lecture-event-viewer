@@ -1514,7 +1514,30 @@ const sampleEvents = [
     "description": "糖尿病網膜症・黄斑浮腫の病態解明、早期発見、内科連携を議論。",
     "isConference": true,
     "eventOfficialUrl": "https://convention.jtbcom.co.jp/jsod33/",
-    "conferenceChair": "本田 茂（大阪公立大学）"
+    "conferenceChair": "本田 茂（大阪公立大学）",
+    "registration": {
+      "version": 2,
+      "type": "domestic",
+      "timeZone": "Asia/Tokyo",
+      "periods": [
+        {
+          "label": "事前参加登録",
+          "start": "2026-09-09T12:00",
+          "deadline": "2027-02-02",
+          "category": "regular",
+          "advanceEligible": true,
+          "sourceUrl": "https://convention.jtbcom.co.jp/jsod33/join/index.html"
+        },
+        {
+          "label": "直前・当日参加登録",
+          "start": "2027-02-23T12:00",
+          "deadline": "2027-03-13",
+          "category": "onsite",
+          "advanceEligible": false,
+          "sourceUrl": "https://convention.jtbcom.co.jp/jsod33/join/index.html"
+        }
+      ]
+    }
   },
   {
     "id": "conf-jp-iscev-2027",

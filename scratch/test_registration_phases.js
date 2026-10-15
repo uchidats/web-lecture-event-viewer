@@ -35,7 +35,7 @@ vm.runInContext(`
  const snapshot=JSON.stringify(event);getRegistrationState(event,'2027-04-01');assert.equal(JSON.stringify(event),snapshot);
 `,context);
 const stored=JSON.parse(vm.runInContext('JSON.stringify(sampleEvents.find(e=>e.id==="conf-jp-jrvs-2026"))',context));
-assert.equal(vm.runInContext('sampleEvents.filter(e=>e.registration?.version===2).length',context),2,'Only existing structured events migrated');
+assert.equal(vm.runInContext('sampleEvents.filter(e=>e.registration?.version===2).length',context),3,'Two original structured events plus officially verified JSOD33');
 assert.ok(validRegistration(stored.registration));
 const source=config.sources.find(s=>s.id===stored.id),url=source.pages.find(p=>p.role==='registration').url;
 for(const [field,value] of [['category','early'],['advanceEligible',false]]){

@@ -63,13 +63,24 @@ async function runPipeline({ root, config, apply = false, getPage = fetchOfficia
     // 関連セミナーの収集は一時停止。既存レコードは変更・削除しない。
     if (event.parentConferenceId) continue;
     const candidates = [], issues = [], documents = [];
+    let registrationFollowed=false,configuredFetched=0;
     for (const page of source.pages) {
       try {
         const document = await getPage(page, source, { ...config.defaults,
           onRequest: request => summary.requests.push({ eventId: source.id, ...request }) });
+        configuredFetched++;
         documents.push({ url: document.url, fingerprint: document.fingerprint || hash(document.html) });
         const result = adapters[source.adapter](document, { ...source, registrationType: event.registration?.type || event.conferenceRegion || 'domestic' });
         candidates.push(...result.candidates); issues.push(...result.issues);
+        if(page.role==='overview'&&!registrationFollowed) {
+          registrationFollowed=true;
+          const followup=await require('./registration-followup').followRegistrationPages({document,event,
+            excludeUrls:source.pages.filter(p=>p.role==='registration').map(p=>p.url),
+            getPage:p=>getPage(p,{...source,allowedHosts:[new URL(document.url).hostname]}, {...config.defaults,onRequest:request=>summary.requests.push({eventId:source.id,...request})})});
+          for(const p of followup.pages)documents.push({url:p.url,fingerprint:hash(p.html)});
+          if(followup.registration) candidates.push({field:'registration',value:followup.registration.value,url:followup.registration.url,confidence:0.99,method:'one-hop-registration',evidence:followup.registration.evidence});
+          for(const issue of followup.issues)summary.needsReview.push({eventId:source.id,field:'registration',url:issue.url,reason:issue.reason,value:issue.proposed||null});
+        }
       } catch (error) {
         summary.needsReview.push({ eventId: source.id, field: null, oldValue: null, url: page.url,
           confidence: 0, reason: 'fetch-failed', error: error.message });
@@ -86,7 +97,7 @@ async function runPipeline({ root, config, apply = false, getPage = fetchOfficia
       lastChecked: checkedAt, lastChanged: previousState.sources[source.id]?.lastChanged || null,
       confidence: candidates.length ? Math.min(...candidates.map(c => c.confidence)) : 0,
       fingerprint, extractionMethod: source.adapter, autoUpdateEnabled: source.autoUpdateEnabled,
-      fetchSucceeded: documents.length === source.pages.length, pages: documents };
+      fetchSucceeded: configuredFetched === source.pages.length, pages: documents };
     state.sources[source.id] = meta;
     summary.sources.push({ eventId: source.id, ...meta, candidateCount: candidates.length });
   }

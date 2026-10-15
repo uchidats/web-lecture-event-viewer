@@ -69,7 +69,7 @@ function compact(value) { return text(value).replace(/\s+/g, ''); }
 
 function registrationPeriods(labeled, source) {
   const type = source.registrationType || (source.id.startsWith('conf-jp-') || /日本/.test(source.name) ? 'domestic' : 'international');
-  const stage = type === 'domestic' ? /(事前参加登録|直前・当日登録|直前参加登録|当日登録|参加登録期間|参加登録受付期間)/ : /(Early\s*bird|Regular|Late|On[ -]?site)/i;
+  const stage = type === 'domestic' ? /(事前早期登録|事前通常登録|早期参加登録|通常参加登録|事前参加登録|直前・当日参加登録|直前・当日登録|直前参加登録|直前登録|当日参加登録|当日登録|通常登録|早期登録|参加登録受付期間|参加登録期間)/ : /(Early\s*bird|Regular|Late|On[ -]?site)/i;
   const periods = [], evidence = [];
   for (const [label, html] of labeled) {
     if (/演題|ランチョン|セミナー|協賛|展示/.test(label)) continue;
