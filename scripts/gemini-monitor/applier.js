@@ -1,18 +1,22 @@
 const path = require('node:path');
 const { normalizeConferenceTitle, isFormatOnlyTitleChange } = require('../auto-updater/titles');
-const { loadEvents, atomicWrite } = require('../auto-updater/storage');
+const { loadEvents, atomicWrite, validateEvents } = require('../auto-updater/storage');
+const {checkRegistrationChange}=require('./registration-changes');
 const { THRESHOLDS } = require('./constants');
 const {validVenues}=require('../auto-updater/venues');
 
 /**
  * Apply field changes to a single event object.
  */
-function applyFieldChangesToEvent(event, fieldChanges) {
+function applyFieldChangesToEvent(event, fieldChanges, rejectedChanges = []) {
   const appliedFields = [];
 
   for (const change of fieldChanges) {
     const { field } = change;
     const after = field === 'title' ? normalizeConferenceTitle(change.after) : change.after;
+    const registration=checkRegistrationChange(event,change);
+    if (registration?.reason) { rejectedChanges.push({...change,validationReason:registration.reason});continue; }
+    if (registration) { event.registration=registration.value;appliedFields.push(field);continue; }
     // Also guard cached/previously classified batches at the write boundary.
     if (field === 'title' && isFormatOnlyTitleChange(event.title, after)) continue;
     if(field==='venues'&&!validVenues(after))throw new Error('Invalid venues');
@@ -122,6 +126,7 @@ function applyBatchUpdates(root, updateBatches = [], options = {}) {
   const targetIds = updateBatches.map(b => b.eventId);
 
   const appliedSummary = [];
+  const reviewItems = [];
 
   for (const batch of updateBatches) {
     const event = dataset.events.find(e => e.id === batch.eventId);
@@ -129,7 +134,12 @@ function applyBatchUpdates(root, updateBatches = [], options = {}) {
       throw new Error(`Target event ID not found in dataset: ${batch.eventId}`);
     }
 
-    const appliedFields = applyFieldChangesToEvent(event, batch.fieldChanges);
+    const rejectedChanges=[];
+    const appliedFields = applyFieldChangesToEvent(event, batch.fieldChanges, rejectedChanges);
+    if (rejectedChanges.length) reviewItems.push({eventId:event.id,eventName:event.title,fieldChanges:rejectedChanges,source:batch.source,
+      sourceUrl:batch.sourceUrl||event.eventOfficialUrl,action:'needs_review',severity:'medium',priorityScore:300,
+      structuredReason:{code:'invalid_registration_change',detail:rejectedChanges.map(c=>c.validationReason).join('; ')},
+      reason:rejectedChanges.map(c=>c.validationReason).join('; ')});
     if (!appliedFields.length) continue;
     appliedSummary.push({
       eventId: batch.eventId,
@@ -142,6 +152,7 @@ function applyBatchUpdates(root, updateBatches = [], options = {}) {
 
   // 3. Verify integrity
   verifyDatasetIntegrity(originalEventsClone, dataset.events, targetIds);
+  validateEvents(dataset.events, originalEventsClone);
 
   const isDryRun = options.dryRun !== false;
 
@@ -155,6 +166,7 @@ function applyBatchUpdates(root, updateBatches = [], options = {}) {
     success: true,
     appliedCount: appliedSummary.length,
     appliedEvents: appliedSummary,
+    reviewItems,
     mode: isDryRun ? 'simulation' : 'production'
   };
 }

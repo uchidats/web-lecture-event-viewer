@@ -302,6 +302,14 @@ async function runGeminiMonitor(options = {}) {
       timestamp: now.toISOString()
     };
 
+    if (classification.registrationReviewChanges?.length && !classification.fieldChanges.some(change=>change.validationReason)) {
+      metrics.needsReview++;
+      reviewPool.push({...evaluatedItem,action:RECOMMENDED_ACTIONS.NEEDS_REVIEW,
+        fieldChanges:classification.registrationReviewChanges,
+        reason:classification.registrationReviewChanges.map(change=>change.validationReason).join('; '),
+        structuredReason:{code:'invalid_registration_change',detail:'Registration field withheld; other safe fields may continue.'}});
+    }
+
     if (classification.action === RECOMMENDED_ACTIONS.NO_CHANGE) {
       metrics.noChange++;
     } else if (classification.action === RECOMMENDED_ACTIONS.SAFE_AUTO_UPDATE) {
@@ -332,12 +340,6 @@ async function runGeminiMonitor(options = {}) {
     }
   }
 
-  // 9. Prioritize review items for administrator (Target: 0-3, Max: 5 - Requirement 4)
-  const { visible: adminVisibleItems, deferred: deferredReviewItems } =
-    prioritizeAdminReviewItems(reviewPool, THRESHOLDS.MAX_ADMIN_REVIEW_ITEMS);
-
-  metrics.adminVisibleCount = adminVisibleItems.length;
-
   // 10. Combine updates for batch application:
   // - High-confidence automated updates
   // - Admin acknowledged updates from Firestore
@@ -346,7 +348,8 @@ async function runGeminiMonitor(options = {}) {
       eventId: item.eventId,
       fieldChanges: item.fieldChanges,
       reason: item.reason,
-      source: 'gemini_high_confidence'
+      source: 'gemini_high_confidence',
+      sourceUrl: item.sourceUrl
     })),
     ...acknowledgedToApply.map(item => ({
       eventId: item.eventId,
@@ -357,6 +360,7 @@ async function runGeminiMonitor(options = {}) {
       }],
       reason: `Admin acknowledged by ${item.acknowledgedBy || 'uchidats@gmail.com'}`,
       source: 'admin_acknowledged',
+      sourceUrl: item.sourceUrl,
       key: item.key
     }))
   ];
@@ -389,15 +393,20 @@ async function runGeminiMonitor(options = {}) {
       dryRun: !isApplyMode
     });
 
+    for (const item of batchApplyResult.reviewItems || []) { reviewPool.push(item);metrics.needsReview++; }
+
     if (batchApplyResult.success) {
       if (isApplyMode) {
-        metrics.autoAppliedCount = autoApplyPool.length;
-        metrics.adminAppliedCount = acknowledgedToApply.length;
+        metrics.autoAppliedCount = batchApplyResult.appliedEvents.filter(item=>item.source==='gemini_high_confidence').length;
+        metrics.adminAppliedCount = batchApplyResult.appliedEvents.filter(item=>item.source==='admin_acknowledged').length;
 
         // Transition acknowledged items in Firestore to applied
         if (firestoreSync.remoteState && firestoreSync.token) {
           for (const ack of acknowledgedToApply) {
-            if (firestoreSync.remoteState.items[ack.key]) {
+            const fields=ack.fieldChanges || [{field:ack.field,after:ack.afterValue}];
+            const applied=batchApplyResult.appliedEvents.find(item=>item.eventId===ack.eventId&&item.source==='admin_acknowledged');
+            const fullyApplied=applied&&fields.every(change=>applied.fieldChanges.some(c=>c.field===change.field&&JSON.stringify(c.after)===JSON.stringify(change.after)));
+            if (fullyApplied&&firestoreSync.remoteState.items[ack.key]) {
               firestoreSync.remoteState.items[ack.key].status = IDEMPOTENCY_STATUS.APPLIED;
               firestoreSync.remoteState.items[ack.key].appliedAt = now.toISOString();
             }
@@ -411,6 +420,8 @@ async function runGeminiMonitor(options = {}) {
   }
 
   // 11. Format daily report
+  const {visible:adminVisibleItems,deferred:deferredReviewItems}=prioritizeAdminReviewItems(reviewPool,THRESHOLDS.MAX_ADMIN_REVIEW_ITEMS);
+  metrics.adminVisibleCount=adminVisibleItems.length;
   const dailyReport = {
     date: todayStr,
     generatedAt: now.toISOString(),
@@ -425,6 +436,7 @@ async function runGeminiMonitor(options = {}) {
       rollbackKey: `rb-${item.eventId}`
     })),
     deferredReviewCount: deferredReviewItems.length,
+    deferredReviewItems,
     wouldAutoUpdateCount: autoApplyPool.length,
     wouldAutoUpdateSummary: autoApplyPool.map(item => ({
       eventId: item.eventId,

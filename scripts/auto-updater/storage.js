@@ -29,7 +29,7 @@ function validateEvents(events, baseline) {
       const specialties = Array.isArray(e.specialty) ? e.specialty : [e.specialty];
       if (!specialties.length || specialties.some(value => typeof value !== 'string' || !value.trim()) || new Set(specialties).size !== specialties.length) throw new Error('Invalid specialty labels');
     }
-    if (e.registration && !validRegistration(e.registration)) throw new Error('Invalid registration periods');
+    if (e.registration && !validRegistration(e.registration)) throw new Error(`Invalid registration periods: ${e.id}`);
     for (const field of ['eventOfficialUrl', 'societyUrl']) if (e[field]) {
       const url = new URL(e[field]);
       if (url.protocol !== 'https:' || url.username || url.password) throw new Error('Invalid official URL');
@@ -92,7 +92,7 @@ const checks = [
   ['scratch/test_gigan_url_pattern.js'],
   ['scratch/test_gemini_discovery_grounding.js'],
   ['scratch/test_gemini_year_evidence.js'],
-  ['scratch/test_calendar_view.js'], ['scratch/test_calendar_wheel.js'], ['scratch/test_public_demo_removal.js'], ['scratch/test_joint_conference_titles.js'],
+  ['scratch/test_calendar_view.js'], ['scratch/test_calendar_wheel.js'], ['scratch/test_public_demo_removal.js'], ['scratch/test_joint_conference_titles.js'], ['scratch/test_gemini_registration_safety.js'],
   ['scratch/test_multiple_specialties.js'],
   ['scratch/test_pediatric_2026_identity.js'], ['scratch/test_ringan_titles.js'], ['scratch/test_international_venue_display.js'], ['scratch/test_registration_display.js'],
   ['scratch/test_attendance_registration.js'], ['scratch/test_conference_region_labels.js'], ['scratch/test_conference_card_tags.js'], ['scratch/test_card_deadline_labels.js'], ['scratch/test_monitor_zero_update_delivery.js'],

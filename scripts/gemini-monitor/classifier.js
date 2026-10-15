@@ -2,6 +2,7 @@ const { THRESHOLDS, SEVERITY, RECOMMENDED_ACTIONS, SOURCE_QUALITY, LEARNING_FLAG
 const { diffDays } = require('./scheduler');
 const { normalizeConferenceTitle, isFormatOnlyTitleChange } = require('../auto-updater/titles');
 const {validVenues,venueKey}=require('../auto-updater/venues');
+const {checkRegistrationChange}=require('./registration-changes');
 
 /**
  * Compare proposed changes against current event and classify into:
@@ -123,6 +124,12 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
     });
   }
 
+  const registrationReviewChanges=[];
+  for (let index=fieldChanges.length-1;index>=0;index--) {
+    const validation=checkRegistrationChange(currentEvent,fieldChanges[index]);
+    if (validation?.reason) registrationReviewChanges.unshift({...fieldChanges.splice(index,1)[0],validationReason:validation.reason});
+  }
+
   // 8. Filter against suppression registry (changes rolled back previously)
   const suppressedChanges = [];
   const activeChanges = [];
@@ -147,6 +154,7 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
       reason: 'Proposed update was previously rolled back and is suppressed.',
       structuredReason: { code: 'suppressed_by_rollback', detail: 'Previously rolled back by administrator' },
       fieldChanges: [],
+      registrationReviewChanges,
       priorityScore: 0,
       daysUntil: diffDays(currentEvent.date || currentEvent.endDate, todayStr),
       isAutoApplicable: false
@@ -248,14 +256,21 @@ function classifyDecision(currentEvent, geminiResult, options = {}) {
   const urgencyWeight = Math.max(0, 100 - Math.min(100, daysUntil));
   const priorityScore = severityWeight + confidenceWeight + urgencyWeight;
 
+  const registrationOnlyReview=!activeChanges.length&&registrationReviewChanges.length>0;
+  if (registrationOnlyReview) {
+    finalAction=RECOMMENDED_ACTIONS.NEEDS_REVIEW;
+    structuredReason={code:'invalid_registration_change',detail:registrationReviewChanges.map(c=>c.validationReason).join('; ')};
+  }
+
   return {
     action: finalAction,
     severity: calculatedSeverity,
     confidence,
     sourceQuality: geminiResult.source_quality,
-    reason: geminiResult.reason || structuredReason.detail,
+    reason: registrationOnlyReview ? structuredReason.detail : geminiResult.reason || structuredReason.detail,
     structuredReason,
-    fieldChanges: activeChanges,
+    fieldChanges: registrationOnlyReview?registrationReviewChanges:activeChanges,
+    registrationReviewChanges,
     priorityScore,
     daysUntil,
     isAutoApplicable: finalAction === RECOMMENDED_ACTIONS.SAFE_AUTO_UPDATE

@@ -1,0 +1,11 @@
+{
+  "runId": 38656877617,
+  "eventId": "conf-jp-neuro-2026",
+  "title": "第64回 日本神経眼科学会総会",
+  "sourceUrl": "https://n-practice.co.jp/64thJNOS/",
+  "confidence": 0.98,
+  "fieldChanges": [
+    {"field":"abstractSubmission.deadline","before":null,"after":"2026-07-31","severity":"medium"},
+    {"field":"registration.deadline","before":null,"after":"2026-11-27","severity":"medium"}
+  ]
+}
