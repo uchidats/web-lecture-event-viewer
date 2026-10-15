@@ -1133,55 +1133,6 @@ const sampleEvents = [
     "isConference": true
   },
   {
-    "id": "oph-009",
-    "title": "神経眼科ケースカンファレンス：見落としてはならない視神経疾患",
-    "subtitle": "MOGAD/NMOSD関連視神経炎と虚血性視神経症(AION)の鑑別ポイント",
-    "date": "2026-12-10",
-    "endDate": "2026-12-10",
-    "time": "19:15 - 20:45",
-    "region": "関東",
-    "venue": "TKP東京駅カンファレンスセンター / Web同時配信",
-    "specialty": "神経眼科",
-    "eventType": "地方会・研究会",
-    "format": "ハイブリッド",
-    "sponsor": "首都圏神経眼科研究会",
-    "credits": "日本眼科学会生涯教育 1単位",
-    "creditUnits": 1,
-    "calendarStatus": {
-      "google": {
-        "status": "busy",
-        "conflicts": [
-          {
-            "start": "19:30",
-            "end": "21:00",
-            "title": "院内安全管理委員会"
-          }
-        ]
-      },
-      "icloud": {
-        "status": "partial",
-        "conflicts": [
-          {
-            "start": "19:00",
-            "end": "20:00",
-            "title": "医局抄読会"
-          }
-        ]
-      },
-      "isAdded": false
-    },
-    "officialUrl": "https://example.com/neuro-oph-case-conf",
-    "pdfUrl": "neuro_ophthalmology_case.pdf",
-    "tags": [
-      "抗MOG抗体",
-      "視神経乳頭浮腫",
-      "MRI画像診断",
-      "ステロイドパルス"
-    ],
-    "description": "急速な視力低下・視野欠損をきたす視神経炎の迅速な画像診断と抗体検査オーダーのタイミング、最新免疫療法を症例検討形式で解説。",
-    "isConference": false
-  },
-  {
     "id": "oph-010",
     "title": "38th APACRS – 55th RCOPT Joint Annual Meeting",
     "subtitle": "未確認",
