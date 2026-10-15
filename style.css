@@ -1867,7 +1867,8 @@ body:has(#calendar-panel:is([data-view="calendar"], [data-view="compact"]):not([
   border: 1px solid #cbd5e1;
 }
 
-.conf-category-badge.category {
+.conf-category-badge.category,
+.conf-category-badge.specialty {
   background: #eff6ff;
   color: #1d4ed8;
   border: 1px solid #bfdbfe;
