@@ -14,7 +14,8 @@ async function main(){
  const expected={startDate:'2026-09-09',deadline:'2026-11-11T12:00',url:abstractUrl,timeZone:'Asia/Tokyo'};
  assert.deepEqual(extractAbstractPage({url:abstractUrl,html:abstractHtml},event).value,expected);
  assert.equal(extractAbstractPage({url:abstractUrl,html:abstractHtml.replace('正午','13:00')},event).value.deadline,'2026-11-11T13:00','Adjacent Japanese day/time must retain explicit time');
- for(const label of ['演題募集','抄録募集','Abstract','Call for Abstracts'])assert.deepEqual(registrationLinks(`<a href="abstract/index.html">${label}</a>`,url,'abstract'),[abstractUrl]);
+ for(const label of ['演題募集','抄録募集','Abstract','Call for Abstracts','Submission','Abstract Submission','一般演題登録','一般演題募集について'])assert.deepEqual(registrationLinks(`<a href="abstract/index.html">${label}</a>`,url,'abstract'),[abstractUrl]);
+ for(const label of ['指定演題登録','ISOT Abstract Submission','Photo Exhibition Submission'])assert.deepEqual(registrationLinks(`<a href="abstract/index.html">${label}</a>`,url,'abstract'),[]);
  const top=`<html><title>第33回日本糖尿病眼学会総会</title><h2>会期</h2><p>2027年3月12日～2027年3月13日</p><a href="join/index.html">参加登録</a><a href="abstract/index.html">演題募集NEW</a><a href="https://external.test/">Abstract</a><a href="/other-edition/abstract/">抄録募集</a><a href="privacy/">Privacy</a></html>`;
  let calls=[],currentAbstract=abstractHtml;
  const getPage=async p=>{calls.push(p.url);assert.ok([url,abstractUrl,registrationUrl].includes(p.url));return {url:p.url,html:p.url===url?top:p.url===abstractUrl?currentAbstract:registrationHtml,httpStatus:200};};

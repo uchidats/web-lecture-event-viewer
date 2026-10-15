@@ -1369,7 +1369,8 @@ const sampleEvents = [
       "status": "open",
       "startDate": "2026-09-10",
       "deadline": "2026-11-05T12:00",
-      "url": "https://convention.jtbcom.co.jp/gigan38/abstract/index.html"
+      "url": "https://convention.jtbcom.co.jp/gigan38/abstract/index.html",
+      "timeZone": "Asia/Tokyo"
     },
     "calendarStatus": {
       "google": {
@@ -1949,10 +1950,11 @@ const sampleEvents = [
     "sourceUrl": "https://www.ganki.jp/lowvision2027/information.html",
     "note": "",
     "abstractSubmission": {
-      "status": "unknown",
-      "startDate": null,
-      "deadline": null,
-      "url": null
+      "status": "upcoming",
+      "startDate": "2026-11-05T12:00",
+      "deadline": "2027-01-07",
+      "url": "https://www.ganki.jp/lowvision2027/abstracts.html",
+      "timeZone": "Asia/Tokyo"
     },
     "calendarStatus": {
       "google": {

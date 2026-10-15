@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T16:17:31.762Z",
+  "updatedAt": "2026-10-15T13:23:26.387Z",
   "items": [
     {
       "field": "abstractSubmission.deadline",
@@ -73087,6 +73087,832 @@
       "status": "needs-review",
       "firstSeen": "2026-10-08T16:17:31.762Z",
       "lastSeen": "2026-10-08T16:17:31.762Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://50.jsos.jp/abstract",
+      "reason": "abstract-period-ambiguous",
+      "eventId": "conf-jp-surgery-2027",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": "https://50.jsos.jp/"
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "88e94adc3b4fe06a789701b1cbe472f42e1f0389b78711c496aa30ee7c027d7b",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://50.jsos.jp/registration",
+      "reason": "registration-periods-ambiguous",
+      "proposed": {
+        "version": 2,
+        "type": "domestic",
+        "timeZone": "Asia/Tokyo",
+        "periods": [
+          {
+            "label": "事前通常登録",
+            "start": "2026-08-21",
+            "deadline": "2026-11-12",
+            "category": "regular",
+            "advanceEligible": true,
+            "sourceUrl": "https://50.jsos.jp/registration"
+          },
+          {
+            "label": "当日登録",
+            "start": "2027-01-29",
+            "deadline": "2027-01-31",
+            "category": "onsite",
+            "advanceEligible": false,
+            "sourceUrl": "https://50.jsos.jp/registration"
+          },
+          {
+            "label": "事前早期登録",
+            "start": "2026-06-01",
+            "deadline": "2026-08-20",
+            "category": "early",
+            "advanceEligible": true,
+            "sourceUrl": "https://50.jsos.jp/registration"
+          }
+        ]
+      },
+      "eventId": "conf-jp-surgery-2027",
+      "value": {
+        "version": 2,
+        "type": "domestic",
+        "timeZone": "Asia/Tokyo",
+        "periods": [
+          {
+            "label": "事前通常登録",
+            "start": "2026-08-21",
+            "deadline": "2026-11-12",
+            "category": "regular",
+            "advanceEligible": true,
+            "sourceUrl": "https://50.jsos.jp/registration"
+          },
+          {
+            "label": "当日登録",
+            "start": "2027-01-29",
+            "deadline": "2027-01-31",
+            "category": "onsite",
+            "advanceEligible": false,
+            "sourceUrl": "https://50.jsos.jp/registration"
+          },
+          {
+            "label": "事前早期登録",
+            "start": "2026-06-01",
+            "deadline": "2026-08-20",
+            "category": "early",
+            "advanceEligible": true,
+            "sourceUrl": "https://50.jsos.jp/registration"
+          }
+        ]
+      },
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "860d075ad80ae515455ce1ad2a64256e56eca65917ae547ba0fd168cd415f1c5",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://www.okinawa-congre.co.jp/cornea2027/cfa/index.html",
+      "reason": "abstract-period-ambiguous",
+      "eventId": "conf-jp-cornea-2027",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": null
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "8d547a4a5c54ee3f2a0b39a7c58bae4a856d3d4ecf1dcc67805a7c1b8c51a46d",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html",
+      "reason": "registration-periods-ambiguous",
+      "proposed": {
+        "version": 2,
+        "type": "domestic",
+        "timeZone": "Asia/Tokyo",
+        "periods": [
+          {
+            "label": "参加登録期間",
+            "start": "2026-12-01",
+            "deadline": "2027-01-14",
+            "category": null,
+            "advanceEligible": null,
+            "sourceUrl": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html"
+          },
+          {
+            "label": "参加登録期間",
+            "start": "2027-01-15",
+            "deadline": "2027-02-13",
+            "category": null,
+            "advanceEligible": null,
+            "sourceUrl": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html"
+          }
+        ]
+      },
+      "eventId": "conf-jp-cornea-2027",
+      "value": {
+        "version": 2,
+        "type": "domestic",
+        "timeZone": "Asia/Tokyo",
+        "periods": [
+          {
+            "label": "参加登録期間",
+            "start": "2026-12-01",
+            "deadline": "2027-01-14",
+            "category": null,
+            "advanceEligible": null,
+            "sourceUrl": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html"
+          },
+          {
+            "label": "参加登録期間",
+            "start": "2027-01-15",
+            "deadline": "2027-02-13",
+            "category": null,
+            "advanceEligible": null,
+            "sourceUrl": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html"
+          }
+        ]
+      },
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "0b18ad19bbe696a83fcd06368e502c8582d37dd9708c686f77ce421268a4dad2",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://convention.jtbcom.co.jp/gigan38/join/index.html",
+      "reason": "registration-periods-ambiguous",
+      "proposed": {
+        "version": 2,
+        "type": "domestic",
+        "timeZone": "Asia/Tokyo",
+        "periods": [
+          {
+            "label": "参加登録受付期間",
+            "start": "2026-10-08T12:00",
+            "deadline": "2027-01-08",
+            "category": null,
+            "advanceEligible": null,
+            "sourceUrl": "https://convention.jtbcom.co.jp/gigan38/join/index.html"
+          },
+          {
+            "label": "参加登録受付期間",
+            "start": "2027-01-15T12:00",
+            "deadline": "2027-02-20",
+            "category": null,
+            "advanceEligible": null,
+            "sourceUrl": "https://convention.jtbcom.co.jp/gigan38/join/index.html"
+          }
+        ]
+      },
+      "eventId": "conf-jp-eyelid-2027",
+      "value": {
+        "version": 2,
+        "type": "domestic",
+        "timeZone": "Asia/Tokyo",
+        "periods": [
+          {
+            "label": "参加登録受付期間",
+            "start": "2026-10-08T12:00",
+            "deadline": "2027-01-08",
+            "category": null,
+            "advanceEligible": null,
+            "sourceUrl": "https://convention.jtbcom.co.jp/gigan38/join/index.html"
+          },
+          {
+            "label": "参加登録受付期間",
+            "start": "2027-01-15T12:00",
+            "deadline": "2027-02-20",
+            "category": null,
+            "advanceEligible": null,
+            "sourceUrl": "https://convention.jtbcom.co.jp/gigan38/join/index.html"
+          }
+        ]
+      },
+      "oldValue": {
+        "type": "domestic",
+        "periods": [
+          {
+            "label": "事前登録",
+            "start": "2026-10-08T12:00",
+            "deadline": "2027-01-08",
+            "category": "regular",
+            "advanceEligible": true,
+            "sourceUrl": "https://convention.jtbcom.co.jp/gigan38/join/index.html"
+          },
+          {
+            "label": "追加登録",
+            "start": "2027-01-15T12:00",
+            "deadline": "2027-02-20",
+            "category": null,
+            "advanceEligible": null,
+            "sourceUrl": "https://convention.jtbcom.co.jp/gigan38/join/index.html"
+          }
+        ],
+        "version": 2,
+        "timeZone": "Asia/Tokyo"
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "db99af05fd80dfd5e58bdf6509bbd4f0107a4bc9f1c636bfafd191f88ccfeef5",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://www.congre.co.jp/73jscev/cfa.html",
+      "reason": "abstract-period-unconfirmed",
+      "eventId": "conf-jp-iscev-2027",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": null
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "7c3245e87637c0c90596ffbbed310bcbf095d9d496d37f4d2eda2dca01749cc6",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://www.congre.co.jp/73jscev/registration.html",
+      "reason": "registration-periods-unconfirmed",
+      "proposed": null,
+      "eventId": "conf-jp-iscev-2027",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "e8f43ac1b17f2c61a86d827d6ae43b6968a15daab1a2c76ed7e3cea4b087c7d1",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://2027.apaophth.org/abstract-submission/",
+      "reason": "abstract-conference-identity-unconfirmed",
+      "eventId": "conf-int-apao-2027",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": null
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "de28f8ad30cb904ed75fede0f1865f08fc9f4d95476db35be4c14b5238d83f91",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://2027.apaophth.org/registration/",
+      "reason": "registration-conference-identity-unconfirmed",
+      "proposed": null,
+      "eventId": "conf-int-apao-2027",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "1b0beb0263b972a17fa86711ce9d8591730ba5486ca516f1f7ca9e21e8ff7397",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://convention.jtbcom.co.jp/fujiretina/abstracts/index.html",
+      "reason": "abstract-conference-identity-unconfirmed",
+      "eventId": "conf-int-fujiretina-2027",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": null
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "4558b6bfe9fbb7ff24eb4927a3a2e9db4b0c2710d2642237e76f5f832c3fd591",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://convention.jtbcom.co.jp/fujiretina/registration/index.html",
+      "reason": "registration-conference-identity-unconfirmed",
+      "proposed": null,
+      "eventId": "conf-int-fujiretina-2027",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "372ba907002e49193356dd4b881fc72493e8670e24c7305439ecae241ee739c4",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "both",
+      "reason": "bot-protected",
+      "url": "https://annualmeeting.ascrs.org/",
+      "eventId": "conf-int-ascrs-2027",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "dad562ca428b6282438b6d84c223ff6bae22b61c9cef51547bf57cd82460f317",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html",
+      "reason": "abstract-period-ambiguous",
+      "eventId": "oph-011",
+      "value": null,
+      "oldValue": {
+        "status": "open",
+        "startDate": "2026-10-01",
+        "deadline": "2026-11-05 13:00",
+        "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html"
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "a87bcaf564d44296600592a853afa2d2e4d5f9288ac48952778cdc014c91af9e",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://convention.jtbcom.co.jp/131jos/join/index.html",
+      "reason": "registration-periods-ambiguous",
+      "proposed": {
+        "version": 2,
+        "type": "domestic",
+        "timeZone": "Asia/Tokyo",
+        "periods": [
+          {
+            "label": "事前参加登録",
+            "start": "2026-10-01T12:00",
+            "deadline": "2027-02-12",
+            "category": "regular",
+            "advanceEligible": true,
+            "sourceUrl": "https://convention.jtbcom.co.jp/131jos/join/index.html"
+          },
+          {
+            "label": "事前参加登録",
+            "start": "2027-02-12",
+            "deadline": "2027-02-16T12:00",
+            "category": "regular",
+            "advanceEligible": true,
+            "sourceUrl": "https://convention.jtbcom.co.jp/131jos/join/index.html"
+          }
+        ]
+      },
+      "eventId": "oph-011",
+      "value": {
+        "version": 2,
+        "type": "domestic",
+        "timeZone": "Asia/Tokyo",
+        "periods": [
+          {
+            "label": "事前参加登録",
+            "start": "2026-10-01T12:00",
+            "deadline": "2027-02-12",
+            "category": "regular",
+            "advanceEligible": true,
+            "sourceUrl": "https://convention.jtbcom.co.jp/131jos/join/index.html"
+          },
+          {
+            "label": "事前参加登録",
+            "start": "2027-02-12",
+            "deadline": "2027-02-16T12:00",
+            "category": "regular",
+            "advanceEligible": true,
+            "sourceUrl": "https://convention.jtbcom.co.jp/131jos/join/index.html"
+          }
+        ]
+      },
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "9ed6c99716b1398b50f55bb7eb084765c7c3fc5315a8c235d5b40bb3635da738",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://site2.convention.co.jp/jgs2027/endai/",
+      "reason": "abstract-period-unconfirmed",
+      "eventId": "oph-014",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": null
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "09ef30bcec79a64eb155551b80ec4ea17327b15d01740492f2cdc7f270137dda",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://site2.convention.co.jp/jgs2027/resitration/",
+      "reason": "registration-periods-ambiguous",
+      "proposed": {
+        "version": 2,
+        "type": "domestic",
+        "timeZone": "Asia/Tokyo",
+        "periods": [
+          {
+            "label": "参加登録期間",
+            "start": "2026-10-06T12:00",
+            "deadline": "2027-03-15T12:00",
+            "category": null,
+            "advanceEligible": null,
+            "sourceUrl": "https://site2.convention.co.jp/jgs2027/resitration/"
+          },
+          {
+            "label": "参加登録期間",
+            "start": "2027-03-15T12:00",
+            "deadline": "2027-04-23",
+            "category": null,
+            "advanceEligible": null,
+            "sourceUrl": "https://site2.convention.co.jp/jgs2027/resitration/"
+          }
+        ]
+      },
+      "eventId": "oph-014",
+      "value": {
+        "version": 2,
+        "type": "domestic",
+        "timeZone": "Asia/Tokyo",
+        "periods": [
+          {
+            "label": "参加登録期間",
+            "start": "2026-10-06T12:00",
+            "deadline": "2027-03-15T12:00",
+            "category": null,
+            "advanceEligible": null,
+            "sourceUrl": "https://site2.convention.co.jp/jgs2027/resitration/"
+          },
+          {
+            "label": "参加登録期間",
+            "start": "2027-03-15T12:00",
+            "deadline": "2027-04-23",
+            "category": null,
+            "advanceEligible": null,
+            "sourceUrl": "https://site2.convention.co.jp/jgs2027/resitration/"
+          }
+        ]
+      },
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "0b6ee4b2e0e2de5d6fde146736216f65a63b2241105ad57b35e63f7709ba66cd",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://worldglaucomacongress.org/abstracts/",
+      "reason": "abstract-conference-identity-unconfirmed",
+      "eventId": "conf-int-wgc-2027",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": null
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "5734fa358bac9dadca6d4b9277749fc253fd317be04cea554ac3ec6d48014bd1",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://worldglaucomacongress.org/registration/",
+      "reason": "registration-conference-identity-unconfirmed",
+      "proposed": null,
+      "eventId": "conf-int-wgc-2027",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "71cdde83d489f93d248c3d9addc8273fd4e883211bddfb30f03eccb710aea193",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "both",
+      "reason": "bot-protected",
+      "url": "https://www.arvo.org/annual-meeting",
+      "eventId": "oph-012",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "942ed97e9a4b0263624598c24a13e36d0d1acbac3339c77571b06873f99bf762",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://www.ganki.jp/lowvision2027/registration.html",
+      "reason": "registration-fetch-failed",
+      "error": "http-404",
+      "eventId": "conf-jp-lowvision-2027",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "57dea963b332a45ecde99df771258396503bef6c9df12fbfb605a420ac301437",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://apacrs2027.org/guidelines-for-abstract-submission-2027/",
+      "reason": "abstract-conference-identity-unconfirmed",
+      "eventId": "conf-int-apacrs-2027",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": null
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "4246b3083117fa509a43a6beff9ba20b827b523b442b5f3ac0a792122722bd0c",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://apacrs2027.org/registration/",
+      "reason": "registration-conference-identity-unconfirmed",
+      "proposed": null,
+      "eventId": "conf-int-apacrs-2027",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "40be9fad4cf9d1a67c6aec74a384ed0396a74c5e59d09ccb9ff653336ac62005",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://www.ganki.jp/jips2027/abstracts.html",
+      "reason": "abstract-fetch-failed",
+      "error": "http-404",
+      "eventId": "conf-jp-perimetry-2027",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": null
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "4c9f4b872e76f499dfaaa3a6d589b4332ddd10eaa067cf9532ab52eca846b393",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://www.ganki.jp/jips2027/participants.html",
+      "reason": "registration-fetch-failed",
+      "error": "http-404",
+      "eventId": "conf-jp-perimetry-2027",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "754bce6076d9e492ca521a8c0055ba4cf34a7a5cfabca26fa61d31f6d14e11ee",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "reason": "no-recognized-one-hop-link",
+      "url": "https://orbit-cs.net/jsoprs2027/",
+      "eventId": "conf-jp-jsoprs-2027",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "011d1a91ec9bd21379bda8dd2cf2d285399415e422b570676209980abc7a763c",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://orbit-cs.net/jsoprs2027/abstracts.html",
+      "reason": "abstract-conference-identity-unconfirmed",
+      "eventId": "conf-jp-jsoprs-2027",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": "http://www.jsoprs.jp/"
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "57ad69447ab67d71ad66cd6f755575106fa42774bf1aaeb302e3bb0b37f6ec51",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://jasa-japo2027.jp/endai.html",
+      "reason": "abstract-conference-identity-unconfirmed",
+      "eventId": "conf-jp-pediatric-2027",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": null
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "fb1fca8a7968302f73e57d9172a98de41e0b647af63b710d0478862d863e362b",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://jasa-japo2027.jp/sanka.html",
+      "reason": "registration-conference-identity-unconfirmed",
+      "proposed": null,
+      "eventId": "conf-jp-pediatric-2027",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "11402ecd0ab5da7fedd341276247c9c80a961e2142c68f2c907d675a14592b2f",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "reason": "no-recognized-one-hop-link",
+      "url": "https://soe2027.soevision.org/",
+      "eventId": "conf-int-soe-2027",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": null
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "05a771ad5fe24845361f214ab175a1065f3c4b43312229e53596c4740f5b25a0",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://soe2027.soevision.org/registration/",
+      "reason": "registration-conference-identity-unconfirmed",
+      "proposed": null,
+      "eventId": "conf-int-soe-2027",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "46ef020e5447e12c51d111227701e99f14bed10e84c66441d9e66209338006bc",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://www.kwcs.jp/42jscrs/theme.html",
+      "reason": "abstract-conference-identity-unconfirmed",
+      "eventId": "oph-013",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": null
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "ab699e916d2173e5d39bc4b37a844ab6273fb1e533ca3a4996f87a84b17f25fe",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://www.kwcs.jp/42jscrs/reg.html",
+      "reason": "registration-conference-identity-unconfirmed",
+      "proposed": null,
+      "eventId": "oph-013",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "6d8f365661030150a130b54cbfcfe1a9b03b55cfc15dbf64c53713c1265e6ea7",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "abstractSubmission",
+      "url": "https://www.rousi.jp/jps5-abstract",
+      "reason": "abstract-conference-identity-unconfirmed",
+      "eventId": "conf-jp-presbyopia-2028",
+      "value": null,
+      "oldValue": {
+        "status": "unknown",
+        "startDate": null,
+        "deadline": null,
+        "url": null
+      },
+      "method": "official-one-hop-h1-audit",
+      "id": "db43a4c9201d95b4a8234051949e57d17a5bc14a5c193db4fd98db3f1afb4d92",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
+      "occurrences": 1
+    },
+    {
+      "field": "registration",
+      "url": "https://www.rousi.jp/event-details/nipponroshigakkaidai5kaigakujutsusokai",
+      "reason": "registration-periods-unconfirmed",
+      "proposed": null,
+      "eventId": "conf-jp-presbyopia-2028",
+      "value": null,
+      "oldValue": null,
+      "method": "official-one-hop-h1-audit",
+      "id": "b25518de80fff1eb517d24372baa8563fa0948b6832ee4e295603c977b214736",
+      "status": "needs-review",
+      "firstSeen": "2026-10-15T13:23:26.387Z",
+      "lastSeen": "2026-10-15T13:23:26.387Z",
       "occurrences": 1
     }
   ]

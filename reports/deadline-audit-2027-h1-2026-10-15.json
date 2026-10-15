@@ -1,0 +1,1047 @@
+{
+  "checkedAt": "2026-10-15",
+  "mode": "applied",
+  "scope": {
+    "from": "2027-01-01",
+    "through": "2027-06-30",
+    "fields": [
+      "abstractSubmission",
+      "registration"
+    ],
+    "maxDepth": 1,
+    "maxAdditionalPages": 4
+  },
+  "summary": {
+    "targetConferences": 20,
+    "abstractNewlyConfirmed": 1,
+    "abstractChanged": 2,
+    "registrationNewlyConfirmed": 0,
+    "registrationChanged": 0,
+    "reviewConferences": 19,
+    "reviewItems": 34,
+    "unchangedConferences": 18,
+    "unchangedWithoutReview": 1
+  },
+  "records": [
+    {
+      "eventId": "conf-jp-surgery-2027",
+      "title": "第50回 日本眼科手術学会学術総会",
+      "date": "2027-01-29",
+      "topUrl": "https://50.jsos.jp/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://50.jsos.jp/",
+          "role": "overview",
+          "fingerprint": "e4401c1ee5b78e1fa6c0f7fddb774e998551d3719cf98ad823c14ee930f15c1f"
+        },
+        {
+          "url": "https://50.jsos.jp/registration",
+          "role": "registration",
+          "fingerprint": "39b45222c6f0232e6edb997ffedcf2d22b67e9313650ccef45b3020cafc87276"
+        },
+        {
+          "url": "https://50.jsos.jp/abstract",
+          "role": "abstract",
+          "fingerprint": "b3e7a7298544a81f7e86fc88b514ca83aa611650b8be0b746f5e913f97fec91f"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-jp-surgery-2027-0",
+          "field": "abstractSubmission",
+          "url": "https://50.jsos.jp/abstract",
+          "reason": "abstract-period-ambiguous"
+        },
+        {
+          "status": "needs-review",
+          "id": "conf-jp-surgery-2027-1",
+          "field": "registration",
+          "url": "https://50.jsos.jp/registration",
+          "reason": "registration-periods-ambiguous",
+          "proposed": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "事前通常登録",
+                "start": "2026-08-21",
+                "deadline": "2026-11-12",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://50.jsos.jp/registration"
+              },
+              {
+                "label": "当日登録",
+                "start": "2027-01-29",
+                "deadline": "2027-01-31",
+                "category": "onsite",
+                "advanceEligible": false,
+                "sourceUrl": "https://50.jsos.jp/registration"
+              },
+              {
+                "label": "事前早期登録",
+                "start": "2026-06-01",
+                "deadline": "2026-08-20",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://50.jsos.jp/registration"
+              }
+            ]
+          }
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    },
+    {
+      "eventId": "conf-jp-cornea-2027",
+      "title": "角膜カンファランス2027",
+      "date": "2027-02-11",
+      "topUrl": "https://www.okinawa-congre.co.jp/cornea2027/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://www.okinawa-congre.co.jp/cornea2027/",
+          "role": "overview",
+          "fingerprint": "cb174fbcbffe2279afd65eca4b2fff551da3410a5a4699ac245fa7b660b0798b"
+        },
+        {
+          "url": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html",
+          "role": "registration",
+          "fingerprint": "149921ec4fa3fad5fe6b4edbfc12296af989f57e901cce5f953e9c206cdec51a"
+        },
+        {
+          "url": "https://www.okinawa-congre.co.jp/cornea2027/cfa/index.html",
+          "role": "abstract",
+          "fingerprint": "aa6a78ac90142dd24fc744c4446a30ae5247fd06483f160ed8fa42d0d7eed171"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-jp-cornea-2027-0",
+          "field": "abstractSubmission",
+          "url": "https://www.okinawa-congre.co.jp/cornea2027/cfa/index.html",
+          "reason": "abstract-period-ambiguous"
+        },
+        {
+          "status": "needs-review",
+          "id": "conf-jp-cornea-2027-1",
+          "field": "registration",
+          "url": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html",
+          "reason": "registration-periods-ambiguous",
+          "proposed": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "参加登録期間",
+                "start": "2026-12-01",
+                "deadline": "2027-01-14",
+                "category": null,
+                "advanceEligible": null,
+                "sourceUrl": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html"
+              },
+              {
+                "label": "参加登録期間",
+                "start": "2027-01-15",
+                "deadline": "2027-02-13",
+                "category": null,
+                "advanceEligible": null,
+                "sourceUrl": "https://www.okinawa-congre.co.jp/cornea2027/registration/index.html"
+              }
+            ]
+          }
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    },
+    {
+      "eventId": "conf-jp-eyelid-2027",
+      "title": "第38回 日本眼瞼義眼床手術学会",
+      "date": "2027-02-20",
+      "topUrl": "https://convention.jtbcom.co.jp/gigan38/index.html",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://convention.jtbcom.co.jp/gigan38/index.html",
+          "role": "overview",
+          "fingerprint": "7fde877731675e843a5d54c91644770211575bc06af19d27434e520ad9f1e2ba"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/gigan38/join/index.html",
+          "role": "registration",
+          "fingerprint": "a3c0fadf46cab92063e697f4292494c66af1b920d49c08fa62b5fc11f6af6ac9"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/gigan38/abstract/index.html",
+          "role": "abstract",
+          "fingerprint": "4ae3363fe804352824cea2378ebb8c4ccb1bfae061cb646ad9ae362ca9569502"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-jp-eyelid-2027-0",
+          "field": "registration",
+          "url": "https://convention.jtbcom.co.jp/gigan38/join/index.html",
+          "reason": "registration-periods-ambiguous",
+          "proposed": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "参加登録受付期間",
+                "start": "2026-10-08T12:00",
+                "deadline": "2027-01-08",
+                "category": null,
+                "advanceEligible": null,
+                "sourceUrl": "https://convention.jtbcom.co.jp/gigan38/join/index.html"
+              },
+              {
+                "label": "参加登録受付期間",
+                "start": "2027-01-15T12:00",
+                "deadline": "2027-02-20",
+                "category": null,
+                "advanceEligible": null,
+                "sourceUrl": "https://convention.jtbcom.co.jp/gigan38/join/index.html"
+              }
+            ]
+          }
+        }
+      ],
+      "changes": [
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "startDate": "2026-09-10",
+            "deadline": "2026-11-05T12:00",
+            "url": "https://convention.jtbcom.co.jp/gigan38/abstract/index.html",
+            "timeZone": "Asia/Tokyo"
+          },
+          "evidence": "2026年9月10日~2026年11月5日正午"
+        },
+        "registration": null
+      }
+    },
+    {
+      "eventId": "conf-jp-diabetic-2027",
+      "title": "第33回 日本糖尿病眼学会総会",
+      "date": "2027-03-12",
+      "topUrl": "https://convention.jtbcom.co.jp/jsod33/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://convention.jtbcom.co.jp/jsod33/",
+          "role": "overview",
+          "fingerprint": "254634eafb1c46f878a083cf1507eec0d23cbb8fd2724c6b25c65a4bd45e645e"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/jsod33/join/index.html",
+          "role": "registration",
+          "fingerprint": "bd3881d489a85ab816dca4e2ffd6d09f174a777fabba83b89cf8fa34c4db7e56"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/jsod33/abstract/index.html",
+          "role": "abstract",
+          "fingerprint": "58451be9db9eed3d9d9b40809557af6478d6a4abd33fa07ebb5ec403638f5328"
+        }
+      ],
+      "review": [],
+      "changes": [],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "startDate": "2026-09-09",
+            "deadline": "2026-11-11T12:00",
+            "url": "https://convention.jtbcom.co.jp/jsod33/abstract/index.html",
+            "timeZone": "Asia/Tokyo"
+          },
+          "evidence": "2026年9月9日~2026年11月11日正午"
+        },
+        "registration": {
+          "value": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "事前参加登録",
+                "start": "2026-09-09T12:00",
+                "deadline": "2027-02-02",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://convention.jtbcom.co.jp/jsod33/join/index.html"
+              },
+              {
+                "label": "直前・当日参加登録",
+                "start": "2027-02-23T12:00",
+                "deadline": "2027-03-13",
+                "category": "onsite",
+                "advanceEligible": false,
+                "sourceUrl": "https://convention.jtbcom.co.jp/jsod33/join/index.html"
+              }
+            ]
+          },
+          "evidence": "事前参加登録\n2026年9月9日(水)正午~2027年2月2日(火) <入金締切日:2月2日(火)>\n\n直前・当日参加登録\n2027年2月23日(火)正午~2027年3月13日(土) <入金締切日:3月13日(土)>\n参加登録方法、支払方法\n本会の参加登録はオンライン登録のみとさせていただきます。\n本ページ下部の「参加登録はこちら」ボタンを押して参加登録システムよりお申込みください。\n(当日申込もオンライン登録のみの受付となります。現地での登録は行いませんので、事前にオンライン登録をお済ませの上、会場へお越しください。)\nお支払い方法は、クレジットカード決済のみとなります。\n(クレジットカードでの決済ができない方は、参加登録デスクまでご連絡ください)\n※決済後は、いかなる理由においても返金はいたしかねますのでご注意ください。\nご本人による二重登録、ご自身の都合により参加できなくなった場合なども含めて返金には一切応じられませんので、\n十分確認の上、ご登録ください。\n<ご注意ください>\n携帯電話用のメールアドレスについて\n参加登録でのご利用はご遠慮ください。\n迷惑メール対策設定により、システムからの通知メールが受信できないという不具合が生じます。\nフリーメール(Gmail、Yahooメール、Hotmailなど)をご利用される場合\n通知メール送信アドレスの「@mail.jtbcom.co.jp」ドメインのメールを受信できるよう設定をお願いいたします。\nフリーメール(Gmail、Yahooメール、Hotmailなど)をご利用の場合、迷惑メールフィルタリング機能により、配信メールが迷惑メール(スパムメール)として扱われる場合があります。メールが届かない場合は、「迷惑メール」フォルダや「削除(ゴミ箱)」フォルダ等をご確認ください。\n※フリーメールの種類や設定によっては、振り分けられたメールが数日後に自動削除される場合がございます。\n参加登録費\n参加区分\n事前登録\n\n事前参加登録\n2026年9月9日(水)正午~2027年2月2日(火) <入金締切日:2月2日(火)>\n\n直前・当日参加登録\n2027年2月23日(火)正午~2027年3月13日(土) <入金締切日:3月13日(土)>",
+          "url": "https://convention.jtbcom.co.jp/jsod33/join/index.html"
+        }
+      }
+    },
+    {
+      "eventId": "conf-jp-iscev-2027",
+      "title": "第73回 日本臨床視覚電気生理学会",
+      "date": "2027-03-12",
+      "topUrl": "https://www.congre.co.jp/73jscev/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://www.congre.co.jp/73jscev/",
+          "role": "overview",
+          "fingerprint": "abb5bd14f144af82e24f2fc6a3ede87c7d09636cc1d54488338190dfde29c7a3"
+        },
+        {
+          "url": "https://www.congre.co.jp/73jscev/registration.html",
+          "role": "registration",
+          "fingerprint": "1dc42b6268409aa3a234b9d007a8584329130421c3827671237bd425a6232ac9"
+        },
+        {
+          "url": "https://www.congre.co.jp/73jscev/cfa.html",
+          "role": "abstract",
+          "fingerprint": "c2ed202f0a06e41da447bc51713034cff7b8aed6a661091dba346b542ea93e8f"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-jp-iscev-2027-0",
+          "field": "abstractSubmission",
+          "url": "https://www.congre.co.jp/73jscev/cfa.html",
+          "reason": "abstract-period-unconfirmed"
+        },
+        {
+          "status": "needs-review",
+          "id": "conf-jp-iscev-2027-1",
+          "field": "registration",
+          "url": "https://www.congre.co.jp/73jscev/registration.html",
+          "reason": "registration-periods-unconfirmed",
+          "proposed": null
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    },
+    {
+      "eventId": "conf-int-apao-2027",
+      "title": "APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress)",
+      "date": "2027-03-18",
+      "topUrl": "https://2027.apaophth.org/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://2027.apaophth.org/",
+          "role": "overview",
+          "fingerprint": "7da9747b200a132fbcca3bb251e7d0d5250572ee1e60f3dc044156cc035b3c61"
+        },
+        {
+          "url": "https://2027.apaophth.org/registration/",
+          "role": "registration",
+          "fingerprint": "a4dca2d7151241642b509fd29fe3aac3b5ad2f8dc79c8458f5092ec6738ac4bd"
+        },
+        {
+          "url": "https://2027.apaophth.org/abstract-submission/",
+          "role": "abstract",
+          "fingerprint": "b193f80c529928384a24aaefeb90ce09cdc5a1c2da28548ccfc9c1bf6e313fc3"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-int-apao-2027-0",
+          "field": "abstractSubmission",
+          "url": "https://2027.apaophth.org/abstract-submission/",
+          "reason": "abstract-conference-identity-unconfirmed"
+        },
+        {
+          "status": "needs-review",
+          "id": "conf-int-apao-2027-1",
+          "field": "registration",
+          "url": "https://2027.apaophth.org/registration/",
+          "reason": "registration-conference-identity-unconfirmed",
+          "proposed": null
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    },
+    {
+      "eventId": "conf-int-fujiretina-2027",
+      "title": "FujiRetina 2027",
+      "date": "2027-03-26",
+      "topUrl": "https://convention.jtbcom.co.jp/fujiretina/index.html",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://convention.jtbcom.co.jp/fujiretina/index.html",
+          "role": "overview",
+          "fingerprint": "b7a6b0c3b3d36fbef06392aa55780bc8212f9f35009d5cffd5aafc0c7b83d76a"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/fujiretina/registration/index.html",
+          "role": "registration",
+          "fingerprint": "160165e66f4c833bd0bc8b66ef5bc4c282d0c18dee4413edd7e2a56a04822e1c"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/fujiretina/abstracts/index.html",
+          "role": "abstract",
+          "fingerprint": "a6ba33bff706ed22bb3980efce48f0d15b19c5f9f3dab5800a24e1c19bf3909a"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-int-fujiretina-2027-0",
+          "field": "abstractSubmission",
+          "url": "https://convention.jtbcom.co.jp/fujiretina/abstracts/index.html",
+          "reason": "abstract-conference-identity-unconfirmed"
+        },
+        {
+          "status": "needs-review",
+          "id": "conf-int-fujiretina-2027-1",
+          "field": "registration",
+          "url": "https://convention.jtbcom.co.jp/fujiretina/registration/index.html",
+          "reason": "registration-conference-identity-unconfirmed",
+          "proposed": null
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    },
+    {
+      "eventId": "conf-int-ascrs-2027",
+      "title": "ASCRS 2027 Annual Meeting",
+      "date": "2027-04-02",
+      "topUrl": "https://annualmeeting.ascrs.org/",
+      "requests": [],
+      "pages": [],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-int-ascrs-2027-0",
+          "field": "both",
+          "reason": "bot-protected",
+          "url": "https://annualmeeting.ascrs.org/"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "eventId": "oph-011",
+      "title": "第131回 日本眼科学会総会",
+      "date": "2027-04-15",
+      "topUrl": "https://convention.jtbcom.co.jp/131jos/index.html",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://convention.jtbcom.co.jp/131jos/index.html",
+          "role": "overview",
+          "fingerprint": "146aee4735db443aaa4346aa623965bbf2775e0e0f61229ba5d84cb689e52134"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/131jos/join/index.html",
+          "role": "registration",
+          "fingerprint": "4e27142916bd4bbaff465c00acafd951dfffa1f4bf7659f82a77e20e03ee59c3"
+        },
+        {
+          "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html",
+          "role": "abstract",
+          "fingerprint": "c18b39372ab6459475d8d046d87770604a98ac7e6de7b7d93613b6d0e9393dad"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "oph-011-0",
+          "field": "abstractSubmission",
+          "url": "https://convention.jtbcom.co.jp/131jos/abstract/index.html",
+          "reason": "abstract-period-ambiguous"
+        },
+        {
+          "status": "needs-review",
+          "id": "oph-011-1",
+          "field": "registration",
+          "url": "https://convention.jtbcom.co.jp/131jos/join/index.html",
+          "reason": "registration-periods-ambiguous",
+          "proposed": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "事前参加登録",
+                "start": "2026-10-01T12:00",
+                "deadline": "2027-02-12",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://convention.jtbcom.co.jp/131jos/join/index.html"
+              },
+              {
+                "label": "事前参加登録",
+                "start": "2027-02-12",
+                "deadline": "2027-02-16T12:00",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://convention.jtbcom.co.jp/131jos/join/index.html"
+              }
+            ]
+          }
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    },
+    {
+      "eventId": "oph-014",
+      "title": "第38回 日本緑内障学会",
+      "date": "2027-04-23",
+      "topUrl": "https://site2.convention.co.jp/jgs2027/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://site2.convention.co.jp/jgs2027/",
+          "role": "overview",
+          "fingerprint": "23803b43177f30f6dd1123313f7ef1608036cce390eadd9b8edc48d6ef575d0d"
+        },
+        {
+          "url": "https://site2.convention.co.jp/jgs2027/resitration/",
+          "role": "registration",
+          "fingerprint": "dcbc73a404ee1f2d4a8fb0441906dfec97961e561ea55f2aaa0fba7bd50da90c"
+        },
+        {
+          "url": "https://site2.convention.co.jp/jgs2027/endai/",
+          "role": "abstract",
+          "fingerprint": "2446ca08fff2b7852a7fdeef7ed47fb7caed9dcf0d7fca79a2582b078ca906ba"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "oph-014-0",
+          "field": "abstractSubmission",
+          "url": "https://site2.convention.co.jp/jgs2027/endai/",
+          "reason": "abstract-period-unconfirmed"
+        },
+        {
+          "status": "needs-review",
+          "id": "oph-014-1",
+          "field": "registration",
+          "url": "https://site2.convention.co.jp/jgs2027/resitration/",
+          "reason": "registration-periods-ambiguous",
+          "proposed": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "参加登録期間",
+                "start": "2026-10-06T12:00",
+                "deadline": "2027-03-15T12:00",
+                "category": null,
+                "advanceEligible": null,
+                "sourceUrl": "https://site2.convention.co.jp/jgs2027/resitration/"
+              },
+              {
+                "label": "参加登録期間",
+                "start": "2027-03-15T12:00",
+                "deadline": "2027-04-23",
+                "category": null,
+                "advanceEligible": null,
+                "sourceUrl": "https://site2.convention.co.jp/jgs2027/resitration/"
+              }
+            ]
+          }
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    },
+    {
+      "eventId": "conf-int-wgc-2027",
+      "title": "World Glaucoma Congress 2027 (WGC 2027)",
+      "date": "2027-04-20",
+      "topUrl": "https://worldglaucomacongress.org/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://worldglaucomacongress.org/",
+          "role": "overview",
+          "fingerprint": "764260a84e40ebbe76eaf35c0d72344cc23a2cc76614c95fcd3980e9c7e7d95d"
+        },
+        {
+          "url": "https://worldglaucomacongress.org/registration/",
+          "role": "registration",
+          "fingerprint": "dbb1a4dd2f462b07713f5a896768e8d596669a1b0357a0439b4e2e55d2553334"
+        },
+        {
+          "url": "https://worldglaucomacongress.org/abstracts/",
+          "role": "abstract",
+          "fingerprint": "328f23fe740ed613d1bb0b0cbaff1deb870d3d4c4362cf03e20cad95dc14fa15"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-int-wgc-2027-0",
+          "field": "abstractSubmission",
+          "url": "https://worldglaucomacongress.org/abstracts/",
+          "reason": "abstract-conference-identity-unconfirmed"
+        },
+        {
+          "status": "needs-review",
+          "id": "conf-int-wgc-2027-1",
+          "field": "registration",
+          "url": "https://worldglaucomacongress.org/registration/",
+          "reason": "registration-conference-identity-unconfirmed",
+          "proposed": null
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    },
+    {
+      "eventId": "oph-012",
+      "title": "ARVO 2027 Annual Meeting",
+      "date": "2027-05-02",
+      "topUrl": "https://www.arvo.org/annual-meeting",
+      "requests": [],
+      "pages": [],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "oph-012-0",
+          "field": "both",
+          "reason": "bot-protected",
+          "url": "https://www.arvo.org/annual-meeting"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "eventId": "conf-jp-lowvision-2027",
+      "title": "第28回 日本ロービジョン学会学術総会",
+      "date": "2027-05-22",
+      "topUrl": "https://www.ganki.jp/lowvision2027/",
+      "requests": [
+        {
+          "url": "https://www.ganki.jp/lowvision2027/",
+          "httpStatus": 200
+        }
+      ],
+      "pages": [
+        {
+          "url": "https://www.ganki.jp/lowvision2027/",
+          "role": "overview",
+          "fingerprint": "c5ae7ece707246595ab8908b17d38780f10636316f05ed03da3a4108953dbc30"
+        },
+        {
+          "url": "https://www.ganki.jp/lowvision2027/abstracts.html",
+          "role": "abstract",
+          "fingerprint": "f81ff8110690db50bb59ac2451a91defcfaad81fb2dc21f37d87e6d91046d008"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-jp-lowvision-2027-0",
+          "field": "registration",
+          "url": "https://www.ganki.jp/lowvision2027/registration.html",
+          "reason": "registration-fetch-failed",
+          "error": "http-404"
+        }
+      ],
+      "changes": [
+        {
+          "field": "abstractSubmission.startDate",
+          "before": null,
+          "after": "2026-11-05T12:00",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2027-01-07",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": null,
+          "after": "https://www.ganki.jp/lowvision2027/abstracts.html",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.status",
+          "before": "unknown",
+          "after": "upcoming",
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "abstract": {
+          "value": {
+            "startDate": "2026-11-05T12:00",
+            "deadline": "2027-01-07",
+            "url": "https://www.ganki.jp/lowvision2027/abstracts.html",
+            "timeZone": "Asia/Tokyo"
+          },
+          "evidence": "2026年11月5日正午~2027年1月7日"
+        },
+        "registration": null
+      }
+    },
+    {
+      "eventId": "conf-int-apacrs-2027",
+      "title": "APACRS 2027 Annual Meeting",
+      "date": "2027-06-03",
+      "topUrl": "https://apacrs2027.org/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://apacrs2027.org/",
+          "role": "overview",
+          "fingerprint": "2a0e27c802ccf4fb92c6128f85311470de78a7c80e0b3cf176a3dfd897ca3bc0"
+        },
+        {
+          "url": "https://apacrs2027.org/registration/",
+          "role": "registration",
+          "fingerprint": "9f0307cd70ce584ecd5af25069c848eb35d2b069efcb28b1b3a363ddd33b0256"
+        },
+        {
+          "url": "https://apacrs2027.org/guidelines-for-abstract-submission-2027/",
+          "role": "abstract",
+          "fingerprint": "ea8192dba1edd3888996d0fd87bfb340d2cacea4502055a55fa9260e4aa594f1"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-int-apacrs-2027-0",
+          "field": "abstractSubmission",
+          "url": "https://apacrs2027.org/guidelines-for-abstract-submission-2027/",
+          "reason": "abstract-conference-identity-unconfirmed"
+        },
+        {
+          "status": "needs-review",
+          "id": "conf-int-apacrs-2027-1",
+          "field": "registration",
+          "url": "https://apacrs2027.org/registration/",
+          "reason": "registration-conference-identity-unconfirmed",
+          "proposed": null
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    },
+    {
+      "eventId": "conf-jp-perimetry-2027",
+      "title": "第16回日本視野画像学会学術集会",
+      "date": "2027-06-05",
+      "topUrl": "https://www.ganki.jp/jips2027/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://www.ganki.jp/jips2027/",
+          "role": "overview",
+          "fingerprint": "6a5412509fd54e7d6179a0814aa4f619210571dd2fdd5e947b66f5721f2a0986"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-jp-perimetry-2027-0",
+          "field": "abstractSubmission",
+          "url": "https://www.ganki.jp/jips2027/abstracts.html",
+          "reason": "abstract-fetch-failed",
+          "error": "http-404"
+        },
+        {
+          "status": "needs-review",
+          "id": "conf-jp-perimetry-2027-1",
+          "field": "registration",
+          "url": "https://www.ganki.jp/jips2027/participants.html",
+          "reason": "registration-fetch-failed",
+          "error": "http-404"
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    },
+    {
+      "eventId": "conf-jp-jsoprs-2027",
+      "title": "第14回 日本眼形成再建外科学会学術集会 (JSOPRS 2027)",
+      "date": "2027-06-12",
+      "topUrl": "https://orbit-cs.net/jsoprs2027/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://orbit-cs.net/jsoprs2027/",
+          "role": "overview",
+          "fingerprint": "14683767ac2edac3a399e8adaf431ce28b5795a708e62a2a0e3ed0e09b39fcae"
+        },
+        {
+          "url": "https://orbit-cs.net/jsoprs2027/abstracts.html",
+          "role": "abstract",
+          "fingerprint": "cdb15b4765b63b74c25b7c7f61dc0da3f517f2d6cca665e4322e6db269891917"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-jp-jsoprs-2027-0",
+          "field": "registration",
+          "reason": "no-recognized-one-hop-link",
+          "url": "https://orbit-cs.net/jsoprs2027/"
+        },
+        {
+          "status": "needs-review",
+          "id": "conf-jp-jsoprs-2027-1",
+          "field": "abstractSubmission",
+          "url": "https://orbit-cs.net/jsoprs2027/abstracts.html",
+          "reason": "abstract-conference-identity-unconfirmed"
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    },
+    {
+      "eventId": "conf-jp-pediatric-2027",
+      "title": "第83回 日本弱視斜視学会総会・第52回 日本小児眼科学会総会",
+      "date": "2027-06-18",
+      "topUrl": "https://jasa-japo2027.jp/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://jasa-japo2027.jp/",
+          "role": "overview",
+          "fingerprint": "43da64eb1db684d4e5665683489c5a68da28a680b7bae57c8553503dc4360355"
+        },
+        {
+          "url": "https://jasa-japo2027.jp/sanka.html",
+          "role": "registration",
+          "fingerprint": "f7f659ac4f1761fe115d41ae02a46832c1a6806be28d519ac094809cde6acb95"
+        },
+        {
+          "url": "https://jasa-japo2027.jp/endai.html",
+          "role": "abstract",
+          "fingerprint": "2e7d4c0f33650513f438489eaed46fbab334a7e6b87a4bba25f5ed6c2904af57"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-jp-pediatric-2027-0",
+          "field": "abstractSubmission",
+          "url": "https://jasa-japo2027.jp/endai.html",
+          "reason": "abstract-conference-identity-unconfirmed"
+        },
+        {
+          "status": "needs-review",
+          "id": "conf-jp-pediatric-2027-1",
+          "field": "registration",
+          "url": "https://jasa-japo2027.jp/sanka.html",
+          "reason": "registration-conference-identity-unconfirmed",
+          "proposed": null
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    },
+    {
+      "eventId": "conf-int-soe-2027",
+      "title": "SOE 2027 (European Society of Ophthalmology Congress)",
+      "date": "2027-06-18",
+      "topUrl": "https://soe2027.soevision.org/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://soe2027.soevision.org/",
+          "role": "overview",
+          "fingerprint": "a464e1be06c92365ee208ad26104f6bad7303959ff47b935c5350cd3ee4c1bab"
+        },
+        {
+          "url": "https://soe2027.soevision.org/registration/",
+          "role": "registration",
+          "fingerprint": "51d0ec9a2609bfa7136f1e249448c85b2430292e9a4f27c4628798dde7d48faa"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-int-soe-2027-0",
+          "field": "abstractSubmission",
+          "reason": "no-recognized-one-hop-link",
+          "url": "https://soe2027.soevision.org/"
+        },
+        {
+          "status": "needs-review",
+          "id": "conf-int-soe-2027-1",
+          "field": "registration",
+          "url": "https://soe2027.soevision.org/registration/",
+          "reason": "registration-conference-identity-unconfirmed",
+          "proposed": null
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    },
+    {
+      "eventId": "oph-013",
+      "title": "第42回 JSCRS学術総会 (日本白内障屈折矯正手術学会)",
+      "date": "2027-06-25",
+      "topUrl": "https://www.kwcs.jp/42jscrs/",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://www.kwcs.jp/42jscrs/",
+          "role": "overview",
+          "fingerprint": "d2e80c192153ad924dc31cb04247db21fae61e5c1c8893e383d5fe9205a4ca97"
+        },
+        {
+          "url": "https://www.kwcs.jp/42jscrs/reg.html",
+          "role": "registration",
+          "fingerprint": "b79264711098decdae1e9f62ea0dccde8a1528884b1c34fac03e4e135b006009"
+        },
+        {
+          "url": "https://www.kwcs.jp/42jscrs/theme.html",
+          "role": "abstract",
+          "fingerprint": "200dd5e8524d9dd9e1b662fbccddc1eee127a22797e514fecb1856e8f53bc623"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "oph-013-0",
+          "field": "abstractSubmission",
+          "url": "https://www.kwcs.jp/42jscrs/theme.html",
+          "reason": "abstract-conference-identity-unconfirmed"
+        },
+        {
+          "status": "needs-review",
+          "id": "oph-013-1",
+          "field": "registration",
+          "url": "https://www.kwcs.jp/42jscrs/reg.html",
+          "reason": "registration-conference-identity-unconfirmed",
+          "proposed": null
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    },
+    {
+      "eventId": "conf-jp-presbyopia-2028",
+      "title": "日本老視学会 第5回学術総会",
+      "date": "2027-01-16",
+      "topUrl": "https://www.rousi.jp/jps5",
+      "requests": [],
+      "pages": [
+        {
+          "url": "https://www.rousi.jp/jps5",
+          "role": "overview",
+          "fingerprint": "ed51f349b0356508db0c3a05a205f60fb2afc1eaf4f0e50bf57f467bc61ab14e"
+        },
+        {
+          "url": "https://www.rousi.jp/event-details/nipponroshigakkaidai5kaigakujutsusokai",
+          "role": "registration",
+          "fingerprint": "23bd3a8cd93dff5a56a276386c3cf9bb8921b48355b639e29501e0a4ff939cdf"
+        },
+        {
+          "url": "https://www.rousi.jp/jps5-abstract",
+          "role": "abstract",
+          "fingerprint": "72e93b6c895fb4b0a8695b3a9cdc9cc78e901ed78134683a045147b12a53ffbd"
+        }
+      ],
+      "review": [
+        {
+          "status": "needs-review",
+          "id": "conf-jp-presbyopia-2028-0",
+          "field": "abstractSubmission",
+          "url": "https://www.rousi.jp/jps5-abstract",
+          "reason": "abstract-conference-identity-unconfirmed"
+        },
+        {
+          "status": "needs-review",
+          "id": "conf-jp-presbyopia-2028-1",
+          "field": "registration",
+          "url": "https://www.rousi.jp/event-details/nipponroshigakkaidai5kaigakujutsusokai",
+          "reason": "registration-periods-unconfirmed",
+          "proposed": null
+        }
+      ],
+      "changes": [],
+      "evidence": {
+        "abstract": null,
+        "registration": null
+      }
+    }
+  ]
+}

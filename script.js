@@ -1278,7 +1278,8 @@ function renderAbstractUnknownHtml(event) {
     try {
       const url = new URL(value);
       if (!['https:', 'http:'].includes(url.protocol) || url.username || url.password) continue;
-      return `<a href="${escapeHtml(value)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link"><span>${label}</span>${renderExternalLinkIconHtml()}</a>`;
+      const linkLabel = label === '詳細' && event.eventOfficialUrl && new URL(event.eventOfficialUrl).href === url.href ? '公式' : label;
+      return `<a href="${escapeHtml(value)}" target="_blank" rel="noopener noreferrer" class="abstract-submit-link"><span>${linkLabel}</span>${renderExternalLinkIconHtml()}</a>`;
     } catch {}
   }
   return '<span class="abstract-unknown">情報未確認</span>';
