@@ -92,3 +92,21 @@
 .gemini-sync-status { margin: 4px 0 8px; padding: 8px 12px; border-radius: 8px; font-size: .85rem; font-weight: 600; }
 .gemini-sync-synced { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
 .gemini-sync-failed { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+.gemini-view-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 12px; }
+.gemini-state-badge { font-size: .75rem; font-weight: 700; border-radius: 20px; padding: 3px 10px; background: #e2e8f0; color: #334155; }
+.gemini-state-badge.state-pending { background: #fff0cb; color: #845009; }
+.gemini-state-badge.state-hold { background: #e0e7ff; color: #3730a3; }
+.gemini-state-badge.state-done { background: #dff4ec; color: #136650; }
+.gemini-decision-cell { min-width: 200px; }
+.gemini-decision-state { display: block; font-size: .8rem; font-weight: 700; margin-bottom: 6px; color: #475569; }
+.gemini-decision-state.apply-pending { color: #0b5d8f; }
+.gemini-decision-state.apply-applied { color: #136650; }
+.gemini-decision-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
+.gemini-decision-btn { min-height: 36px; padding: 4px 10px; border: 1px solid #b7c2d1; border-radius: 8px; background: #fff; color: #253449; font: inherit; font-size: .8rem; cursor: pointer; }
+.gemini-decision-btn.is-active { background: #215ca8; border-color: #215ca8; color: #fff; font-weight: 700; }
+.gemini-decision-btn:disabled { opacity: .5; cursor: not-allowed; }
+@media (max-width: 600px) { .gemini-decision-btn { flex: 1 1 30%; } .gemini-card-actions { flex-direction: column; } }
+.gemini-changes-table { overflow-x: auto; max-width: 100%; }
+.gemini-changes-table table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: .85rem; }
+.gemini-changes-table th, .gemini-changes-table td { padding: 8px; border: 1px solid #dbe3ec; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+.gemini-changes-table th { background: #f4f7fb; white-space: nowrap; }
