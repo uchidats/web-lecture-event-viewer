@@ -2,6 +2,7 @@
 // Shadow classification of review candidates. Judgement only: this module never changes events.js,
 // Firestore status, review state, approval history or auto-apply counts.
 const n = require('./normalize');
+const places = require('./places');
 
 const CLASS = Object.freeze({ EQUIVALENT: 'equivalent', LOW_RISK: 'low_risk_auto_candidate', SOURCE: 'source_problem', HUMAN: 'human_review' });
 const result = (classification, ruleId, reason, extra = {}) => ({ classification, ruleId, reason, ...extra });
@@ -9,6 +10,7 @@ const MIN_CONFIDENCE = 0.95;
 const COMPLETION_FIELDS = new Set(['abstractSubmission.startDate', 'abstractSubmission.deadline', 'abstractSubmission.status', 'abstractSubmission.url', 'abstractSubmission.timeZone']);
 const DATE_FIELDS = new Set(['date', 'endDate', 'year']);
 const LOCATION_FIELDS = new Set(['venue', 'venues', 'city', 'country', 'cityCountry']);
+const PLACE_FIELDS = new Set(['cityCountry', 'city']);
 const URL_FIELDS = new Set(['eventOfficialUrl', 'societyUrl', 'officialUrl', 'abstractSubmission.url']);
 const CENTRAL_EUROPE = new Set(['CET', 'CEST']);
 
@@ -196,6 +198,14 @@ function classifyChangeBase(change, ctx) {
 
   const same = sameMeaning(field, current, detected);
   if (same) return same;
+  if (PLACE_FIELDS.has(field)) {
+    // Host-city notation: keep the Japanese value (prefecture/country included) when the official side is just the English city name.
+    const place = places.samePlace(current, detected);
+    if (place) {
+      return result(CLASS.EQUIVALENT, 'location-english-city-name-same-place',
+        `開催地は同じ都市（${place.city}）。公式側は英語の都市名のみなので、日本語表記・都道府県・国つきの現在値を維持し、英語表記へ置き換えない（国際学会でも日本開催は日本語表記を優先）。`, { keepCurrent: true });
+    }
+  }
   if (field === 'title' && typeof current === 'string' && typeof detected === 'string' && titleCore(current) && titleCore(current) === titleCore(detected)) {
     return result(CLASS.EQUIVALENT, 'title-supplemental-text-only', '括弧書きの別名・英語併記・会期や会場の付記が増減しているだけで、学会名と開催回の部分は同一。');
   }

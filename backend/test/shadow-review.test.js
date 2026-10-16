@@ -84,7 +84,8 @@ test('日付変更・締切日変更は人間確認（表記差に吸収しな�
 
 test('会場・都市・国の実質変更、情報量が減る会場名は人間確認', () => {
   expectRule({ field: 'venue', current: '国立京都国際会館', detected: '京都ブライトンホテル' }, CLASS.HUMAN, 'venue-location-changed');
-  expectRule({ field: 'cityCountry', current: '京都市（京都府） / 日本', detected: 'Kyoto' }, CLASS.HUMAN, 'venue-location-changed');
+  // 英語の都市名だけで同じ都市なら equivalent（下の「開催地」テスト）。別の都市は人間確認。
+  expectRule({ field: 'cityCountry', current: '京都市（京都府） / 日本', detected: 'Osaka' }, CLASS.HUMAN, 'venue-location-changed');
   expectRule({ field: 'venue', current: 'じゅうろくプラザ（岐阜市文化産業交流センター）', detected: 'じゅうろくプラザ' }, CLASS.HUMAN, 'venue-information-reduced');
 });
 
@@ -273,4 +274,36 @@ test('stale: 現行データでは presbyopia 2件は stale にならず、反�
   assert.ok(!stale.some(c => /presbyopia/.test(c.eventId)), 'presbyopia must never be closed as stale');
   assert.ok(stale.some(c => c.eventId === 'conf-jp-myopia-2027'));
   assert.ok(stale.every(c => c.classification === CLASS.EQUIVALENT && c.baselineRuleId));
+});
+
+// ---- host-city notation: keep the Japanese value when the official side is only the English city name ----
+test('開催地: 日本語（県・国つき）の現在値と英語の都市名だけの公式値が同じ都市なら equivalent（現在値を維持）', () => {
+  const kyoto = expectRule({ field: 'cityCountry', current: '京都市（京都府） / 日本', detected: 'Kyoto' }, CLASS.EQUIVALENT, 'location-english-city-name-same-place');
+  assert.equal(kyoto.keepCurrent, true);
+  assert.match(kyoto.reason, /日本語表記.*維持/);
+  expectRule({ field: 'cityCountry', current: '京都市（京都府） / 日本', detected: 'Kyoto, Japan' }, CLASS.EQUIVALENT, 'location-english-city-name-same-place');
+  expectRule({ field: 'cityCountry', current: '東京都 / 日本', detected: 'Tokyo' }, CLASS.EQUIVALENT, 'location-english-city-name-same-place');
+  expectRule({ field: 'cityCountry', current: '千代田区（東京都） / 日本', detected: 'Tokyo' }, CLASS.EQUIVALENT, 'location-english-city-name-same-place');
+  expectRule({ field: 'cityCountry', current: 'アテネ / ギリシャ', detected: 'Athens' }, CLASS.EQUIVALENT, 'location-english-city-name-same-place');
+  expectRule({ field: 'cityCountry', current: 'サンディエゴ（カリフォルニア州） / 米国', detected: 'San Diego, USA' }, CLASS.EQUIVALENT, 'location-english-city-name-same-place');
+  expectRule({ field: 'cityCountry', current: 'Pattaya / Thailand', detected: 'Pattaya' }, CLASS.EQUIVALENT, 'location-english-city-name-same-place');
+});
+
+test('開催地: 実際に都市が異なる・国が食い違う・未知の都市名は人間確認のまま', () => {
+  expectRule({ field: 'cityCountry', current: '東京都 / 日本', detected: 'Yokohama' }, CLASS.HUMAN, 'venue-location-changed');
+  expectRule({ field: 'cityCountry', current: '京都市（京都府） / 日本', detected: 'Nara' }, CLASS.HUMAN, 'venue-location-changed');
+  // A prefecture alone does not make a different city in it the same place.
+  expectRule({ field: 'cityCountry', current: '枚方市（大阪府） / 日本', detected: 'Osaka' }, CLASS.HUMAN, 'venue-location-changed');
+  expectRule({ field: 'cityCountry', current: 'アテネ / ギリシャ', detected: 'Athens, Italy' }, CLASS.HUMAN, 'venue-location-changed');
+  expectRule({ field: 'cityCountry', current: '京都市（京都府） / 日本', detected: 'Kyoto, somewhere unknown' }, CLASS.HUMAN, 'venue-location-changed');
+  expectRule({ field: 'cityCountry', current: '京都市（京都府） / 日本', detected: 'Kyoto International Conference Center' }, CLASS.HUMAN, 'venue-location-changed');
+});
+
+test('開催地: WGC 2027（Kyoto）とSOE 2027（Athens）の実データ候補が equivalent になり、Tokyo→Yokohama型は残る', { skip: !fs.existsSync(path.join(root, 'reports/gemini-monitor/2026-10-16.json')) }, () => {
+  const { loadEvents } = require('../../scripts/shadow-review/run');
+  const geminiReport = JSON.parse(fs.readFileSync(path.join(root, 'reports/gemini-monitor/2026-10-16.json'), 'utf8'));
+  const result = buildShadowReport({ legacyData: { version: 1, items: [] }, geminiReport, events: loadEvents(), today: '2026-10-16' });
+  const cities = result.candidates.filter(c => c.field === 'cityCountry');
+  assert.ok(cities.length >= 2);
+  for (const c of cities) assert.equal(c.ruleId, 'location-english-city-name-same-place', `${c.eventId}: ${c.current} -> ${c.detected}`);
 });
