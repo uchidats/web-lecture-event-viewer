@@ -118,11 +118,11 @@ async function main() {
       }
       await evaluate('document.getElementById("view-list").click();elements.resetFilterBtn.click();state.filters.keyword="第28回 日本ロービジョン学会学術総会";renderEvents()');
       const lowvision=await evaluate('(()=>{const card=document.querySelector("#event-list [data-id=conf-jp-lowvision-2027]"),row=card.querySelector(".conf-abstract-deadline-val");return {text:row.textContent,url:row.querySelector("a")?.href,fits:card.scrollWidth<=card.clientWidth+1,pageFits:document.documentElement.scrollWidth<=innerWidth+1};})()');
-      assert.ok(lowvision.text.includes('1月7日')&&lowvision.text.includes('締切'));
+      assert.ok(lowvision.text.includes('受付前')&&lowvision.text.includes('11月5日 12:00 開始')&&!lowvision.text.includes('詳細'));
       assert.equal(lowvision.url,'https://www.ganki.jp/lowvision2027/abstracts.html');assert.ok(lowvision.fits&&lowvision.pageFits);
       const closed=await evaluate('renderAbstractSubmissionHtml(state.events.find(e=>e.id==="conf-jp-lowvision-2027"),new Date("2027-01-08T00:00:00+09:00"))');
-      assert.ok(closed.includes('1月7日 締切済')&&!closed.includes('受付中'));
-      assert.ok((await evaluate('(()=>{const e=state.events.find(e=>e.id==="conf-jp-surgery-2027");return renderAbstractSubmissionHtml({...e,abstractSubmission:{status:"unknown",url:e.eventOfficialUrl}});})()')).includes('公式</span>'));
+      assert.ok(closed.includes('<span>終了</span>')&&!closed.includes('受付中')&&!closed.includes('締切済')&&closed.includes('<svg'));
+      assert.ok((await evaluate('(()=>{const e=state.events.find(e=>e.id==="conf-jp-surgery-2027");return renderAbstractSubmissionHtml({...e,abstractSubmission:{status:"unknown",url:e.eventOfficialUrl}});})()')).includes('情報未確認</span>'));
       console.log('PASS '+width+'px: JSOD33 list/calendar/compact phases and abstract noon; audited lowvision deadline/dedicated URL/closed state; no overflow');
     }
     await call('Browser.close');

@@ -5,12 +5,15 @@ const report=require('../reports/deadline-audit-2027-h1-2026-10-15.json');
 const {events}=loadEvents(require('node:path').resolve(__dirname,'..'));
 const fs=require('node:fs'),vm=require('node:vm'),context=vm.createContext({console,URL,Intl,document:{getElementById:()=>null,addEventListener:()=>{}}});
 for(const file of ['venues.js','companies.js','events.js','script.js'])vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'..',file),'utf8'),context);
-assert.ok(vm.runInContext('(()=>{const e=sampleEvents.find(e=>e.id==="conf-jp-surgery-2027");return renderAbstractSubmissionHtml({...e,abstractSubmission:{status:"unknown",url:e.eventOfficialUrl}});})()',context).includes('公式</span>'));
-assert.ok(vm.runInContext('renderAbstractUnknownHtml({...sampleEvents.find(e=>e.id==="conf-jp-lowvision-2027"),abstractSubmission:{url:"https://www.ganki.jp/lowvision2027/abstracts.html"}})',context).includes('詳細</span>'));
+assert.ok(vm.runInContext('(()=>{const e=sampleEvents.find(e=>e.id==="conf-jp-surgery-2027");return renderAbstractSubmissionHtml({...e,abstractSubmission:{status:"unknown",url:e.eventOfficialUrl}});})()',context).includes('情報未確認</span>'));
+assert.ok(vm.runInContext('renderAbstractUnknownHtml({...sampleEvents.find(e=>e.id==="conf-jp-lowvision-2027"),abstractSubmission:{url:"https://www.ganki.jp/lowvision2027/abstracts.html"}})',context).includes('情報未確認</span>'));
 assert.equal(events.filter(inScope).length,20);
-assert.deepEqual(report.records.map(r=>r.eventId),events.filter(inScope).map(e=>e.id));
+// The 2026-10-15 report audited the 5th Presbyopia congress (jps5) under the id it had then (…-2028). The id now follows the year:
+// the 5th congress (2027-01-16) is conf-jp-presbyopia-2027, so the record is read under that id.
+const reportEventId=id=>id==='conf-jp-presbyopia-2028'?'conf-jp-presbyopia-2027':id;
+assert.deepEqual(report.records.map(r=>reportEventId(r.eventId)).sort(),events.filter(inScope).map(e=>e.id).sort());
 for(const record of report.records){
- const event=events.find(e=>e.id===record.eventId);
+ const event=events.find(e=>e.id===reportEventId(record.eventId));
  assert.ok(record.pages.length<=5);
  assert.ok(record.review.every(i=>i.status==='needs-review'));
  for(const change of record.changes){assert.ok(allowed(change.field));const [field,key]=change.field.split('.');assert.deepEqual(key?event[field][key]:event[field],change.after);}

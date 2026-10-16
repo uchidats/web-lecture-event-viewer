@@ -6,8 +6,8 @@ const now=new Date('2026-10-14T12:00:00+09:00');
 for(const [deadline,expected,closed] of [['2026-11-05 12:00','11月5日 12:00 締切',false],['2026-11-05','11月5日 締切',false],['2026-10-13 12:00','10月13日 締切済',true],['2027-01-08','1月8日 締切',false]]) {
   const event={isConference:true,date:'2027-02-01',timeZone:'Asia/Tokyo',registration:{periods:[{label:'事前参加登録',category:'regular',deadline}]},abstractSubmission:{status:'open',deadline}};
   const saved=JSON.stringify(event);
-  for(const html of [renderRegistrationHtml(event,now),renderAbstractSubmissionHtml(event,now)]) {
-    assert.ok(html.includes(expected),html);assert.ok(!html.includes('年'));if(closed)assert.ok(!html.includes('12:00'));
+  for(const [kind,html] of [['registration',renderRegistrationHtml(event,now)],['abstract',renderAbstractSubmissionHtml(event,now)]]) {
+    assert.ok(html.includes(kind==='abstract'&&closed?'終了':expected),html);assert.ok(!html.includes('年'));if(closed)assert.ok(!html.includes('12:00'));
   }
   assert.equal(JSON.stringify(event),saved);
 }

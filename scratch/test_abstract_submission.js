@@ -27,22 +27,22 @@ vm.runInContext(`
     assert.equal(info.urgency, urgency);
     assert.equal(info.status, days < 0 ? 'closed' : 'open');
     const html = createEventCardHtml(event);
-    assert.ok(html.includes(days < 0 ? '締切済' : '13:00 締切'));assert.ok(!html.includes('日前'));assert.ok(!html.includes('本日締切'));
+    assert.ok(html.includes(days < 0 ? '終了' : '13:00 締切'));assert.ok(!html.includes('日前'));assert.ok(!html.includes('本日締切'));
     assert.equal(matchesAbstractFilter(event, 'open'), days >= 0);
     assert.equal(matchesAbstractFilter(event, 'deadline_30d'), days >= 0 && days <= 30);
     assert.equal(matchesAbstractFilter(event, 'deadline_7d'), days >= 0 && days <= 7);
   }
   for (const [status, label] of [
-    ['open', '受付中'], ['upcoming', '演題募集予定'],
-    ['closed', '11月5日 締切済'], ['unknown', '公式']
+    ['open', '受付中'], ['upcoming', '受付前'],
+    ['closed', '終了'], ['unknown', '情報未確認']
   ]) {
     const event = make(status, status === 'unknown' ? null : '2026-11-05');
     assert.ok(createEventCardHtml(event).includes(label));
     const linked = renderAbstractSubmissionHtml({ ...event, abstractSubmission: {
       ...event.abstractSubmission, url: 'https://example.com/abstract?a=1&b=2'
     }});
-    if(status==='closed')assert.ok(!linked.includes('<a '));
-    else {assert.ok(linked.includes('target="_blank" rel="noopener noreferrer"'));assert.ok(linked.includes('https://example.com/abstract?a=1&amp;b=2'));}
+    assert.ok(linked.includes('target="_blank" rel="noopener noreferrer"'));assert.ok(linked.includes('https://example.com/abstract?a=1&amp;b=2'));
+    assert.ok(linked.includes('<svg'), 'external-link icon next to the status');assert.ok(!linked.includes('詳細'), 'no 詳細 text link');
     if(status!=='unknown')assert.ok(!renderAbstractSubmissionHtml(event).includes('<a '));
   }
   assert.ok(renderAbstractSubmissionHtml(make('open', '2026-11-05')).includes('11月5日 締切'));
@@ -59,11 +59,10 @@ vm.runInContext(`
   ]) {
     const ended = make(status, deadline);
     const html = renderAbstractSubmissionHtml(ended);
-    assert.equal(html, '<span class="deadline-highlight closed">' + (deadline ? formatAbstractDeadline(deadline,{showTime:false}) + ' 締切済' : '締切済') + '</span>');
+    assert.equal(html, '<span class="abstract-status-tag closed">終了</span>');
     const linked = renderAbstractSubmissionHtml(make(status, deadline, 'https://example.com/abstract'));
-    assert.ok(linked.includes('締切済'));assert.ok(!linked.includes('演題募集終了'));assert.ok(!linked.includes('受付終了'));
-    assert.ok(!linked.includes('<a '));
-    assert.ok(!linked.includes('abstract-status-tag'));
+    assert.ok(linked.includes('<span>終了</span>'));assert.ok(!linked.includes('締切済'));assert.ok(!linked.includes('演題募集終了'));assert.ok(!linked.includes('受付終了'));
+    assert.ok(linked.includes('abstract-link-closed'));assert.ok(!linked.includes('abstract-status-tag'));
     assert.ok(!linked.includes('演題締切'));
     assert.ok(!linked.includes('募集開始予定'));
     assert.ok(!linked.includes('締切まで'));
@@ -71,17 +70,17 @@ vm.runInContext(`
   }
   for (const status of ['open', 'upcoming']) {
     const html = renderAbstractSubmissionHtml(make(status, '2026-11-05', 'https://example.com/abstract'));
-    assert.ok(html.includes('11月5日 締切'));
+    assert.ok(html.includes(status === 'open' ? '11月5日 締切' : '10月1日 開始'));
     assert.ok(!html.includes('abstract-submit-link-closed'));
   }
   assert.ok(renderAbstractSubmissionHtml(make('open', '2026-10-04')).includes('abstract-deadline urgent'));
   const historical = make('closed', '2026-05-21 12:00');
   const savedHistorical = JSON.stringify(historical);
-  assert.ok(renderAbstractSubmissionHtml(historical).includes('5月21日 締切済'));
+  assert.ok(renderAbstractSubmissionHtml(historical).includes('終了'));assert.ok(!renderAbstractSubmissionHtml(historical).includes('5月21日'));
   getAbstractSubmissionState(historical); getDaysUntilAbstractDeadline(historical);
   assert.equal(JSON.stringify(historical), savedHistorical, 'closed rendering never removes deadline');
   assert.equal(formatAbstractDeadline('2026-05-21 12:00', {showTime:false}), '5月21日');
-  for (const [status, expected] of [['closed', '6月1日 締切済（延長）'], ['open', '6月1日 締切（延長）']]) {
+  for (const [status, expected] of [['closed', '終了'], ['open', '6月1日 締切（延長）']]) {
     const extended = make(status, '2026-06-01');
     extended.abstractSubmission = {...extended.abstractSubmission, originalDeadline:'2026-05-21', currentDeadline:'2026-06-01', extended:true};
     assert.ok(renderAbstractSubmissionHtml(extended, '2026-05-25').includes(expected));
