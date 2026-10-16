@@ -163,6 +163,14 @@ function getEventSpecialties(event) {
 }
 
 // 表示ラベルのみ短縮し、既存のデータ・フィルタ内部値は維持する。
+// イベント種別フィルタ・種別表示用の文言（内部値は変えない）。学会分類バッジは getEventTypeDisplayLabel（国内/国際）のまま。
+function getEventTypeFilterLabel(value) {
+  if (value === "講演会・勉強会") return "講演会";
+  if (value === "地方会・研究会") return "研究会";
+  if (value === "海外学会" || value === "国際学会") return "国際学会";
+  return value;
+}
+
 function getEventTypeDisplayLabel(value) {
   if (value === '国内学会') return '国内';
   if (value === '海外学会' || value === '国際学会') return '国際';
@@ -1426,7 +1434,7 @@ function renderFilterOptions() {
       const count = state.events.filter(e => key === 'specialty' ? getEventSpecialties(e).includes(val) : e[key] === val).length;
       const displayLabel = key === 'specialty'
         ? getSpecialtyDisplayLabel(val)
-        : (key === 'eventType' ? getEventTypeDisplayLabel(val) : val);
+        : (key === 'eventType' ? getEventTypeFilterLabel(val) : val);
       return `
         <label class="chip-label">
           <input type="checkbox" name="${key}" value="${val}">
@@ -2022,7 +2030,7 @@ function renderActiveFilterChips() {
 
   ["specialty", "eventType", "format", "region"].forEach(group => {
     state.filters[group].forEach(val => {
-      chips.push({ group, label: group === 'specialty' ? getSpecialtyDisplayLabel(val) : group === 'eventType' ? getEventTypeDisplayLabel(val) : val, value: val });
+      chips.push({ group, label: group === 'specialty' ? getSpecialtyDisplayLabel(val) : group === 'eventType' ? getEventTypeFilterLabel(val) : val, value: val });
     });
   });
 
@@ -2547,7 +2555,7 @@ function createEventCardHtml(event, { showConferenceTags = false } = {}) {
         </div>
         <div class="card-meta-item">
           <span class="card-meta-label">種別:</span>
-          <span>${escapeHtml(getEventTypeDisplayLabel(event.eventType))}</span>
+          <span>${escapeHtml(getEventTypeFilterLabel(event.eventType))}</span>
         </div>
         `}
         <div class="card-meta-item">

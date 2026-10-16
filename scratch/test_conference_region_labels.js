@@ -18,16 +18,16 @@ assert.equal(JSON.stringify(sampleEvents),original);
 const container={innerHTML:''};
 document.getElementById=id=>id==='filter-eventType'?container:{innerHTML:'',querySelectorAll:()=>[]};
 state.events=sampleEvents;renderFilterOptions();
-for(const [value,label] of [['国内学会','国内'],['海外学会','国際']]) {
+for(const [value,label] of [['国内学会','国内学会'],['海外学会','国際学会'],['講演会・勉強会','講演会'],['地方会・研究会','研究会']]) {
   const start=container.innerHTML.indexOf('value="'+value+'"');
   assert.ok(start>=0,'internal filter value retained');
   const chip=container.innerHTML.slice(start,container.innerHTML.indexOf('</label>',start));
   assert.ok(chip.includes(label));assert.ok(chip.includes('('+sampleEvents.filter(e=>e.eventType===value).length+')'));
 }
 elements.activeFilterChips={innerHTML:'',querySelectorAll:()=>[]};
-state.filters.eventType=new Set(['国内学会','海外学会']);renderActiveFilterChips();
-assert.ok(elements.activeFilterChips.innerHTML.includes('<strong>国内</strong>'));
-assert.ok(elements.activeFilterChips.innerHTML.includes('<strong>国際</strong>'));
+state.filters.eventType=new Set(['国内学会','海外学会','講演会・勉強会','地方会・研究会']);renderActiveFilterChips();
+assert.ok(elements.activeFilterChips.innerHTML.includes('<strong>国内学会</strong>'));assert.ok(elements.activeFilterChips.innerHTML.includes('<strong>講演会</strong>'));assert.ok(elements.activeFilterChips.innerHTML.includes('<strong>研究会</strong>'));
+assert.ok(elements.activeFilterChips.innerHTML.includes('<strong>国際学会</strong>'));
 assert.ok(state.filters.eventType.has('国内学会'));assert.ok(state.filters.eventType.has('海外学会'));
 `,context);
 console.log('PASS: concise domestic/international labels, all conference cards, unchanged data and non-conference labels');
