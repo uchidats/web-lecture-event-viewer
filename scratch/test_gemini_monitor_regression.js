@@ -124,9 +124,14 @@ async function testAll() {
     detectedYears: [2027],
     detectedEditions: [5] // event in database is 4th
   };
-  const presbyopiaDecision = classifyDecision(presbyopiaEvent, localSemanticAnalyzer(presbyopiaEvent, 'https://www.rousi.jp/jps5-overview', presbyopiaContext5th));
+  // Pre-fix state: the 2027 id carried the 4th congress (2026-01-17); the 5th (2027) is the correct content for this id.
+  const presbyopiaEventOld = { ...presbyopiaEvent, title: '日本老視学会 第4回学術総会', date: '2026-01-17', endDate: '2026-01-18' };
+  const presbyopiaDecision = classifyDecision(presbyopiaEventOld, localSemanticAnalyzer(presbyopiaEventOld, 'https://www.rousi.jp/jps5-overview', presbyopiaContext5th));
   assert.equal(presbyopiaDecision.action, RECOMMENDED_ACTIONS.NEEDS_REVIEW);
-  console.log('PASS: 3. 日本老視学会 (conf-jp-presbyopia-2027): Edition 4 vs 5 caught as needs_review');
+  // Post-fix: the id now holds the 5th congress, so the same official page is no longer a mismatch.
+  const presbyopiaDecisionFixed = classifyDecision(presbyopiaEvent, localSemanticAnalyzer(presbyopiaEvent, 'https://www.rousi.jp/jps5-overview', presbyopiaContext5th));
+  assert.notEqual(presbyopiaDecisionFixed.action, RECOMMENDED_ACTIONS.NEEDS_REVIEW);
+  console.log('PASS: 3. 日本老視学会 (conf-jp-presbyopia-2027): Edition 4 vs 5 caught as needs_review; post-fix 5th congress verified clean');
 
   // 3.4 日本眼腫瘍学会: conf-jp-oncology-2027 (第44回 2027年 富山国際会議場)
   const oncologyEvent = events.find(e => e.id === 'conf-jp-oncology-2027');

@@ -7,7 +7,7 @@ module.exports = [
   { eventId:'conf-jp-optics-2027', url:'https://www.jsoo-ws.com/63overview', checkedOn:'2026-10-09',
     facts:{title:'第63回日本眼光学学会総会',edition:[63],year:2027,date:'2027-08-28',endDate:'2027-08-29',venue:'御茶ノ水ソラシティカンファレンスセンター',subtitle:'Informed vision, bright future'},
     evidence:'公式開催概要：第63回、2027年8月28～29日、御茶ノ水ソラシティ、テーマ「Informed vision, bright future」。' },
-  { eventId:'conf-jp-presbyopia-2028', url:'https://www.rousi.jp/jps5-overview', checkedOn:'2026-10-09',
+  { eventId:'conf-jp-presbyopia-2027', url:'https://www.rousi.jp/jps5-overview', checkedOn:'2026-10-09',
     facts:{title:'日本老視学会 第5回学術総会',edition:[5],year:2027,date:'2027-01-16',endDate:'2027-01-17',cityCountry:'東京都 / 日本',venue:'御茶ノ水ソラシティ カンファレンスセンター',subtitle:'老視克服への新たな冒険'},
     evidence:'開催概要：第5回、2027年1月16日・17日、御茶ノ水ソラシティ、テーマ「老視克服への新たな冒険」。' },
   { eventId:'conf-jp-iscev-2027', url:'https://n-practice.co.jp/jscev/meeting/latest.html', checkedOn:'2026-10-09',

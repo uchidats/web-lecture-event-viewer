@@ -1185,13 +1185,13 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-presbyopia-2027",
-    "title": "日本老視学会 第4回学術総会",
-    "subtitle": "アンメットニーズはここにある",
-    "date": "2026-01-17",
-    "endDate": "2026-01-18",
+    "title": "第5回 日本老視学会学術総会",
+    "subtitle": "老視克服への新たな冒険",
+    "date": "2027-01-16",
+    "endDate": "2027-01-17",
     "time": "全日程",
     "region": "関東",
-    "venue": "品川THE GRAND HALL",
+    "venue": "御茶ノ水ソラシティ カンファレンスセンター",
     "specialty": "白内障",
     "eventType": "国内学会",
     "format": "現地",
@@ -1200,7 +1200,7 @@ const sampleEvents = [
     "conferenceRegion": "domestic",
     "conferenceCategory": "白内障屈折",
     "conferenceTier": "subspecialty",
-    "period": "2026年1月17日(土) 〜 2026年1月18日(日)",
+    "period": "2027年1月16日(土) 〜 2027年1月17日(日)",
     "cityCountry": "東京都 / 日本",
     "abstractDeadline": "未定",
     "earlyBirdDeadline": "未定",
@@ -1210,8 +1210,9 @@ const sampleEvents = [
     "abstractSubmission": {
       "status": "unknown",
       "startDate": null,
-      "deadline": null,
-      "url": null
+      "deadline": "2026-10-20T12:00",
+      "url": "https://www.rousi.jp/jps5-abstract",
+      "timeZone": "Asia/Tokyo"
     },
     "calendarStatus": {
       "google": {
@@ -1232,8 +1233,8 @@ const sampleEvents = [
     ],
     "description": "老眼に対する水晶体再建術、点眼薬、調節機能解析の最新トピックス。",
     "isConference": true,
-    "eventOfficialUrl": "https://www.rousi.jp/jps4",
-    "conferenceChair": "神谷 和孝（昭和医科大学）"
+    "eventOfficialUrl": "https://www.rousi.jp/jps5",
+    "conferenceChair": "平岡 孝浩（筑波大学）"
   },
   {
     "id": "conf-jp-surgery-2027",
@@ -3358,13 +3359,13 @@ const sampleEvents = [
   },
   {
     "id": "conf-jp-presbyopia-2028",
-    "title": "日本老視学会 第5回学術総会",
-    "subtitle": "老視克服への新たな冒険",
-    "date": "2027-01-16",
-    "endDate": "2027-01-17",
+    "title": "日本老視学会 学術総会 2028",
+    "subtitle": "",
+    "date": "2028-01-15",
+    "endDate": "2028-01-16",
     "time": "全日程",
-    "region": "関東",
-    "venue": "御茶ノ水ソラシティ カンファレンスセンター",
+    "region": "関西",
+    "venue": "京都テルサ（京都府民総合交流プラザ）",
     "specialty": "白内障",
     "eventType": "国内学会",
     "format": "現地",
@@ -3373,19 +3374,18 @@ const sampleEvents = [
     "conferenceRegion": "domestic",
     "conferenceCategory": "白内障屈折",
     "conferenceTier": "subspecialty",
-    "period": "2027年1月16日(土) 〜 2027年1月17日(日)",
-    "cityCountry": "東京都 / 日本",
+    "period": "2028年1月15日(土) 〜 2028年1月16日(日)",
+    "cityCountry": "京都市（京都府） / 日本",
     "abstractDeadline": "未定",
     "earlyBirdDeadline": "未定",
     "officialUrl": "",
     "sourceUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-    "note": "",
+    "note": "日本眼科学会の学会一覧に基づく予定情報。公式サイト未公開のため回次・詳細は未確定。",
     "abstractSubmission": {
       "status": "unknown",
       "startDate": null,
-      "deadline": "2026-10-20T12:00",
-      "url": "https://www.rousi.jp/jps5-abstract",
-      "timeZone": "Asia/Tokyo"
+      "deadline": null,
+      "url": null
     },
     "calendarStatus": {
       "google": {
@@ -3404,9 +3404,7 @@ const sampleEvents = [
       "老眼治療"
     ],
     "description": "老眼の基礎研究、多焦点レンズ、点眼薬の最新エビデンス。",
-    "isConference": true,
-    "eventOfficialUrl": "https://www.rousi.jp/jps5",
-    "conferenceChair": "平岡 孝浩（筑波大学）"
+    "isConference": true
   },
   {
     "id": "conf-jp-surgery-2028",

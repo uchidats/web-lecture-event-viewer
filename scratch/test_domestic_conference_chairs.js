@@ -5,11 +5,11 @@ const evidence=require('../docs/domestic-conference-chairs-2026-10-13.json');
 const events=loadEvents(path.resolve(__dirname,'..')).events;
 const domestic=events.filter(e=>e.isConference&&e.conferenceRegion==='domestic');
 assert.equal(domestic.length,61);
-assert.equal(domestic.filter(e=>e.conferenceChair).length,34);
-assert.equal(domestic.filter(e=>!e.conferenceChair).length,27);
-assert.equal(evidence.records.filter(r=>!r.preserved).length,32);
+assert.equal(domestic.filter(e=>e.conferenceChair).length,33);
+assert.equal(domestic.filter(e=>!e.conferenceChair).length,28);
+assert.equal(evidence.records.filter(r=>!r.preserved).length,31);
 assert.equal(evidence.records.filter(r=>r.preserved).length,2);
-assert.equal(new Set(evidence.records.map(r=>r.eventId)).size,34);
+assert.equal(new Set(evidence.records.map(r=>r.eventId)).size,33);
 for(const record of evidence.records){
  const event=domestic.find(e=>e.id===record.eventId);
  assert.ok(event,record.eventId);
@@ -42,5 +42,5 @@ assert.equal(chair('conf-jp-strabismus-2026'),'横山 吉美（JCHO中京病院�
 assert.equal(chair('conf-jp-surgery-2027'),'稲富 勉（国立長寿医療研究センター/京都府立医科大学）');
 assert.equal(chair('conf-jp-inflammation-2027'),'髙瀬 博（宮田眼科 東京）');
 assert.equal(evidence.affiliationSimplification.beforeWithChair,evidence.affiliationSimplification.afterWithChair);
-assert.equal(evidence.affiliationSimplification.changedRecords+evidence.affiliationSimplification.unchangedRecords,34);
-console.log('PASS: 34 domestic chairs, 32 additions, 27 unknown; official provenance, affiliations and joint meeting attribution');
+assert.equal(evidence.affiliationSimplification.changedRecords+evidence.affiliationSimplification.unchangedRecords,33);
+console.log('PASS: 33 domestic chairs, 31 additions, 28 unknown; official provenance, affiliations and joint meeting attribution');

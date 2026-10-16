@@ -25,9 +25,9 @@ endedConfs.forEach(e => {
   console.log(`  - [${e.id}] ${e.title} (endDate: ${e.endDate || e.date})`);
 });
 
-// 公式確認済みの小児眼科・弱視斜視2026の追加により終了学会は11件。
-if (endedConfs.length !== 11) {
-  console.error(`FAIL: Expected 11 ended conferences, got ${endedConfs.length}`);
+// 終了学会は10件。日本老視学会の第4回（2026-01-17）は公開マスターに持たない（IDと開催年を一致させるため、2027は第5回）。
+if (endedConfs.length !== 10) {
+  console.error(`FAIL: Expected 10 ended conferences, got ${endedConfs.length}`);
   process.exit(1);
 }
 
@@ -127,8 +127,8 @@ console.log('PASS: All conferences shown when includeEndedConferences is true');
 const year2026EndedOn = simulateFilter({ includeEndedConferences: true, years: new Set([2026]) });
 const year2026EndedOff = simulateFilter({ includeEndedConferences: false, years: new Set([2026]) });
 console.log(`2026 with ended confs: ${year2026EndedOn.length}, without: ${year2026EndedOff.length} (diff: ${year2026EndedOn.length - year2026EndedOff.length})`);
-if (year2026EndedOn.length - year2026EndedOff.length !== 11) {
-  console.error(`FAIL: Difference should be 11 (all 11 ended conferences are in 2026), got ${year2026EndedOn.length - year2026EndedOff.length}`);
+if (year2026EndedOn.length - year2026EndedOff.length !== 10) {
+  console.error(`FAIL: Difference should be 10 (all 10 ended conferences are in 2026), got ${year2026EndedOn.length - year2026EndedOff.length}`);
   process.exit(1);
 }
 console.log('PASS: Year filter + includeEndedConferences combination works correctly');

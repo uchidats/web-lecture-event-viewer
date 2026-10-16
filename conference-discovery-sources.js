@@ -61,9 +61,9 @@ module.exports = {
     {
       "eventId": "conf-jp-presbyopia-2027",
       "indexUrls": [
-        "https://www.rousi.jp/"
-      ],
-      "integrityReview": "第4回は2026年。カード日程・会場に対応する2027年は第5回（jps5）。開催回修正前は保留。"
+        "https://www.rousi.jp/",
+        "https://www.rousi.jp/jps5-overview"
+      ]
     },
     {
       "eventId": "conf-jp-eyelid-2027",
@@ -207,10 +207,8 @@ module.exports = {
     {
       "eventId": "conf-jp-presbyopia-2028",
       "indexUrls": [
-        "https://www.rousi.jp/",
-        "https://www.rousi.jp/jps5-overview"
-      ],
-      "integrityReview": "第5回公式開催概要は2027年1月16–17日、御茶ノ水。カードの2028年・京都と不一致。jps5を付けない。"
+        "https://www.rousi.jp/"
+      ]
     },
     {
       "eventId": "conf-jp-surgery-2028",

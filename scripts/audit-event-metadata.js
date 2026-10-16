@@ -155,8 +155,7 @@ function sourcesFor(event, oldAudit, missingAudit, discovery) {
   const urls = [];
   const add = (url, kind, role = 'overview') => { if (url?.startsWith('https:') && !new URL(url).hostname.endsWith('example.com')) urls.push({ url, kind, role }); };
   if (event.id === 'conf-jp-presbyopia-2027') {
-    add('https://www.rousi.jp/jps4-summary', 'event'); add('https://www.rousi.jp/jps4', 'event'); add('https://www.rousi.jp/jps4-registration', 'event', 'registration');
-  } else if (event.id === 'conf-jp-presbyopia-2028') {
+    // 2027 is the 5th congress (jps5). The 2028 card is schedule-only and has no official event page yet.
     add('https://www.rousi.jp/jps5-overview', 'event'); add('https://www.rousi.jp/jps5', 'event');
   } else {
     add(event.eventOfficialUrl, 'event');
@@ -204,7 +203,7 @@ async function runAudit({ root = path.resolve(__dirname, '..'), getPage = fetchO
         if (!parsed.associated) continue;
         for (const [field, fact] of Object.entries(parsed.facts)) if (!facts[field]) facts[field] = fact;
         if (source.kind === 'event' && !officialUrl) officialUrl = event.eventOfficialUrl ||
-          (event.id === 'conf-jp-presbyopia-2027' ? 'https://www.rousi.jp/jps4' : event.id === 'conf-jp-presbyopia-2028' ? 'https://www.rousi.jp/jps5' : source.url);
+          (event.id === 'conf-jp-presbyopia-2027' ? 'https://www.rousi.jp/jps5' : source.url);
         // Follow explicit same-site overview/abstract/registration links, never synthesize year URLs.
         if (source.kind === 'event' && source.role === 'overview') {
           for (const m of result.doc.html.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {

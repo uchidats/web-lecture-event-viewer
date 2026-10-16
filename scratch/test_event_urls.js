@@ -21,7 +21,7 @@ async function main() {
   const conferences = events.filter(e => e.isConference);
   const approved = audit.records.filter(record => record.proposedEventOfficialUrl);
   assert.equal(approved.length, 31);
-  assert.equal(conferences.filter(e => e.eventOfficialUrl).length, 49);
+  assert.equal(conferences.filter(e => e.eventOfficialUrl).length, 48);
   assert.equal(additions.length, 5);
   for (const record of additions) assert.equal(events.find(e => e.id === record.id).eventOfficialUrl, record.proposedEventOfficialUrl);
   assert.equal(conferences.filter(e => e.societyUrl).length, 16);
@@ -36,10 +36,10 @@ async function main() {
     } : event.id === 'conf-jp-lowvision-2027' ? {
       officialUrl: 'https://www.ganki.jp/lowvision2027/information.html',
       eventOfficialUrl: 'https://www.ganki.jp/lowvision2027/information.html'
-    } : event.id === 'oph-001' ? {title:'第80回 日本臨床眼科学会'} : event.id === 'conf-int-ascrs-2027' ? {
+    } : event.id === 'oph-001' ? {title:'第80回 日本臨床眼科学会'} : event.id === 'conf-jp-presbyopia-2027' ? {title:'第5回 日本老視学会学術総会', date:'2027-01-16', eventOfficialUrl:'https://www.rousi.jp/jps5'} : event.id === 'conf-jp-presbyopia-2028' ? {title:'日本老視学会 学術総会 2028', date:'2028-01-15', eventOfficialUrl:undefined} : event.id === 'conf-int-ascrs-2027' ? {
       officialUrl: 'https://annualmeeting.ascrs.org/', eventOfficialUrl: 'https://annualmeeting.ascrs.org/', societyUrl: 'https://ascrs.org/'
     } : {};
-    const expected=(field,old)=>manual[field]??correction?.changes.find(c=>c.field===field)?.after??old;
+    const expected=(field,old)=>field in manual?manual[field]:correction?.changes.find(c=>c.field===field)?.after??old;
     assert.equal(event.officialUrl || null, expected('officialUrl',record.currentOfficialUrl)||null, `${event.id}: legacy URL`);
     assert.equal(event.title, require('../scripts/auto-updater/titles').normalizeConferenceTitle(expected('title',record.title)));
     assert.equal(Number(event.date.slice(0, 4)), Number(String(expected('date',record.year)).slice(0,4)));
@@ -180,6 +180,6 @@ async function main() {
   assert.ok(persisted.items.some(item => item.field === 'eventOfficialUrl' && item.reason === 'multiple-candidates' && item.value === moved.value && item.oldValue === event.eventOfficialUrl));
   assert.equal(fs.readFileSync(path.join(isolated, 'events.js'), 'utf8'), original);
   assert.equal(fs.readFileSync(path.join(root, 'events.js'), 'utf8'), original);
-  console.log('PASS: 49 event URLs / 16 society URLs, manual ASCRS confirmation, held titles unlinked, no fallback, year/edition/multiple reviews and role isolation');
+  console.log('PASS: 48 event URLs / 16 society URLs, manual ASCRS confirmation, held titles unlinked, no fallback, year/edition/multiple reviews and role isolation');
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

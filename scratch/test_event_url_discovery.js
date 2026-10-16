@@ -134,20 +134,24 @@ async function main() {
     const current = realEvents.find(e => e.id === record.id);
     if(record.id==='oph-003'){assert.equal(current,undefined,'Erroneous demo joint meeting removed after official audit');continue;}
     const changes=corrections.find(r=>r.eventId===record.id)?.changes||[];
-    const manual = record.id === 'conf-jp-eyelid-2027' ? {
+    const manualBase = record.id === 'conf-jp-eyelid-2027' ? {
       title: '第38回 日本眼瞼義眼床手術学会', date: '2027-02-20', endDate: '2027-02-20',
       venue: '京都府立医科大学附属図書館ホール', eventOfficialUrl: 'https://convention.jtbcom.co.jp/gigan38/index.html'
     } : record.id === 'conf-jp-lowvision-2027' ? { eventOfficialUrl: 'https://www.ganki.jp/lowvision2027/information.html' } : record.id === 'oph-001' ? {title:'第80回 日本臨床眼科学会'} : record.id === 'conf-int-ascrs-2027' ? {eventOfficialUrl:'https://annualmeeting.ascrs.org/'} : {};
+    // Presbyopia ids follow their own year: 2027 = 第5回 (jps5), 2028 = schedule-only placeholder without an official page.
+    const presbyopia = { 'conf-jp-presbyopia-2027': { title: '第5回 日本老視学会学術総会', date: '2027-01-16', endDate: '2027-01-17', venue: '御茶ノ水ソラシティ カンファレンスセンター', eventOfficialUrl: 'https://www.rousi.jp/jps5' },
+      'conf-jp-presbyopia-2028': { title: '日本老視学会 学術総会 2028', date: '2028-01-15', endDate: '2028-01-16', venue: '京都テルサ（京都府民総合交流プラザ）', eventOfficialUrl: undefined } };
+    const manual = { ...manualBase, ...(presbyopia[record.id] || {}) };
     for (const field of ['title', 'date', 'endDate', 'venue']) {
       const expected=manual[field]??changes.find(c=>c.field===field)?.after??record[field];
       assert.equal(current[field],field==='title'?require('../scripts/auto-updater/titles').normalizeConferenceTitle(expected):expected,`${record.id}: audited ${field}`);
     }
-    if (record.status === 'needs-review') assert.equal(current.eventOfficialUrl, manual.eventOfficialUrl??changes.find(c=>c.field==='eventOfficialUrl')?.after, `${record.id}: reviewed URL`);
+    if (record.status === 'needs-review') assert.equal(current.eventOfficialUrl, 'eventOfficialUrl' in manual ? manual.eventOfficialUrl : changes.find(c=>c.field==='eventOfficialUrl')?.after, `${record.id}: reviewed URL`);
   }
   const callsAlreadySet = [];
   assert.equal((await discoverMissingEventUrls({ events: realEvents.filter(e => e.eventOfficialUrl), config,
     getPage: async () => callsAlreadySet.push('fetch') })).records.length, 0);
-  assert.equal(registry.discovery.entries.filter(e => e.integrityReview).length, 18); // Deleted oph-003 no longer needs an integrity hold.
+  assert.equal(registry.discovery.entries.filter(e => e.integrityReview).length, 16); // Deleted oph-003 and the two corrected presbyopia cards no longer need an integrity hold.
 
   // Regression test: 第28回日本ロービジョン学会学術総会 2027 official URL discovery via ganki.jp organizer pattern & overview
   const gankiHomeUrl = 'https://www.ganki.jp/';
@@ -244,6 +248,6 @@ async function main() {
     const report = JSON.parse(fs.readFileSync(path.join(isolated, 'reports/auto-update-report.json'), 'utf8'));
     assert.ok(report.discovery.records.find(r => r.eventId === blank.id).requests.every(r => r.httpStatus === 200));
   }
-  console.log('PASS: discovery identity, annual/joint editions, single/multiple/absent candidates, mismatches, HTTP/redirect/network logs, trust boundaries, 20 integrity holds, review persistence and zero URL auto-apply in dry-run/apply');
+  console.log('PASS: discovery identity, annual/joint editions, single/multiple/absent candidates, mismatches, HTTP/redirect/network logs, trust boundaries, 16 integrity holds, review persistence and zero URL auto-apply in dry-run/apply');
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

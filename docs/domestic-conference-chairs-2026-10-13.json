@@ -3,9 +3,9 @@
   "policy": "Official current-edition evidence only; no inference or reuse from other editions; unknown stays empty.",
   "summary": {
     "domestic": 61,
-    "withChair": 34,
-    "added": 32,
-    "unknown": 27,
+    "withChair": 33,
+    "added": 31,
+    "unknown": 28,
     "specialHandling": 2
   },
   "records": [
@@ -637,7 +637,7 @@
       "officialConferenceChair": "柚木 達也（富山大学 学術研究部医学系 眼科学講座）"
     },
     {
-      "eventId": "conf-jp-presbyopia-2028",
+      "eventId": "conf-jp-presbyopia-2027",
       "title": "日本老視学会 第5回学術総会",
       "date": "2027-01-16",
       "sourceUrl": "https://www.rousi.jp/jps5-overview",
@@ -655,26 +655,6 @@
       ],
       "specialHandling": null,
       "officialConferenceChair": "平岡 孝浩（筑波大学医学医療系 眼科）"
-    },
-    {
-      "eventId": "conf-jp-presbyopia-2027",
-      "title": "日本老視学会 第4回学術総会",
-      "date": "2026-01-17",
-      "sourceUrl": "https://www.rousi.jp/jps4-greeting",
-      "checkedOn": "2026-10-13",
-      "preserved": false,
-      "conferenceChair": "神谷 和孝（昭和医科大学）",
-      "people": [
-        {
-          "conference": "日本老視学会 第4回学術総会",
-          "role": "会長",
-          "name": "神谷 和孝",
-          "affiliation": "昭和医科大学",
-          "officialAffiliation": "昭和医科大学保健医療学部"
-        }
-      ],
-      "specialHandling": null,
-      "officialConferenceChair": "神谷 和孝（昭和医科大学保健医療学部）"
     },
     {
       "eventId": "conf-jp-optics-2027",
@@ -699,10 +679,10 @@
   ],
   "affiliationSimplification": {
     "checkedOn": "2026-10-13",
-    "beforeWithChair": 34,
-    "afterWithChair": 34,
-    "changedRecords": 32,
-    "shortenedRecords": 29,
+    "beforeWithChair": 33,
+    "afterWithChair": 33,
+    "changedRecords": 31,
+    "shortenedRecords": 28,
     "separatorOnlyRecords": 3,
     "unchangedRecords": 2,
     "universityHospitalNormalization": {
