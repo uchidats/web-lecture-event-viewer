@@ -56,13 +56,54 @@
         (!item.field.endsWith('.url') || safeUrl(item.value))) return 'low';
     return 'medium';
   }
+  const keyLabels = { status: '状態', startDate: '開始', deadline: '締切', start: '開始', url: 'URL', timeZone: 'タイムゾーン', type: '区分', label: '名称', category: '種別', advanceEligible: '事前登録対象', edition: '回次', year: '開催年' };
+  const registrationTypes = { domestic: '国内', international: '海外' };
+  const hiddenKeys = new Set(['sourceUrl', 'version']);
+  fieldLabels['abstractSubmission'] = '演題募集（まとめて）';
+  fieldLabels['abstractSubmission.timeZone'] = '演題募集のタイムゾーン';
+  fieldLabels.cityCountry = fieldLabels.cityCountry || '開催地';
+  function formatScalar(key, value) {
+    if (value == null || value === '') return '未確認';
+    if (typeof value === 'boolean') return value ? 'はい' : 'いいえ';
+    if (key === 'status') return statuses[value] || String(value);
+    if (key === 'type') return registrationTypes[value] || String(value);
+    return String(value).replace(/^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}:\d{2})(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:\d{2})?)?/, (_, y, m, d, t) => `${y}/${m}/${d}${t ? ' ' + t : ''}`);
+  }
+  function formatAny(key, value) {
+    if (Array.isArray(value)) return value.map(v => formatAny(key, v)).join(' / ');
+    if (value && typeof value === 'object') return formatObject(value);
+    return formatScalar(key, value);
+  }
+  function formatObject(value) {
+    const parts = Object.entries(value).filter(([k, v]) => !hiddenKeys.has(k) && v != null && v !== '' && !(Array.isArray(v) && !v.length))
+      .map(([k, v]) => `${keyLabels[k] || fieldLabels[k] || k}：${formatAny(k, v)}`);
+    return parts.length ? parts.join('／') : '未入力';
+  }
+  function formatMetadata(value) {
+    return Object.entries(value).filter(([k]) => ['title', 'date', 'endDate', 'venue', 'subtitle', 'sponsor', 'eventOfficialUrl'].includes(k))
+      .map(([k, v]) => `${fieldLabels[k] || k}：${v ?? '未確認'}`).join(' / ');
+  }
   function formatValue(field, value) {
-    if(field==='venues'&&Array.isArray(value))return value.map(v=>v?.name||'未確認').join(' / ');
+    if (field === 'venues' && Array.isArray(value)) return value.map(v => v?.name || '未確認').join(' / ');
     if (value == null || value === '') return '未入力';
-    if (field === 'eventMetadata') return Object.entries(value).filter(([k])=>['title','date','endDate','venue','subtitle','sponsor','eventOfficialUrl'].includes(k)).map(([k,v])=>`${fieldLabels[k] || k}：${v ?? '未確認'}`).join(' / ');
-    if (field === 'registration' && Array.isArray(value.periods)) return value.periods.map(p => `${p?.label || '名称未確認'}：${p?.start ? p.start + ' ～ ' : ''}${p?.deadline || '締切未確認'}${p?.category ? ` [${p.category}]` : ''}${typeof p?.advanceEligible==='boolean' ? `（事前登録対象：${p.advanceEligible?'はい':'いいえ'}）` : ''}`).join(' / ');
+    if (typeof value === 'object' && !Array.isArray(value) && (field === 'eventMetadata' || (!field && 'title' in value))) return formatMetadata(value);
+    if (field === 'registration' && Array.isArray(value.periods)) return value.periods.map(p => `${p?.label || '名称未確認'}：${p?.start ? formatScalar('start', p.start) + ' ～ ' : ''}${p?.deadline ? formatScalar('deadline', p.deadline) : '締切未確認'}${p?.category ? ` [${p.category}]` : ''}${typeof p?.advanceEligible === 'boolean' ? `（事前登録対象：${p.advanceEligible ? 'はい' : 'いいえ'}）` : ''}`).join(' / ');
     if (field === 'abstractSubmission.status') return statuses[value] || '未確認の状態';
-    return String(value).replace(/^(\d{4})-(\d{2})-(\d{2})/, '$1/$2/$3');
+    return formatAny(field, value);
+  }
+  // 根拠・備考などの文字列にJSONがそのまま入っている場合、人間が読める形に直す。
+  function formatText(text) {
+    if (typeof text !== 'string' || !/^\s*[[{]/.test(text)) return text;
+    let parsed;
+    try { parsed = JSON.parse(text); } catch { return text; }
+    if (Array.isArray(parsed) && parsed.length && parsed.every(p => p && typeof p === 'object' && 'label' in p)) return formatValue('registration', { periods: parsed });
+    return formatAny(null, parsed);
+  }
+  // Gemini monitor summary lines look like "field: before -> after" and may embed "[object Object]".
+  function formatChangeSummary(text) {
+    const match = /^([\w.]+): (.*) -> (.*)$/.exec(String(text ?? ''));
+    const clean = value => value === 'null' || value === 'undefined' ? '未入力' : value.includes('[object Object]') ? '（構造化データ）' : formatScalar(null, value);
+    return match ? `${fieldLabels[match[1]] || match[1]}：${clean(match[2])} → ${clean(match[3])}` : String(text ?? '').replace(/\[object Object\]/g, '（構造化データ）');
   }
   function normalize(data) {
     return data.items.filter(item => item.status === 'needs-review' || !item.status).map(item => {
@@ -80,12 +121,18 @@
     return items.filter(item => {
       if (item.blocked || item.read || !['needs-review', undefined].includes(item.status)) return false;
       const decision = store.latest(item, reviewerId)?.decision;
-      if (decision && decision !== 'deferred') return false;
+      if (decision && decision !== 'reset') return false;
       const event = events.find(event => event.id === item.eventId);
       const current = item.field?.split('.').reduce((value, key) => value?.[key], event);
       const comparable=value=>typeof value!=='string'?JSON.stringify(value):item.field==='title'?value.normalize('NFKC').replace(/[\p{White_Space}\p{Punctuation}]/gu,''):/(?:startDate|deadline)$/.test(item.field||'')?value.replace(/^(\d{4}-\d{2}-\d{2}) /,'$1T'):value;
       return !event || !item.field || comparable(current) !== comparable(item.value);
     });
+  }
+  // 表示用の状態。保存値（approved/rejected/deferred）は変えず、最新の判断から導出する。
+  // 'reset' は「未処理に戻す」を履歴へ追記する値で、過去の判断は削除しない。
+  function reviewState(item, store, reviewerId) {
+    const decision = store.latest(item, reviewerId)?.decision;
+    return decision === 'approved' || decision === 'rejected' ? 'done' : decision === 'deferred' ? 'hold' : 'pending';
   }
   function createStore(storage) {
     function read() {
@@ -96,13 +143,14 @@
     }
     function latest(item, reviewerId) { return read().history.findLast(entry => entry.reviewId === item.reviewId && entry.signature === item.signature && entry.reviewerId === reviewerId); }
     function decide(item, decision, { reviewerId, automationCandidate = false, items = [], now = new Date().toISOString() }) {
-      if (!reviewerId || !['approved', 'rejected', 'deferred'].includes(decision)) throw new Error('判断内容が正しくありません。');
+      if (!reviewerId || !['approved', 'rejected', 'deferred', 'reset'].includes(decision)) throw new Error('判断内容が正しくありません。');
       if (decision === 'approved' && !item.actionable) throw new Error('候補値や情報源がない項目は採用できません。');
       if (decision === 'approved' && items.some(other => other.reviewId !== item.reviewId && other.eventId === item.eventId && other.field === item.field && JSON.stringify(other.value) !== JSON.stringify(item.value) && latest(other, reviewerId)?.decision === 'approved')) {
         throw new Error('同じ項目の別候補が採用済みです。先にその判断を変更してください。');
       }
       const data = read();
       const previous = latest(item, reviewerId);
+      if (decision === 'reset' && (!previous || previous.decision === 'reset')) return previous || null;
       const candidateFlag = !item.audit && item.riskLevel === 'low' && automationCandidate === true;
       if (previous?.decision === decision && previous.automationCandidate === candidateFlag) return previous;
       const entry = { reviewId: item.reviewId, signature: item.signature, reviewerId, eventId: item.eventId, decision, decidedAt: now,
@@ -137,7 +185,7 @@
     const local = developmentMode === true && ['localhost', '127.0.0.1', '[::1]'].includes(hostname) && new URLSearchParams(search).get('adminReview') === '1';
     return { reviewerId(user) { return user?.uid && authorizeUser(user) === true ? user.uid : local ? 'local-admin' : null; } };
   }
-  const api = { storageKey, fieldLabels, reasonLabels, safeUrl, riskLevel, formatValue, normalize, pendingItems, createStore, createAccess, isAdminUser };
+  const api = { storageKey, fieldLabels, reasonLabels, safeUrl, riskLevel, formatValue, formatText, formatChangeSummary, normalize, pendingItems, reviewState, createStore, createAccess, isAdminUser };
   root.OphthalReviewModel = api;
   if (typeof module !== 'undefined') module.exports = api;
 })(globalThis);

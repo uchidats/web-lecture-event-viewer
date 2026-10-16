@@ -85,3 +85,7 @@
 }
 
 #deadline-acquisition-status { overflow-wrap: anywhere; margin: 1rem 0; }
+.review-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.review-tab { min-height: 44px; padding: 8px 14px; border: 1px solid #b7c2d1; border-radius: 8px; background: white; color: #253449; font: inherit; cursor: pointer; }
+.review-tab[aria-pressed="true"] { background: #215ca8; border-color: #215ca8; color: white; font-weight: 700; }
+.review-tab-count { font-size: .85em; opacity: .85; }

@@ -9,6 +9,9 @@
   const STORAGE_KEY = 'ophthalconf_gemini_monitor_acknowledgements_v1';
   const ADMIN_EMAIL = 'uchidats@gmail.com';
 
+  const model = root.OphthalReviewModel;
+  const label = field => model?.fieldLabels?.[field] || field;
+  const fmt = (field, value) => model ? model.formatValue(field, value) : String(value ?? '');
   const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   let currentAdminUser = null;
@@ -236,7 +239,7 @@
                   <table>
                     <thead><tr><th>変更項目</th><th>変更前</th><th>変更後</th></tr></thead>
                     <tbody>
-                      ${item.fieldChanges.map(c => `<tr><td>${escape(c.field)}</td><td>${escape(c.before || '（なし）')}</td><td><strong>${escape(c.after)}</strong></td></tr>`).join('')}
+                      ${item.fieldChanges.map(c => `<tr><td>${escape(label(c.field))}</td><td>${escape(c.before == null ? '（なし）' : fmt(c.field, c.before))}</td><td><strong>${escape(c.after == null ? (c.validationReason ? '（確認が必要なため保留）' : '（なし）') : fmt(c.field, c.after))}</strong></td></tr>`).join('')}
                     </tbody>
                   </table>
                 </div>
@@ -259,7 +262,7 @@
         <details class="gemini-shadow-details">
           <summary>高信頼自動更新予定（シャドーモードのため未適用）: ${wouldAuto}件のサマリーを表示</summary>
           <ul>
-            ${(report.wouldAutoUpdateSummary || []).map(s => `<li><strong>${escape(s.eventName)}</strong>: ${escape(s.changes.join(', '))}（信頼度: ${Math.round((s.confidence||0)*100)}%）</li>`).join('')}
+            ${(report.wouldAutoUpdateSummary || []).map(s => `<li><strong>${escape(s.eventName)}</strong>: ${escape(s.changes.map(c => model ? model.formatChangeSummary(c) : c).join(' / '))}（信頼度: ${Math.round((s.confidence||0)*100)}%）</li>`).join('')}
           </ul>
         </details>
       `;
@@ -291,7 +294,7 @@
                     statusLabel = '<span class="status-badge rollback">元に戻した</span>';
                   }
                   const changesStr = Array.isArray(entry.fieldChanges) && entry.fieldChanges.length > 0
-                    ? entry.fieldChanges.map(c => `${c.field}: ${c.before || '未定'} → ${c.after}`).join(', ')
+                    ? entry.fieldChanges.map(c => `${label(c.field)}：${c.before == null ? '未定' : fmt(c.field, c.before)} → ${c.after == null ? '未定' : fmt(c.field, c.after)}`).join(' / ')
                     : entry.reason || '（詳細なし）';
                   return `
                     <tr>
