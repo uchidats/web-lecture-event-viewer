@@ -21,8 +21,12 @@
   const store = {
     data: { version: 1, items: {} },
     isFirestoreSynced: false,
+    // Outcome of the latest Firestore write / read. Only a 2xx response counts as success; tokens are never stored here.
+    lastSave: null, // { state: 'synced' | 'failed', status: number | null, reason?: 'no-auth' | 'network' | 'http', local: boolean }
+    lastLoad: null, // { state: 'synced' | 'failed', status: number | null, reason?: ... }
 
     async loadPrimary(user) {
+      this.lastLoad = null;
       // 1. Try Primary: Firestore
       if (user && user.email === ADMIN_EMAIL && user.emailVerified === true) {
         try {
@@ -33,6 +37,7 @@
               headers: { 'Authorization': `Bearer ${authHeader}` }
             });
             if (res.ok) {
+              this.lastLoad = { state: 'synced', status: res.status };
               const docData = await res.json();
               const remoteJsonStr = docData.fields?.json?.stringValue;
               if (remoteJsonStr) {
@@ -42,10 +47,20 @@
                 this.saveLocalCache();
                 return this.data;
               }
+            } else if (res.status === 404) {
+              // The state document is created by the first successful write; nothing to load yet.
+              this.lastLoad = { state: 'synced', status: 404, reason: 'not-created' };
+            } else {
+              this.lastLoad = { state: 'failed', status: res.status, reason: 'http' };
+              console.warn(`[Gemini Monitor] Firestore load failed: HTTP ${res.status}. Showing the local cache.`);
             }
+          } else {
+            this.lastLoad = { state: 'failed', status: null, reason: 'no-auth' };
+            console.warn('[Gemini Monitor] Firestore load skipped: no sign-in token available. Showing the local cache.');
           }
         } catch (err) {
-          console.warn('[Gemini Monitor] Firestore load failed, falling back to local cache:', err);
+          this.lastLoad = { state: 'failed', status: null, reason: 'network' };
+          console.warn(`[Gemini Monitor] Firestore load failed (${err?.name || 'error'}). Showing the local cache.`);
         }
       }
 
@@ -70,38 +85,66 @@
       try {
         this.data.updatedAt = new Date().toISOString();
         root.localStorage?.setItem(STORAGE_KEY, JSON.stringify(this.data));
-      } catch (_) {}
+        return true;
+      } catch (_) { return false; }
     },
 
+    // Returns the sync outcome. Success means a 2xx Firestore response; anything else leaves the change in this browser only.
     async savePrimary(user) {
       this.data.updatedAt = new Date().toISOString();
-      this.saveLocalCache();
+      const local = this.saveLocalCache();
+      const fail = (reason, status) => {
+        this.isFirestoreSynced = false;
+        this.lastSave = { state: 'failed', status, reason, local };
+        return this.lastSave;
+      };
 
-      // Push to Primary: Firestore
-      if (user && user.email === ADMIN_EMAIL && user.emailVerified === true) {
-        try {
-          const authHeader = await user.getIdToken?.();
-          if (authHeader) {
-            const url = `https://firestore.googleapis.com/v1/projects/ophthalconf/databases/(default)/documents/gemini_monitor_acknowledgements/state`;
-            await fetch(url, {
-              method: 'PATCH',
-              headers: {
-                'Authorization': `Bearer ${authHeader}`,
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                fields: {
-                  json: { stringValue: JSON.stringify(this.data) },
-                  updatedAt: { stringValue: this.data.updatedAt }
-                }
-              })
-            });
-            this.isFirestoreSynced = true;
-          }
-        } catch (err) {
-          console.warn('[Gemini Monitor] Firestore save failed, persisted in local cache:', err);
+      if (!(user && user.email === ADMIN_EMAIL && user.emailVerified === true)) return fail('no-auth', null);
+      try {
+        const authHeader = await user.getIdToken?.();
+        if (!authHeader) {
+          console.warn('[Gemini Monitor] Firestore sync failed: no sign-in token available. Saved in this browser only.');
+          return fail('no-auth', null);
         }
+        const url = `https://firestore.googleapis.com/v1/projects/ophthalconf/databases/(default)/documents/gemini_monitor_acknowledgements/state`;
+        const res = await fetch(url, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': `Bearer ${authHeader}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            fields: {
+              json: { stringValue: JSON.stringify(this.data) },
+              updatedAt: { stringValue: this.data.updatedAt }
+            }
+          })
+        });
+        if (!res.ok) {
+          console.warn(`[Gemini Monitor] Firestore sync failed: HTTP ${res.status}. Saved in this browser only.`);
+          return fail('http', res.status);
+        }
+        this.isFirestoreSynced = true;
+        this.lastSave = { state: 'synced', status: res.status, local };
+        return this.lastSave;
+      } catch (err) {
+        console.warn(`[Gemini Monitor] Firestore sync failed (${err?.name || 'error'}). Saved in this browser only.`);
+        return fail('network', null);
       }
+    },
+
+    // Human readable sync state for the panel; null when nothing has been attempted yet.
+    syncNotice() {
+      const save = this.lastSave, load = this.lastLoad;
+      const where = r => r.status ? `HTTP ${r.status}` : r.reason === 'no-auth' ? '認証情報なし' : '通信エラー';
+      if (save?.state === 'failed') {
+        return { state: 'failed', text: `Firestore同期失敗（${where(save)}）: 変更はこのブラウザのlocalStorage${save.local ? 'にのみ保存されました' : 'にも保存できませんでした'}。他の端末や自動監視には反映されません。` };
+      }
+      if (load?.state === 'failed') {
+        return { state: 'failed', text: `Firestore読み込み失敗（${where(load)}）: このブラウザのlocalStorageの内容を表示しています。` };
+      }
+      if (save?.state === 'synced') return { state: 'synced', text: 'Firestore同期済み' };
+      return null;
     },
 
     getItemKey(item) {
@@ -149,7 +192,7 @@
         reviewerEmail: currentAdminUser?.email || ADMIN_EMAIL,
         storagePrimary: 'firestore'
       };
-      await this.savePrimary(currentAdminUser);
+      return this.savePrimary(currentAdminUser);
     },
 
     getRecentHistory(days = 30) {
@@ -186,6 +229,12 @@
     }
   }
 
+  function syncNoticeHtml() {
+    const notice = store.syncNotice();
+    if (!notice) return '';
+    return `<p class="gemini-sync-status gemini-sync-${notice.state}" role="${notice.state === 'failed' ? 'alert' : 'status'}" data-sync-state="${notice.state}">${escape(notice.text)}</p>`;
+  }
+
   function renderReport(report) {
     if (!currentAdminUser || currentAdminUser.email !== ADMIN_EMAIL || currentAdminUser.emailVerified !== true) {
       container.innerHTML = '';
@@ -208,6 +257,7 @@
             要確認: ${pendingItems.length}件 / 自動更新予定: ${wouldAuto}件
           </span>
         </div>
+        ${syncNoticeHtml()}
         <p class="gemini-monitor-meta">
           監視日: ${escape(report.date)} ｜ 監視対象: ${metrics.monitoredToday}件 / 全${metrics.totalEvents}件 ｜ Gemini呼出: ${metrics.geminiCalls}件
           <br>取得状態（要確認とは別）：取得不能 ${metrics.deadlineStatuses?.unavailable||0}件・未公開 ${metrics.deadlineStatuses?.unpublished||0}件・リンク未検出 ${metrics.deadlineStatuses?.['link-not-found']||0}件・抽出失敗 ${metrics.deadlineStatuses?.['extraction-failed']||0}件
@@ -323,16 +373,16 @@
         const item = pendingItems.find(i => store.getItemKey(i) === itemKey);
         if (!item) return;
 
-        store.recordAction(item, 'acknowledged');
+        const saved = store.recordAction(item, 'acknowledged');
 
-        // Immediate removal animation/deletion
+        // Immediate removal animation/deletion; the panel re-renders once the sync outcome is known.
         if (card) {
           card.style.transition = 'opacity 0.25s, transform 0.25s';
           card.style.opacity = '0';
           card.style.transform = 'scale(0.96)';
-          setTimeout(() => renderReport(report), 250);
+          Promise.all([saved, new Promise(resolve => setTimeout(resolve, 250))]).then(() => renderReport(report));
         } else {
-          renderReport(report);
+          saved.then(() => renderReport(report));
         }
       });
     });
@@ -347,14 +397,14 @@
         if (!item) return;
 
         if (confirm(`イベント「${eventId}」の更新候補を元に戻しますか？\n※現在はシャドーモードのため events.js は変更せず、再適用防止リストおよび処理済み履歴へテスト登録されます。`)) {
-          store.recordAction(item, 'rolled_back', 'Admin rollback (shadow mode test)');
+          const saved = store.recordAction(item, 'rolled_back', 'Admin rollback (shadow mode test)');
           if (card) {
             card.style.transition = 'opacity 0.25s, transform 0.25s';
             card.style.opacity = '0';
             card.style.transform = 'scale(0.96)';
-            setTimeout(() => renderReport(report), 250);
+            Promise.all([saved, new Promise(resolve => setTimeout(resolve, 250))]).then(() => renderReport(report));
           } else {
-            renderReport(report);
+            saved.then(() => renderReport(report));
           }
         }
       });

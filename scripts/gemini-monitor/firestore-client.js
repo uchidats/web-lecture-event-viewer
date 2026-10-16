@@ -7,8 +7,12 @@ const FIRESTORE_DATABASE_URL = 'https://firestore.googleapis.com/v1/projects/oph
  * using built-in Node.js crypto (zero npm dependencies).
  */
 async function getAccessTokenFromServiceAccount(serviceAccountKey) {
-  const sa = typeof serviceAccountKey === 'string' ? JSON.parse(serviceAccountKey) : serviceAccountKey;
-  if (!sa.client_email || !sa.private_key) {
+  let sa = serviceAccountKey;
+  if (typeof serviceAccountKey === 'string') {
+    // JSON.parse errors can quote the beginning of the input; never let key material reach the logs.
+    try { sa = JSON.parse(serviceAccountKey); } catch { throw new Error('Invalid service account key: not valid JSON'); }
+  }
+  if (!sa || !sa.client_email || !sa.private_key) {
     throw new Error('Invalid service account key: client_email or private_key missing');
   }
 
@@ -93,7 +97,7 @@ async function fetchRemoteState(authToken) {
 
     if (!res.ok) {
       if (res.status === 404) return { version: 1, items: {} };
-      console.warn(`[FirestoreClient] HTTP ${res.status} fetching remote state`);
+      console.warn(`[FirestoreClient] Firestore read failed: HTTP ${res.status}. Admin acknowledgements/rollbacks were NOT loaded this run.`);
       return null;
     }
 
@@ -103,7 +107,7 @@ async function fetchRemoteState(authToken) {
       return JSON.parse(rawJson);
     }
   } catch (err) {
-    console.warn(`[FirestoreClient] Failed to fetch remote state: ${err.message}`);
+    console.warn(`[FirestoreClient] Firestore read failed (network/parse error: ${err.name}). Admin acknowledgements/rollbacks were NOT loaded this run.`);
   }
   return null;
 }
@@ -129,9 +133,13 @@ async function saveRemoteState(authToken, stateData) {
         }
       })
     });
-    return res.ok;
+    if (!res.ok) {
+      console.warn(`[FirestoreClient] Firestore write failed: HTTP ${res.status}. Processed acknowledgement/rollback status was NOT persisted and may be processed again next run.`);
+      return false;
+    }
+    return true;
   } catch (err) {
-    console.warn(`[FirestoreClient] Failed to save remote state: ${err.message}`);
+    console.warn(`[FirestoreClient] Firestore write failed (network error: ${err.name}). Processed acknowledgement/rollback status was NOT persisted and may be processed again next run.`);
     return false;
   }
 }
@@ -143,6 +151,12 @@ async function saveRemoteState(authToken, stateData) {
 async function getPendingActionsFromFirestore(options = {}) {
   const token = await getFirestoreAuthToken(options);
   if (!token) {
+    // Never silent: without credentials neither admin acknowledgements nor rollback requests can be read or written.
+    // Firestore trouble must not stop the conference monitor, so this only reports and continues.
+    const message = '[FirestoreClient] No Firestore credentials (CLOUD_ACCESS_TOKEN / FIREBASE_SERVICE_ACCOUNT_KEY not set or unusable). ' +
+      'Admin acknowledgements and rollback requests are NOT synchronized in this run.';
+    if (options.applyMode) console.warn(`WARNING: ${message} Production apply mode is active, so acknowledged items cannot be applied or marked as applied.`);
+    else console.log(message.replace('[FirestoreClient]', '[FirestoreClient] (simulation)'));
     return {
       authenticated: false,
       acknowledgedToApply: [],

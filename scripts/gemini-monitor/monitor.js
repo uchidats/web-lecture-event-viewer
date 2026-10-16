@@ -50,7 +50,7 @@ async function runGeminiMonitor(options = {}) {
   const allEvents = dataset.events;
 
   // 1. Synchronize with Firestore (Requirements 11, 12, 13, 16)
-  const firestoreSync = await getPendingActionsFromFirestore(options);
+  const firestoreSync = await getPendingActionsFromFirestore({ ...options, applyMode: isApplyMode });
   let processedRollbacksCount = 0;
   const acknowledgedToApply = firestoreSync.acknowledgedToApply || [];
 
