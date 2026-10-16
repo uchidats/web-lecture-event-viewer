@@ -20,7 +20,7 @@ if(!process.argv.includes('--child')) {
       assert.ok(getAbstractSubmissionState(timed,at('2026-11-05T12:59:59'+offset)).isOpen);
       assert.equal(getAbstractSubmissionState(timed,at('2026-11-05T13:00:01'+offset)).status,'closed');
       const closed=renderAbstractSubmissionHtml(timed,at('2026-11-05T13:00:01'+offset));
-      assert.ok(closed.includes('終了'));assert.ok(!closed.includes('締切済'));assert.ok(!closed.includes('13:00'));assert.ok(closed.includes('abstract-link-closed'));assert.ok(closed.includes('<span>終了</span>'));
+      assert.ok(closed.includes('11月5日 締切済'));assert.ok(!closed.includes('13:00'));assert.ok(closed.includes('abstract-link-closed'));assert.ok(closed.includes('<span>11月5日 締切済</span>'));
       assert.equal(getDaysUntilAbstractDeadline(event('2026-11-06',zone),at('2026-11-05T12:00:00'+offset)),1);
       assert.equal(getDaysUntilAbstractDeadline(event('2026-11-04',zone),at('2026-11-05T12:00:00'+offset)),-1);
       assert.ok(!matchesAbstractFilter(timed,'open',at('2026-11-05T13:00:01'+offset)));
@@ -32,7 +32,7 @@ if(!process.argv.includes('--child')) {
       assert.ok(!html.includes('日前'));assert.ok(!html.includes('本日締切'));assert.ok(html.includes(' 締切</span>'));
       assert.equal(html.includes('abstract-deadline urgent'),days<=30);
     }
-    {const closedNoDate=renderAbstractSubmissionHtml(event(null,'Asia/Tokyo','closed'),now);assert.ok(closedNoDate.includes('<span>終了</span>'));assert.ok(closedNoDate.includes('abstract-link-closed'));assert.ok(!closedNoDate.includes('締切済'));}
+    {const closedNoDate=renderAbstractSubmissionHtml(event(null,'Asia/Tokyo','closed'),now);assert.ok(closedNoDate.includes('<span>締切済</span>'));assert.ok(closedNoDate.includes('abstract-link-closed'));}
     for(const sub of [undefined,{status:'unknown',deadline:null,url:null}]) {
       const source={isConference:true,abstractSubmission:sub,eventOfficialUrl:'https://official.example/congress',abstractDeadline:'未定'},saved=JSON.stringify(source);
       const html=renderAbstractSubmissionHtml(source,now);assert.ok(html.includes('<span>情報未確認</span>'));assert.ok(!html.includes('<span>公式</span>'));assert.ok(html.includes(source.eventOfficialUrl));assert.ok(html.includes(renderExternalLinkIconHtml()));assert.ok(!html.includes('演題募集情報未確認'));assert.equal(JSON.stringify(source),saved);
@@ -43,7 +43,7 @@ if(!process.argv.includes('--child')) {
     assert.equal(renderAbstractSubmissionHtml({isConference:true,eventOfficialUrl:'javascript:alert(1)',abstractSubmission:{status:'unknown',url:'javascript:alert(2)'}},now),'<span class="abstract-unknown">情報未確認</span>');
     for(const legacy of ['受付終了','演題募集終了','締切済','2026年11月5日 13:00 受付終了','2026-11-05 13:00 演題募集終了']) {
       const source={isConference:true,abstractDeadline:legacy},snapshot=JSON.stringify(source),html=renderAbstractSubmissionHtml(source,now);
-      assert.ok(html.includes('>終了<'));assert.ok(!html.includes('締切済'));assert.ok(!html.includes('13:00'));assert.ok(!html.includes('受付終了'));assert.ok(!html.includes('演題募集終了'));assert.ok(!html.includes('<a'));assert.equal(JSON.stringify(source),snapshot);
+      assert.ok(html.includes(legacy.includes('2026')?'11月5日 締切済':'>締切済<'));assert.ok(!html.includes('13:00'));assert.ok(!html.includes('受付終了'));assert.ok(!html.includes('演題募集終了'));assert.ok(!html.includes('<a'));assert.equal(JSON.stringify(source),snapshot);
     }
     const fallback=event('2026-11-05');delete fallback.timeZone;fallback.registration={timeZone:'America/Los_Angeles'};
     assert.ok(getAbstractSubmissionState(fallback,at('2026-11-06T06:00:00Z')).isOpen);

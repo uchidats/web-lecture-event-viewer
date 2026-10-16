@@ -1309,7 +1309,11 @@ function renderAbstractSubmissionHtml(event, baseDate = new Date()) {
   const sub = event.abstractSubmission;
   if (!sub) {
     const legacy = event.abstractDeadline || '要確認';
-    if (/受付終了|演題募集終了|締切済/.test(legacy)) return renderAbstractStatusHtml('closed', '終了', null);
+    if (/受付終了|演題募集終了|締切済/.test(legacy)) {
+      const rawDate = legacy.match(/\d{4}-\d{2}-\d{2}/)?.[0] || legacy.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/)?.slice(1).map((v,i)=>i?v.padStart(2,'0'):v).join('-');
+      const date = formatCardDeadline(rawDate, event, {showTime:false});
+      return renderAbstractStatusHtml('closed', `${date ? date + ' ' : ''}締切済`, null);
+    }
     if (/未定|未確認|不明|要確認/.test(legacy)) return renderAbstractUnknownHtml(event);
     return `<span class="deadline-highlight">${escapeHtml(formatLegacyCardDeadline(legacy, event))}</span>`;
   }
@@ -1317,7 +1321,7 @@ function renderAbstractSubmissionHtml(event, baseDate = new Date()) {
   const isClosed = info.status === "closed";
   const deadlineLabel = formatCardDeadline(getCurrentAbstractDeadline(sub), event, {showTime: !isClosed});
   const extensionLabel = sub.extended === true ? '（延長）' : '';
-  if (isClosed) return renderAbstractStatusHtml('closed', '終了', sub.url);
+  if (isClosed) return renderAbstractStatusHtml('closed', `${deadlineLabel ? deadlineLabel + ' ' : ''}締切済${extensionLabel}`, sub.url);
   if (info.isOpen) {
     const parts = [renderAbstractStatusHtml('open', '受付中', sub.url)];
     if (deadlineLabel) {
