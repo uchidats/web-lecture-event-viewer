@@ -18,6 +18,32 @@ async function testAll() {
   const root = path.resolve(__dirname, '..');
   const dataset = loadEvents(root);
   const events = dataset.events;
+  const apao = events.find(e => e.id === 'conf-int-apao-2027');
+  const apaoTitle = 'APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress)';
+  assert.equal(apao.title, apaoTitle);
+  const subtitle = '42nd Asia-Pacific Academy of Ophthalmology Congress';
+  for (const separator of ['(', '– ', '— ', ': ']) {
+    for (const article of ['', 'The ']) {
+      const proposal = `APAO 2027 ${separator}${article}${subtitle}${separator === '(' ? ')' : ''}`;
+      if (proposal === apaoTitle) continue;
+      assert.ok(isFormatOnlyTitleChange(apaoTitle, proposal));
+      assert.ok(isFormatOnlyTitleChange(proposal, apaoTitle));
+      const event = {...apao};
+      const decision = classifyDecision(event, {same_event:true, source_quality:SOURCE_QUALITY.OFFICIAL_EVENT_PAGE,
+        confidence:.98, official_title:proposal, recommended_action:RECOMMENDED_ACTIONS.SAFE_AUTO_UPDATE});
+      assert.ok(!decision.fieldChanges.some(c => c.field === 'title'));
+      assert.deepEqual(applyFieldChangesToEvent(event, [{field:'title', after:proposal}]), []);
+      assert.equal(event.title, apaoTitle);
+    }
+  }
+  for (const proposal of [
+    apaoTitle.replace('42nd', '43rd'), apaoTitle.replace('2027', '2028'),
+    apaoTitle.replace('Academy', 'Association'), apaoTitle.replace('Ophthalmology', 'Optometry'),
+    apaoTitle.replace('Congress', 'Annual Meeting'), apaoTitle.replace('Asia-Pacific', 'The Asia-Pacific')
+  ]) {
+    assert.ok(!isFormatOnlyTitleChange(apaoTitle, proposal));
+  }
+  assert.ok(!isFormatOnlyTitleChange('The Congress 2027', 'Congress 2027'));
   assert.equal(events.length, 90, 'Dataset must contain 90 events');
   const pharmacology=events.find(e=>e.id==='conf-jp-pharmacology-2026');
   assert.equal(pharmacology.title,'第46回 日本眼薬理学会');

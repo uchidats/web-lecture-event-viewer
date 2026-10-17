@@ -6,10 +6,13 @@ function normalizeConferenceTitle(title) {
   return match ? `第${match[1].normalize('NFKC')}回 日本臨床眼科学会` : title;
 }
 // Compare textual content without changing its word order, edition or year.
-// Bracket contents are retained; only punctuation/spacing and width are ignored.
+// Retain subtitle contents; ignore an auxiliary English article only at an
+// explicit subtitle boundary, never inside an organization or congress name.
 function isFormatOnlyTitleChange(before, after) {
   if (typeof before !== 'string' || typeof after !== 'string' || before === after) return false;
-  const key = value => value.normalize('NFKC').replace(/[\p{White_Space}\p{Punctuation}]/gu, '');
+  const key = value => value.normalize('NFKC')
+    .replace(/([(:\u2013\u2014])\s*The\s+(?=\S)/gu, '$1')
+    .replace(/[\p{White_Space}\p{Punctuation}]/gu, '');
   const original = key(before);
   return !!original && original === key(after);
 }

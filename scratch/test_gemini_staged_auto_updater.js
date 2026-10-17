@@ -31,6 +31,12 @@ async function testAll() {
   // Reproduce the scheduled JSOP46 proposal through the real write boundary.
   const original=loadEvents(root),isolated=fs.mkdtempSync(path.join(os.tmpdir(),'gemini-format-title-'));
   fs.writeFileSync(path.join(isolated,'events.js'),original.original);
+  const apao = original.events.find(e => e.id === 'conf-int-apao-2027');
+  const cosmeticApao = applyBatchUpdates(isolated, [{eventId:apao.id, fieldChanges:[{
+    field:'title', before:apao.title, after:'APAO 2027 – The 42nd Asia-Pacific Academy of Ophthalmology Congress'
+  }]}], {dryRun:false});
+  assert.strictEqual(cosmeticApao.appliedCount, 0);
+  assert.strictEqual(fs.readFileSync(path.join(isolated,'events.js'),'utf8'), original.original);
   const id='conf-jp-pharmacology-2026',current=original.events.find(e=>e.id===id);
   assert.strictEqual(current.title,'第46回 日本眼薬理学会');
   const format={field:'title',before:current.title,after:'第46回日本眼薬理学会'};
