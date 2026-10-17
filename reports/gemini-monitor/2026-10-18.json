@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-18",
+  "generatedAt": "2026-10-17T23:07:28.574Z",
+  "mode": "production_apply",
+  "isApplyMode": true,
+  "description": "Gemini 3.8 Flash Daily Conference Monitor Report (Production Auto-Apply Enabled)",
+  "metrics": {
+    "totalEvents": 90,
+    "monitoredToday": 15,
+    "skippedNotDue": 58,
+    "skippedEnded": 13,
+    "urlDiscoveryChecks": 0,
+    "urlDiscovered": 0,
+    "httpFetched": 15,
+    "hashUnchangedSkipped": 11,
+    "geminiCalls": 3,
+    "noChange": 13,
+    "wouldAutoUpdate": 1,
+    "autoAppliedCount": 1,
+    "adminAppliedCount": 0,
+    "rollbackCount": 0,
+    "needsReview": 0,
+    "insufficientEvidence": 0,
+    "adminVisibleCount": 0,
+    "massChangeSafeguardTriggered": false,
+    "deadlineStatuses": {
+      "unavailable": 1,
+      "unpublished": 2,
+      "link-not-found": 4,
+      "extraction-failed": 1
+    },
+    "fetchErrors": 1
+  },
+  "adminVisibleItems": [],
+  "deferredReviewCount": 0,
+  "deferredReviewItems": [],
+  "wouldAutoUpdateCount": 1,
+  "wouldAutoUpdateSummary": [
+    {
+      "eventId": "conf-int-apao-2027",
+      "eventName": "APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress)",
+      "changes": [
+        "cityCountry: シンガポール / シンガポール共和国 -> Singapore"
+      ],
+      "confidence": 0.98
+    }
+  ],
+  "batchApplyResult": {
+    "success": true,
+    "appliedCount": 1,
+    "appliedEvents": [
+      {
+        "eventId": "conf-int-apao-2027",
+        "eventName": "APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress)",
+        "appliedFields": [
+          "cityCountry"
+        ],
+        "fieldChanges": [
+          {
+            "field": "cityCountry",
+            "before": "シンガポール / シンガポール共和国",
+            "after": "Singapore",
+            "severity": "medium"
+          }
+        ],
+        "source": "gemini_high_confidence"
+      }
+    ],
+    "reviewItems": [],
+    "mode": "production"
+  }
+}

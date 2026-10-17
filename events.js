@@ -1623,7 +1623,7 @@ const sampleEvents = [
     "conferenceCategory": "総合",
     "conferenceTier": "primary",
     "period": "2027年3月18日(木) 〜 3月21日(日)",
-    "cityCountry": "シンガポール / シンガポール共和国",
+    "cityCountry": "Singapore",
     "abstractDeadline": "未定",
     "earlyBirdDeadline": "未定",
     "officialUrl": "https://apaophth.org/",

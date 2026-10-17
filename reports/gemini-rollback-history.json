@@ -1,7 +1,34 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-15T23:45:23.686Z",
+  "updatedAt": "2026-10-17T23:07:58.976Z",
   "snapshots": [
+    {
+      "id": "rb-conf-int-apao-2027-2026-10-17T23-07-52-120Z",
+      "eventId": "conf-int-apao-2027",
+      "eventName": "APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress)",
+      "timestamp": "2026-10-17T23:07:52.120Z",
+      "status": "applied",
+      "beforeValues": {
+        "cityCountry": "シンガポール / シンガポール共和国"
+      },
+      "afterValues": {
+        "cityCountry": "Singapore"
+      },
+      "fieldChanges": [
+        {
+          "field": "cityCountry",
+          "before": "シンガポール / シンガポール共和国",
+          "after": "Singapore",
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "url": "https://2027.apaophth.org/",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.98,
+        "reason": "The official conference website confirms the 42nd Asia-Pacific Academy of Ophthalmology Congress (APAO 2027) held in Singapore. The dates, abstract deadline of September 23, 2026, at 23:59, and official URL fully match the database record."
+      }
+    },
     {
       "id": "rb-oph-013-2026-10-15T23-44-01-949Z",
       "eventId": "oph-013",
