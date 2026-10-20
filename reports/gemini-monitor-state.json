@@ -1,15 +1,15 @@
 {
   "version": 1,
-  "lastRun": "2026-10-18T23:10:54.027Z",
+  "lastRun": "2026-10-20T00:19:08.635Z",
   "sources": {
     "oph-001": {
       "url": "https://convention.jtbcom.co.jp/80ringan/index.html",
-      "lastChecked": "2026-10-19",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "f11e18d628c4a668063e2b08df8df9d4db65a8e7c3a04339e49649108ebf38a8",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-21",
       "deadlineObservations": []
     },
     "oph-001-s1": {
@@ -41,22 +41,22 @@
     },
     "conf-jp-pharmacology-2026": {
       "url": "https://square.umin.ac.jp/jsop46/",
-      "lastChecked": "2026-10-19",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "d5761ac15ba059d8740fe19fa813575e03bb46763e2932c0f9c648523536bb8b",
+      "normalizedHash": "dc690ce267870fab649077251d3cade0e6687285ee8b6de906f9dd857eb895f4",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-21",
       "deadlineObservations": []
     },
     "conf-jp-neuro-2026": {
       "url": "https://n-practice.co.jp/64thJNOS/",
-      "lastChecked": "2026-10-19",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "1ce83a59e53198c4b8daaceb4ccbf1268fa922958bd76f6a7e927775548182c3",
       "lastGeminiDecision": "needs_review",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-21",
       "deadlineObservations": [
         {
           "url": "https://n-practice.co.jp/64thJNOS/subject/index.html",
@@ -68,28 +68,29 @@
     },
     "conf-jp-jrvs-2026": {
       "url": "https://convention.jtbcom.co.jp/65moumaku/index.html",
-      "lastChecked": "2026-10-19",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "23712fb7571d573e71dba3adeb2b2a51fab0efbd37463eeee4f10ec8cab7d4d0",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-21",
       "deadlineObservations": []
     },
     "conf-int-arc-2026": {
       "url": "https://convention.jtbcom.co.jp/arc2026/",
-      "lastChecked": "2026-10-19",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "1ea5037c11154b7ed51f11bcde97a833a62fb6251c8fcd99dc959649b9109c63",
-      "lastGeminiDecision": "no_change",
-      "lastGeminiConfidence": 0.85,
-      "nextCheckDate": "2026-10-20",
+      "normalizedHash": "128c3df65f019f7482eda823695173a7a20ce5c308b50272310e5a1d97f8f1aa",
+      "lastGeminiDecision": "safe_auto_update",
+      "lastGeminiConfidence": 0.95,
+      "nextCheckDate": "2026-10-21",
       "deadlineObservations": [
         {
-          "url": "https://convention.jtbcom.co.jp/arc2026/",
-          "reason": "registration-link-not-found",
+          "url": "https://convention.jtbcom.co.jp/arc2026/registration/index.html",
+          "reason": "registration-extraction-failed",
+          "proposed": null,
           "field": "registration",
-          "category": "link-not-found"
+          "category": "extraction-failed"
         },
         {
           "url": "https://convention.jtbcom.co.jp/arc2026/",
@@ -101,100 +102,92 @@
     },
     "conf-jp-surgery-2027": {
       "url": "https://50.jsos.jp/",
-      "lastChecked": "2026-10-19",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "d960393253f0efdaa7e2d19ff421371901f04aec36048870602eab4d662b64c0",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-21",
       "deadlineObservations": []
     },
     "conf-jp-cornea-2027": {
       "url": "https://www.okinawa-congre.co.jp/cornea2027/",
-      "lastChecked": "2026-10-19",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "b2841cebb7db1160214322a0770f1b5ee7fadcea58cd2872708a3e3aa16ea2e5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-21",
       "deadlineObservations": []
     },
     "conf-jp-eyelid-2027": {
       "url": "https://convention.jtbcom.co.jp/gigan38/index.html",
-      "lastChecked": "2026-10-19",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "d276a16707958ac33b232d58706d08bfc1e6e18f1a39d02f49b8535ae561ecd1",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-21",
       "deadlineObservations": []
     },
     "conf-jp-diabetic-2027": {
       "url": "https://convention.jtbcom.co.jp/jsod33/",
-      "lastChecked": "2026-10-19",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "2ec0aeb1c28635d6aa3a49c44fa723e63a841ba645384c52a7b8da4de75e313c",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.99,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-21",
       "deadlineObservations": []
     },
     "conf-jp-iscev-2027": {
       "url": "https://www.congre.co.jp/73jscev/",
-      "lastChecked": "2026-10-19",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "b54ee64d01986a54c5f2ae92a2f007f16fced3342f9ad7cc631c1188ae454176",
-      "lastGeminiDecision": "no_change",
-      "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-10-20",
-      "deadlineObservations": [
-        {
-          "url": "https://www.congre.co.jp/73jscev/registration.html",
-          "reason": "registration-not-published",
-          "proposed": null,
-          "field": "registration",
-          "category": "unpublished"
-        }
-      ]
+      "normalizedHash": "300b03a87498a5d1e06ac15ba503affbe9491367b63b641daa0233a37b057095",
+      "lastGeminiDecision": "safe_auto_update",
+      "lastGeminiConfidence": 0.98,
+      "nextCheckDate": "2026-10-21",
+      "deadlineObservations": []
     },
     "conf-int-apao-2027": {
       "url": "https://2027.apaophth.org/",
-      "lastChecked": "2026-10-19",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "65b128309021f58fefd41a42176a1dd851b17221436c98dfccc0ed4a4c71bcf0",
+      "normalizedHash": "e722872c0828e9d8f48ecae893fda2fafdd0741fa1c3367eb19c20ce32cacb39",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-21",
       "deadlineObservations": []
     },
     "conf-int-fujiretina-2027": {
       "url": "https://convention.jtbcom.co.jp/fujiretina/index.html",
-      "lastChecked": "2026-10-19",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "a982a1d317306433542ab947156445bf45ab57a601c6bcb099c8eb60966e4061",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-21",
       "deadlineObservations": []
     },
     "oph-011": {
       "url": "https://convention.jtbcom.co.jp/131jos/index.html",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "368a8542c392de1bb2c5a2e0286c946175961f6e78872690c3f46a7c03dbc5ae",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-21",
       "deadlineObservations": []
     },
     "oph-014": {
       "url": "https://site2.convention.co.jp/jgs2027/",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "b9d15892ab2fbef3512c45006bcba3ca64f97c698ef5d3973ed1ca8e8f29fc5e",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://site2.convention.co.jp/jgs2027/endai/",
@@ -206,12 +199,12 @@
     },
     "conf-int-wgc-2027": {
       "url": "https://worldglaucomacongress.org/",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "8f3d4fbd5ece2954268b9772bf525da246aafb3c053062746e259b21cd95ee8f",
+      "normalizedHash": "acd6ef20c73dd6b154df8aa46c8d4132d18e2736a3279a1188483809179d5bb0",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": []
     },
     "conf-jp-lowvision-2027": {
@@ -252,12 +245,12 @@
     },
     "conf-int-apacrs-2027": {
       "url": "https://apacrs2027.org/",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "5e868f8de69e9207e09110da6369634c525848c6fa9b3c220bb2d5ad8b2bbc1e",
+      "normalizedHash": "c6a4029546d05b8a599998794adf7f755fd1fb8487ced1a7ec64da9fa4b570a4",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://apacrs2027.org/registration/",
@@ -270,12 +263,12 @@
     },
     "conf-jp-perimetry-2027": {
       "url": "https://www.ganki.jp/jips2027/",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "b30a7de76d5e5be9a19d98fd0dbb32ec54011d7acbaded86a5dd29f891c68bb8",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://www.ganki.jp/jips2027/participants.html",
@@ -295,12 +288,12 @@
     },
     "conf-jp-jsoprs-2027": {
       "url": "https://orbit-cs.net/jsoprs2027/",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "3178d0e9a5a1fc25c54b162d6878c506679846083a2ab1ca14336fee3268cf97",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://orbit-cs.net/jsoprs2027/",
@@ -312,12 +305,12 @@
     },
     "conf-jp-pediatric-2027": {
       "url": "https://jasa-japo2027.jp/",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "d6b697be48e2083a2175b63e237b5b4444cd5f856d35a7b7b74254a739ce62f6",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://jasa-japo2027.jp/endai.html",
@@ -329,22 +322,22 @@
     },
     "conf-int-soe-2027": {
       "url": "https://soe2027.soevision.org/",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "682f0183e437dfdc56757f49d4ae95973296bbbc7da31cd8e45e0be4f7c8eb4c",
+      "normalizedHash": "53482a344de781afcc02b2d8ca34fec68a352d6fb9588fba702885f341b613a0",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": []
     },
     "oph-013": {
       "url": "https://www.kwcs.jp/42jscrs/",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "7608369c45dc569e3f3905bf984ed9c1e05116fade9552df49b2e943f7b3fd06",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://www.kwcs.jp/42jscrs/reg.html",
@@ -363,12 +356,12 @@
     },
     "conf-jp-myopia-2027": {
       "url": "https://www.ganki.jp/myopia2027/",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "afb7575e2b95da7ef7404ff0d5da116f4419a7101a6159a92a76b38cd91d5694",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://www.ganki.jp/myopia2027/registration.html",
@@ -388,12 +381,12 @@
     },
     "conf-int-iois-2027": {
       "url": "https://www.iois.info/page.php?edi_id=1697",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "2e8be5a47bf2ac212194965d5b94f2a3d915cfd5e1f6a72d638ddcd3e60a2e7f",
       "lastGeminiDecision": "needs_review",
       "lastGeminiConfidence": 0.8,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://www.iois.info/page.php?edi_id=1699",
@@ -412,12 +405,12 @@
     },
     "conf-jp-inflammation-2027": {
       "url": "https://www.congre.co.jp/oiw2027/",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "5fd5bf764de585b5957289766d76af468efedc5fea0d32743a0553dbf4111aa3",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.8,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://www.congre.co.jp/oiw2027/",
@@ -435,12 +428,12 @@
     },
     "conf-jp-circulation-2027": {
       "url": "https://convention.jtbcom.co.jp/43jsoc/",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "7a00ed93609828023dc3275a74a3d62eb71cc324376a0337d5c5d19eb54a151f",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.9,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://convention.jtbcom.co.jp/43jsoc/",
@@ -458,12 +451,12 @@
     },
     "conf-jp-cl-2027": {
       "url": "https://www.congre.co.jp/jcls2027/",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "b499247fd0db5e5681f0aa9aeceb444ca750c73fd8b825f2b65a7653d0bc0af5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.9,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://www.congre.co.jp/jcls2027/",
@@ -481,12 +474,12 @@
     },
     "conf-jp-optics-2027": {
       "url": "https://www.jsoo-ws.com/63jsoo",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "b4a2d049cc3a2ed37d6b49e4d1d8381fb8d2dcd59d986bc760df45c409717b6c",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://www.jsoo-ws.com/63jsoo",
@@ -504,12 +497,12 @@
     },
     "conf-jp-cataract-2027": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "8a34bec496b5d7876109dbb4789c404fde81b027248a8b878a338681e77e05db",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
@@ -527,12 +520,12 @@
     },
     "conf-jp-pharmacology-2027": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "8a34bec496b5d7876109dbb4789c404fde81b027248a8b878a338681e77e05db",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
@@ -550,12 +543,12 @@
     },
     "conf-int-euretina-2027": {
       "url": "https://euretina.org/copenhagen-27/",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "dd36d959ed029b2eb1ae3b8dc692ab4b2dafed154015b00901167bab7ec9a87b",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.9,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://euretina.org/copenhagen-27/",
@@ -573,12 +566,12 @@
     },
     "conf-jp-oncology-2027": {
       "url": "https://www.ganki.jp/jsoo2027/",
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
       "normalizedHash": "4af6848d41f3fe36e091fe5b56283c207d64a82e7498753697ef952888445b39",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "url": "https://www.ganki.jp/jsoo2027/registration.html",
@@ -919,10 +912,10 @@
       "nextCheckDate": "2026-10-12"
     },
     "conf-int-ascrs-2027": {
-      "lastChecked": "2026-10-19",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 0,
       "lastError": "bot-protected",
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-21",
       "deadlineObservations": [
         {
           "category": "unavailable",
@@ -932,10 +925,10 @@
       ]
     },
     "oph-012": {
-      "lastChecked": "2026-10-16",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 0,
       "lastError": "bot-protected",
-      "nextCheckDate": "2026-10-20",
+      "nextCheckDate": "2026-10-23",
       "deadlineObservations": [
         {
           "category": "unavailable",
@@ -985,12 +978,12 @@
         }
       ],
       "url": "https://www.rousi.jp/jps5",
-      "lastChecked": "2026-10-19",
+      "lastChecked": "2026-10-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "da71adeb116ddd2300dfc3c7dfa551f450b403c673e0480aabc5f46cd2379148",
+      "normalizedHash": "739c6817ac3aa7270ec461d3eccd86facd4f68013b26be70475fd0e83f4d4cc1",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-10-20"
+      "nextCheckDate": "2026-10-21"
     }
   }
 }
