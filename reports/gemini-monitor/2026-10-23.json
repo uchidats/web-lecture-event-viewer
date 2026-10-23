@@ -1,0 +1,653 @@
+{
+  "date": "2026-10-23",
+  "generatedAt": "2026-10-22T23:59:23.793Z",
+  "mode": "production_apply",
+  "isApplyMode": true,
+  "description": "Gemini 3.8 Flash Daily Conference Monitor Report (Production Auto-Apply Enabled)",
+  "metrics": {
+    "totalEvents": 90,
+    "monitoredToday": 34,
+    "skippedNotDue": 39,
+    "skippedEnded": 13,
+    "urlDiscoveryChecks": 0,
+    "urlDiscovered": 0,
+    "httpFetched": 34,
+    "hashUnchangedSkipped": 21,
+    "geminiCalls": 10,
+    "noChange": 22,
+    "wouldAutoUpdate": 8,
+    "autoAppliedCount": 0,
+    "adminAppliedCount": 0,
+    "rollbackCount": 0,
+    "needsReview": 5,
+    "insufficientEvidence": 0,
+    "adminVisibleCount": 5,
+    "massChangeSafeguardTriggered": true,
+    "deadlineStatuses": {
+      "unavailable": 9,
+      "unpublished": 4,
+      "link-not-found": 18,
+      "extraction-failed": 4,
+      "not-applicable": 1
+    },
+    "fetchErrors": 3
+  },
+  "adminVisibleItems": [
+    {
+      "eventId": "conf-int-wgc-2027",
+      "eventName": "World Glaucoma Congress 2027 (WGC 2027)",
+      "action": "needs_review",
+      "severity": "high",
+      "confidence": 0.98,
+      "sourceQuality": "official_event_page",
+      "sourceUrl": "https://worldglaucomacongress.org/",
+      "reason": "abstract-conflicting-deadlines",
+      "structuredReason": {
+        "code": "unconfirmed_abstract_change",
+        "detail": "Unconfirmed field withheld; other safe fields may continue."
+      },
+      "fieldChanges": [
+        {
+          "field": "abstractSubmission",
+          "before": {
+            "status": "unknown",
+            "startDate": null,
+            "deadline": null,
+            "url": null
+          },
+          "after": null,
+          "sourceUrl": "https://worldglaucomacongress.org/abstracts/",
+          "validationReason": "abstract-conflicting-deadlines"
+        }
+      ],
+      "priorityScore": 302,
+      "daysUntil": 179,
+      "timestamp": "2026-10-22T23:59:23.793Z",
+      "rollbackKey": "rb-conf-int-wgc-2027"
+    },
+    {
+      "eventId": "conf-int-wgc-2027",
+      "eventName": "World Glaucoma Congress 2027 (WGC 2027)",
+      "action": "safe_auto_update",
+      "severity": "high",
+      "confidence": 0.98,
+      "sourceQuality": "official_event_page",
+      "sourceUrl": "https://worldglaucomacongress.org/",
+      "reason": "[Mass Change Escalated] The official conference page confirms the 12th World Glaucoma Congress (WGC 2027) in Kyoto, Japan, for April 20-23, 2027, along with the abstract submission deadline of October 19, 2026.",
+      "structuredReason": {
+        "code": "safe_auto_update_eligible",
+        "detail": "The official conference page confirms the 12th World Glaucoma Congress (WGC 2027) in Kyoto, Japan, for April 20-23, 2027, along with the abstract submission deadline of October 19, 2026."
+      },
+      "fieldChanges": [
+        {
+          "field": "cityCountry",
+          "before": "京都市（京都府） / 日本",
+          "after": "Kyoto",
+          "severity": "medium"
+        },
+        {
+          "field": "registration",
+          "before": null,
+          "after": {
+            "version": 2,
+            "type": "international",
+            "timeZone": "Etc/GMT-2",
+            "periods": [
+              {
+                "label": "Early bird fee",
+                "deadline": "2027-01-18",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://worldglaucomacongress.org/registration/"
+              },
+              {
+                "label": "Regular fee",
+                "start": "2027-01-19",
+                "deadline": "2027-03-15",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://worldglaucomacongress.org/registration/"
+              },
+              {
+                "label": "Late fee",
+                "start": "2027-03-16",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://worldglaucomacongress.org/registration/"
+              }
+            ]
+          },
+          "severity": "medium"
+        },
+        {
+          "field": "title",
+          "before": "World Glaucoma Congress 2027 (WGC 2027)",
+          "after": "12th World Glaucoma Congress (WGC 2027)",
+          "severity": "high"
+        }
+      ],
+      "priorityScore": 302,
+      "daysUntil": 179,
+      "timestamp": "2026-10-22T23:59:23.793Z",
+      "rollbackKey": "rb-conf-int-wgc-2027"
+    },
+    {
+      "eventId": "conf-int-apacrs-2027",
+      "eventName": "APACRS 2027 Annual Meeting",
+      "action": "safe_auto_update",
+      "severity": "high",
+      "confidence": 0.98,
+      "sourceQuality": "official_event_page",
+      "sourceUrl": "https://apacrs2027.org/",
+      "reason": "[Mass Change Escalated] The official website confirms the 39th APACRS Annual Meeting scheduled for 3 June 2027 to 5 June 2027, with abstract submission deadline on 5 January 2027 at 23:59 Singapore Time, fully matching and confirming existing metadata while adding the 39th edition.",
+      "structuredReason": {
+        "code": "safe_auto_update_eligible",
+        "detail": "The official website confirms the 39th APACRS Annual Meeting scheduled for 3 June 2027 to 5 June 2027, with abstract submission deadline on 5 January 2027 at 23:59 Singapore Time, fully matching and confirming existing metadata while adding the 39th edition."
+      },
+      "fieldChanges": [
+        {
+          "field": "title",
+          "before": "APACRS 2027 Annual Meeting",
+          "after": "39th APACRS Annual Meeting",
+          "severity": "high"
+        }
+      ],
+      "priorityScore": 302,
+      "daysUntil": 223,
+      "timestamp": "2026-10-22T23:59:23.793Z",
+      "rollbackKey": "rb-conf-int-apacrs-2027"
+    },
+    {
+      "eventId": "oph-001",
+      "eventName": "第80回 日本臨床眼科学会",
+      "action": "safe_auto_update",
+      "severity": "medium",
+      "confidence": 0.98,
+      "sourceQuality": "official_event_page",
+      "sourceUrl": "https://convention.jtbcom.co.jp/80ringan/index.html",
+      "reason": "[Mass Change Escalated] The page corresponds exactly to the 80th Annual Congress of Japan Clinical Ophthalmology (第80回日本臨床眼科学会) held in 2026 from October 29 to November 1, 2026 at the Kyoto International Conference Center. Confirmed abstract and registration deadlines are available.",
+      "structuredReason": {
+        "code": "safe_auto_update_eligible",
+        "detail": "The page corresponds exactly to the 80th Annual Congress of Japan Clinical Ophthalmology (第80回日本臨床眼科学会) held in 2026 from October 29 to November 1, 2026 at the Kyoto International Conference Center. Confirmed abstract and registration deadlines are available."
+      },
+      "fieldChanges": [
+        {
+          "field": "abstractSubmission.startDate",
+          "before": null,
+          "after": "2026-03-03T12:00",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2026-05-21T12:00",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": "https://convention.jtbcom.co.jp/80ringan/index.html",
+          "after": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        },
+        {
+          "field": "registration",
+          "before": null,
+          "after": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "事前参加登録",
+                "start": "2026-03-03T12:00",
+                "deadline": "2026-09-25T12:00",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://convention.jtbcom.co.jp/80ringan/join/index.html"
+              },
+              {
+                "label": "後期参加登録",
+                "start": "2026-10-01T12:00",
+                "deadline": "2026-11-01",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://convention.jtbcom.co.jp/80ringan/join/index.html"
+              }
+            ]
+          },
+          "severity": "medium"
+        }
+      ],
+      "priorityScore": 296,
+      "daysUntil": 6,
+      "timestamp": "2026-10-22T23:59:23.793Z",
+      "rollbackKey": "rb-oph-001"
+    },
+    {
+      "eventId": "conf-jp-pharmacology-2026",
+      "eventName": "第46回 日本眼薬理学会",
+      "action": "safe_auto_update",
+      "severity": "medium",
+      "confidence": 0.98,
+      "sourceQuality": "official_event_page",
+      "sourceUrl": "https://square.umin.ac.jp/jsop46/",
+      "reason": "[Mass Change Escalated] Official conference website confirms the 46th Annual Meeting of the Japanese Society of Ocular Pharmacology (第46回日本眼薬理学会) in Gifu on November 7-8, 2026. Deadlines for abstract submission (extended to August 10, 2026) and registration (November 8, 2026) are verified.",
+      "structuredReason": {
+        "code": "safe_auto_update_eligible",
+        "detail": "Official conference website confirms the 46th Annual Meeting of the Japanese Society of Ocular Pharmacology (第46回日本眼薬理学会) in Gifu on November 7-8, 2026. Deadlines for abstract submission (extended to August 10, 2026) and registration (November 8, 2026) are verified."
+      },
+      "fieldChanges": [
+        {
+          "field": "venue",
+          "before": "じゅうろくプラザ（岐阜市文化産業交流センター）",
+          "after": "じゅうろくプラザ",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.startDate",
+          "before": null,
+          "after": "2026-05-08",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2026-07-26",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": null,
+          "after": "https://square.umin.ac.jp/jsop46/abstracts.html",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        },
+        {
+          "field": "registration",
+          "before": null,
+          "after": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "事前登録",
+                "start": "2026-05-08",
+                "deadline": "2026-08-31",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://square.umin.ac.jp/jsop46/registration.html"
+              },
+              {
+                "label": "直前・当日登録",
+                "start": "2026-09-01",
+                "deadline": "2026-11-08T14:00",
+                "category": "onsite",
+                "advanceEligible": false,
+                "sourceUrl": "https://square.umin.ac.jp/jsop46/registration.html"
+              }
+            ]
+          },
+          "severity": "medium"
+        }
+      ],
+      "priorityScore": 287,
+      "daysUntil": 15,
+      "timestamp": "2026-10-22T23:59:23.793Z",
+      "rollbackKey": "rb-conf-jp-pharmacology-2026"
+    }
+  ],
+  "deferredReviewCount": 8,
+  "deferredReviewItems": [
+    {
+      "eventId": "conf-jp-jrvs-2026",
+      "eventName": "第65回 日本網膜硝子体学会総会",
+      "action": "needs_review",
+      "severity": "medium",
+      "confidence": 0.98,
+      "sourceQuality": "official_event_page",
+      "sourceUrl": "https://convention.jtbcom.co.jp/65moumaku/index.html",
+      "reason": "registration-conflicting-deadlines",
+      "structuredReason": {
+        "code": "invalid_registration_change",
+        "detail": "Unconfirmed field withheld; other safe fields may continue."
+      },
+      "fieldChanges": [
+        {
+          "field": "registration",
+          "before": {
+            "type": "domestic",
+            "periods": [
+              {
+                "label": "事前参加登録",
+                "start": "2026-05-19T12:00",
+                "deadline": "2026-10-16",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://convention.jtbcom.co.jp/65moumaku/join/index.html"
+              },
+              {
+                "label": "直前・当日登録",
+                "start": "2026-11-12T12:00",
+                "deadline": "2026-12-06",
+                "category": "onsite",
+                "advanceEligible": false,
+                "sourceUrl": "https://convention.jtbcom.co.jp/65moumaku/join/index.html"
+              }
+            ],
+            "version": 2,
+            "timeZone": "Asia/Tokyo"
+          },
+          "after": null,
+          "sourceUrl": "https://convention.jtbcom.co.jp/65moumaku/join/index.html",
+          "validationReason": "registration-conflicting-deadlines"
+        }
+      ],
+      "priorityScore": 260,
+      "daysUntil": 42,
+      "timestamp": "2026-10-22T23:59:23.793Z"
+    },
+    {
+      "eventId": "conf-jp-jrvs-2026",
+      "eventName": "第65回 日本網膜硝子体学会総会",
+      "action": "safe_auto_update",
+      "severity": "medium",
+      "confidence": 0.98,
+      "sourceQuality": "official_event_page",
+      "sourceUrl": "https://convention.jtbcom.co.jp/65moumaku/index.html",
+      "reason": "[Mass Change Escalated] The official conference page confirms the 65th Annual Meeting of the Japanese Retina and Vitreous Society (第65回日本網膜硝子体学会総会) taking place December 4–6, 2026, matching all existing database information and providing abstract and registration deadlines.",
+      "structuredReason": {
+        "code": "safe_auto_update_eligible",
+        "detail": "The official conference page confirms the 65th Annual Meeting of the Japanese Retina and Vitreous Society (第65回日本網膜硝子体学会総会) taking place December 4–6, 2026, matching all existing database information and providing abstract and registration deadlines."
+      },
+      "fieldChanges": [
+        {
+          "field": "abstractSubmission.startDate",
+          "before": null,
+          "after": "2026-05-19T12:00",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2026-07-23T12:00",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": null,
+          "after": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        }
+      ],
+      "priorityScore": 260,
+      "daysUntil": 42,
+      "timestamp": "2026-10-22T23:59:23.793Z"
+    },
+    {
+      "eventId": "conf-jp-neuro-2026",
+      "eventName": "第64回 日本神経眼科学会総会",
+      "action": "needs_review",
+      "severity": "none",
+      "confidence": 0.98,
+      "sourceQuality": "official_event_page",
+      "sourceUrl": "https://n-practice.co.jp/64thJNOS/",
+      "reason": "registration-invalid-order",
+      "structuredReason": {
+        "code": "invalid_registration_change",
+        "detail": "registration-invalid-order"
+      },
+      "fieldChanges": [
+        {
+          "field": "registration",
+          "before": null,
+          "after": null,
+          "sourceUrl": "https://n-practice.co.jp/64thJNOS/entry/index.html",
+          "validationReason": "registration-invalid-order"
+        }
+      ],
+      "priorityScore": 168,
+      "daysUntil": 34,
+      "timestamp": "2026-10-22T23:59:23.793Z"
+    },
+    {
+      "eventId": "conf-jp-presbyopia-2027",
+      "eventName": "第5回 日本老視学会学術総会",
+      "action": "needs_review",
+      "severity": "low",
+      "confidence": 0.95,
+      "sourceQuality": "official_event_page",
+      "sourceUrl": "https://www.rousi.jp/jps5",
+      "reason": "abstract-invalid-date",
+      "structuredReason": {
+        "code": "unconfirmed_abstract_change",
+        "detail": "Unconfirmed field withheld; other safe fields may continue."
+      },
+      "fieldChanges": [
+        {
+          "field": "abstractSubmission",
+          "before": {
+            "status": "unknown",
+            "startDate": null,
+            "deadline": "2026-10-20T12:00",
+            "url": "https://www.rousi.jp/jps5-abstract",
+            "timeZone": "Asia/Tokyo"
+          },
+          "after": null,
+          "sourceUrl": "https://www.rousi.jp/jps5-abstract",
+          "validationReason": "abstract-invalid-date"
+        }
+      ],
+      "priorityScore": 120,
+      "daysUntil": 85,
+      "timestamp": "2026-10-22T23:59:23.793Z"
+    },
+    {
+      "eventId": "conf-jp-presbyopia-2027",
+      "eventName": "第5回 日本老視学会学術総会",
+      "action": "safe_auto_update",
+      "severity": "low",
+      "confidence": 0.95,
+      "sourceQuality": "official_event_page",
+      "sourceUrl": "https://www.rousi.jp/jps5",
+      "reason": "[Mass Change Escalated] The page is the official homepage for the 5th Annual Meeting of the Japanese Presbyopia Society (第5回 日本老視学会学術総会). The edition matches, registration deadlines align with a January 2027 meeting, and no conflicting schedule or metadata was found.",
+      "structuredReason": {
+        "code": "safe_auto_update_eligible",
+        "detail": "The page is the official homepage for the 5th Annual Meeting of the Japanese Presbyopia Society (第5回 日本老視学会学術総会). The edition matches, registration deadlines align with a January 2027 meeting, and no conflicting schedule or metadata was found."
+      },
+      "fieldChanges": [
+        {
+          "field": "title",
+          "before": "第5回 日本老視学会学術総会",
+          "after": "日本老視学会第5回学術総会",
+          "severity": "low"
+        }
+      ],
+      "priorityScore": 120,
+      "daysUntil": 85,
+      "timestamp": "2026-10-22T23:59:23.793Z"
+    },
+    {
+      "eventId": "conf-int-soe-2027",
+      "eventName": "SOE 2027 (European Society of Ophthalmology Congress)",
+      "action": "needs_review",
+      "severity": "low",
+      "confidence": 0.98,
+      "sourceQuality": "official_event_page",
+      "sourceUrl": "https://soe2027.soevision.org/",
+      "reason": "registration-ambiguous-boundary",
+      "structuredReason": {
+        "code": "invalid_registration_change",
+        "detail": "Unconfirmed field withheld; other safe fields may continue."
+      },
+      "fieldChanges": [
+        {
+          "field": "registration",
+          "before": null,
+          "after": null,
+          "sourceUrl": "https://soe2027.soevision.org/registration/",
+          "validationReason": "registration-ambiguous-boundary"
+        }
+      ],
+      "priorityScore": 102,
+      "daysUntil": 238,
+      "timestamp": "2026-10-22T23:59:23.793Z"
+    },
+    {
+      "eventId": "conf-int-apao-2027",
+      "eventName": "APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress)",
+      "action": "safe_auto_update",
+      "severity": "low",
+      "confidence": 0.98,
+      "sourceQuality": "official_event_page",
+      "sourceUrl": "https://2027.apaophth.org/",
+      "reason": "[Mass Change Escalated] The target website confirms the 42nd Asia-Pacific Academy of Ophthalmology Congress (APAO 2027) in Singapore. The abstract submission deadline of September 23, 2026 (23:59) exactly matches the existing database record.",
+      "structuredReason": {
+        "code": "safe_auto_update_eligible",
+        "detail": "The target website confirms the 42nd Asia-Pacific Academy of Ophthalmology Congress (APAO 2027) in Singapore. The abstract submission deadline of September 23, 2026 (23:59) exactly matches the existing database record."
+      },
+      "fieldChanges": [
+        {
+          "field": "title",
+          "before": "APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress)",
+          "after": "42nd Asia-Pacific Academy of Ophthalmology Congress",
+          "severity": "low"
+        }
+      ],
+      "priorityScore": 102,
+      "daysUntil": 146,
+      "timestamp": "2026-10-22T23:59:23.793Z"
+    },
+    {
+      "eventId": "conf-int-soe-2027",
+      "eventName": "SOE 2027 (European Society of Ophthalmology Congress)",
+      "action": "safe_auto_update",
+      "severity": "low",
+      "confidence": 0.98,
+      "sourceQuality": "official_event_page",
+      "sourceUrl": "https://soe2027.soevision.org/",
+      "reason": "[Mass Change Escalated] Extracted details from the official SOE 2027 website confirm the dates (June 18-20, 2027), venue (Megaron Athens International Conference Centre in Athens), and abstract deadline (19 January 2027, 23:59 GMT), matching the database records perfectly.",
+      "structuredReason": {
+        "code": "safe_auto_update_eligible",
+        "detail": "Extracted details from the official SOE 2027 website confirm the dates (June 18-20, 2027), venue (Megaron Athens International Conference Centre in Athens), and abstract deadline (19 January 2027, 23:59 GMT), matching the database records perfectly."
+      },
+      "fieldChanges": [
+        {
+          "field": "title",
+          "before": "SOE 2027 (European Society of Ophthalmology Congress)",
+          "after": "SOE 2027",
+          "severity": "low"
+        }
+      ],
+      "priorityScore": 102,
+      "daysUntil": 238,
+      "timestamp": "2026-10-22T23:59:23.793Z"
+    }
+  ],
+  "wouldAutoUpdateCount": 8,
+  "wouldAutoUpdateSummary": [
+    {
+      "eventId": "oph-001",
+      "eventName": "第80回 日本臨床眼科学会",
+      "changes": [
+        "abstractSubmission.startDate: null -> 2026-03-03T12:00",
+        "abstractSubmission.deadline: null -> 2026-05-21T12:00",
+        "abstractSubmission.url: https://convention.jtbcom.co.jp/80ringan/index.html -> https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
+        "abstractSubmission.timeZone: null -> Asia/Tokyo",
+        "registration: null -> [object Object]"
+      ],
+      "confidence": 0.98
+    },
+    {
+      "eventId": "conf-jp-pharmacology-2026",
+      "eventName": "第46回 日本眼薬理学会",
+      "changes": [
+        "venue: じゅうろくプラザ（岐阜市文化産業交流センター） -> じゅうろくプラザ",
+        "abstractSubmission.startDate: null -> 2026-05-08",
+        "abstractSubmission.deadline: null -> 2026-07-26",
+        "abstractSubmission.url: null -> https://square.umin.ac.jp/jsop46/abstracts.html",
+        "abstractSubmission.timeZone: null -> Asia/Tokyo",
+        "registration: null -> [object Object]"
+      ],
+      "confidence": 0.98
+    },
+    {
+      "eventId": "conf-jp-jrvs-2026",
+      "eventName": "第65回 日本網膜硝子体学会総会",
+      "changes": [
+        "abstractSubmission.startDate: null -> 2026-05-19T12:00",
+        "abstractSubmission.deadline: null -> 2026-07-23T12:00",
+        "abstractSubmission.url: null -> https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+        "abstractSubmission.timeZone: null -> Asia/Tokyo"
+      ],
+      "confidence": 0.98
+    },
+    {
+      "eventId": "conf-jp-presbyopia-2027",
+      "eventName": "第5回 日本老視学会学術総会",
+      "changes": [
+        "title: 第5回 日本老視学会学術総会 -> 日本老視学会第5回学術総会"
+      ],
+      "confidence": 0.95
+    },
+    {
+      "eventId": "conf-int-apao-2027",
+      "eventName": "APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress)",
+      "changes": [
+        "title: APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress) -> 42nd Asia-Pacific Academy of Ophthalmology Congress"
+      ],
+      "confidence": 0.98
+    },
+    {
+      "eventId": "conf-int-wgc-2027",
+      "eventName": "World Glaucoma Congress 2027 (WGC 2027)",
+      "changes": [
+        "cityCountry: 京都市（京都府） / 日本 -> Kyoto",
+        "registration: null -> [object Object]",
+        "title: World Glaucoma Congress 2027 (WGC 2027) -> 12th World Glaucoma Congress (WGC 2027)"
+      ],
+      "confidence": 0.98
+    },
+    {
+      "eventId": "conf-int-apacrs-2027",
+      "eventName": "APACRS 2027 Annual Meeting",
+      "changes": [
+        "title: APACRS 2027 Annual Meeting -> 39th APACRS Annual Meeting"
+      ],
+      "confidence": 0.98
+    },
+    {
+      "eventId": "conf-int-soe-2027",
+      "eventName": "SOE 2027 (European Society of Ophthalmology Congress)",
+      "changes": [
+        "title: SOE 2027 (European Society of Ophthalmology Congress) -> SOE 2027"
+      ],
+      "confidence": 0.98
+    }
+  ],
+  "batchApplyResult": {
+    "success": false,
+    "haltedBySafeguard": true,
+    "reason": "Batch contains 8 events, which exceeds safe limit of 5",
+    "appliedCount": 0,
+    "appliedEvents": [],
+    "mode": "production_apply"
+  }
+}
