@@ -1,7 +1,431 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-27T00:26:43.085Z",
+  "updatedAt": "2026-10-30T01:00:33.113Z",
   "snapshots": [
+    {
+      "id": "rb-conf-int-soe-2027-2026-10-30T01-00-05-064Z",
+      "eventId": "conf-int-soe-2027",
+      "eventName": "SOE 2027 (European Society of Ophthalmology Congress)",
+      "timestamp": "2026-10-30T01:00:05.064Z",
+      "status": "applied",
+      "beforeValues": {
+        "cityCountry": "アテネ / ギリシャ"
+      },
+      "afterValues": {
+        "cityCountry": "Athens"
+      },
+      "fieldChanges": [
+        {
+          "field": "cityCountry",
+          "before": "アテネ / ギリシャ",
+          "after": "Athens",
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "url": "https://soe2027.soevision.org/",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.98,
+        "reason": "The official website confirms all current event details: SOE 2027 held on June 18-20, 2027 at the Megaron Athens International Conference Centre in Athens, Greece, with an abstract submission deadline of 19 January 2027 at 23:59 GMT."
+      }
+    },
+    {
+      "id": "rb-conf-jp-jsoprs-2027-2026-10-30T00-59-59-204Z",
+      "eventId": "conf-jp-jsoprs-2027",
+      "eventName": "第14回 日本眼形成再建外科学会学術集会 (JSOPRS 2027)",
+      "timestamp": "2026-10-30T00:59:59.204Z",
+      "status": "applied",
+      "beforeValues": {
+        "title": "第14回 日本眼形成再建外科学会学術集会 (JSOPRS 2027)"
+      },
+      "afterValues": {
+        "title": "第14回日本眼形成再建外科学会学術集会"
+      },
+      "fieldChanges": [
+        {
+          "field": "title",
+          "before": "第14回 日本眼形成再建外科学会学術集会 (JSOPRS 2027)",
+          "after": "第14回日本眼形成再建外科学会学術集会",
+          "severity": "low"
+        }
+      ],
+      "evidence": {
+        "url": "https://orbit-cs.net/jsoprs2027/",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.98,
+        "reason": "The official event page confirms the 14th edition of JSOPRS scheduled for June 12-13, 2027 at Kyushu University School of Medicine Centennial Hall with abstract deadline on February 19, 2027, completely matching the database."
+      }
+    },
+    {
+      "id": "rb-conf-int-apacrs-2027-2026-10-30T00-59-51-140Z",
+      "eventId": "conf-int-apacrs-2027",
+      "eventName": "APACRS 2027 Annual Meeting",
+      "timestamp": "2026-10-30T00:59:51.140Z",
+      "status": "applied",
+      "beforeValues": {
+        "title": "APACRS 2027 Annual Meeting"
+      },
+      "afterValues": {
+        "title": "39th APACRS Annual Meeting"
+      },
+      "fieldChanges": [
+        {
+          "field": "title",
+          "before": "APACRS 2027 Annual Meeting",
+          "after": "39th APACRS Annual Meeting",
+          "severity": "high"
+        }
+      ],
+      "evidence": {
+        "url": "https://apacrs2027.org/",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.99,
+        "reason": "The official conference website confirms the 39th APACRS Annual Meeting held from 3 June 2027 to 5 June 2027, matching all current event details and providing the verified edition number (39)."
+      }
+    },
+    {
+      "id": "rb-conf-int-wgc-2027-2026-10-30T00-59-44-957Z",
+      "eventId": "conf-int-wgc-2027",
+      "eventName": "World Glaucoma Congress 2027 (WGC 2027)",
+      "timestamp": "2026-10-30T00:59:44.957Z",
+      "status": "applied",
+      "beforeValues": {
+        "cityCountry": "京都市（京都府） / 日本",
+        "registration": null,
+        "title": "World Glaucoma Congress 2027 (WGC 2027)"
+      },
+      "afterValues": {
+        "cityCountry": "Kyoto",
+        "registration": {
+          "version": 2,
+          "type": "international",
+          "timeZone": "Etc/GMT-2",
+          "periods": [
+            {
+              "label": "Early bird fee",
+              "deadline": "2027-01-18",
+              "category": "early",
+              "advanceEligible": true,
+              "sourceUrl": "https://worldglaucomacongress.org/registration/"
+            },
+            {
+              "label": "Regular fee",
+              "start": "2027-01-19",
+              "deadline": "2027-03-15",
+              "category": "regular",
+              "advanceEligible": true,
+              "sourceUrl": "https://worldglaucomacongress.org/registration/"
+            },
+            {
+              "label": "Late fee",
+              "start": "2027-03-16",
+              "category": "regular",
+              "advanceEligible": null,
+              "sourceUrl": "https://worldglaucomacongress.org/registration/"
+            }
+          ]
+        },
+        "title": "12th World Glaucoma Congress (WGC 2027)"
+      },
+      "fieldChanges": [
+        {
+          "field": "cityCountry",
+          "before": "京都市（京都府） / 日本",
+          "after": "Kyoto",
+          "severity": "medium"
+        },
+        {
+          "field": "registration",
+          "before": null,
+          "after": {
+            "version": 2,
+            "type": "international",
+            "timeZone": "Etc/GMT-2",
+            "periods": [
+              {
+                "label": "Early bird fee",
+                "deadline": "2027-01-18",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://worldglaucomacongress.org/registration/"
+              },
+              {
+                "label": "Regular fee",
+                "start": "2027-01-19",
+                "deadline": "2027-03-15",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://worldglaucomacongress.org/registration/"
+              },
+              {
+                "label": "Late fee",
+                "start": "2027-03-16",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://worldglaucomacongress.org/registration/"
+              }
+            ]
+          },
+          "severity": "medium"
+        },
+        {
+          "field": "title",
+          "before": "World Glaucoma Congress 2027 (WGC 2027)",
+          "after": "12th World Glaucoma Congress (WGC 2027)",
+          "severity": "high"
+        }
+      ],
+      "evidence": {
+        "url": "https://worldglaucomacongress.org/",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.98,
+        "reason": "The official website confirms the 12th World Glaucoma Congress (WGC 2027) in Kyoto, Japan, for April 20–23, 2027, along with an abstract submission deadline of October 19, 2026 and registration deadlines."
+      }
+    },
+    {
+      "id": "rb-conf-int-apao-2027-2026-10-30T00-59-16-299Z",
+      "eventId": "conf-int-apao-2027",
+      "eventName": "APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress)",
+      "timestamp": "2026-10-30T00:59:16.299Z",
+      "status": "applied",
+      "beforeValues": {
+        "title": "APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress)"
+      },
+      "afterValues": {
+        "title": "42nd Asia-Pacific Academy of Ophthalmology Congress"
+      },
+      "fieldChanges": [
+        {
+          "field": "title",
+          "before": "APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress)",
+          "after": "42nd Asia-Pacific Academy of Ophthalmology Congress",
+          "severity": "low"
+        }
+      ],
+      "evidence": {
+        "url": "https://2027.apaophth.org/",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.98,
+        "reason": "The official conference website confirms APAO 2027 (42nd Asia-Pacific Academy of Ophthalmology Congress) in Singapore, including the abstract submission deadline of September 23, 2026 at 23:59 GMT+8. All details match current database records."
+      }
+    },
+    {
+      "id": "rb-conf-jp-iscev-2027-2026-10-30T00-59-06-992Z",
+      "eventId": "conf-jp-iscev-2027",
+      "eventName": "第73回 日本臨床視覚電気生理学会",
+      "timestamp": "2026-10-30T00:59:06.992Z",
+      "status": "applied",
+      "beforeValues": {
+        "abstractSubmission.status": "open",
+        "abstractSubmission.deadline": "2026-10-28",
+        "registration": null
+      },
+      "afterValues": {
+        "abstractSubmission.status": "closed",
+        "abstractSubmission.deadline": "2026-08-03",
+        "registration": {
+          "version": 2,
+          "type": "domestic",
+          "timeZone": "Asia/Tokyo",
+          "periods": [
+            {
+              "label": "早期参加登録",
+              "start": "2026-10-19T12:00",
+              "deadline": "2027-01-15T12:00",
+              "category": "early",
+              "advanceEligible": true,
+              "sourceUrl": "https://www.congre.co.jp/73jscev/registration.html"
+            },
+            {
+              "label": "後期参加登録",
+              "start": "2027-01-19T12:00",
+              "deadline": "2027-03-13T15:00",
+              "category": "regular",
+              "advanceEligible": null,
+              "sourceUrl": "https://www.congre.co.jp/73jscev/registration.html"
+            }
+          ]
+        }
+      },
+      "fieldChanges": [
+        {
+          "field": "abstractSubmission.status",
+          "before": "open",
+          "after": "closed",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": "2026-10-28",
+          "after": "2026-08-03",
+          "severity": "medium"
+        },
+        {
+          "field": "registration",
+          "before": null,
+          "after": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "早期参加登録",
+                "start": "2026-10-19T12:00",
+                "deadline": "2027-01-15T12:00",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://www.congre.co.jp/73jscev/registration.html"
+              },
+              {
+                "label": "後期参加登録",
+                "start": "2027-01-19T12:00",
+                "deadline": "2027-03-13T15:00",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://www.congre.co.jp/73jscev/registration.html"
+              }
+            ]
+          },
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "url": "https://www.congre.co.jp/73jscev/",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.98,
+        "reason": "The page corresponds to the 73rd Annual Meeting of the Japanese Society for Clinical Electrophysiology of Vision (第73回日本臨床視覚電気生理学会). The registration schedule confirms the 2027 dates (March 12-13, 2027), matching the database."
+      }
+    },
+    {
+      "id": "rb-conf-jp-presbyopia-2027-2026-10-30T00-58-41-602Z",
+      "eventId": "conf-jp-presbyopia-2027",
+      "eventName": "第5回 日本老視学会学術総会",
+      "timestamp": "2026-10-30T00:58:41.602Z",
+      "status": "applied",
+      "beforeValues": {
+        "title": "第5回 日本老視学会学術総会"
+      },
+      "afterValues": {
+        "title": "日本老視学会第5回学術総会"
+      },
+      "fieldChanges": [
+        {
+          "field": "title",
+          "before": "第5回 日本老視学会学術総会",
+          "after": "日本老視学会第5回学術総会",
+          "severity": "low"
+        }
+      ],
+      "evidence": {
+        "url": "https://www.rousi.jp/jps5",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.95,
+        "reason": "The page corresponds to the 5th Annual Meeting of the Japan Presbyopia Society (第5回 日本老視学会学術総会). The edition matches, early registration occurs in December 2026 for the January 2027 meeting, and no conflicting information was found."
+      }
+    },
+    {
+      "id": "rb-oph-001-2026-10-30T00-58-21-993Z",
+      "eventId": "oph-001",
+      "eventName": "第80回 日本臨床眼科学会",
+      "timestamp": "2026-10-30T00:58:21.993Z",
+      "status": "applied",
+      "beforeValues": {
+        "abstractSubmission.startDate": null,
+        "abstractSubmission.deadline": null,
+        "abstractSubmission.url": "https://convention.jtbcom.co.jp/80ringan/index.html",
+        "abstractSubmission.timeZone": null,
+        "registration": null
+      },
+      "afterValues": {
+        "abstractSubmission.startDate": "2026-03-03T12:00",
+        "abstractSubmission.deadline": "2026-05-21T12:00",
+        "abstractSubmission.url": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
+        "abstractSubmission.timeZone": "Asia/Tokyo",
+        "registration": {
+          "version": 2,
+          "type": "domestic",
+          "timeZone": "Asia/Tokyo",
+          "periods": [
+            {
+              "label": "事前参加登録",
+              "start": "2026-03-03T12:00",
+              "deadline": "2026-09-25T12:00",
+              "category": "regular",
+              "advanceEligible": true,
+              "sourceUrl": "https://convention.jtbcom.co.jp/80ringan/join/index.html"
+            },
+            {
+              "label": "後期参加登録",
+              "start": "2026-10-01T12:00",
+              "deadline": "2026-11-01",
+              "category": "regular",
+              "advanceEligible": null,
+              "sourceUrl": "https://convention.jtbcom.co.jp/80ringan/join/index.html"
+            }
+          ]
+        }
+      },
+      "fieldChanges": [
+        {
+          "field": "abstractSubmission.startDate",
+          "before": null,
+          "after": "2026-03-03T12:00",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2026-05-21T12:00",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": "https://convention.jtbcom.co.jp/80ringan/index.html",
+          "after": "https://convention.jtbcom.co.jp/80ringan/abstract/index.html",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        },
+        {
+          "field": "registration",
+          "before": null,
+          "after": {
+            "version": 2,
+            "type": "domestic",
+            "timeZone": "Asia/Tokyo",
+            "periods": [
+              {
+                "label": "事前参加登録",
+                "start": "2026-03-03T12:00",
+                "deadline": "2026-09-25T12:00",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://convention.jtbcom.co.jp/80ringan/join/index.html"
+              },
+              {
+                "label": "後期参加登録",
+                "start": "2026-10-01T12:00",
+                "deadline": "2026-11-01",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://convention.jtbcom.co.jp/80ringan/join/index.html"
+              }
+            ]
+          },
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "url": "https://convention.jtbcom.co.jp/80ringan/index.html",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.98,
+        "reason": "The official conference website confirms the 80th Annual Congress of Japan Clinical Ophthalmology (第80回日本臨床眼科学会) taking place from October 29 to November 1, 2026 at the Kyoto International Conference Center. Abstract submission and registration deadline details are also verified."
+      }
+    },
     {
       "id": "rb-conf-int-soe-2027-2026-10-27T00-26-24-474Z",
       "eventId": "conf-int-soe-2027",
