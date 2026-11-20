@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastRun": "2026-11-18T02:53:16.918Z",
+  "lastRun": "2026-11-20T02:18:00.054Z",
   "sources": {
     "oph-001": {
       "url": "https://convention.jtbcom.co.jp/80ringan/index.html",
@@ -51,12 +51,12 @@
     },
     "conf-jp-neuro-2026": {
       "url": "https://n-practice.co.jp/64thJNOS/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "04369ccc8efe8871ecb78d2b2828ecdc5ec4a6824ccb49db720c33e4a7bec3b1",
       "lastGeminiDecision": "needs_review",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": [
         {
           "url": "https://n-practice.co.jp/64thJNOS/subject/index.html",
@@ -68,22 +68,22 @@
     },
     "conf-jp-jrvs-2026": {
       "url": "https://convention.jtbcom.co.jp/65moumaku/index.html",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "4cce26e054a4d585d236f0e099cc67745bda797cae614755477127eb22bc4340",
+      "normalizedHash": "8df691c12ae74de97a226f836fb1bfc4e300da8caf8682cd50a9bfb5b224a786",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": []
     },
     "conf-int-arc-2026": {
       "url": "https://convention.jtbcom.co.jp/arc2026/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "20a11ea529c5da0d6bdfc545e2bceb0478a4d007039f58e6be0a9799eec2a92b",
       "lastGeminiDecision": "needs_review",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": [
         {
           "url": "https://convention.jtbcom.co.jp/arc2026/registration/index.html",
@@ -102,92 +102,92 @@
     },
     "conf-jp-surgery-2027": {
       "url": "https://50.jsos.jp/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "50465343e354f977bcb14e6252dc7787d51bd5d5b4cf9a55d89af5b3aeda5eba",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": []
     },
     "conf-jp-cornea-2027": {
       "url": "https://www.okinawa-congre.co.jp/cornea2027/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "39d6decbd8d11e98de0e0527f63b9ceb13a73eeeaac7a261abf811a2867d719c",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": []
     },
     "conf-jp-eyelid-2027": {
       "url": "https://convention.jtbcom.co.jp/gigan38/index.html",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "c74a4a116425302d4af65b9d896bfafe3c8262c811bebeef611cf3844687ac21",
       "lastGeminiDecision": "needs_review",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": []
     },
     "conf-jp-diabetic-2027": {
       "url": "https://convention.jtbcom.co.jp/jsod33/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "579e85e5b2a70c6d6917d087523c1cff37ffcd46ae04b25bd941c5f9395018d6",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": []
     },
     "conf-jp-iscev-2027": {
       "url": "https://www.congre.co.jp/73jscev/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "1264d1af8b1908287afea064144ed1f8432b516737b66592643be41414e1f384",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": []
     },
     "conf-int-apao-2027": {
       "url": "https://2027.apaophth.org/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "8e7972561dd7ee0804083f5a9f29a6d3ac04ee275fce395d26f3552029705b75",
-      "lastGeminiDecision": "no_change",
+      "normalizedHash": "cf46d3fa4bee7764d4037f1c2c69ca9607bf2fda9ab705f3aa9cc40cee2b144e",
+      "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": []
     },
     "conf-int-fujiretina-2027": {
       "url": "https://convention.jtbcom.co.jp/fujiretina/index.html",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "6c2fa77cb9faa2d0ee0ea74b16d510c94189936f961942dc88d2b683de6dc35f",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": []
     },
     "oph-011": {
       "url": "https://convention.jtbcom.co.jp/131jos/index.html",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "1aecf387d0a8d1ccdb1c57ed5341a35a00d5446d9bd099ee1b6870cedc044ad1",
+      "normalizedHash": "e46255cff398a134d9d46dba1f713358f650dd0f1bde3e74d0cc364b8c2c68a1",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": []
     },
     "oph-014": {
       "url": "https://site2.convention.co.jp/jgs2027/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "b9d15892ab2fbef3512c45006bcba3ca64f97c698ef5d3973ed1ca8e8f29fc5e",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": [
         {
           "url": "https://site2.convention.co.jp/jgs2027/endai/",
@@ -199,12 +199,12 @@
     },
     "conf-int-wgc-2027": {
       "url": "https://worldglaucomacongress.org/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "b9aefadba07de1bb5dba560998e3dcf6f9d4b06769dae05acecaee44da6740df",
+      "normalizedHash": "fec6e1887e9af8cdbd5453d9e39e5fc9fe3dcf2e72f5d82a961c7f757e9b4130",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": []
     },
     "conf-jp-lowvision-2027": {
@@ -245,12 +245,12 @@
     },
     "conf-int-apacrs-2027": {
       "url": "https://apacrs2027.org/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "0b0b10d62a3a78b083de0262b4b1798d19599178723f5f7d23df21a4a4251029",
+      "normalizedHash": "76ee0546866c602805036eac0430217947ddfd58047bd0fbc0f66692d10bda3f",
       "lastGeminiDecision": "safe_auto_update",
-      "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-20",
+      "lastGeminiConfidence": 0.99,
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://apacrs2027.org/registration/",
@@ -263,12 +263,12 @@
     },
     "conf-jp-perimetry-2027": {
       "url": "https://www.ganki.jp/jips2027/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "4ba93740be0d9165897cbc0e9e5f01981b6d7d5d959363769d704587474b0f9c",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://www.ganki.jp/jips2027/participants.html",
@@ -281,12 +281,12 @@
     },
     "conf-jp-jsoprs-2027": {
       "url": "https://orbit-cs.net/jsoprs2027/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "f293bb3ad7b21d9ab06d1ec523b38ea0a9f3681b1253bccf61c43ba563444fa2",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://orbit-cs.net/jsoprs2027/",
@@ -299,39 +299,32 @@
     },
     "conf-jp-pediatric-2027": {
       "url": "https://jasa-japo2027.jp/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "d6b697be48e2083a2175b63e237b5b4444cd5f856d35a7b7b74254a739ce62f6",
-      "lastGeminiDecision": "no_change",
+      "normalizedHash": "37a685d0aadf68c0bb52e05855de63a6a664962b70388d783e5d55bdbbe1ced2",
+      "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-20",
-      "deadlineObservations": [
-        {
-          "url": "https://jasa-japo2027.jp/endai.html",
-          "reason": "abstract-not-published",
-          "field": "abstractSubmission",
-          "category": "unpublished"
-        }
-      ]
+      "nextCheckDate": "2026-11-24",
+      "deadlineObservations": []
     },
     "conf-int-soe-2027": {
       "url": "https://soe2027.soevision.org/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "7d64ad535b6546803060be30f79cdd861906d26f8b74309011657b47dd80cbcb",
-      "lastGeminiDecision": "needs_review",
+      "normalizedHash": "78451f10c39b0808a5d4f9eeffb8eb826b9a6c2dd95d05266e6958e1365b87f4",
+      "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": []
     },
     "oph-013": {
       "url": "https://www.kwcs.jp/42jscrs/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "7608369c45dc569e3f3905bf984ed9c1e05116fade9552df49b2e943f7b3fd06",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://www.kwcs.jp/42jscrs/reg.html",
@@ -350,12 +343,12 @@
     },
     "conf-jp-myopia-2027": {
       "url": "https://www.ganki.jp/myopia2027/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "afb7575e2b95da7ef7404ff0d5da116f4419a7101a6159a92a76b38cd91d5694",
+      "normalizedHash": "514dd155687d6a4ce8beced2ec5894015bdb15db761485bf734cfee2a73eaa2c",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://www.ganki.jp/myopia2027/registration.html",
@@ -375,12 +368,12 @@
     },
     "conf-int-iois-2027": {
       "url": "https://www.iois.info/page.php?edi_id=1697",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "5a5e2c453290ca12926370f6d7a9ad419dd2ce8d6da4a123138a921ad1abd86e",
       "lastGeminiDecision": "needs_review",
       "lastGeminiConfidence": 0.7,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://www.iois.info/page.php?edi_id=1699",
@@ -399,12 +392,12 @@
     },
     "conf-jp-inflammation-2027": {
       "url": "https://www.congre.co.jp/oiw2027/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "5fd5bf764de585b5957289766d76af468efedc5fea0d32743a0553dbf4111aa3",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.8,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://www.congre.co.jp/oiw2027/",
@@ -422,12 +415,12 @@
     },
     "conf-jp-circulation-2027": {
       "url": "https://convention.jtbcom.co.jp/43jsoc/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "7a00ed93609828023dc3275a74a3d62eb71cc324376a0337d5c5d19eb54a151f",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.9,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://convention.jtbcom.co.jp/43jsoc/",
@@ -445,12 +438,12 @@
     },
     "conf-jp-cl-2027": {
       "url": "https://www.congre.co.jp/jcls2027/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "b499247fd0db5e5681f0aa9aeceb444ca750c73fd8b825f2b65a7653d0bc0af5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.9,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://www.congre.co.jp/jcls2027/",
@@ -468,12 +461,12 @@
     },
     "conf-jp-optics-2027": {
       "url": "https://www.jsoo-ws.com/63jsoo",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "b4a2d049cc3a2ed37d6b49e4d1d8381fb8d2dcd59d986bc760df45c409717b6c",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://www.jsoo-ws.com/63jsoo",
@@ -491,12 +484,12 @@
     },
     "conf-jp-cataract-2027": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
@@ -514,12 +507,12 @@
     },
     "conf-jp-pharmacology-2027": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
@@ -537,12 +530,12 @@
     },
     "conf-int-euretina-2027": {
       "url": "https://euretina.org/copenhagen-27/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "09b5517edc753343958b22ded2574ae9cad17f6806b06217a8a54828d1ce498a",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.9,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://euretina.org/copenhagen-27/",
@@ -560,12 +553,12 @@
     },
     "conf-jp-oncology-2027": {
       "url": "https://www.ganki.jp/jsoo2027/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "4af6848d41f3fe36e091fe5b56283c207d64a82e7498753697ef952888445b39",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://www.ganki.jp/jsoo2027/registration.html",
@@ -585,12 +578,12 @@
     },
     "conf-int-escrs-2027": {
       "url": "https://www.escrs.org/escrs-annual-events/45th-congress-of-the-escrs",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
       "normalizedHash": "48c7341c98665aa195a07eedc560e5d448d4553f80acf67a6cf8818821f11ab9",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-20",
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
         {
           "url": "https://www.escrs.org/escrs-annual-events/45th-congress-of-the-escrs",
@@ -607,107 +600,81 @@
       ]
     },
     "conf-jp-ringan-2027": {
-      "url": "https://eye.med.hokudai.ac.jp/2027_ringan/",
-      "lastChecked": "2026-11-18",
+      "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "d98ce7a0f3200a7f5a22b9ff734edbd7a3f09db855b9a1162911c93c38309eb1",
+      "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
-      "lastGeminiConfidence": 0.7,
-      "nextCheckDate": "2026-11-20",
+      "lastGeminiConfidence": 0,
+      "nextCheckDate": "2026-11-24",
       "lastUrlDiscoveryDiagnostics": [
         {
           "query": "第81回 日本臨床眼科学会 2027",
           "webSearchQueries": [
             "第81回 日本臨床眼科学会 2027",
-            "\"nichigan.or.jp\" \"主要学術集会予定表\"",
-            "日本臨床眼科学会 開催地 一覧 81回",
-            "\"第81回日本臨床眼科学会\""
+            "第81回 日本臨床眼科学会",
+            "日本臨床眼科学会 開催予定",
+            "\"第81回日本臨床眼科学会\" ホームページ"
           ],
           "groundingUrls": [
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHvHMSMrQYuAjViMQyJdhs0ScvdeTF2nkfdkKVejcfkPXZAqhludxe6giNJFtXbBHg4M0J5nk2P7DAv7GtPqQ7kDPsRGxBhIATF65cXkg53KBIf0UtYu8v0R06Fpm3HzfTnVgJiIshdjjLKHV_6s5t6bbseuoy0iN2N-ojBWT2Q",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG7VeI6WMMlPxbMi21XQED2VkI2vr3qBbVdzFt7N--fxthi4NkdYQxSMsry5YBpai0c95CX_5JgaEYGOaJ88KZfSzIPZb2ndwr05L3m5h7BhRPhhMCQ4Kq86eEQjqEbR1jUVEDR7Oit8g==",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGcj30OwuEEb13k5lEfUO1pu2ldM4SILSGO3tVDcYDTZS3Ubv3Q1PeZoe3eEvtrXl-lJ1r5uXslF-Z554ntrs0V_4-NF1HEUs_Q4NH_1aWr4pudUhzMd_2VwLYGAM4GKQ==",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHV6Ij1fRmaUVDPbwRrB2-y043IdcCh7RvUrC3j3nIKP53YgG1iG3Bfn7PESfb2pmdz1e4a0jeFC0ca5T9yvM3-zu-7pb9LNaH_QfhsJJ8XYQbgUeco1_iy",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGlRS-trLAEUSFxevR_iTRsHr72zvPgN8CLw8z00lzWpNi-nji2ufcTBESn1_BVkoUmSnDEFZwO4ANkQ07gcAaY72yIL0By0Ywv5gbMdAo0g_zXl0KzzkMCaP7pu2ZcqDbSYM9Q9G_rjvfdGGC1XpyO2bf0JE8lRPp4qtX2DekjDxcWsADYskwI",
-            "https://www.nichigan.or.jp/member/syukai/hyoji.html`",
-            "https://www.nichigan.or.jp/member/`",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG1j7E8DExi3bCxk2m1g9tp6PLa8E6uCc4tGtoHdYrFCVchottRQl29Z6fnxITFr70Y1y-SLabVfSaHJ49a3VeH9awC0fs6ShXYOuXq4N0Cnnp5V78V8zLw7_dlutiGE2L-WCDMsx9z",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVYad3NMeSb_GPnCyevmz-4Y9sFXfKlK0kI18dE461UKtVYW9UWxM3Ch1YP-NBZ1jPrOMluviP5acsUBBZLnrwiw2HZu2vEVY5dUEX0j5d5D4qhWREUYuYojkNf5kpT3odqoc68PYixH7o8wLooIB3YrzVjZl5yPhJ459CAaqfMYAnZ3rFEjB1oA==",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF2Xif9C6xcv6_r6qcofu8VLb1MgQHQbW25HicZ2SvPozEBQfRMcp3gMe7a3-JdiyR3lC-VY3e96mzSH8HtWR6cWxAKYfEB91eE1upFcmNyzJRoZqp6wiCDM3uQI-0b4ijrAKqfWFRv",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGu8cMJMmAK-c8xng5oB0T2N192EjB29SyCWNWHsN9qTnsYTIh_UwdWMEJQ0V6irG7nVSEIXvmhPwUByEC2bBJNIeftKwmy6v4xjaUE1tLcRmSoornk9orvaGNm-uoU",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGlwzSSz9LuBvnzwG-qomr6dGTTBLlyY4bb6kIdkWdP71bnTp7czpC5FP50WvrEeUoc_fc2NC0yt3vQQ_z8hsAy6fmu_N2Uf-EZLqsgCSnU3qFZxIkqYxWlEciiXrB2",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFHR8uF_v4MhIeoVJ7aqfbQzF0cNTvrpJIi8qQmMOFFXS0K2yY9IpnUIWDvHE4pNhtbbNE-3u2ShOFYFDea7JDAHTeyQ6v485eiYM8fK89ZLpgqJs-7djjp6Pq-mF3U2C6BMHgfg69xQWE=",
+            "https://www.joia.or.jp/`",
             "https://www.nichigan.or.jp/`"
           ],
           "candidates": [
             {
               "rank": 1,
-              "url": "http://shizuoka.gankaikai.or.jp/wp-content/uploads/2025/10/202510link.pdf",
-              "title": "gankaikai.or.jp",
-              "snippet": "**URL:** `https://www.nichigan.or.jp/member/syukai/hyoji.html`\n**URL:** `https://www.nichigan.or.jp/member/`"
+              "url": "https://www.joia.or.jp/domestic-conference/83584/",
+              "title": "joia.or.jp",
+              "snippet": "Conference scheduling and official notices are hosted across the parent academic society and associated official event organizers\n**学会名 (Edition):** 第81回 日本臨床眼科学会 (Congress of Clinical Ophthalmology of Japan)\n**Title:** 2027年 国内外の学会予定\n**日程 (Dates):** 10/21（木） - 10/24（日）\n**学会名 (Edition):** 第81回日本臨床眼科学会（併設器械展示会）"
             },
             {
               "rank": 2,
-              "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+              "url": "https://www.nichigan.or.jp/news/detail.html?itemid=721&dispmid=1050&TabModule1051=0",
               "title": "nichigan.or.jp",
-              "snippet": "**Title:** 主要学術集会予定表 - 日本眼科学会\nListed under the **2027年** schedule"
+              "snippet": "Conference scheduling and official notices are hosted across the parent academic society and associated official event organizers\n**Title:** 「b) 共通講習（必修講習A、必修講習B）」の開催予定について\n**Edition & Year:** 「第81回日本臨床眼科学会時（2027年10月）」"
             },
             {
               "rank": 3,
-              "url": "https://eye.med.hokudai.ac.jp/2027_ringan/",
-              "title": "hokudai.ac.jp",
-              "snippet": "**Title:** 会員・医療関係の皆さまへ - 日本眼科学会"
+              "url": "https://www.joia.or.jp/domestic-conference/41185/",
+              "title": "joia.or.jp",
+              "snippet": "**URL:** `https://www.joia.or.jp/`\n**URL:** `https://www.joia.or.jp/`"
             },
             {
               "rank": 4,
-              "url": "https://www.nichigan.or.jp/member/",
-              "title": "nichigan.or.jp",
-              "snippet": "Official portal page containing congress links, banner carousels, and notices confirming **第81回日本臨床眼科学会** for the 2027 academic year"
+              "url": "https://www.joia.or.jp/exhibition/79101/",
+              "title": "joia.or.jp",
+              "snippet": "**Title:** 2027年 学会併設器械展示会"
             },
             {
               "rank": 5,
-              "url": "https://www.nichigan.or.jp/news/detail.html?itemid=721&dispmid=1050&TabModule1051=0",
+              "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
               "title": "nichigan.or.jp",
-              "snippet": "**URL:** `https://www.nichigan.or.jp/` (Notice: *「b) 共通講習（必修講習A、必修講習B）」の開催予定について*)\n**Title:** 「b) 共通講習（必修講習A、必修講習B）」の開催予定について - 日本眼科学会\nOutlines future mandatory lecture schedules explicitly linking both the numbered edition and the year\n*\"b）共通講習 必修講習B: **第81回日本臨床眼科学会時（2027年10月）**\"*"
+              "snippet": "**URL:** `https://www.nichigan.or.jp/`"
             },
             {
               "rank": 6,
-              "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html`",
+              "url": "https://www.joia.or.jp/`",
               "title": "",
-              "snippet": "* **URL:** `https://www.nichigan.or.jp/member/syukai/hyoji.html`"
+              "snippet": "* **URL:** `https://www.joia.or.jp/`"
             },
             {
               "rank": 7,
-              "url": "https://www.nichigan.or.jp/member/`",
-              "title": "",
-              "snippet": "* **URL:** `https://www.nichigan.or.jp/member/`"
-            },
-            {
-              "rank": 8,
               "url": "https://www.nichigan.or.jp/`",
               "title": "",
-              "snippet": "* **URL:** `https://www.nichigan.or.jp/` (Notice: *「b) 共通講習（必修講習A、必修講習B）」の開催予定について*)"
+              "snippet": "* **URL:** `https://www.nichigan.or.jp/`"
             }
           ],
           "finishReason": "STOP"
         },
         {
           "query": "第81回 日本臨床眼科学会 2027",
-          "candidateUrl": "http://shizuoka.gankaikai.or.jp/wp-content/uploads/2025/10/202510link.pdf",
-          "verification": {
-            "isOfficialEventPage": false,
-            "is_official_page": false,
-            "yearMatches": false,
-            "year_matches": false,
-            "editionMatches": false,
-            "edition_matches": false,
-            "isOfficialDomain": false,
-            "is_official_domain": false,
-            "isThirdParty": false,
-            "is_third_party": false,
-            "confidence": 0.95,
-            "reason": "The candidate URL is a regional branch (Shizuoka) PDF file from 2025 containing links, not the official event page for the 81st Annual Congress in 2027.",
-            "recommended_action": "adopt_official_url"
-          },
-          "accepted": false
-        },
-        {
-          "query": "第81回 日本臨床眼科学会 2027",
-          "candidateUrl": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
+          "candidateUrl": "https://www.joia.or.jp/domestic-conference/83584/",
           "verification": {
             "isOfficialEventPage": false,
             "is_official_page": false,
@@ -715,22 +682,22 @@
             "year_matches": true,
             "editionMatches": true,
             "edition_matches": true,
-            "isOfficialDomain": true,
-            "is_official_domain": true,
-            "isThirdParty": false,
-            "is_third_party": false,
-            "confidence": 0.95,
-            "reason": "The URL is an academic meeting schedule list (主要学術集会予定表) on the official society domain, not a dedicated official website or event page for the 81st Japanese Clinical Ophthalmology conference.",
+            "isOfficialDomain": false,
+            "is_official_domain": false,
+            "isThirdParty": true,
+            "is_third_party": true,
+            "confidence": 0.85,
+            "reason": "The URL is an event calendar entry on the Japan Ophthalmic Instruments Association (JOIA) website rather than the dedicated official conference website for the 81st Congress of Clinical Ophthalmology of Japan.",
             "recommended_action": "adopt_official_url"
           },
           "accepted": false
         },
         {
           "query": "第81回 日本臨床眼科学会 2027",
-          "candidateUrl": "https://eye.med.hokudai.ac.jp/2027_ringan/",
+          "candidateUrl": "https://www.nichigan.or.jp/news/detail.html?itemid=721&dispmid=1050&TabModule1051=0",
           "verification": {
-            "isOfficialEventPage": true,
-            "is_official_page": true,
+            "isOfficialEventPage": false,
+            "is_official_page": false,
             "yearMatches": true,
             "year_matches": true,
             "editionMatches": true,
@@ -740,23 +707,43 @@
             "isThirdParty": false,
             "is_third_party": false,
             "confidence": 0.85,
-            "reason": "The URL path '/2027_ringan/' on the Hokkaido University Ophthalmology Department domain corresponds directly to the official conference portal/teaser hosted by the organizing department for the 2027 meeting (第81回 日本臨床眼科学会).",
+            "reason": "The URL is an official society news announcement (nichigan.or.jp) detailing mandatory lecture schedules rather than the dedicated official conference website for the 81st meeting.",
             "recommended_action": "adopt_official_url"
           },
-          "accepted": true
+          "accepted": false
+        },
+        {
+          "query": "第81回 日本臨床眼科学会 2027",
+          "candidateUrl": "https://www.joia.or.jp/domestic-conference/41185/",
+          "verification": {
+            "isOfficialEventPage": false,
+            "is_official_page": false,
+            "yearMatches": false,
+            "year_matches": false,
+            "editionMatches": false,
+            "edition_matches": false,
+            "isOfficialDomain": false,
+            "is_official_domain": false,
+            "isThirdParty": true,
+            "is_third_party": true,
+            "confidence": 0.95,
+            "reason": "The URL is an event calendar entry on an industry association website (JOIA), not the dedicated official website for the 81st Japanese Clinical Ophthalmology conference.",
+            "recommended_action": "adopt_official_url"
+          },
+          "accepted": false
         }
       ],
       "urlDiscoveryStatus": "official_url_not_found",
-      "lastUrlDiscoveryDate": "2026-11-11",
+      "lastUrlDiscoveryDate": "2026-11-20",
       "deadlineObservations": [
         {
-          "url": "https://eye.med.hokudai.ac.jp/2027_ringan/",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
           "reason": "registration-link-not-found",
           "field": "registration",
           "category": "link-not-found"
         },
         {
-          "url": "https://eye.med.hokudai.ac.jp/2027_ringan/",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
           "reason": "abstract-link-not-found",
           "field": "abstractSubmission",
           "category": "link-not-found"
@@ -765,13 +752,20 @@
     },
     "conf-int-aao-2027": {
       "url": "https://www.aao.org/annual-meeting",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "4e85aae700937af61fbc2797b376606cd1508db9811c32782ed868ced0410035",
+      "normalizedHash": "bacc8d988012f20427b3556936782e8458b3562aec5afd2dd96b2d1ba29b494f",
       "lastGeminiDecision": "needs_review",
-      "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-20",
+      "lastGeminiConfidence": 0.9,
+      "nextCheckDate": "2026-11-24",
       "deadlineObservations": [
+        {
+          "url": "https://www.aao.org/annual-meeting/exhibitor/registration",
+          "reason": "registration-extraction-failed",
+          "proposed": null,
+          "field": "registration",
+          "category": "extraction-failed"
+        },
         {
           "url": "https://www.aao.org/annual-meeting",
           "reason": "abstract-link-not-found",
@@ -783,115 +777,146 @@
         {
           "query": "AAO Annual Meeting 2027",
           "webSearchQueries": [
-            "\"Annual Session\" \"American Association of Orthodontists\" \"2027\" \"edition\" OR \"th Annual Session\"",
-            "\"127th\" \"Annual Meeting\" site:aao.org",
-            "AAO Annual Meeting 2027 official website",
-            "site:aao.org \"131st\" OR \"130th\" OR \"129th\" \"Annual Meeting\"",
-            "site:aaoinfo.org \"125th\" OR \"126th\" OR \"127th\""
+            "American Academy of Ophthalmology Annual Meeting 2027 future dates",
+            "\"annual session\" \"American Association of Orthodontists\" \"2027\" \"edition\" OR \"th\"",
+            "AAO Annual Meeting 2027",
+            "\"aao.org/annual-meeting\" \"Venetian Expo & Hotel\"",
+            "\"American Academy of Ophthalmology\" \"annual meeting\" \"131st\" OR \"130th\" OR \"132nd\"",
+            "site:annualsession.aaoinfo.org \"2027\"",
+            "\"Annual Session\" \"American Association of Orthodontists\" \"126th\" OR \"127th\" OR \"128th\""
           ],
           "groundingUrls": [
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHL83-MMSzr800jHt-wY1fSkwch1KyZTKVO6_TUNLvc_uB25PB1LQGTSnBJGfDtOaGaY_IBLEmLBVxgNBvsveFsxuQDOmni5UdMsZ7xunjpRpzw0TwlpUW0w7FKAJF29iv2Aqu1wGZA8cB4zzKKlyqQ",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFafLPR_jKcKlqr_kL-0LBsgywnM5FYwERXtx_De3qS-fi5u1v3m_igfkjpLGfq6-ojRlhQ_HxgNKBNNST8M1NPHNGOCVr9nc9sMd3bsRKiaSp-QJWMWf9A34E9m8CI4nZrlvJTnmMkgTk2aA==",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGma-db3J1YVh3ZeFPjdKmKs0nxWQBcT1oW-wuOEpIr8w8KzZUI5VogCTyXf-jRXGG3FFgE4z09FagiXW1rxXfB2Q16zfxqczvheYU4rRx__j4ykfsVhOWbfSMIXV9S7KqPuP6uWhYvuYlLXndzIUtG5voG2A==",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEkZLx53OYaRXPaeT0RR6K2x-DqJkLt5rBne7uAamY1Tygv0UdS0V_QBQBxHchXzOvFqquc97HCNkWgbFsubcmzonyoHA_z0ADyOUD7FYDK6GMClBBe-AFYSZW8duq_Ksn9hrmhfwJUXF0dv27tB0X-",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFSyxpoGdy6IVmytlWxo2m7WAKgJM4ul1F0gFyzLQMRYhpafMrwv5EbFxmiOCWh5egxVvyT6m2F9LOBS8MSe6fm1bkfDvC_knsnFOlz3zb6Qdd-kseLOGUAo02M4fN7lG5Dsy9qzekU_POR8Wed1uf6hETqnD7jK1eHXMcfMC6oHSxHrYmHh1fsTz0Lr16fSHa1SMXJdg-8pLtA",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVAXTKRIhE8LoIlGBLye5qtfHRdlNcNKpRQvJKuaDGQV7NACEw75a1GBSZOFWZxV_Z343fv6Xpt9lq6Z_UOzb0KNWs7d94QMR-VUfjQgKCLy3NT7vrGxWZe_b1spBc_xizOoXCEPlTg5OASA==",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFg_C6amQMhziyl849lAf0cOp8wTblCOYp8ML5vA_Ie4yi07RGj0r7EMgQP8f3wUP4HG_sq7ihN6zvFRFtm5991E31Tk9p5FvK4sHoZNnHKUuqDIzP1JN8=",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGixiWDSEr91lTtfObrJCsuBCg8Ua07McBWb_Pq1_rdS7Vm46jxX0OL4SnnjV48JSdI2ei1UtQ0g_1AcpdH5S_QHIG4fvkIe2UI_Kb8HLrveWFOU96L735edIQLROOwB2tt8w84zKgZzYn2aw==",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGZRsBuQQQ88iy5LwfpT9SzS5VlJHfp4eycg37joKSf62rBPGj4IBmQljlTNfxDNU_sCdwF-jIby0D8nmw8M-_IW3vS5TEkJIipLriU06viUz8EuyjR1cwKqRUvSY8d8Rccl_HWlZVycpdMQtu3bop3ZC8coVFwCNx8A8-8ZaJcEiL8u3TbJNqw2LqFH9qCgOHc",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH7JYtozPcJk3D5kV1fK1nLZi93fbYBJ3FJWJScs5cZ_VFOWQYBc4j3TuEw8hBbovW8EaNjsfS08ds03LatG51LgqVl8nnhwacuPcrBbXFY0AVnccOw2V8atcGS_hPy42SnbBjw9yib6ZOdUjllMvWJUkuTt2sVNsvo1VZ1yEOoLzhUiq-l_4Teg316IJMU-6Br8Aag7IlAYoJQ2BUVCC0beRvtDpF2SZeoKAzradNutsPDmLtj4I92Suyg20jiXt8VQZRFwBmvVW8jqfM=",
-            "https://www.aao.org/annual-meeting`",
-            "https://www.aao.org/annual-meeting/past-and-future-meetings`",
-            "https://annualsession.aaoinfo.org/`",
-            "https://www2.aaoinfo.org/meetings/annual-session-2027/`"
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFi9j6VUdFDBKMh_esA4qo3q5NCgbQawfSlK_zZVsKQ7GcLQ-2XhasH8i9n-lCkvsZmX09crR0IiGlPr36twGjVBHdPh7ZfVSBBCpQYpxuPO4PW1csmPJGnen9HsjdaCKGw2Y3In046r6yWfnKs68ALoeocm-dPnnbHJa9IrNLaYIZOhFusuks5U9MVxIcv5Qyc_-dfdc9bMyQMJ4andNBo8e7qZjKils8sPB6z_5kV0gsMf9lcnMnWEKYMPmcOnfSdNTz9mLpR44wvvg==",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFwUC3CvsW74XnnDwPiGVBF4bhNSsxh_qh3BmcrnFkRSZhb84V4idvr_JwJFdLHE-v261uXoKQYZbM5O_Q8hUw48QMOM64qq0lyFtWXvg4ABtjfXZkTVTrhVN5VfYnyQZY7mZeGoUb5r7usSih3v131KyiAW6p8mW8-maShP4HGYpAtocA2bJSpnRXTGxLomvuatw2R4M5Rc7lkiHXJh8RFvU_r",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEdH-QoH5Sx_eD5O9X5qAWSkO288qI8n40AiOahGqa-2vAHhdoRrQxzRvoA6ZbNDma5622xTcpha41ySRzU74mY6oeBvhypunrxiCT6uCQI5YnsvmrCNWtBx4-cVG-IPgx9UGmBBjdwAjzPBdcPVRoI",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHi46t2otxNCkHUHBl3y7qsbdnPiD7Z7GBflnEzicfnAVPM1zKpGp1yWN6OfHviuVQq9oNFhQWz-uACtxoM41RQFGKMO9UlcX1sDImSoms0LzAWIwbeik1qsoVyJZEN9K62qplqECbdVCrTiGHssPPn",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHaYMD4ACKFRCGddLHjgVSES_OKJpP2inec_HF2q2UgA4yqHnMt49uE_O-inZPpvYjY7dYzF0XyU53ZNhhTQZMU2HY_W2UQgNkr7L9IU2xxz3NoKghCe62bSPVBTmduw9joaNdJSNP_aj2ahjNFwmmv5Nz2Las=",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFWgHH9y9xeZiofkgFElG0J0EVk4Pg85pXnb2RBqfMWh-T8JvFSusn3eaAMi2gMnm9Z1gS1bMtCVa8wMJjfGMTAiyK-5tcwfIuD43VU-KEJ1sx4crBtbZq1P6p7PovMmtU=",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEeYyaHm7ENeR3nlwkzw14MVm7YnK2WL31HuZK90MKFOZ006_mOVQDUlZCIKbonw3QVhObz2lL_OawS_UpQ5MrhBZ3Pm4lu4fl45GGrrHEQ0cqZCpIUaW4GFVav4IEZwftg3-3JY3y7Ianx",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEFGd31-fEMdiMqLY9n8SNNw32HJs7IVNyAhmb56UgmQDm2vOJjNLPT9RAcy-C3li7k0fSe3TrTPK0XDzxr6rak15UYgb_NyRuqsZYLbnDQel_4UE1vh0XHem1bNn7aIlhRWF7PlQHLTBmQkS2GvPMiLRCLf0AK9A86xllYIg==",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEfvi8RV_lLEadRpG3Zkfneyasmr60c4c-MzzFQo_fU-G_ULXIQWjpo1-39YwDLGpRfpjesvMeadj7C0dbPZCW9QvTNNFlJuWWHK_uOOtG-Y7w36twSMco=",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGXoUhaK0CDNrf-g-bambxqtb136BsIAIMZsMfJ8DfnJAkP3QmyiuuWVzS3c0fKyGF0t5pE8lKx1IdiZOJ0b4vYBoPuOyyr6ZbTNUMIO4kbZzP3cbO3JMSm",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGGJpjjXZyyVPC8TOFV8DOOE1EBGCd5xl6zU1gFCI2X4ap2zX2bwa0DHKa05UUaONUjvT_bbLJLGw45mlraqSVh27tZULOsaWHZrf065LgWv3vkDFFHz_4=",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQENdBl16GT4X3boGnOIjzv15Z1Tnk0ZHZeVtuUHvlkZMeeu6svv0eu8qLuDdcS9a5ZXt_BrK1AOCJAtDOVm73NE5DYGprI3NWtF9uXXgX_aTqiYvHbn4EWedokI10vGdcFr3Kf_Fty84FIoYvSsF2KQ",
+            "https://www.aao.org/annual-meeting",
+            "https://www.aao.org/annual-meeting/past-and-future-meetings",
+            "https://annualsession.aaoinfo.org/"
           ],
           "candidates": [
             {
               "rank": 1,
-              "url": "https://congressagenda.com/congress/aao-annual-meeting-2027",
-              "title": "congressagenda.com",
-              "snippet": "**Official Conference URL:** `https://www.aao.org/annual-meeting`"
+              "url": "https://orthodonticproductsonline.com/industry-news/association-news/aao-moves-2027-annual-session-to-canada-for-first-time-in-organizations-history/",
+              "title": "orthodonticproductsonline.com",
+              "snippet": "The term **\"AAO Annual Meeting\"** primarily refers to the **American Academy of Ophthalmology (AAO)** Annual Meeting, but it is also frequently used to refer to the **American Association of Orthodontists (AAO)** Annual Session\n**Conference Year & Dates:** **June 4–6, 2027** at the Vancouver Convention Centre in Vancouver, British Columbia, Canada"
             },
             {
               "rank": 2,
-              "url": "https://www.aao.org/annual-meeting/meeting-information",
-              "title": "aao.org",
-              "snippet": "**Page Title:** *Annual Meeting - American Academy of Ophthalmology*"
+              "url": "https://us.dental-tribune.com/news/orthodontics-innovation-on-display-aao-annual-meeting-kicks-off-in-orlando/",
+              "title": "dental-tribune.com",
+              "snippet": "The term **\"AAO Annual Meeting\"** primarily refers to the **American Academy of Ophthalmology (AAO)** Annual Meeting, but it is also frequently used to refer to the **American Association of Orthodontists (AAO)** Annual Session"
             },
             {
               "rank": 3,
-              "url": "https://www.eyenews.uk.com/events/event/aao-2027-annual-meeting",
-              "title": "uk.com",
-              "snippet": "**Supplementary Official Dates & Venues URL:** `https://www.aao.org/annual-meeting/past-and-future-meetings`"
+              "url": "https://congressagenda.com/congress/aao-annual-meeting-2027",
+              "title": "congressagenda.com",
+              "snippet": "**Official URL:** [https://www.aao.org/annual-meeting](https://www.aao.org/annual-meeting)"
             },
             {
               "rank": 4,
               "url": "https://www.aao.org/annual-meeting/past-and-future-meetings",
               "title": "aao.org",
-              "snippet": "**Page Title:** *Past and Future Meetings - American Academy of Ophthalmology*\n**Conference Year:** **2027** (Held November 12–15, 2027, at the Venetian Expo & Hotel in Las Vegas, Nevada)"
+              "snippet": "**Official Future Meetings Schedule:** [https://www.aao.org/annual-meeting/past-and-future-meetings](https://www.aao.org/annual-meeting/past-and-future-meetings)\n**Page Title:** *Past and Future Meetings – American Academy of Ophthalmology*\n**Conference Year & Dates:** **November 12–15, 2027** at the Venetian Expo & Hotel in Las Vegas, Nevada"
             },
             {
               "rank": 5,
-              "url": "https://www.aao.org/newsroom/news-releases/detail/world-s-largest-meeting-of-eye-physicians-surgeons",
-              "title": "aao.org",
-              "snippet": "**Numbered Edition:** **131st Annual Meeting** (the Academy's 127th meeting was held in 2023"
+              "url": "https://www.eyenews.uk.com/events/event/aao-2027-annual-meeting",
+              "title": "uk.com",
+              "snippet": "**Official Future Meetings Schedule:** [https://www.aao.org/annual-meeting/past-and-future-meetings](https://www.aao.org/annual-meeting/past-and-future-meetings)"
             },
             {
               "rank": 6,
-              "url": "https://www.aao.org/newsroom/annual-meeting-for-media",
+              "url": "https://www.aao.org/annual-meeting/lasvegas",
               "title": "aao.org",
-              "snippet": "**Numbered Edition:** **131st Annual Meeting** (the Academy's 127th meeting was held in 2023 and its 130th meeting was held in 2026"
+              "snippet": "**Conference Year & Dates:** **November 12–15, 2027** at the Venetian Expo & Hotel in Las Vegas, Nevada"
             },
             {
               "rank": 7,
-              "url": "https://annualsession.aaoinfo.org/",
-              "title": "aaoinfo.org",
-              "snippet": "**Dedicated Official Conference Website:** `https://annualsession.aaoinfo.org/`\n**Page Title:** *AAO Annual Session 2027: Annual Session*\n**Conference Year:** **2027** (Held June 4–6, 2027, at the Vancouver Convention Centre in Vancouver, British Columbia, Canada)"
+              "url": "https://www.aao.org/newsroom/annual-meeting-for-media",
+              "title": "aao.org",
+              "snippet": "**Numbered Edition:** Official AAO meeting records document AAO 2026 as the Academy's **130th Annual Meeting**"
             },
             {
               "rank": 8,
-              "url": "https://www2.aaoinfo.org/meetings/annual-session-2027/",
-              "title": "aaoinfo.org",
-              "snippet": "**Official Meeting Portal:** `https://www2.aaoinfo.org/meetings/annual-session-2027/`\n**Page Title:** *Annual Session 2027 - AAO - American Association of Orthodontists*"
+              "url": "https://www.aao.org/practice-management/coding/codequest-events/aao-2025",
+              "title": "aao.org",
+              "snippet": "**Numbered Edition:** Official AAO meeting records document AAO 2026 as the Academy's **130th Annual Meeting**"
             },
             {
               "rank": 9,
-              "url": "https://www2.aaoinfo.org/10-ways-to-make-the-most-of-your-membership-with-the-aao-this-year/",
+              "url": "https://annualsession.aaoinfo.org/",
               "title": "aaoinfo.org",
-              "snippet": "**Numbered Edition / Context:** **127th Session** (the association celebrated its 125th anniversary in 2025"
+              "snippet": "**Official URL:** [https://annualsession.aaoinfo.org/](https://annualsession.aaoinfo.org/)\n**Page Title:** *AAO Annual Session 2027: Annual Session*"
             },
             {
               "rank": 10,
-              "url": "https://orthodonticproductsonline.com/industry-news/association-news/aao-moves-2027-annual-session-to-canada-for-first-time-in-organizations-history/",
-              "title": "orthodonticproductsonline.com",
-              "snippet": "**Numbered Edition / Context:** **127th Session** (the association celebrated its 125th anniversary in 2025, marking 2027 as its 127th annual gathering year)"
+              "url": "https://www2.aaoinfo.org/meetings/",
+              "title": "aaoinfo.org",
+              "snippet": "**Conference Year & Dates:** **June 4–6, 2027** at the Vancouver Convention Centre in Vancouver, British Columbia, Canada"
             },
             {
               "rank": 11,
-              "url": "https://www.aao.org/annual-meeting`",
-              "title": "",
-              "snippet": "* **Official Conference URL:** `https://www.aao.org/annual-meeting`"
+              "url": "https://www.8meetings.com/2026/2026_aao_orthodontists.html",
+              "title": "8meetings.com",
+              "snippet": "**Numbered Edition:** With the 2026 conference held as the 126th edition\n**Numbered Edition:** With the 2026 conference held as the 126th edition, the 2027 event marks the **127th Annual Session** of the American Association of Orthodontists"
             },
             {
               "rank": 12,
-              "url": "https://www.aao.org/annual-meeting/past-and-future-meetings`",
+              "url": "https://www.aao.org/annual-meeting",
               "title": "",
-              "snippet": "* **Supplementary Official Dates & Venues URL:** `https://www.aao.org/annual-meeting/past-and-future-meetings`"
-            },
-            {
-              "rank": 13,
-              "url": "https://annualsession.aaoinfo.org/`",
-              "title": "",
-              "snippet": "* **Dedicated Official Conference Website:** `https://annualsession.aaoinfo.org/`"
-            },
-            {
-              "rank": 14,
-              "url": "https://www2.aaoinfo.org/meetings/annual-session-2027/`",
-              "title": "",
-              "snippet": "* **Official Meeting Portal:** `https://www2.aaoinfo.org/meetings/annual-session-2027/`"
+              "snippet": "* **Official URL:** [https://www.aao.org/annual-meeting](https://www.aao.org/annual-meeting)"
             }
           ],
           "finishReason": "STOP"
+        },
+        {
+          "query": "AAO Annual Meeting 2027",
+          "candidateUrl": "https://orthodonticproductsonline.com/industry-news/association-news/aao-moves-2027-annual-session-to-canada-for-first-time-in-organizations-history/",
+          "verification": {
+            "isOfficialEventPage": false,
+            "is_official_page": false,
+            "yearMatches": true,
+            "year_matches": true,
+            "editionMatches": false,
+            "edition_matches": false,
+            "isOfficialDomain": false,
+            "is_official_domain": false,
+            "isThirdParty": true,
+            "is_third_party": true,
+            "confidence": 0,
+            "reason": "The URL is an article from a third-party orthodontic industry news website concerning the American Association of Orthodontists, not the American Academy of Ophthalmology.",
+            "recommended_action": "reject_and_continue"
+          },
+          "accepted": false
+        },
+        {
+          "query": "AAO Annual Meeting 2027",
+          "candidateUrl": "https://us.dental-tribune.com/news/orthodontics-innovation-on-display-aao-annual-meeting-kicks-off-in-orlando/",
+          "verification": {
+            "isOfficialEventPage": false,
+            "is_official_page": false,
+            "yearMatches": false,
+            "year_matches": false,
+            "editionMatches": false,
+            "edition_matches": false,
+            "isOfficialDomain": false,
+            "is_official_domain": false,
+            "isThirdParty": true,
+            "is_third_party": true,
+            "confidence": 0,
+            "reason": "The candidate is a third-party dental news website article concerning the American Association of Orthodontists, completely unrelated to the American Academy of Ophthalmology 2027 Annual Meeting.",
+            "recommended_action": "reject_and_continue"
+          },
+          "accepted": false
         },
         {
           "query": "AAO Annual Meeting 2027",
@@ -908,54 +933,14 @@
             "isThirdParty": true,
             "is_third_party": true,
             "confidence": 0.95,
-            "reason": "congressagenda.com is a third-party congress directory/aggregator website, not the official website of the American Academy of Ophthalmology.",
-            "recommended_action": "adopt_official_url"
-          },
-          "accepted": false
-        },
-        {
-          "query": "AAO Annual Meeting 2027",
-          "candidateUrl": "https://www.aao.org/annual-meeting/meeting-information",
-          "verification": {
-            "isOfficialEventPage": false,
-            "is_official_page": false,
-            "yearMatches": false,
-            "year_matches": false,
-            "editionMatches": true,
-            "edition_matches": true,
-            "isOfficialDomain": true,
-            "is_official_domain": true,
-            "isThirdParty": false,
-            "is_third_party": false,
-            "confidence": 0.85,
-            "reason": "The URL is on the official American Academy of Ophthalmology domain, but it is a generic annual meeting information page without specific dedication or evidence for the 2027 edition.",
-            "recommended_action": "adopt_official_url"
-          },
-          "accepted": false
-        },
-        {
-          "query": "AAO Annual Meeting 2027",
-          "candidateUrl": "https://www.eyenews.uk.com/events/event/aao-2027-annual-meeting",
-          "verification": {
-            "isOfficialEventPage": false,
-            "is_official_page": false,
-            "yearMatches": true,
-            "year_matches": true,
-            "editionMatches": true,
-            "edition_matches": true,
-            "isOfficialDomain": false,
-            "is_official_domain": false,
-            "isThirdParty": true,
-            "is_third_party": true,
-            "confidence": 0.95,
-            "reason": "The candidate URL is hosted on eyenews.uk.com, which is a third-party ophthalmology news website and event calendar, not the official American Academy of Ophthalmology (aao.org) website.",
+            "reason": "congressagenda.com is a third-party conference directory/aggregator website, not the official domain of the American Academy of Ophthalmology.",
             "recommended_action": "adopt_official_url"
           },
           "accepted": false
         }
       ],
       "urlDiscoveryStatus": "official_url_not_found",
-      "lastUrlDiscoveryDate": "2026-11-18"
+      "lastUrlDiscoveryDate": "2026-11-20"
     },
     "conf-jp-neuro-2027": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
@@ -1653,10 +1638,10 @@
       "nextCheckDate": "2026-10-12"
     },
     "conf-int-ascrs-2027": {
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 0,
       "lastError": "bot-protected",
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": [
         {
           "category": "unavailable",
@@ -1666,10 +1651,10 @@
       ]
     },
     "oph-012": {
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 0,
       "lastError": "bot-protected",
-      "nextCheckDate": "2026-11-19",
+      "nextCheckDate": "2026-11-21",
       "deadlineObservations": [
         {
           "category": "unavailable",
@@ -1754,12 +1739,12 @@
         }
       ],
       "url": "https://www.rousi.jp/jps5",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-20",
       "lastHttpStatus": 200,
-      "normalizedHash": "d31b6c5f957c52b12e94710755a4ad2a1d5586a911006325985fffb2701a27d9",
-      "lastGeminiDecision": "safe_auto_update",
-      "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-19"
+      "normalizedHash": "fc67ca65bacb0dbfc81059d20a30d5f70aa29dac4461e047d7af1f27b8fef1f4",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.92,
+      "nextCheckDate": "2026-11-21"
     }
   }
 }
