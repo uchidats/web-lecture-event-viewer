@@ -1,7 +1,315 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-24T05:25:58.114Z",
+  "updatedAt": "2026-11-27T03:43:26.308Z",
   "snapshots": [
+    {
+      "id": "rb-conf-jp-ringan-2027-2026-11-27T03-41-23-310Z",
+      "eventId": "conf-jp-ringan-2027",
+      "eventName": "第81回 日本臨床眼科学会",
+      "timestamp": "2026-11-27T03:41:23.310Z",
+      "status": "applied",
+      "beforeValues": {
+        "eventOfficialUrl": ""
+      },
+      "afterValues": {
+        "eventOfficialUrl": "https://www.congre.co.jp/81ringan/"
+      },
+      "fieldChanges": [
+        {
+          "field": "eventOfficialUrl",
+          "before": "",
+          "after": "https://www.congre.co.jp/81ringan/"
+        }
+      ],
+      "evidence": {
+        "url": "https://www.congre.co.jp/81ringan/",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.98,
+        "reason": "The URL is the dedicated official conference website hosted by the official congress secretariat (Congres Inc.) matching the 81st edition, 2027 dates, and venue."
+      }
+    },
+    {
+      "id": "rb-conf-jp-perimetry-2027-2026-11-27T03-39-43-557Z",
+      "eventId": "conf-jp-perimetry-2027",
+      "eventName": "第16回日本視野画像学会学術集会",
+      "timestamp": "2026-11-27T03:39:43.557Z",
+      "status": "applied",
+      "beforeValues": {
+        "abstractSubmission.startDate": null,
+        "abstractSubmission.deadline": null,
+        "abstractSubmission.url": null,
+        "abstractSubmission.timeZone": null,
+        "abstractSubmission.status": "unknown"
+      },
+      "afterValues": {
+        "abstractSubmission.startDate": "2026-11-25",
+        "abstractSubmission.deadline": "2027-02-10",
+        "abstractSubmission.url": "https://www.ganki.jp/jips2027/abstracts.html",
+        "abstractSubmission.timeZone": "Asia/Tokyo",
+        "abstractSubmission.status": "open"
+      },
+      "fieldChanges": [
+        {
+          "field": "abstractSubmission.startDate",
+          "before": null,
+          "after": "2026-11-25",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2027-02-10",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": null,
+          "after": "https://www.ganki.jp/jips2027/abstracts.html",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.status",
+          "before": "unknown",
+          "after": "open",
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "url": "https://www.ganki.jp/jips2027/",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.98,
+        "reason": "The official conference page and abstract submission page confirm the 16th edition in 2027 starting on 2027-06-05, and provide the abstract submission deadline of 2027-02-10."
+      }
+    },
+    {
+      "id": "rb-conf-int-wgc-2027-2026-11-27T03-39-22-701Z",
+      "eventId": "conf-int-wgc-2027",
+      "eventName": "World Glaucoma Congress 2027 (WGC 2027)",
+      "timestamp": "2026-11-27T03:39:22.701Z",
+      "status": "applied",
+      "beforeValues": {
+        "registration": null,
+        "title": "World Glaucoma Congress 2027 (WGC 2027)"
+      },
+      "afterValues": {
+        "registration": {
+          "version": 2,
+          "type": "international",
+          "timeZone": "Etc/GMT-2",
+          "periods": [
+            {
+              "label": "Early bird fee",
+              "deadline": "2027-01-18",
+              "category": "early",
+              "advanceEligible": true,
+              "sourceUrl": "https://worldglaucomacongress.org/registration/"
+            },
+            {
+              "label": "Regular fee",
+              "start": "2027-01-19",
+              "deadline": "2027-03-15",
+              "category": "regular",
+              "advanceEligible": true,
+              "sourceUrl": "https://worldglaucomacongress.org/registration/"
+            },
+            {
+              "label": "Late fee",
+              "start": "2027-03-16",
+              "category": "regular",
+              "advanceEligible": null,
+              "sourceUrl": "https://worldglaucomacongress.org/registration/"
+            }
+          ]
+        },
+        "title": "12th World Glaucoma Congress"
+      },
+      "fieldChanges": [
+        {
+          "field": "registration",
+          "before": null,
+          "after": {
+            "version": 2,
+            "type": "international",
+            "timeZone": "Etc/GMT-2",
+            "periods": [
+              {
+                "label": "Early bird fee",
+                "deadline": "2027-01-18",
+                "category": "early",
+                "advanceEligible": true,
+                "sourceUrl": "https://worldglaucomacongress.org/registration/"
+              },
+              {
+                "label": "Regular fee",
+                "start": "2027-01-19",
+                "deadline": "2027-03-15",
+                "category": "regular",
+                "advanceEligible": true,
+                "sourceUrl": "https://worldglaucomacongress.org/registration/"
+              },
+              {
+                "label": "Late fee",
+                "start": "2027-03-16",
+                "category": "regular",
+                "advanceEligible": null,
+                "sourceUrl": "https://worldglaucomacongress.org/registration/"
+              }
+            ]
+          },
+          "severity": "medium"
+        },
+        {
+          "field": "title",
+          "before": "World Glaucoma Congress 2027 (WGC 2027)",
+          "after": "12th World Glaucoma Congress",
+          "severity": "high"
+        }
+      ],
+      "evidence": {
+        "url": "https://worldglaucomacongress.org/",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.98,
+        "reason": "The official website confirms the 12th World Glaucoma Congress (WGC 2027) taking place in Kyoto, Japan, with an early bird registration deadline of January 18, 2027."
+      }
+    },
+    {
+      "id": "rb-conf-jp-diabetic-2027-2026-11-27T03-38-53-035Z",
+      "eventId": "conf-jp-diabetic-2027",
+      "eventName": "第33回 日本糖尿病眼学会総会",
+      "timestamp": "2026-11-27T03:38:53.035Z",
+      "status": "applied",
+      "beforeValues": {
+        "abstractSubmission.status": "open"
+      },
+      "afterValues": {
+        "abstractSubmission.status": "closed"
+      },
+      "fieldChanges": [
+        {
+          "field": "abstractSubmission.status",
+          "before": "open",
+          "after": "closed",
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "url": "https://convention.jtbcom.co.jp/jsod33/",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.98,
+        "reason": "The page directly corresponds to the 33rd Annual Meeting of the Japan Society of Ophthalmic Diabetology (2027). The conference dates (March 12-13, 2027) are confirmed by the registration guidelines, and the abstract submission deadline was extended to November 25, 2026 at 12:00."
+      }
+    },
+    {
+      "id": "rb-conf-jp-presbyopia-2027-2026-11-27T03-38-38-304Z",
+      "eventId": "conf-jp-presbyopia-2027",
+      "eventName": "第5回 日本老視学会学術総会",
+      "timestamp": "2026-11-27T03:38:38.304Z",
+      "status": "applied",
+      "beforeValues": {
+        "title": "第5回 日本老視学会学術総会"
+      },
+      "afterValues": {
+        "title": "日本老視学会第5回学術総会"
+      },
+      "fieldChanges": [
+        {
+          "field": "title",
+          "before": "第5回 日本老視学会学術総会",
+          "after": "日本老視学会第5回学術総会",
+          "severity": "low"
+        }
+      ],
+      "evidence": {
+        "url": "https://www.rousi.jp/jps5",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.95,
+        "reason": "The webpage is the official site for the 5th Annual Meeting of the Japan Presbyopia Society (第5回 日本老視学会学術総会), matching the edition and target URL. Registration details (early registration ending in December 2026) align with a January 2027 conference, with no conflicting information."
+      }
+    },
+    {
+      "id": "rb-conf-int-arc-2026-2026-11-27T03-38-28-539Z",
+      "eventId": "conf-int-arc-2026",
+      "eventName": "Asia Retina Congress 2026 (ARC 2026)",
+      "timestamp": "2026-11-27T03:38:28.539Z",
+      "status": "applied",
+      "beforeValues": {
+        "title": "Asia Retina Congress 2026 (ARC 2026)"
+      },
+      "afterValues": {
+        "title": "The 6th Asia Retina Congress"
+      },
+      "fieldChanges": [
+        {
+          "field": "title",
+          "before": "Asia Retina Congress 2026 (ARC 2026)",
+          "after": "The 6th Asia Retina Congress",
+          "severity": "low"
+        }
+      ],
+      "evidence": {
+        "url": "https://convention.jtbcom.co.jp/arc2026/",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.95,
+        "reason": "The page confirms The 6th Asia Retina Congress (ARC 2026) matching the URL, conference year 2026, and schedule dates in December."
+      }
+    },
+    {
+      "id": "rb-conf-jp-jrvs-2026-2026-11-27T03-38-22-364Z",
+      "eventId": "conf-jp-jrvs-2026",
+      "eventName": "第65回 日本網膜硝子体学会総会",
+      "timestamp": "2026-11-27T03:38:22.364Z",
+      "status": "applied",
+      "beforeValues": {
+        "abstractSubmission.startDate": null,
+        "abstractSubmission.deadline": null,
+        "abstractSubmission.url": null,
+        "abstractSubmission.timeZone": null
+      },
+      "afterValues": {
+        "abstractSubmission.startDate": "2026-05-19T12:00",
+        "abstractSubmission.deadline": "2026-07-23T12:00",
+        "abstractSubmission.url": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+        "abstractSubmission.timeZone": "Asia/Tokyo"
+      },
+      "fieldChanges": [
+        {
+          "field": "abstractSubmission.startDate",
+          "before": null,
+          "after": "2026-05-19T12:00",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.deadline",
+          "before": null,
+          "after": "2026-07-23T12:00",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.url",
+          "before": null,
+          "after": "https://convention.jtbcom.co.jp/65moumaku/abstract/index.html",
+          "severity": "medium"
+        },
+        {
+          "field": "abstractSubmission.timeZone",
+          "before": null,
+          "after": "Asia/Tokyo",
+          "severity": "medium"
+        }
+      ],
+      "evidence": {
+        "url": "https://convention.jtbcom.co.jp/65moumaku/index.html",
+        "sourceQuality": "official_event_page",
+        "confidence": 0.98,
+        "reason": "The official website confirms the 65th Annual Meeting of the Japanese Retina and Vitreous Society (第65回日本網膜硝子体学会総会) scheduled for December 4-6, 2026. Abstract submission deadline (2026-07-23) is confirmed."
+      }
+    },
     {
       "id": "rb-conf-jp-ringan-2027-2026-11-24T05-24-04-731Z",
       "eventId": "conf-jp-ringan-2027",

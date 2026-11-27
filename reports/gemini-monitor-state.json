@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastRun": "2026-11-24T05:19:03.998Z",
+  "lastRun": "2026-11-27T03:38:11.891Z",
   "sources": {
     "oph-001": {
       "url": "https://convention.jtbcom.co.jp/80ringan/index.html",
@@ -51,12 +51,12 @@
     },
     "conf-jp-neuro-2026": {
       "url": "https://n-practice.co.jp/64thJNOS/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "04369ccc8efe8871ecb78d2b2828ecdc5ec4a6824ccb49db720c33e4a7bec3b1",
       "lastGeminiDecision": "needs_review",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": [
         {
           "url": "https://n-practice.co.jp/64thJNOS/subject/index.html",
@@ -68,22 +68,22 @@
     },
     "conf-jp-jrvs-2026": {
       "url": "https://convention.jtbcom.co.jp/65moumaku/index.html",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
-      "normalizedHash": "820337f930d37121545be0d160330641793674c8fcdd44ee52bb050093e24326",
+      "normalizedHash": "363167766fe2650052a0c16dfa07f46bac0a8e0e394303256abddcaf264eae71",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": []
     },
     "conf-int-arc-2026": {
       "url": "https://convention.jtbcom.co.jp/arc2026/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
-      "normalizedHash": "20a11ea529c5da0d6bdfc545e2bceb0478a4d007039f58e6be0a9799eec2a92b",
-      "lastGeminiDecision": "needs_review",
+      "normalizedHash": "52d6db9167534cf6b65eb052606e0e5301cb0d4541f859d75c10351b2cdfdf93",
+      "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": [
         {
           "url": "https://convention.jtbcom.co.jp/arc2026/registration/index.html",
@@ -102,92 +102,92 @@
     },
     "conf-jp-surgery-2027": {
       "url": "https://50.jsos.jp/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "50465343e354f977bcb14e6252dc7787d51bd5d5b4cf9a55d89af5b3aeda5eba",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": []
     },
     "conf-jp-cornea-2027": {
       "url": "https://www.okinawa-congre.co.jp/cornea2027/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "39d6decbd8d11e98de0e0527f63b9ceb13a73eeeaac7a261abf811a2867d719c",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": []
     },
     "conf-jp-eyelid-2027": {
       "url": "https://convention.jtbcom.co.jp/gigan38/index.html",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "c74a4a116425302d4af65b9d896bfafe3c8262c811bebeef611cf3844687ac21",
       "lastGeminiDecision": "needs_review",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": []
     },
     "conf-jp-diabetic-2027": {
       "url": "https://convention.jtbcom.co.jp/jsod33/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
-      "normalizedHash": "579e85e5b2a70c6d6917d087523c1cff37ffcd46ae04b25bd941c5f9395018d6",
+      "normalizedHash": "b35f1bb1fab12c15f614517e3801d51dfe39e88680fed946339c4e8e0166adf9",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": []
     },
     "conf-jp-iscev-2027": {
       "url": "https://www.congre.co.jp/73jscev/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "1264d1af8b1908287afea064144ed1f8432b516737b66592643be41414e1f384",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": []
     },
     "conf-int-apao-2027": {
       "url": "https://2027.apaophth.org/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
-      "normalizedHash": "eee4ec1346364b522f118e96a87cac5c766b2c5ff58965e6ebb9b0125f7153f3",
+      "normalizedHash": "8e84b072a24f43be375ebd06773c0d5b2729ba6cd0ffd653bdc1eab3de2326b0",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": []
     },
     "conf-int-fujiretina-2027": {
       "url": "https://convention.jtbcom.co.jp/fujiretina/index.html",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "6c2fa77cb9faa2d0ee0ea74b16d510c94189936f961942dc88d2b683de6dc35f",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": []
     },
     "oph-011": {
       "url": "https://convention.jtbcom.co.jp/131jos/index.html",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "247270a5027d177884c98975f0a6c060324ffaa23bb56547a7ae10034d91ed4b",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": []
     },
     "oph-014": {
       "url": "https://site2.convention.co.jp/jgs2027/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "b9d15892ab2fbef3512c45006bcba3ca64f97c698ef5d3973ed1ca8e8f29fc5e",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": [
         {
           "url": "https://site2.convention.co.jp/jgs2027/endai/",
@@ -199,12 +199,12 @@
     },
     "conf-int-wgc-2027": {
       "url": "https://worldglaucomacongress.org/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
-      "normalizedHash": "0b7c90290a165fdf62d68b6acdbc23f8f972158ec27130cba55a8c1930feebbf",
+      "normalizedHash": "f1e4e2660de91117c24af6efe055527db5b69973943a2d90e68e649547c82593",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": []
     },
     "conf-jp-lowvision-2027": {
@@ -245,30 +245,35 @@
     },
     "conf-int-apacrs-2027": {
       "url": "https://apacrs2027.org/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
-      "normalizedHash": "3dc6c38dfe402ce86a8dfbfec428f32dd1639c31a8e443d4a6bef18133db6362",
-      "lastGeminiDecision": "safe_auto_update",
-      "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-27",
+      "normalizedHash": "b0b0d9e29acd89feb970eb83de87664a0bb3f9e2fd1404f5ef7375f17053a345",
+      "lastGeminiDecision": "no_change",
+      "lastGeminiConfidence": 0,
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
-          "url": "https://apacrs2027.org/registration/",
-          "reason": "registration-extraction-failed",
-          "proposed": null,
+          "url": "https://apacrs2027.org/",
+          "reason": "registration-link-not-found",
           "field": "registration",
-          "category": "extraction-failed"
+          "category": "link-not-found"
+        },
+        {
+          "url": "https://apacrs2027.org/",
+          "reason": "abstract-link-not-found",
+          "field": "abstractSubmission",
+          "category": "link-not-found"
         }
       ]
     },
     "conf-jp-perimetry-2027": {
       "url": "https://www.ganki.jp/jips2027/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
-      "normalizedHash": "4ba93740be0d9165897cbc0e9e5f01981b6d7d5d959363769d704587474b0f9c",
+      "normalizedHash": "f36045d083fd8f7236f93c608132b347d3be6821d4901b4894d91fc9674da62e",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
           "url": "https://www.ganki.jp/jips2027/participants.html",
@@ -281,12 +286,12 @@
     },
     "conf-jp-jsoprs-2027": {
       "url": "https://orbit-cs.net/jsoprs2027/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "6168b204e3a390d04c614502863c6e6f774c1b8fa0f1a140458d425b83480997",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
           "url": "https://orbit-cs.net/jsoprs2027/registration.html",
@@ -300,42 +305,35 @@
     },
     "conf-jp-pediatric-2027": {
       "url": "https://jasa-japo2027.jp/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "37a685d0aadf68c0bb52e05855de63a6a664962b70388d783e5d55bdbbe1ced2",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": []
     },
     "conf-int-soe-2027": {
       "url": "https://soe2027.soevision.org/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
-      "normalizedHash": "b6640e77a4859a9e89136b74e14b30d7a27cf7892ef505e60d5d32f6e545975d",
-      "lastGeminiDecision": "safe_auto_update",
+      "normalizedHash": "e1bf8be687f4a47f63a77d64e2e9ea170359680a19d1569831d1a5ad7425b2de",
+      "lastGeminiDecision": "needs_review",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": []
     },
     "oph-013": {
       "url": "https://www.kwcs.jp/42jscrs/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
-      "normalizedHash": "7608369c45dc569e3f3905bf984ed9c1e05116fade9552df49b2e943f7b3fd06",
-      "lastGeminiDecision": "safe_auto_update",
-      "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-27",
+      "normalizedHash": "e70a58c47761de1287a30853079599848db164d733ff57415351ee484a8fb3c4",
+      "lastGeminiDecision": "needs_review",
+      "lastGeminiConfidence": 0.9,
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
-          "url": "https://www.kwcs.jp/42jscrs/reg.html",
-          "reason": "registration-not-published",
-          "proposed": null,
-          "field": "registration",
-          "category": "unpublished"
-        },
-        {
-          "url": "https://www.kwcs.jp/42jscrs/theme.html",
+          "url": "https://www.kwcs.jp/42jscrs/abstract.html",
           "reason": "abstract-not-published",
           "field": "abstractSubmission",
           "category": "unpublished"
@@ -344,12 +342,12 @@
     },
     "conf-jp-myopia-2027": {
       "url": "https://www.ganki.jp/myopia2027/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "514dd155687d6a4ce8beced2ec5894015bdb15db761485bf734cfee2a73eaa2c",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
           "url": "https://www.ganki.jp/myopia2027/registration.html",
@@ -369,12 +367,12 @@
     },
     "conf-int-iois-2027": {
       "url": "https://www.iois.info/page.php?edi_id=1697",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "5a5e2c453290ca12926370f6d7a9ad419dd2ce8d6da4a123138a921ad1abd86e",
       "lastGeminiDecision": "needs_review",
       "lastGeminiConfidence": 0.7,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
           "url": "https://www.iois.info/page.php?edi_id=1699",
@@ -393,12 +391,12 @@
     },
     "conf-jp-inflammation-2027": {
       "url": "https://www.congre.co.jp/oiw2027/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "5fd5bf764de585b5957289766d76af468efedc5fea0d32743a0553dbf4111aa3",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.8,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
           "url": "https://www.congre.co.jp/oiw2027/",
@@ -416,12 +414,12 @@
     },
     "conf-jp-circulation-2027": {
       "url": "https://convention.jtbcom.co.jp/43jsoc/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "7a00ed93609828023dc3275a74a3d62eb71cc324376a0337d5c5d19eb54a151f",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.9,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
           "url": "https://convention.jtbcom.co.jp/43jsoc/",
@@ -439,12 +437,12 @@
     },
     "conf-jp-cl-2027": {
       "url": "https://www.congre.co.jp/jcls2027/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "b499247fd0db5e5681f0aa9aeceb444ca750c73fd8b825f2b65a7653d0bc0af5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.9,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
           "url": "https://www.congre.co.jp/jcls2027/",
@@ -462,12 +460,12 @@
     },
     "conf-jp-optics-2027": {
       "url": "https://www.jsoo-ws.com/63jsoo",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "b4a2d049cc3a2ed37d6b49e4d1d8381fb8d2dcd59d986bc760df45c409717b6c",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
           "url": "https://www.jsoo-ws.com/63jsoo",
@@ -485,46 +483,46 @@
     },
     "conf-jp-cataract-2027": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
           "category": "unavailable",
-          "reason": "fetch failed",
+          "reason": "http-503",
           "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
       ],
-      "lastError": "fetch failed"
+      "lastError": "http-503"
     },
     "conf-jp-pharmacology-2027": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
           "category": "unavailable",
-          "reason": "fetch failed",
+          "reason": "http-503",
           "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
       ],
-      "lastError": "fetch failed"
+      "lastError": "http-503"
     },
     "conf-int-euretina-2027": {
       "url": "https://euretina.org/copenhagen-27/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "7d018a187aa90be00ea411c35279020dc58838981649844faae98c68d71f5f0d",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
           "url": "https://euretina.org/copenhagen-27/",
@@ -542,12 +540,12 @@
     },
     "conf-jp-oncology-2027": {
       "url": "https://www.ganki.jp/jsoo2027/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "4af6848d41f3fe36e091fe5b56283c207d64a82e7498753697ef952888445b39",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
           "url": "https://www.ganki.jp/jsoo2027/registration.html",
@@ -567,12 +565,12 @@
     },
     "conf-int-escrs-2027": {
       "url": "https://www.escrs.org/escrs-annual-events/45th-congress-of-the-escrs",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "48c7341c98665aa195a07eedc560e5d448d4553f80acf67a6cf8818821f11ab9",
       "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
           "url": "https://www.escrs.org/escrs-annual-events/45th-congress-of-the-escrs",
@@ -590,38 +588,39 @@
     },
     "conf-jp-ringan-2027": {
       "url": "https://www.congre.co.jp/81ringan/",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "f9ddb3ae514532021d911268edebab3c26da5872e3c14eff3e86f8761da4a60c",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.98,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "lastUrlDiscoveryDiagnostics": [
         {
           "query": "第81回 日本臨床眼科学会 2027",
           "webSearchQueries": [
+            "\"81ringan/contents/outline.html\"",
             "第81回 日本臨床眼科学会 2027",
-            "\"www.congre.co.jp/81ringan\" outline"
+            "\"81ringan@m.congre.co.jp\""
           ],
           "groundingUrls": [
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE14jX86_ovvge6YGQbfWtXQD8yIuJaLkI0CBZCFSD36okEs2SCx1kY9F0amNobMke5xiBO7kHt0kewxrW6hjtD5w0pGmtlHrF2Xa1Ooocp5wOJ8COfvYti",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGG1CLKzSCoY5vmXZv-VRDjHSMOd3jlOZ00RmuIwR4PzmZcPhWFvFD5_L-KNjOYb5NNXngtAZQhCDqzPHL6tQBb2fGJ3Hh2Ku6jZTZamtU5M6H4emTJo9GiI2Uc1Sjc-vi71IbtNVjnvbwhoh4=",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFdZLG6nbmspstIiwojrRe5zZjMDHKZXovadF_SnoCZsb_Kg817TQCdzQMZQ8H5_YdsWv6Mr57kBGz7K0X2D6uB6QwRx6RJgybzAtkLgQLdockXr2yRt5RyE06X2MgWbqmijAh7NSqqn7S7a3IL",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGMKsxXr0f0FjhtloKho5NdT36pXXYmH3SJf9CH_W2m1lHJfRyS5frT1nnwLSiXPFmTjxAAGp1HzPOBHtLn71qSkVb4UmyWyIGDKXlu9aJ1ByYbYXRiYEkI",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEeaqiPC0dWt8bE54zAMEXtfy3yN5rc9PJWiEqtMz6W5k55Zm39jtsotXnokX2PLnrqiOFOemNkbtUe0aJ_W0v0DrfeTAm4aCBCHh_uYhwqplm7hLmQJhgqUuFXRvv4aWWJYg6Va1hT3z0XeQ4u",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFLfBKAWXDwG6-4IFxDfD0zLtFgnpXPeY4m6OmOVkTyg44OEvsp2ap3DJCV2e7xqFNFMirGq2atM_GQW8N3HmRkCRebdb7aIX0YECTbqDu_psicw9EBUqNKkQBV6AHMnDBxjx87xqlP-PjOL57t",
             "https://www.congre.co.jp/81ringan/`",
-            "https://www.congre.co.jp/81ringan/outline.html`"
+            "https://www.congre.co.jp/81ringan/contents/outline.html`"
           ],
           "candidates": [
             {
               "rank": 1,
               "url": "https://www.congre.co.jp/81ringan/",
               "title": "congre.co.jp",
-              "snippet": "**URL:** `https://www.congre.co.jp/81ringan/`\n**Title:** 第81回日本臨床眼科学会 - コングレ\n**Numbered Edition:** 第81回 (The 81st Annual Congress of Japan Clinical Ophthalmology)\n**Conference Year & Dates:** 2027年10月21日（木）～10月24日（日）\n**Additional Details:** Theme: Passion for Vision ～みえる未来をきり拓く～; President: 根岸 一乃 (慶應義塾大学医学部眼科学教室); Venues: 東京国際フォーラム、JPタワーホール＆カンファレンス; Secretariat: 株式会社コングレ\n**Additional Details:** Confirms the event venues, host department (主管校: 慶應義塾大学医学部 眼科学教室), congress leadership, and secretariat contact details (`81ringan@m.congre.co.jp`)"
+              "snippet": "The dedicated official conference website and relevant official pages for the **第81回 日本臨床眼科学会 (The 81st Annual Congress of Japan Clinical Ophthalmology)**\n**URL:** `https://www.congre.co.jp/81ringan/`\n**Page Title:** 第81回日本臨床眼科学会\n**Numbered Edition:** Explicitly titled **第81回** 日本臨床眼科学会 (*The 81st Annual Congress of Japan Clinical Ophthalmology*)\n**Conference Year / Dates:** **2027年**10月21日（木）～24日（日）\n**Details:** Theme: *Passion for Vision ～みえる未来をきり拓く～*; Venue: 東京国際フォーラム、JPタワーホール＆カンファレンス; Host institution: 慶應義塾大学医学部 眼科学教室"
             },
             {
               "rank": 2,
               "url": "https://www.congre.co.jp/81ringan/contents/outline.html",
               "title": "congre.co.jp",
-              "snippet": "**URL:** `https://www.congre.co.jp/81ringan/outline.html`\n**Title:** 開催概要 | 第81回日本臨床眼科学会 - コングレ"
+              "snippet": "**URL:** `https://www.congre.co.jp/81ringan/contents/outline.html`\n**Page Title:** 開催概要 | 第81回日本臨床眼科学会\n**Numbered Edition:** Listed as **第81回**日本臨床眼科学会\n**Conference Year / Dates:** 会期：**2027年**10月21日（木）～10月24日（日）"
             },
             {
               "rank": 3,
@@ -631,9 +630,9 @@
             },
             {
               "rank": 4,
-              "url": "https://www.congre.co.jp/81ringan/outline.html`",
+              "url": "https://www.congre.co.jp/81ringan/contents/outline.html`",
               "title": "",
-              "snippet": "* **URL:** `https://www.congre.co.jp/81ringan/outline.html`"
+              "snippet": "* **URL:** `https://www.congre.co.jp/81ringan/contents/outline.html`"
             }
           ],
           "finishReason": "STOP"
@@ -653,7 +652,7 @@
             "isThirdParty": false,
             "is_third_party": false,
             "confidence": 0.98,
-            "reason": "The URL is the dedicated official event website hosted by the official congress secretariat (Congrès Inc.), matching the 81st edition, 2027 dates, and venues exactly.",
+            "reason": "The URL is the dedicated official conference website hosted by the official congress secretariat (Congres Inc.) matching the 81st edition, 2027 dates, and venue.",
             "recommended_action": "adopt_official_url"
           },
           "accepted": true
@@ -678,12 +677,12 @@
     },
     "conf-int-aao-2027": {
       "url": "https://www.aao.org/annual-meeting",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
-      "normalizedHash": "56cbcc9e58aae368544179813b319e7c5af5d69f95f515475bf3587874c31002",
+      "normalizedHash": "2fd5ce8901ff3888f312c4ea9372316c1253097e3a0b9368c0a2ddc5361f66ce",
       "lastGeminiDecision": "needs_review",
       "lastGeminiConfidence": 0.85,
-      "nextCheckDate": "2026-11-27",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
           "url": "https://www.aao.org/annual-meeting/exhibitor/registration",
@@ -703,108 +702,122 @@
         {
           "query": "AAO Annual Meeting 2027",
           "webSearchQueries": [
-            "\"annual meeting\" \"American Academy of Ophthalmology\" 2027 \"131st\" OR \"132nd\" OR \"130th\"",
-            "AAO Annual Meeting 2027",
-            "\"131st Annual Meeting\" \"American Academy of Ophthalmology\"",
-            "\"annual session\" \"American Association of Orthodontists\" \"127th\" OR \"126th\" OR \"128th\"",
-            "site:annualsession.aaoinfo.org \"2027\""
+            "\"https://www.aao.org/annual-meeting\"",
+            "\"annual session\" \"American Association of Orthodontists\" \"2027\" \"127th\" OR \"126th\" OR \"128th\"",
+            "AAO Annual Meeting 2027 official website",
+            "\"annualsession.aaoinfo.org\"",
+            "\"131st\" \"American Academy of Ophthalmology\" OR \"131st annual meeting\" \"AAO\""
           ],
           "groundingUrls": [
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGhsV9dQ3gLtzysRTwUBfRW4oJr-PpiGj0UygqujXwvW_3bKWeSiD7pAmhI0s_sB0CBNxfxZ0oXk_d4nsOJZ8KROtkpcE5Bz4ZLCvH__pNOWRxhU8mw3WXNAm9IZdIZNGHm",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgxaCQJ5UVQoDX2p6lh93pBeXXrU7fqvLbpPQhArNYYLzSZ4KjESa1OSLdI4O_WM9kvfRNAlS3On8rDgUkiA1AA1AnUxKdtN9eAoMeHIGim0X6TcE5ubXZmLio9md6RQ-_sk797swMud6iEuOyreYYFw==",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF3wPwBB4MfcAGXY7CX4SSAFlJTlxb8EhCdlkNbiJKa-GVOaHpQCJvwsi-i0hmkdNvltSrrz5WbqGG-jeSo6CekPxVYwG4c0NTVkPxtzLaFmidkURGpQvoiP4Cy2RbtYsi2ijL51qFRkD8qM-G8P9QYjM3kn5YBUJUNHARnOmEL9JfmQdUk0H9J9_wtxT1jFSbar9m_lP5sbltloZPjFIu0GOlDFjKQdjw9XnyYCDldzzrr6tOMGN27DYk3aPQRi4v1o4-fJiQzR9F4adKxZtEIUcPACZ0gWbRR-MYWXASPufK-aCZplk9klq5eXXvFUzxUWY5aWUbQcDlIyseO12GdUxVcAc_v8iKuwWWOau_0yJqFg6_n5UuuRllrpy9Vv5QbSnS3-gtYGOD0",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG-6unbs3XoVjW0Mm_J6dU22AoEinJpjxeoV8W8F3qMN5aKgre9eD2Tu1dL3t3IWKtabSqj-spB13hhXISnyMKKriSicDzaMqptU4jq4WnOqVrAW2OaQX3YY3DRWljD8GSuNABA7dZ_ovH3ZeBKBVKB8K12DE37RgKDYcI7H223EgdWR3CD_vfqBbVGyKXMwMb1tkSo-hv-wls-7SgS7erlIw==",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHsalKVXJQlUM0GxIVUf1mK_CWJzv0crt_44Xsk0g61uLcUVgBAZ3ho2k-BPl4dRa3l2gImBFa2DuHc_6mdODHFMTUEgj6Q_KP_K0ASEHyYv8CcC0Z3rAUU",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG8-R_Td18t8SEJQnQGRYcCiI1UYoflCMVajqcKY0yr5xkfSVVK1rVSAKOubu-sPTYcwFpXIlPKPw8_PU3XnFi0YwYFRzd3piDlfycuI7BwrKI4P8EGv8Y=",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEMjakyw1XqTclOt0ElHpwLcEsb0PluQbqpYffSa2zUEyH9mSPrBH-Vg_fEEr8VxrjUqrDz34WvLvep3Yy96Y8viTLwbqerLTQ7Kk4IIOfUS4_O4lHEL-QBdxhkJqRHx6atorzeMqJfVL6sFtY3h4-Q",
-            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGAqMjgq61L3CKhtwT5FEDMAbiGHtnAdd_m5Gk_k6467ijoXWHhwNjqqN_RqF0s2jsXHH9L9Mas5JguL-jbIJkjfTyHZzPmMjRdUkcPrRDcL8mMW23UEdyR5w5Y9mX2COgn9Dt8Aw==",
-            "https://www.aao.org/annual-meeting`",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHI4HLOU5ix-BO1ILzcd3Xgx1IjyQqnUyu7LYoNLhKgai03l236jhQOevl5plQAlLP1x-QK8KKzN2Y92oaYXD0_9iOPHEROz3QAu4TElKPZqhKQ7JUaZUTKQbKLnu7S8zqNuGaTPuzUCSfvunQMhFuQlw==",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETdtxp7QmwShQRREIRoVYSP8lkhPyT2-Dva5pYXrIC5t4K81QfsPb9DUPT84OPHLy5ihB0EyCNXt7TnOtKQgO_0b0BxBG6-xG8bxl19aFLrx_jEoZW2YkJ",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXGFi1h4-vGA7iPJFcDtau2SYXVShrtt2A6YET2OsEske_sA9nlicv1l5313Zd2Z7rAatyQCf4IHtsd_BvVhdcDKVEtGrovqJDtJno9DMvs5eYubv1l_SkNkUG26Bw5kAt1amaDMkJtj1leaA0RXe0",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHahAxutmiw9SUx2HgUCODDiTvCUbdVazkXvas0pAPZkp9uoBuyzCZYNXWCXicJYsnr9GkFf1Q61g7ZpOcjkbI6NVw6_QjSS7vn-xgFK2t1mrrXmY8AfFNB",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGhMsWpzye2M2sU0dYOeLPHPRpakGJ0XngQjLLOSg7fnBqdi5I7_j5YiKfstq6qQ58C4ii5enQSsBbHMUWFZZ4uMMkYqmXidREfj7em4v-CxhQOAqzuDwzlH_gzAtSoMGUNukJsjXpZF3R7-VIa0rHMfB3rZ7AnqXv9RNyiRP7YDXZzVaU=",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGfNY_aCw3w8e4z8C-ZFywxq_FY6MUW85etcJR7eankS-T9cAUtML40-NZGYCRTxCbiglmOn7uWtmT2Q_bl0umm63A3R3bH4gcygAfEBOdVTOInEjsB2L1Zw6uqBq3RswXpc0MnMblzhP-oRoojGXR3vQMzgCp1CX5_Fe2Lh87c3pNAevA7mbFD0L59Gn8=",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH5FMM9qhYC1gYCzBDSdJib110MKwLdAIWORIGuMb7rnHkQHqEc-zc7tJNZna6CneHdIdtAVO3PYpoeFe9T9lW5bdSAJBAmBQ_1fQ_kszouP-yuVyVqPaC6TQCjgBGL-VLkD_dZVQZIHgOHx5BGhrkSWLbGFSjzvMHshblxp8zcW3s4DD47",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFnm8lgB0Rf78dLnv-pxMvPsJOsXQkT-zAQ0lM2Bl9lGJd3ZsQrmefba1R8Mb0aD6F_SXT8fApDDkNgrutBeewZZFcBLPsijEf0vGdsnnmHZp9wwJkqcOqF1wxILY4YhZUFroDbcdkxYGwmbuwi4tADLot9UGU=",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHEr8J-irLnxf_G_xF_00nCuIlHWbv43oh6sDHd9ZKg8QgAeruvKyLkeTybuF1DHA8kPWQ4y-oF807jEwUVTeEthcHqkcUAAAWNeifuKb9Q7p2k4EnAvt4V",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEHtnZR-rCkaUaLr8R3qDnDA_6BEaqX4_hwd6eX4V3-L0ZJsFgrukY6YbLuyuUisvE6XqdMiRYhQ3GSp8QIg20wEE1aCqGj07g3fhFTVFff3loCfbK9H9PI3a6Z6VFIYpekrO4VxSenmyiX3fM=",
+            "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEKrBfuOLOwoPa5V0zsAj2q4eszy3J5RG88wkQuwiQn_EQ5V5K38pvdBaNHDWKuG7bqGfPZmqk3jTSM45ciJFFWeCyDmzt-ouBAQFfA_ZgwbMt_sQHa4zMkZA2beL18NUcV5xAotflblQ==",
+            "https://annualsession.aaoinfo.org/`",
             "https://www.aao.org/annual-meeting/past-and-future-meetings`",
-            "https://annualsession.aaoinfo.org/`"
+            "https://www.aao.org/annual-meeting`",
+            "https://www2.aaoinfo.org/meetings/`"
           ],
           "candidates": [
             {
               "rank": 1,
-              "url": "https://www.aao.org/annual-meeting/lasvegas",
+              "url": "https://www.aao.org/annual-meeting/past-and-future-meetings",
               "title": "aao.org",
-              "snippet": "**URL:** `https://www.aao.org/annual-meeting`\n**Title:** Annual Meeting – American Academy of Ophthalmology"
+              "snippet": "The term **AAO Annual Meeting 2027** commonly refers to one of two major organizations: the **American Academy of Ophthalmology (AAO)** or the **American Association of Orthodontists (AAO)**\n**Page Title:** Past and Future Meetings - American Academy of Ophthalmology\n**Conference Year Evidence:** Scheduled for November 12–15, 2027 at the Venetian Expo & Hotel in Las Vegas, Nevada"
             },
             {
               "rank": 2,
-              "url": "https://www.aao.org/annual-meeting/past-and-future-meetings",
-              "title": "aao.org",
-              "snippet": "**URL:** `https://www.aao.org/annual-meeting/past-and-future-meetings`\n**Title:** Past and Future Meetings – American Academy of Ophthalmology\n**Year / Dates & Venue:** **AAO 2027** is scheduled for **November 12–15, 2027** (with the AAO Expo running Nov. 13–15 and Subspecialty Day Nov. 12–13) at the Venetian Expo & Hotel in Las Vegas, Nevada"
+              "url": "https://www2.aaoinfo.org/meetings/",
+              "title": "aaoinfo.org",
+              "snippet": "The term **AAO Annual Meeting 2027** commonly refers to one of two major organizations: the **American Academy of Ophthalmology (AAO)** or the **American Association of Orthodontists (AAO)**\n**Official URL:** `https://www2.aaoinfo.org/meetings/`\n**Page Title:** Meetings and Conferences - AAO - American Association of Orthodontists\n**Conference Year Evidence:** Features future annual events including \"June 4 – 6, 2027 | Annual Session 2027 | Vancouver, B.C.\""
             },
             {
               "rank": 3,
-              "url": "https://www.kaden-verlag.de/ophthalmologie/aktuelles-nachrichten/kongresskalender/?tx_sykongresse_sykongresse%5Baction%5D=list&tx_sykongresse_sykongresse%5Bcontroller%5D=Kongresse&tx_sykongresse_sykongresse%5Bpage%5D=32&cHash=39139ec9ca56aaf889e40533bbe54b27",
-              "title": "kaden-verlag.de",
-              "snippet": "**Numbered Edition:** **131st Annual Meeting**"
+              "url": "https://www.cainwatters.com/event/aao-annual-session-2027/",
+              "title": "cainwatters.com",
+              "snippet": "**Official URL:** `https://annualsession.aaoinfo.org/`"
             },
             {
               "rank": 4,
-              "url": "https://theophthalmologist.com/issues/2026/articles/october/aao-2026-honors-ophthalmology-s-leading-figures/",
-              "title": "theophthalmologist.com",
-              "snippet": "**Numbered Edition:** **131st Annual Meeting** (with official AAO meeting archives confirming the 2026 New Orleans gathering as the 130th annual meeting"
+              "url": "https://annualsession.aaoinfo.org/",
+              "title": "aaoinfo.org",
+              "snippet": "**Page Title:** AAO Annual Session 2027: Annual Session\n**Conference Year Evidence:** June 4–6, 2027 at the Vancouver Convention Centre in Vancouver, British Columbia, Canada"
             },
             {
               "rank": 5,
-              "url": "https://annualsession.aaoinfo.org/",
-              "title": "aaoinfo.org",
-              "snippet": "**URL:** `https://annualsession.aaoinfo.org/`\n**Title:** AAO Annual Session 2027: Annual Session"
+              "url": "https://soran.cc.okayama-u.ac.jp/html/ac33f667dee71a8674506e4da22f6611_ja.html",
+              "title": "okayama-u.ac.jp",
+              "snippet": "**Numbered Edition Evidence:** The AAO Annual Session follows an annual cadence where 2025 was the 125th and 2026 was the 126th, making the 2027 conference the **127th Annual Session**\n**Numbered Edition Evidence:** Corresponds to the 127th session of the AAO Annual Session series"
             },
             {
               "rank": 6,
-              "url": "https://www.8meetings.com/2026/2026_aao_orthodontists.html",
-              "title": "8meetings.com",
-              "snippet": "**Numbered Edition:** **127th Annual Session**"
+              "url": "https://www.scribd.com/document/901949208/2020-Supplier-Guide-Rev3-Print-1up-Hl-Opt-Int",
+              "title": "scribd.com",
+              "snippet": "**Numbered Edition Evidence:** The AAO Annual Session follows an annual cadence where 2025 was the 125th and 2026 was the 126th, making the 2027 conference the **127th Annual Session**\n**Numbered Edition Evidence:** Corresponds to the 127th session of the AAO Annual Session series"
             },
             {
               "rank": 7,
-              "url": "http://www.maxflexaligner.com/news_68/1997.html",
-              "title": "maxflexaligner.com",
-              "snippet": "**Numbered Edition:** **127th Annual Session** (succeeding the 126th Annual Session held in 2026"
+              "url": "https://expofp.com/pennsylvania-convention-center/aao-annual-session-april-2025",
+              "title": "expofp.com",
+              "snippet": "**Numbered Edition Evidence:** The AAO Annual Session follows an annual cadence where 2025 was the 125th and 2026 was the 126th, making the 2027 conference the **127th Annual Session**"
             },
             {
               "rank": 8,
-              "url": "https://www.aao.org/annual-meeting`",
-              "title": "",
-              "snippet": "  * **URL:** `https://www.aao.org/annual-meeting`  "
+              "url": "https://www.eyenews.uk.com/events/event/aao-2027-annual-meeting",
+              "title": "uk.com",
+              "snippet": "**Official URL:** `https://www.aao.org/annual-meeting/past-and-future-meetings` (Main portal: `https://www.aao.org/annual-meeting`)"
             },
             {
               "rank": 9,
-              "url": "https://www.aao.org/annual-meeting/past-and-future-meetings`",
-              "title": "",
-              "snippet": "  * **URL:** `https://www.aao.org/annual-meeting/past-and-future-meetings`  "
+              "url": "https://www.aao.org/annual-meeting",
+              "title": "aao.org",
+              "snippet": "**Official URL:** `https://www.aao.org/annual-meeting/past-and-future-meetings` (Main portal: `https://www.aao.org/annual-meeting`)"
             },
             {
               "rank": 10,
+              "url": "https://www.aao.org/annual-meeting/meeting-information",
+              "title": "aao.org",
+              "snippet": "**Numbered Edition Evidence:** AAO official documents identify the 2026 meeting in New Orleans as the Academy's 130th annual meeting, designating AAO 2027 as the **131st Annual Meeting**"
+            },
+            {
+              "rank": 11,
+              "url": "https://collections.lib.utah.edu/details?id=225558",
+              "title": "utah.edu",
+              "snippet": "**Numbered Edition Evidence:** AAO official documents identify the 2026 meeting in New Orleans as the Academy's 130th annual meeting, designating AAO 2027 as the **131st Annual Meeting**"
+            },
+            {
+              "rank": 12,
               "url": "https://annualsession.aaoinfo.org/`",
               "title": "",
-              "snippet": "  * **URL:** `https://annualsession.aaoinfo.org/`  "
+              "snippet": "* **Official URL:** `https://annualsession.aaoinfo.org/`"
+            },
+            {
+              "rank": 13,
+              "url": "https://www.aao.org/annual-meeting/past-and-future-meetings`",
+              "title": "",
+              "snippet": "* **Official URL:** `https://www.aao.org/annual-meeting/past-and-future-meetings` (Main portal: `https://www.aao.org/annual-meeting`)"
+            },
+            {
+              "rank": 14,
+              "url": "https://www.aao.org/annual-meeting`",
+              "title": "",
+              "snippet": "* **Official URL:** `https://www.aao.org/annual-meeting/past-and-future-meetings` (Main portal: `https://www.aao.org/annual-meeting`)"
+            },
+            {
+              "rank": 15,
+              "url": "https://www2.aaoinfo.org/meetings/`",
+              "title": "",
+              "snippet": "* **Official URL:** `https://www2.aaoinfo.org/meetings/`"
             }
           ],
           "finishReason": "STOP"
-        },
-        {
-          "query": "AAO Annual Meeting 2027",
-          "candidateUrl": "https://www.aao.org/annual-meeting/lasvegas",
-          "verification": {
-            "isOfficialEventPage": false,
-            "is_official_page": false,
-            "yearMatches": false,
-            "year_matches": false,
-            "editionMatches": true,
-            "edition_matches": true,
-            "isOfficialDomain": true,
-            "is_official_domain": true,
-            "isThirdParty": false,
-            "is_third_party": false,
-            "confidence": 0.4,
-            "reason": "While the domain is the official AAO website, the URL and snippet provide no confirmation that this page is dedicated to the 2027 annual meeting rather than a past Las Vegas edition or a generic landing page.",
-            "recommended_action": "reject_and_continue"
-          },
-          "accepted": false
         },
         {
           "query": "AAO Annual Meeting 2027",
@@ -820,15 +833,35 @@
             "is_official_domain": true,
             "isThirdParty": false,
             "is_third_party": false,
-            "confidence": 0.8,
-            "reason": "This is an official list of past and future annual meetings hosted on the AAO website, not a dedicated event homepage for the 2027 edition.",
+            "confidence": 0.6,
+            "reason": "The URL belongs to the official organizer domain (aao.org) and mentions the 2027 meeting dates and location, but it is a general 'Past and Future Meetings' listing page rather than a dedicated event page for the 2027 edition.",
             "recommended_action": "reject_and_continue"
           },
           "accepted": false
         },
         {
           "query": "AAO Annual Meeting 2027",
-          "candidateUrl": "https://www.kaden-verlag.de/ophthalmologie/aktuelles-nachrichten/kongresskalender/?tx_sykongresse_sykongresse%5Baction%5D=list&tx_sykongresse_sykongresse%5Bcontroller%5D=Kongresse&tx_sykongresse_sykongresse%5Bpage%5D=32&cHash=39139ec9ca56aaf889e40533bbe54b27",
+          "candidateUrl": "https://www2.aaoinfo.org/meetings/",
+          "verification": {
+            "isOfficialEventPage": false,
+            "is_official_page": false,
+            "yearMatches": false,
+            "year_matches": false,
+            "editionMatches": false,
+            "edition_matches": false,
+            "isOfficialDomain": false,
+            "is_official_domain": false,
+            "isThirdParty": false,
+            "is_third_party": false,
+            "confidence": 0,
+            "reason": "This URL belongs to the American Association of Orthodontists (orthodontics), not the American Academy of Ophthalmology.",
+            "recommended_action": "reject_and_continue"
+          },
+          "accepted": false
+        },
+        {
+          "query": "AAO Annual Meeting 2027",
+          "candidateUrl": "https://www.cainwatters.com/event/aao-annual-session-2027/",
           "verification": {
             "isOfficialEventPage": false,
             "is_official_page": false,
@@ -841,299 +874,227 @@
             "isThirdParty": true,
             "is_third_party": true,
             "confidence": 0,
-            "reason": "The candidate URL is from kaden-verlag.de, a German third-party publishing/calendar site, not the official American Academy of Ophthalmology website.",
+            "reason": "cainwatters.com is a third-party financial firm website, not the official American Academy of Ophthalmology domain. Furthermore, the listed event refers to the American Association of Orthodontists Annual Session.",
             "recommended_action": "reject_and_continue"
           },
           "accepted": false
         }
       ],
       "urlDiscoveryStatus": "official_url_not_found",
-      "lastUrlDiscoveryDate": "2026-11-24"
+      "lastUrlDiscoveryDate": "2026-11-27"
     },
     "conf-jp-neuro-2027": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-int-asnos-2027": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "6ce74279741500cc79dfad906a1f3c0e2b85e3d56fe52bc875c2a108c3a599c2",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-ai-2027": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-01",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-jrvs-2027": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-presbyopia-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-surgery-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-cornea-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-eyelid-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-iscev-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-diabetic-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-int-ips-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "6ce74279741500cc79dfad906a1f3c0e2b85e3d56fe52bc875c2a108c3a599c2",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-perimetry-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-int-apao-2028": {
       "url": "https://apaophth.org/",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "02d1672a71782b543d3440cb28e7641714f519f81e5a622151f32902bf44b4bd",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.3,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
           "url": "https://apaophth.org/",
@@ -1151,288 +1112,216 @@
     },
     "conf-int-fujiretina-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "6ce74279741500cc79dfad906a1f3c0e2b85e3d56fe52bc875c2a108c3a599c2",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji_international.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-jos-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.2,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-myopia-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-lowvision-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-pediatric-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-optics-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-jscrs-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-inflammation-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-cl-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-cataract-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.1,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-oncology-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-jp-ringan-2028": {
       "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-      "lastChecked": "2026-11-18",
-      "lastHttpStatus": 200,
+      "lastChecked": "2026-11-27",
+      "lastHttpStatus": 0,
       "normalizedHash": "e369c776b03aeffa7d91361805bf52d89299daf807edc61aa43b1abb2ec958a5",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "registration-link-not-found",
-          "field": "registration",
-          "category": "link-not-found"
-        },
-        {
-          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html",
-          "reason": "abstract-link-not-found",
-          "field": "abstractSubmission",
-          "category": "link-not-found"
+          "category": "unavailable",
+          "reason": "http-503",
+          "url": "https://www.nichigan.or.jp/member/syukai/hyoji.html"
         }
-      ]
+      ],
+      "lastError": "http-503"
     },
     "conf-int-escrs-2028": {
       "url": "https://www.escrs.org/escrs-annual-events/46th-congress-of-the-escrs",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
       "normalizedHash": "d9a373bf3ff1232fa3ac1fb8bfef9a3eb7e5e0e4caff83b6f209269413e9c282",
       "lastGeminiDecision": "no_change",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
           "url": "https://www.escrs.org/escrs-annual-events/46th-congress-of-the-escrs",
@@ -1450,12 +1339,12 @@
     },
     "conf-int-aao-2028": {
       "url": "https://www.aao.org/annual-meeting",
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
-      "normalizedHash": "b95e3b82dab69fec067a7813fb4b2d63931e244870aec34fa261e4f5b2155125",
+      "normalizedHash": "19764cef2807c396bcb11b71c47d953e43493bb923d2b501d714cb8d4ba4bb79",
       "lastGeminiDecision": "needs_review",
-      "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-25",
+      "lastGeminiConfidence": 0.2,
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
           "url": "https://www.aao.org/annual-meeting",
@@ -1546,10 +1435,10 @@
       "nextCheckDate": "2026-10-12"
     },
     "conf-int-ascrs-2027": {
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 0,
       "lastError": "bot-protected",
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": [
         {
           "category": "unavailable",
@@ -1559,10 +1448,10 @@
       ]
     },
     "oph-012": {
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 0,
       "lastError": "bot-protected",
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-11-28",
       "deadlineObservations": [
         {
           "category": "unavailable",
@@ -1572,10 +1461,10 @@
       ]
     },
     "conf-int-ascrs-2028": {
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 0,
       "lastError": "untrusted-domain",
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
           "category": "unavailable",
@@ -1585,10 +1474,10 @@
       ]
     },
     "conf-int-arvo-2028": {
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 0,
       "lastError": "bot-protected",
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
           "category": "unavailable",
@@ -1598,10 +1487,10 @@
       ]
     },
     "conf-jp-jsoprs-2028": {
-      "lastChecked": "2026-11-18",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 0,
       "lastError": "untrusted-domain",
-      "nextCheckDate": "2026-11-25",
+      "nextCheckDate": "2026-12-04",
       "deadlineObservations": [
         {
           "category": "unavailable",
@@ -1647,12 +1536,12 @@
         }
       ],
       "url": "https://www.rousi.jp/jps5",
-      "lastChecked": "2026-11-24",
+      "lastChecked": "2026-11-27",
       "lastHttpStatus": 200,
-      "normalizedHash": "23959bc5d63d8cff48246dc8aada69dd82873a24b3ad584dc8fe6155b252035f",
-      "lastGeminiDecision": "needs_review",
+      "normalizedHash": "cb703aac18408eae8026b2f10484ea18f7ce06576f875e5038a4e91eab3a4ffb",
+      "lastGeminiDecision": "safe_auto_update",
       "lastGeminiConfidence": 0.95,
-      "nextCheckDate": "2026-11-25"
+      "nextCheckDate": "2026-11-28"
     }
   }
 }
